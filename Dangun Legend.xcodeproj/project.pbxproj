@@ -1,0 +1,875 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0CED58BDF824657E973F7047 /* Pods_Dangun_Legend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 482E835E189B783CE527223F /* Pods_Dangun_Legend.framework */; };
+		349BA7D36F202ECC22BB17BA /* Pods_Dangun_Legend_Dangun_LegendUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B994897BFF1A5C7482915A99 /* Pods_Dangun_Legend_Dangun_LegendUITests.framework */; };
+		A420E00F261724D00039F2C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E00E261724D00039F2C8 /* AppDelegate.swift */; };
+		A420E011261724D00039F2C8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E010261724D00039F2C8 /* SceneDelegate.swift */; };
+		A420E013261724D00039F2C8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E012261724D00039F2C8 /* HomeViewController.swift */; };
+		A420E016261724D00039F2C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A420E014261724D00039F2C8 /* Main.storyboard */; };
+		A420E018261724D10039F2C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A420E017261724D10039F2C8 /* Assets.xcassets */; };
+		A420E01B261724D10039F2C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A420E019261724D10039F2C8 /* LaunchScreen.storyboard */; };
+		A420E026261724D10039F2C8 /* Dangun_LegendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E025261724D10039F2C8 /* Dangun_LegendTests.swift */; };
+		A420E031261724D10039F2C8 /* Dangun_LegendUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E030261724D10039F2C8 /* Dangun_LegendUITests.swift */; };
+		A47775FB261821D8002D866C /* RegisterEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47775FA261821D8002D866C /* RegisterEmailVC.swift */; };
+		A477762326182966002D866C /* InitialLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A477762226182966002D866C /* InitialLoginViewController.swift */; };
+		A477762B26182E00002D866C /* GoogleSignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A477762A26182E00002D866C /* GoogleSignInVC.swift */; };
+		A4777630261884DA002D866C /* Contants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A477762F261884DA002D866C /* Contants.swift */; };
+		A477763C2618A28A002D866C /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = A477763B2618A28A002D866C /* FacebookLogin */; };
+		A4CDF1ED261809A400A08809 /* CaveAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */; };
+		A4CDF1F8261809FC00A08809 /* CaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CDF1F7261809FC00A08809 /* CaveViewController.swift */; };
+		A4CDF20026180A6C00A08809 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A4CDF1FF26180A6C00A08809 /* GoogleService-Info.plist */; };
+		A7ECF3464CCD675C0876FD85 /* Pods_Dangun_LegendTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4115F978D496C1738E38CB8 /* Pods_Dangun_LegendTests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A420E022261724D10039F2C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A420E003261724D00039F2C8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A420E00A261724D00039F2C8;
+			remoteInfo = "Dangun Legend";
+		};
+		A420E02D261724D10039F2C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A420E003261724D00039F2C8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A420E00A261724D00039F2C8;
+			remoteInfo = "Dangun Legend";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2A2D3246262D955BF55FB0B0 /* Pods-Dangun Legend-Dangun LegendUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun Legend-Dangun LegendUITests.release.xcconfig"; path = "Target Support Files/Pods-Dangun Legend-Dangun LegendUITests/Pods-Dangun Legend-Dangun LegendUITests.release.xcconfig"; sourceTree = "<group>"; };
+		45776546CA269910ED9E287D /* Pods-Dangun LegendTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun LegendTests.debug.xcconfig"; path = "Target Support Files/Pods-Dangun LegendTests/Pods-Dangun LegendTests.debug.xcconfig"; sourceTree = "<group>"; };
+		482E835E189B783CE527223F /* Pods_Dangun_Legend.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dangun_Legend.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8552188C1427050E47DD9103 /* Pods-Dangun Legend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun Legend.debug.xcconfig"; path = "Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend.debug.xcconfig"; sourceTree = "<group>"; };
+		9DD87C6A75BA537906D5E6F7 /* Pods-Dangun Legend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun Legend.release.xcconfig"; path = "Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend.release.xcconfig"; sourceTree = "<group>"; };
+		A4115F978D496C1738E38CB8 /* Pods_Dangun_LegendTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dangun_LegendTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A420E00B261724D00039F2C8 /* Dangun Legend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dangun Legend.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A420E00E261724D00039F2C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A420E010261724D00039F2C8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		A420E012261724D00039F2C8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		A420E015261724D00039F2C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A420E017261724D10039F2C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A420E01A261724D10039F2C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A420E01C261724D10039F2C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A420E021261724D10039F2C8 /* Dangun LegendTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dangun LegendTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A420E025261724D10039F2C8 /* Dangun_LegendTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dangun_LegendTests.swift; sourceTree = "<group>"; };
+		A420E027261724D10039F2C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A420E02C261724D10039F2C8 /* Dangun LegendUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dangun LegendUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A420E030261724D10039F2C8 /* Dangun_LegendUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dangun_LegendUITests.swift; sourceTree = "<group>"; };
+		A420E032261724D10039F2C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A47775FA261821D8002D866C /* RegisterEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterEmailVC.swift; sourceTree = "<group>"; };
+		A477762226182966002D866C /* InitialLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialLoginViewController.swift; sourceTree = "<group>"; };
+		A477762A26182E00002D866C /* GoogleSignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInVC.swift; sourceTree = "<group>"; };
+		A477762F261884DA002D866C /* Contants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contants.swift; sourceTree = "<group>"; };
+		A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveAddViewController.swift; sourceTree = "<group>"; };
+		A4CDF1F7261809FC00A08809 /* CaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveViewController.swift; sourceTree = "<group>"; };
+		A4CDF1FF26180A6C00A08809 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		B994897BFF1A5C7482915A99 /* Pods_Dangun_Legend_Dangun_LegendUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dangun_Legend_Dangun_LegendUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1FC980DD9320AFA99CD0CD4 /* Pods-Dangun Legend-Dangun LegendUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun Legend-Dangun LegendUITests.debug.xcconfig"; path = "Target Support Files/Pods-Dangun Legend-Dangun LegendUITests/Pods-Dangun Legend-Dangun LegendUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		F25226CD8D48169F35EC8321 /* Pods-Dangun LegendTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun LegendTests.release.xcconfig"; path = "Target Support Files/Pods-Dangun LegendTests/Pods-Dangun LegendTests.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A420E008261724D00039F2C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A477763C2618A28A002D866C /* FacebookLogin in Frameworks */,
+				0CED58BDF824657E973F7047 /* Pods_Dangun_Legend.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A420E01E261724D10039F2C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7ECF3464CCD675C0876FD85 /* Pods_Dangun_LegendTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A420E029261724D10039F2C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				349BA7D36F202ECC22BB17BA /* Pods_Dangun_Legend_Dangun_LegendUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		848D69738083FBEDF69790EB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				482E835E189B783CE527223F /* Pods_Dangun_Legend.framework */,
+				B994897BFF1A5C7482915A99 /* Pods_Dangun_Legend_Dangun_LegendUITests.framework */,
+				A4115F978D496C1738E38CB8 /* Pods_Dangun_LegendTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A420E002261724D00039F2C8 = {
+			isa = PBXGroup;
+			children = (
+				A420E00D261724D00039F2C8 /* Dangun Legend */,
+				A420E024261724D10039F2C8 /* Dangun LegendTests */,
+				A420E02F261724D10039F2C8 /* Dangun LegendUITests */,
+				A420E00C261724D00039F2C8 /* Products */,
+				F8104C9A3DD1E56C3F0249D6 /* Pods */,
+				848D69738083FBEDF69790EB /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A420E00C261724D00039F2C8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A420E00B261724D00039F2C8 /* Dangun Legend.app */,
+				A420E021261724D10039F2C8 /* Dangun LegendTests.xctest */,
+				A420E02C261724D10039F2C8 /* Dangun LegendUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A420E00D261724D00039F2C8 /* Dangun Legend */ = {
+			isa = PBXGroup;
+			children = (
+				A4CDF1E72618094700A08809 /* Model */,
+				A4CDF1EB2618098200A08809 /* View */,
+				A4CDF1E62618093300A08809 /* Contorller */,
+				A420E00E261724D00039F2C8 /* AppDelegate.swift */,
+				A420E010261724D00039F2C8 /* SceneDelegate.swift */,
+				A420E01C261724D10039F2C8 /* Info.plist */,
+				A4CDF1FF26180A6C00A08809 /* GoogleService-Info.plist */,
+			);
+			path = "Dangun Legend";
+			sourceTree = "<group>";
+		};
+		A420E024261724D10039F2C8 /* Dangun LegendTests */ = {
+			isa = PBXGroup;
+			children = (
+				A420E025261724D10039F2C8 /* Dangun_LegendTests.swift */,
+				A420E027261724D10039F2C8 /* Info.plist */,
+			);
+			path = "Dangun LegendTests";
+			sourceTree = "<group>";
+		};
+		A420E02F261724D10039F2C8 /* Dangun LegendUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A420E030261724D10039F2C8 /* Dangun_LegendUITests.swift */,
+				A420E032261724D10039F2C8 /* Info.plist */,
+			);
+			path = "Dangun LegendUITests";
+			sourceTree = "<group>";
+		};
+		A47775FF261827DF002D866C /* Login_Register */ = {
+			isa = PBXGroup;
+			children = (
+				A47775FA261821D8002D866C /* RegisterEmailVC.swift */,
+				A477762226182966002D866C /* InitialLoginViewController.swift */,
+				A477762A26182E00002D866C /* GoogleSignInVC.swift */,
+			);
+			path = Login_Register;
+			sourceTree = "<group>";
+		};
+		A4CDF1E62618093300A08809 /* Contorller */ = {
+			isa = PBXGroup;
+			children = (
+				A420E012261724D00039F2C8 /* HomeViewController.swift */,
+				A4CDF1F7261809FC00A08809 /* CaveViewController.swift */,
+				A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */,
+				A47775FF261827DF002D866C /* Login_Register */,
+			);
+			path = Contorller;
+			sourceTree = "<group>";
+		};
+		A4CDF1E72618094700A08809 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A420E017261724D10039F2C8 /* Assets.xcassets */,
+				A477762F261884DA002D866C /* Contants.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A4CDF1EB2618098200A08809 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A420E019261724D10039F2C8 /* LaunchScreen.storyboard */,
+				A420E014261724D00039F2C8 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F8104C9A3DD1E56C3F0249D6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8552188C1427050E47DD9103 /* Pods-Dangun Legend.debug.xcconfig */,
+				9DD87C6A75BA537906D5E6F7 /* Pods-Dangun Legend.release.xcconfig */,
+				D1FC980DD9320AFA99CD0CD4 /* Pods-Dangun Legend-Dangun LegendUITests.debug.xcconfig */,
+				2A2D3246262D955BF55FB0B0 /* Pods-Dangun Legend-Dangun LegendUITests.release.xcconfig */,
+				45776546CA269910ED9E287D /* Pods-Dangun LegendTests.debug.xcconfig */,
+				F25226CD8D48169F35EC8321 /* Pods-Dangun LegendTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A420E00A261724D00039F2C8 /* Dangun Legend */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A420E035261724D10039F2C8 /* Build configuration list for PBXNativeTarget "Dangun Legend" */;
+			buildPhases = (
+				D386145AD40D4FD102316769 /* [CP] Check Pods Manifest.lock */,
+				A420E007261724D00039F2C8 /* Sources */,
+				A420E008261724D00039F2C8 /* Frameworks */,
+				A420E009261724D00039F2C8 /* Resources */,
+				C84D3D49CCC5BD94685794BC /* [CP] Embed Pods Frameworks */,
+				D7BBD2237BC5FBE41DF0DFBA /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Dangun Legend";
+			packageProductDependencies = (
+				A477763B2618A28A002D866C /* FacebookLogin */,
+			);
+			productName = "Dangun Legend";
+			productReference = A420E00B261724D00039F2C8 /* Dangun Legend.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A420E020261724D10039F2C8 /* Dangun LegendTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A420E038261724D10039F2C8 /* Build configuration list for PBXNativeTarget "Dangun LegendTests" */;
+			buildPhases = (
+				AFBEFF1E601A27DACBDDAFA1 /* [CP] Check Pods Manifest.lock */,
+				A420E01D261724D10039F2C8 /* Sources */,
+				A420E01E261724D10039F2C8 /* Frameworks */,
+				A420E01F261724D10039F2C8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A420E023261724D10039F2C8 /* PBXTargetDependency */,
+			);
+			name = "Dangun LegendTests";
+			productName = "Dangun LegendTests";
+			productReference = A420E021261724D10039F2C8 /* Dangun LegendTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A420E02B261724D10039F2C8 /* Dangun LegendUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A420E03B261724D10039F2C8 /* Build configuration list for PBXNativeTarget "Dangun LegendUITests" */;
+			buildPhases = (
+				302D8B6F9740D2728C842BA4 /* [CP] Check Pods Manifest.lock */,
+				A420E028261724D10039F2C8 /* Sources */,
+				A420E029261724D10039F2C8 /* Frameworks */,
+				A420E02A261724D10039F2C8 /* Resources */,
+				604D04DB751EFFC2E7477648 /* [CP] Embed Pods Frameworks */,
+				2A4042999E44E22BDB8FAC30 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A420E02E261724D10039F2C8 /* PBXTargetDependency */,
+			);
+			name = "Dangun LegendUITests";
+			productName = "Dangun LegendUITests";
+			productReference = A420E02C261724D10039F2C8 /* Dangun LegendUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A420E003261724D00039F2C8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1240;
+				LastUpgradeCheck = 1240;
+				TargetAttributes = {
+					A420E00A261724D00039F2C8 = {
+						CreatedOnToolsVersion = 12.4;
+					};
+					A420E020261724D10039F2C8 = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = A420E00A261724D00039F2C8;
+					};
+					A420E02B261724D10039F2C8 = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = A420E00A261724D00039F2C8;
+					};
+				};
+			};
+			buildConfigurationList = A420E006261724D00039F2C8 /* Build configuration list for PBXProject "Dangun Legend" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A420E002261724D00039F2C8;
+			packageReferences = (
+				A477763A2618A28A002D866C /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
+			);
+			productRefGroup = A420E00C261724D00039F2C8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A420E00A261724D00039F2C8 /* Dangun Legend */,
+				A420E020261724D10039F2C8 /* Dangun LegendTests */,
+				A420E02B261724D10039F2C8 /* Dangun LegendUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A420E009261724D00039F2C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A420E01B261724D10039F2C8 /* LaunchScreen.storyboard in Resources */,
+				A4CDF20026180A6C00A08809 /* GoogleService-Info.plist in Resources */,
+				A420E018261724D10039F2C8 /* Assets.xcassets in Resources */,
+				A420E016261724D00039F2C8 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A420E01F261724D10039F2C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A420E02A261724D10039F2C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2A4042999E44E22BDB8FAC30 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend-Dangun LegendUITests/Pods-Dangun Legend-Dangun LegendUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend-Dangun LegendUITests/Pods-Dangun Legend-Dangun LegendUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend-Dangun LegendUITests/Pods-Dangun Legend-Dangun LegendUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		302D8B6F9740D2728C842BA4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Dangun Legend-Dangun LegendUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		604D04DB751EFFC2E7477648 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend-Dangun LegendUITests/Pods-Dangun Legend-Dangun LegendUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend-Dangun LegendUITests/Pods-Dangun Legend-Dangun LegendUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend-Dangun LegendUITests/Pods-Dangun Legend-Dangun LegendUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AFBEFF1E601A27DACBDDAFA1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Dangun LegendTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C84D3D49CCC5BD94685794BC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D386145AD40D4FD102316769 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Dangun Legend-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D7BBD2237BC5FBE41DF0DFBA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A420E007261724D00039F2C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A4CDF1F8261809FC00A08809 /* CaveViewController.swift in Sources */,
+				A420E013261724D00039F2C8 /* HomeViewController.swift in Sources */,
+				A4CDF1ED261809A400A08809 /* CaveAddViewController.swift in Sources */,
+				A420E00F261724D00039F2C8 /* AppDelegate.swift in Sources */,
+				A477762326182966002D866C /* InitialLoginViewController.swift in Sources */,
+				A47775FB261821D8002D866C /* RegisterEmailVC.swift in Sources */,
+				A4777630261884DA002D866C /* Contants.swift in Sources */,
+				A420E011261724D00039F2C8 /* SceneDelegate.swift in Sources */,
+				A477762B26182E00002D866C /* GoogleSignInVC.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A420E01D261724D10039F2C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A420E026261724D10039F2C8 /* Dangun_LegendTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A420E028261724D10039F2C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A420E031261724D10039F2C8 /* Dangun_LegendUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A420E023261724D10039F2C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A420E00A261724D00039F2C8 /* Dangun Legend */;
+			targetProxy = A420E022261724D10039F2C8 /* PBXContainerItemProxy */;
+		};
+		A420E02E261724D10039F2C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A420E00A261724D00039F2C8 /* Dangun Legend */;
+			targetProxy = A420E02D261724D10039F2C8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A420E014261724D00039F2C8 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A420E015261724D00039F2C8 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A420E019261724D10039F2C8 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A420E01A261724D10039F2C8 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A420E033261724D10039F2C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A420E034261724D10039F2C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A420E036261724D10039F2C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8552188C1427050E47DD9103 /* Pods-Dangun Legend.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6TUZG6LW7U;
+				INFOPLIST_FILE = "Dangun Legend/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.JL.Dangun;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A420E037261724D10039F2C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9DD87C6A75BA537906D5E6F7 /* Pods-Dangun Legend.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6TUZG6LW7U;
+				INFOPLIST_FILE = "Dangun Legend/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.JL.Dangun;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A420E039261724D10039F2C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 45776546CA269910ED9E287D /* Pods-Dangun LegendTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6TUZG6LW7U;
+				INFOPLIST_FILE = "Dangun LegendTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.JL.Dangun-LegendTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dangun Legend.app/Dangun Legend";
+			};
+			name = Debug;
+		};
+		A420E03A261724D10039F2C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F25226CD8D48169F35EC8321 /* Pods-Dangun LegendTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6TUZG6LW7U;
+				INFOPLIST_FILE = "Dangun LegendTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.JL.Dangun-LegendTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dangun Legend.app/Dangun Legend";
+			};
+			name = Release;
+		};
+		A420E03C261724D10039F2C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1FC980DD9320AFA99CD0CD4 /* Pods-Dangun Legend-Dangun LegendUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6TUZG6LW7U;
+				INFOPLIST_FILE = "Dangun LegendUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.JL.Dangun-LegendUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Dangun Legend";
+			};
+			name = Debug;
+		};
+		A420E03D261724D10039F2C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A2D3246262D955BF55FB0B0 /* Pods-Dangun Legend-Dangun LegendUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6TUZG6LW7U;
+				INFOPLIST_FILE = "Dangun LegendUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.JL.Dangun-LegendUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Dangun Legend";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A420E006261724D00039F2C8 /* Build configuration list for PBXProject "Dangun Legend" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A420E033261724D10039F2C8 /* Debug */,
+				A420E034261724D10039F2C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A420E035261724D10039F2C8 /* Build configuration list for PBXNativeTarget "Dangun Legend" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A420E036261724D10039F2C8 /* Debug */,
+				A420E037261724D10039F2C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A420E038261724D10039F2C8 /* Build configuration list for PBXNativeTarget "Dangun LegendTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A420E039261724D10039F2C8 /* Debug */,
+				A420E03A261724D10039F2C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A420E03B261724D10039F2C8 /* Build configuration list for PBXNativeTarget "Dangun LegendUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A420E03C261724D10039F2C8 /* Debug */,
+				A420E03D261724D10039F2C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A477763A2618A28A002D866C /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A477763B2618A28A002D866C /* FacebookLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A477763A2618A28A002D866C /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookLogin;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = A420E003261724D00039F2C8 /* Project object */;
+}
