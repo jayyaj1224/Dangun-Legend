@@ -6,14 +6,18 @@
 //
 
 import UIKit
+import Firebase
+
 
 let defaults = UserDefaults.standard
 
 class HomeViewController: UIViewController {
 
+    @IBOutlet weak var mainImage: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        mainImage.alpha = 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -26,7 +30,10 @@ class HomeViewController: UIViewController {
         print(defaults.bool(forKey: K.loginStatus))
         if defaults.bool(forKey: K.loginStatus) == false {
             performSegue(withIdentifier: "InitialVC", sender: self)
+        } else {
+            welcome()
         }
+        
     }
 
     @IBAction func logoutPressed(_ sender: UIButton) {
@@ -34,5 +41,16 @@ class HomeViewController: UIViewController {
         defaults.set(false, forKey: K.loginStatus)
     }
     
+    func welcome() {
+        for n in 1...100 {
+            Timer.scheduledTimer(withTimeInterval: 0.015*Double(n), repeats: false) { (timer) in
+                self.mainImage.alpha = CGFloat(n)*0.01
+            }
+        }
+        
+        
+    }
+        
+
 }
 

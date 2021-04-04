@@ -16,9 +16,9 @@ target 'Dangun Legend' do
     # Pods for testing
   end
 
-pod 'Firebase/Firestore' 
 pod 'IQKeyboardManagerSwift'
 pod 'Firebase/Auth'
 pod 'GoogleSignIn'
+pod 'Firebase/Firestore' 
 
 end

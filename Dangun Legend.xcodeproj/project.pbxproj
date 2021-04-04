@@ -3,12 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		0CED58BDF824657E973F7047 /* Pods_Dangun_Legend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 482E835E189B783CE527223F /* Pods_Dangun_Legend.framework */; };
 		349BA7D36F202ECC22BB17BA /* Pods_Dangun_Legend_Dangun_LegendUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B994897BFF1A5C7482915A99 /* Pods_Dangun_Legend_Dangun_LegendUITests.framework */; };
+		A411E5022619CD970057FAD3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A411E5012619CD970057FAD3 /* GoogleService-Info.plist */; };
 		A420E00F261724D00039F2C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E00E261724D00039F2C8 /* AppDelegate.swift */; };
 		A420E011261724D00039F2C8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E010261724D00039F2C8 /* SceneDelegate.swift */; };
 		A420E013261724D00039F2C8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E012261724D00039F2C8 /* HomeViewController.swift */; };
@@ -21,10 +22,8 @@
 		A477762326182966002D866C /* InitialLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A477762226182966002D866C /* InitialLoginViewController.swift */; };
 		A477762B26182E00002D866C /* GoogleSignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A477762A26182E00002D866C /* GoogleSignInVC.swift */; };
 		A4777630261884DA002D866C /* Contants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A477762F261884DA002D866C /* Contants.swift */; };
-		A477763C2618A28A002D866C /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = A477763B2618A28A002D866C /* FacebookLogin */; };
 		A4CDF1ED261809A400A08809 /* CaveAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */; };
 		A4CDF1F8261809FC00A08809 /* CaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CDF1F7261809FC00A08809 /* CaveViewController.swift */; };
-		A4CDF20026180A6C00A08809 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A4CDF1FF26180A6C00A08809 /* GoogleService-Info.plist */; };
 		A7ECF3464CCD675C0876FD85 /* Pods_Dangun_LegendTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4115F978D496C1738E38CB8 /* Pods_Dangun_LegendTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +51,7 @@
 		8552188C1427050E47DD9103 /* Pods-Dangun Legend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun Legend.debug.xcconfig"; path = "Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend.debug.xcconfig"; sourceTree = "<group>"; };
 		9DD87C6A75BA537906D5E6F7 /* Pods-Dangun Legend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun Legend.release.xcconfig"; path = "Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend.release.xcconfig"; sourceTree = "<group>"; };
 		A4115F978D496C1738E38CB8 /* Pods_Dangun_LegendTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dangun_LegendTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A411E5012619CD970057FAD3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		A420E00B261724D00039F2C8 /* Dangun Legend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dangun Legend.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A420E00E261724D00039F2C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A420E010261724D00039F2C8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -72,7 +72,6 @@
 		A477762F261884DA002D866C /* Contants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contants.swift; sourceTree = "<group>"; };
 		A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveAddViewController.swift; sourceTree = "<group>"; };
 		A4CDF1F7261809FC00A08809 /* CaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveViewController.swift; sourceTree = "<group>"; };
-		A4CDF1FF26180A6C00A08809 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		B994897BFF1A5C7482915A99 /* Pods_Dangun_Legend_Dangun_LegendUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dangun_Legend_Dangun_LegendUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1FC980DD9320AFA99CD0CD4 /* Pods-Dangun Legend-Dangun LegendUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun Legend-Dangun LegendUITests.debug.xcconfig"; path = "Target Support Files/Pods-Dangun Legend-Dangun LegendUITests/Pods-Dangun Legend-Dangun LegendUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		F25226CD8D48169F35EC8321 /* Pods-Dangun LegendTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun LegendTests.release.xcconfig"; path = "Target Support Files/Pods-Dangun LegendTests/Pods-Dangun LegendTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -83,7 +82,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A477763C2618A28A002D866C /* FacebookLogin in Frameworks */,
 				0CED58BDF824657E973F7047 /* Pods_Dangun_Legend.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -148,7 +146,7 @@
 				A420E00E261724D00039F2C8 /* AppDelegate.swift */,
 				A420E010261724D00039F2C8 /* SceneDelegate.swift */,
 				A420E01C261724D10039F2C8 /* Info.plist */,
-				A4CDF1FF26180A6C00A08809 /* GoogleService-Info.plist */,
+				A411E5012619CD970057FAD3 /* GoogleService-Info.plist */,
 			);
 			path = "Dangun Legend";
 			sourceTree = "<group>";
@@ -243,7 +241,6 @@
 			);
 			name = "Dangun Legend";
 			packageProductDependencies = (
-				A477763B2618A28A002D866C /* FacebookLogin */,
 			);
 			productName = "Dangun Legend";
 			productReference = A420E00B261724D00039F2C8 /* Dangun Legend.app */;
@@ -321,7 +318,6 @@
 			);
 			mainGroup = A420E002261724D00039F2C8;
 			packageReferences = (
-				A477763A2618A28A002D866C /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 			);
 			productRefGroup = A420E00C261724D00039F2C8 /* Products */;
 			projectDirPath = "";
@@ -340,7 +336,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A420E01B261724D10039F2C8 /* LaunchScreen.storyboard in Resources */,
-				A4CDF20026180A6C00A08809 /* GoogleService-Info.plist in Resources */,
+				A411E5022619CD970057FAD3 /* GoogleService-Info.plist in Resources */,
 				A420E018261724D10039F2C8 /* Assets.xcassets in Resources */,
 				A420E016261724D00039F2C8 /* Main.storyboard in Resources */,
 			);
@@ -618,7 +614,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -673,7 +669,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -851,25 +847,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		A477763A2618A28A002D866C /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 9.1.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		A477763B2618A28A002D866C /* FacebookLogin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A477763A2618A28A002D866C /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
-			productName = FacebookLogin;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A420E003261724D00039F2C8 /* Project object */;
 }

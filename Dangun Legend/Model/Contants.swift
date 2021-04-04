@@ -10,16 +10,18 @@ import Foundation
 struct K {
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    static let goals = "goals"
     static let loginStatus = "loginStatus"
+    static let currentUser = "currentUser"
+    static let userID = "userID"
+}
+
+
+struct NewGoal {
+    let userID: String
+    let description: String
+    let trialNumber : String
+    let date : String
+    let currentStatus : Bool
 }

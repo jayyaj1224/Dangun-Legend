@@ -6,8 +6,8 @@
 //
 
 import UIKit
-import Firebase
 import IQKeyboardManagerSwift
+import Firebase
 
 class RegisterEmailVC: UIViewController {
     
@@ -15,11 +15,10 @@ class RegisterEmailVC: UIViewController {
     @IBOutlet weak var passwordOne: UITextField!
     @IBOutlet weak var passwordTwo: UITextField!
     @IBOutlet weak var pwConfirmed: UILabel!
-    
-    
 
     
     @IBAction func pw1Edit(_ sender: UITextField) {
+
         let pw1 = passwordOne.text
         let pw2 = passwordTwo.text
         if pw1 == pw2 {
@@ -30,20 +29,23 @@ class RegisterEmailVC: UIViewController {
             pwConfirmed.textColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
         }
     }
-    
+
     @IBAction func registerPressed(_ sender: UIButton) {
-        if let email = emailInput.text, let pw = passwordOne.text {
-            
-            Auth.auth().createUser(withEmail: email, password: pw) { authResult, error in
+        if let email = emailInput.text, let password = passwordOne.text {
+            print("--->>>\(email)-->>>\(password)")
+            Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
                 if let e = error {
-                    print{e.localizedDescription}
+                    print(e.localizedDescription)
                 } else {
-                    //loginStatus -> Login
+                    defaults.set(true, forKey: K.loginStatus)
                     self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
                     self.dismiss(animated: true, completion: nil)
                 }
             }
         }
     }
-    
+
 }
+
+
+

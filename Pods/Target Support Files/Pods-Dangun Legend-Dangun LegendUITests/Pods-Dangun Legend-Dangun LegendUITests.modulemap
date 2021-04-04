@@ -1,0 +1,6 @@
+framework module Pods_Dangun_Legend_Dangun_LegendUITests {
+  umbrella header "Pods-Dangun Legend-Dangun LegendUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

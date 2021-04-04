@@ -10,12 +10,13 @@ import Firebase
 import GoogleSignIn
 import IQKeyboardManagerSwift
 
-class InitialLoginViewController: UIViewController {
+class InitialLoginViewController: UIViewController, GIDSignInDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        GoogleSignIn.GIDSignIn.sharedInstance()?.presentingViewController = self
-        GoogleSignIn.GIDSignIn.sharedInstance().signIn()
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance()?.clientID = "1095031001681-4jc92ro7etesrr4inrms1dskmb41q9f2.apps.googleusercontent.com"
+        GIDSignIn.sharedInstance()?.delegate = self
     }
     
     @IBOutlet weak var emailTextfield: UITextField!
@@ -28,7 +29,7 @@ class InitialLoginViewController: UIViewController {
                     print(e.localizedDescription)
                 } else {
                     self.dismiss(animated: true, completion: nil)
-                    self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+                    defaults.set(true, forKey: K.loginStatus)
                    
                 }
             }
@@ -39,8 +40,23 @@ class InitialLoginViewController: UIViewController {
     }
     
 
+    @IBOutlet var signInButton: GIDSignInButton!
+    
+    @IBAction func googleSignInPressed(_ sender: UIButton) {
+        signInButton.sendActions(for: .touchUpInside)
+    }
     
     
-    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if (error == nil) {
+            let userID = String(user.userID)
+            defaults.set(userID, forKey: K.currentUser)
+            defaults.set(true, forKey: K.loginStatus)
+            presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+            dismiss(animated: true, completion: nil)
+        } else {
+            print("\(error.localizedDescription)")
+        }
+    }
     
 }
