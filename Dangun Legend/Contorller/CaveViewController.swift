@@ -26,6 +26,7 @@ class CaveViewController: UIViewController {
         print("-->>>caveViewDidLoad")
         //caveGoalAddVC.delegate = self
         caveViewSwitch(defaults.bool(forKey: "goalExisitence"))
+        print(type(of: self),#function)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)

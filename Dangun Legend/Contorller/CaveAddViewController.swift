@@ -26,8 +26,17 @@ class CaveAddViewController: UIViewController {
         super.viewDidLoad()
         getDate()
         self.delegate = caveVC
+        print(type(of: self),#function)
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        print(type(of: self),#function)
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        print(type(of: self),#function)
+    }
+
 
     @IBOutlet weak var goalUserInput: UITextView!
     @IBOutlet weak var startDate: UILabel!
@@ -43,15 +52,15 @@ class CaveAddViewController: UIViewController {
     //처음 저장
     @IBAction func startPressed(_ sender: UIButton) {
         
-        if let description = goalUserInput.text,
-           let userID = defaults.value(forKey: K.currentUser) as? String,
-           let goalIndex = defaults.value(forKey: "goalIndex") as? Int
-        {
-            let goalID = "\(userID)-\(goalIndex+1)"
-            let newGoal = NewGoal(userID: userID, goalID: goalID, trialNumber: 1, description: description, startDate: startDate.text!)
+//        if let description = goalUserInput.text,
+//           let userID = defaults.value(forKey: K.currentUser) as? String,
+//           let goalIndex = defaults.value(forKey: "goalIndex") as? Int
+//        {
+//            let goalID = "\(userID)-\(goalIndex+1)"
+//            let newGoal = NewGoal(userID: userID, goalID: goalID, trialNumber: 1, description: description, startDate: startDate.text!)
             //로컬에 저장
-            defaults.set(newGoal, forKey: "currentRunning")
-            defaults.set(true, forKey: "goalExisitence")
+//            defaults.set(newGoal, forKey: "currentRunning")
+//            defaults.set(true, forKey: "goalExisitence")
 //            db.collection(K.goals).document(userID).setData([
 //                "userID": userID,
 //                "goalID": goalID,
@@ -67,7 +76,7 @@ class CaveAddViewController: UIViewController {
         print("--->>> delegate: \(delegate!)")
         delegate?.updateView(self,"Clean")
         dismiss(animated: true, completion: nil)
-         }
+//         }
     }
  
     
