@@ -22,6 +22,7 @@
 		A477762326182966002D866C /* InitialLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A477762226182966002D866C /* InitialLoginViewController.swift */; };
 		A477762B26182E00002D866C /* GoogleSignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A477762A26182E00002D866C /* GoogleSignInVC.swift */; };
 		A4777630261884DA002D866C /* Contants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A477762F261884DA002D866C /* Contants.swift */; };
+		A49E4314261AADAC00E98619 /* GoalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49E4313261AADAC00E98619 /* GoalManager.swift */; };
 		A4CDF1ED261809A400A08809 /* CaveAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */; };
 		A4CDF1F8261809FC00A08809 /* CaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CDF1F7261809FC00A08809 /* CaveViewController.swift */; };
 		A7ECF3464CCD675C0876FD85 /* Pods_Dangun_LegendTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4115F978D496C1738E38CB8 /* Pods_Dangun_LegendTests.framework */; };
@@ -70,6 +71,7 @@
 		A477762226182966002D866C /* InitialLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialLoginViewController.swift; sourceTree = "<group>"; };
 		A477762A26182E00002D866C /* GoogleSignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInVC.swift; sourceTree = "<group>"; };
 		A477762F261884DA002D866C /* Contants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contants.swift; sourceTree = "<group>"; };
+		A49E4313261AADAC00E98619 /* GoalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalManager.swift; sourceTree = "<group>"; };
 		A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveAddViewController.swift; sourceTree = "<group>"; };
 		A4CDF1F7261809FC00A08809 /* CaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveViewController.swift; sourceTree = "<group>"; };
 		B994897BFF1A5C7482915A99 /* Pods_Dangun_Legend_Dangun_LegendUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dangun_Legend_Dangun_LegendUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -195,6 +197,7 @@
 			children = (
 				A420E017261724D10039F2C8 /* Assets.xcassets */,
 				A477762F261884DA002D866C /* Contants.swift */,
+				A49E4313261AADAC00E98619 /* GoalManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -508,6 +511,7 @@
 				A47775FB261821D8002D866C /* RegisterEmailVC.swift in Sources */,
 				A4777630261884DA002D866C /* Contants.swift in Sources */,
 				A420E011261724D00039F2C8 /* SceneDelegate.swift in Sources */,
+				A49E4314261AADAC00E98619 /* GoalManager.swift in Sources */,
 				A477762B26182E00002D866C /* GoogleSignInVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

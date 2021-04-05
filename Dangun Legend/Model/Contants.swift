@@ -20,8 +20,10 @@ struct K {
 
 struct NewGoal {
     let userID: String
+    let goalID: String
+    let trialNumber : Int
+    
     let description: String
-    let trialNumber : String
-    let date : String
-    let currentStatus : Bool
+
+    let startDate : String
 }

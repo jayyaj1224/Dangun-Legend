@@ -18,6 +18,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         mainImage.alpha = 0
+        firstLaunch()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,7 +51,14 @@ class HomeViewController: UIViewController {
         
         
     }
-        
+    
+    func firstLaunch() {
+        if defaults.bool(forKey: "usedBefore?") == false {
+            defaults.set(0, forKey: "goalIndex")
+            defaults.set(true, forKey: "usedBefore?")
+            // show how to use
+        }
+    }
 
 }
 
