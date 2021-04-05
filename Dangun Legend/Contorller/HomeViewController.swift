@@ -19,6 +19,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         mainImage.alpha = 0
         firstLaunch()
+        print("-->>>HomeViewDidLoad")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -28,7 +29,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        print(defaults.bool(forKey: K.loginStatus))
+        print("-->> Login Status: \(defaults.bool(forKey: K.loginStatus))")
         if defaults.bool(forKey: K.loginStatus) == false {
             performSegue(withIdentifier: "InitialVC", sender: self)
         } else {
@@ -54,8 +55,10 @@ class HomeViewController: UIViewController {
     
     func firstLaunch() {
         if defaults.bool(forKey: "usedBefore?") == false {
-            defaults.set(0, forKey: "goalIndex")
             defaults.set(true, forKey: "usedBefore?")
+            
+            defaults.set(0, forKey: "goalIndex")
+            defaults.set(false, forKey: "goalExisitence")
             // show how to use
         }
     }

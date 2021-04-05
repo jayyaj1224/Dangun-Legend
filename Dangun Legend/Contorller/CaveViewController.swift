@@ -19,29 +19,39 @@ import Firebase
 
 class CaveViewController: UIViewController {
     
-    var caveGoalAddVC = CaveAddViewController()
+    //var caveGoalAddVC = CaveAddViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        caveGoalAddVC.delegate = self
-        noGoalView.alpha = 0
-        GoalView.alpha = 1
+        print("-->>>caveViewDidLoad")
+        //caveGoalAddVC.delegate = self
+        caveViewSwitch(defaults.bool(forKey: "goalExisitence"))
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        print(type(of: self),#function)
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        print(type(of: self),#function)
     }
     
-    @IBOutlet weak var noGoalView: UIView!
-    @IBOutlet weak var GoalView: UIView!
+    @IBOutlet var caveView: UIView!
+    @IBOutlet weak var startYour100DaysView: UIView!
+    @IBOutlet weak var goalManageScrollView: UIScrollView!
+    
+    @IBOutlet weak var goalDescriptionLabel: UILabel!
     
     
-    func goalExists(_ yn: Bool) {
-        if yn {
-            noGoalView.alpha = 0
-            GoalView.alpha = 1
+    func caveViewSwitch(_ bool: Bool) {
+        if bool {
+            startYour100DaysView.isHidden = true
+            goalManageScrollView.isHidden = false
         } else {
-            noGoalView.alpha = 1
-            GoalView.alpha = 0
+            startYour100DaysView.isHidden = false
+            goalManageScrollView.isHidden = true
         }
     }
-    
 }
 
 extension CaveViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -81,18 +91,33 @@ class SquareCell : UICollectionViewCell {
         squareImage.image = #imageLiteral(resourceName: "EmptySquare")
     }
     
-    select
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                if squareImage.image == #imageLiteral(resourceName: "EmptySquare") {
+                    squareImage.image = #imageLiteral(resourceName: "SuccessSquare")
+                } else {
+                    squareImage.image = #imageLiteral(resourceName: "EmptySquare")
+                }
+            }
+        }
+    }
     
 }
 
-extension CaveViewController: goalUIManagerDelegate{
+
+
+extension CaveViewController: GoalUIManagerDelegate {
     
-    func updateView(_ newgoal: NewGoal) {
-        goalExists(true)
+    func updateView(_ caveAddVC: CaveAddViewController,_ data: String) {
+        //caveViewSwitch(defaults.bool(forKey: "goalExisitence"))
+        print("delegated: -->> \(data)")
     }
     
-    func errorOccurred() {
+    
+    func didFailwithError(error: Error) {
         print("")
     }
-    
+
+
 }
