@@ -15,15 +15,13 @@ struct K {
     static let loginStatus = "loginStatus"
     static let currentUser = "currentUser"
     static let userID = "userID"
-}
-
-
-struct NewGoal {
-    let userID: String
-    let goalID: String
-    let trialNumber : Int
+    static let goalExistence = "goalExistence"
     
-    let description: String
-
-    let startDate : String
+    static let currentGoal = "currentGoal"
+    static let currentDaysArray = "currentDaysArray"
+    
+    static let cellDayNum = "cellDayNum"
 }
+
+
+

@@ -19,6 +19,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         mainImage.alpha = 0
         firstLaunch()
+        //defaults.set(false, forKey: "goalExisitence")
         print("-->>>HomeViewDidLoad")
     }
     
@@ -56,12 +57,13 @@ class HomeViewController: UIViewController {
     func firstLaunch() {
         if defaults.bool(forKey: "usedBefore?") == false {
             defaults.set(true, forKey: "usedBefore?")
-            
-            defaults.set(0, forKey: "goalIndex")
             defaults.set(false, forKey: "goalExisitence")
             // show how to use
+            // currentGoal, currentArray -> Dummy Item Set
         }
     }
+    
+
 
 }
 

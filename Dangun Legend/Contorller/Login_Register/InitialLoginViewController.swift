@@ -28,9 +28,9 @@ class InitialLoginViewController: UIViewController, GIDSignInDelegate {
                 if let e = error {
                     print(e.localizedDescription)
                 } else {
-                    self.dismiss(animated: true, completion: nil)
+                    defaults.set(email, forKey: K.currentUser)
                     defaults.set(true, forKey: K.loginStatus)
-                   
+                    self.dismiss(animated: true, completion: nil)
                 }
             }
         }

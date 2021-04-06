@@ -11,40 +11,50 @@
  진행중인 Project가 있는지?     Yes -> 진행중인 프로젝트 화면
                             No -> 시작하기Button        -> AddVC
  
+ 
+ 서버에는: 현재 진행중인 목표 / 성공한 목표 2가지 -> 아이디헤더로 저장
+ 로컬에는: 현재 진행중인 목표만 저장
  */
 
 
 import UIKit
 import Firebase
 
+
+let checkTheDateNoti : Notification.Name = Notification.Name("CheckTheDateNotification")
+
 class CaveViewController: UIViewController {
     
-    //var caveGoalAddVC = CaveAddViewController()
+    var caveGoalAddVC = CaveAddViewController()
+    var goalManager = DaysViewModel()
+    var currentGoal : NewGoal?
+    var currentDaysArray : [SingleDayInfo]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("-->>>caveViewDidLoad")
-        //caveGoalAddVC.delegate = self
-        caveViewSwitch(defaults.bool(forKey: "goalExisitence"))
-        print(type(of: self),#function)
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        print(type(of: self),#function)
-    }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(true)
-        print(type(of: self),#function)
+        CaveAddViewController.delegate = self
+        showGoalManageScrollView(defaults.bool(forKey: K.goalExistence))
+        NotificationCenter.default.addObserver(self, selector: #selector(self.checkAlert(_:)), name: checkTheDateNoti, object: nil)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        updateDescription()  // currentGoal currentArray Update
+        updateCollectionView()
+    }
+
     @IBOutlet var caveView: UIView!
     @IBOutlet weak var startYour100DaysView: UIView!
     @IBOutlet weak var goalManageScrollView: UIScrollView!
     
     @IBOutlet weak var goalDescriptionLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var failAllowanceLabel: UILabel!
+    @IBOutlet weak var trialNumLabel: UILabel!
+    @IBOutlet weak var squareCollectionView: UICollectionView!
     
     
-    func caveViewSwitch(_ bool: Bool) {
+    func showGoalManageScrollView(_ bool: Bool) {
         if bool {
             startYour100DaysView.isHidden = true
             goalManageScrollView.isHidden = false
@@ -53,52 +63,81 @@ class CaveViewController: UIViewController {
             goalManageScrollView.isHidden = true
         }
     }
-}
 
-extension CaveViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 100
-    }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Square", for: indexPath) as? SquareCell
-        else {
-            return UICollectionViewCell()
-        }
-        cell.updateUI()
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    @IBAction func checkTodayPressed(_ sender: UIButton) {
+        let asking = todayAskString()
+        let todaysNumber = 0 // Date() - startdate Count
+        let checkTodayAlert = UIAlertController.init(title: "오늘하루 어떠셨나요 :)", message: asking, preferredStyle: .alert)
+        checkTodayAlert.addAction(UIAlertAction(title: "실패", style: .default, handler: { (UIAlertAction) in
+            self.userCheckSuccess(bool: false, dayNum: todaysNumber)
+        }))
+        checkTodayAlert.addAction(UIAlertAction(title: "성공", style: .destructive, handler: { (UIAlertAction) in
+            self.userCheckSuccess(bool: true, dayNum: todaysNumber)
+        }))
         
-    } // 클릭되었을때 세그웨이를 실행합니다.
-
-
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let sideLength : CGFloat = collectionView.bounds.width / 20
-//
-//        return CGSize(width: sideLength, height: sideLength)
-//    }
-    
-    
-}
-
-class SquareCell : UICollectionViewCell {
-
-    @IBOutlet weak var squareImage: UIImageView!
-    
-    func updateUI(){
-        squareImage.image = #imageLiteral(resourceName: "EmptySquare")
+        present(checkTodayAlert, animated: true, completion: nil)
     }
     
-    override var isSelected: Bool {
-        didSet {
-            if isSelected {
-                if squareImage.image == #imageLiteral(resourceName: "EmptySquare") {
-                    squareImage.image = #imageLiteral(resourceName: "SuccessSquare")
-                } else {
-                    squareImage.image = #imageLiteral(resourceName: "EmptySquare")
+    @objc func checkAlert(_ noti: Notification) {
+        let checkTheDayPressed = UIAlertController.init(title: "미확인 날짜 체크", message: "이날 목표는 성공하셨나요?", preferredStyle: .alert)
+        checkTheDayPressed.addAction(UIAlertAction(title: "실패", style: .default, handler: { (UIAlertAction) in
+            if let dayNumber = noti.userInfo?[K.cellDayNum] as? Int{
+                self.userCheckSuccess(bool: false, dayNum: dayNumber)
+            }
+        }))
+        checkTheDayPressed.addAction(UIAlertAction(title: "성공", style: .destructive, handler: { (UIAlertAction) in
+            if let dayNumber = noti.userInfo?[K.cellDayNum] as? Int {
+                self.userCheckSuccess(bool: true, dayNum: dayNumber)
+            }
+        }))
+        present(checkTheDayPressed, animated: true, completion: nil)
+    }
+    
+    func userCheckSuccess(bool: Bool,dayNum: Int){
+        // dayNum(index) -> singleDayInfo  updateSquares(info: SingleDayInfo)
+        if var theArray = currentDaysArray {
+            let index = dayNum - 1
+            theArray[index].success = bool
+            theArray[index].userChecked = true
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(theArray) {
+                defaults.set(encoded, forKey: K.currentDaysArray)
+                DispatchQueue.main.async {
+                    self.updateCollectionView()
+                }
+            }
+        }
+    }
+    
+    
+    
+    func updateDescription() {
+        if let savedData = defaults.object(forKey: K.currentGoal) as? Data {
+            let decoder = JSONDecoder()
+            if let data = try? decoder.decode(NewGoal.self, from: savedData) {
+                self.currentGoal = data
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy년M월d일"
+                let start = formatter.string(from: (Calendar.current.date(from: data.startDate)!))
+                let end = formatter.string(from: (Calendar.current.date(from: data.endDate)!))
+                DispatchQueue.main.async {
+                    self.goalDescriptionLabel.text = data.description
+                    self.dateLabel.text = "기간: \(start) - \(end)"
+                    self.failAllowanceLabel.text = "잔여 실패허용횟수: \(data.failAllowance)회 / \(data.failAllowance)회"
+                    self.trialNumLabel.text = "\(data.trialNumber)"
+                }
+            }
+        }
+    }
+    
+    func updateCollectionView() {
+        let decoder = JSONDecoder()
+        if let savedData = defaults.data(forKey: K.currentDaysArray) as Data? {
+            if let decodedArrray = try? decoder.decode([SingleDayInfo].self, from: savedData) {
+                self.currentDaysArray = decodedArrray
+                DispatchQueue.main.async {
+                    self.squareCollectionView.reloadData()
                 }
             }
         }
@@ -106,19 +145,167 @@ class SquareCell : UICollectionViewCell {
     
 }
 
-
-
 extension CaveViewController: GoalUIManagerDelegate {
     
-    func updateView(_ caveAddVC: CaveAddViewController,_ data: String) {
-        //caveViewSwitch(defaults.bool(forKey: "goalExisitence"))
-        print("delegated: -->> \(data)")
+    func newGoalAddedUpdateView(_ caveAddVC: CaveAddViewController,_ data: NewGoal) {
+        showGoalManageScrollView(true)
+        let array = goalManager.daysArray(newGoal: data)
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(array) {
+            defaults.set(encoded, forKey: K.currentDaysArray)
+        }
+        updateDescription()
+        updateCollectionView()
     }
-    
     
     func didFailwithError(error: Error) {
         print("")
     }
 
+}
 
+
+
+extension CaveViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    //userDefaults에서 newGoal불러와서 collectionViewupdate
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let numOfItems = currentDaysArray?.count ?? 100
+        return numOfItems
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Square", for: indexPath) as? SquareCell
+        else {
+            return UICollectionViewCell()
+        }
+        if let singleDayInfo = currentDaysArray?[indexPath.item] {
+            cell.updateSquares(info: singleDayInfo)
+        }
+        return cell
+    }
+    
+    
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//    }
+
+}
+
+extension CaveViewController {
+    
+    @IBAction func quitPressed(_ sender: UIButton) {
+        let alertQuitPressed = UIAlertController.init(title: "그만두기", message: "진행중인 목표를 중단합니다.", preferredStyle: .alert)
+        alertQuitPressed.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
+        alertQuitPressed.addAction(UIAlertAction(title: "그만두기", style: .destructive, handler: { (UIAlertAction) in
+            defaults.set(false, forKey: K.goalExistence)
+            defaults.removeObject(forKey: K.currentGoal)
+            self.showGoalManageScrollView(false)
+        }))
+        present(alertQuitPressed, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func resetPressed(_ sender: UIButton) {
+        let trialNum = Int(trialNumLabel.text!) ?? 1
+        let nextTry = trialNum + 1
+        let alertResetPressed = UIAlertController.init(title: "Reset", message: "진행중인 목표를 \(nextTry)회차로 다시 시작합니다.", preferredStyle: .alert)
+        alertResetPressed.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
+        alertResetPressed.addAction(UIAlertAction(title: "다시시작", style: .destructive, handler: { [self] (UIAlertAction) in
+            updateDescription()
+            updateCollectionView()
+            DispatchQueue.main.async {
+                self.trialNumLabel.text = "\(nextTry)"
+            }
+        }))
+        present(alertResetPressed, animated: true, completion: nil)
+    }
+    
+    
+    func todayAskString() -> String {
+        let formatter = DateFormatter()
+        let formatter2 = DateFormatter()
+        formatter2.dateFormat = "e"
+        let whatDay = formatter2.string(from: Date())
+        var todayKor = ""
+        switch whatDay {
+        case "1": todayKor = "월요일"
+        case "2": todayKor = "화요일"
+        case "3": todayKor = "수요일"
+        case "4": todayKor = "목요일"
+        case "5": todayKor = "금요일"
+        case "6": todayKor = "토요일"
+        default: todayKor = "일요일"
+        }
+        formatter.dateFormat = "M월d일 \(todayKor)"
+        let today = formatter.string(from: Date())
+        let asking = "\(today), 성공하셨나요?"
+        return asking
+    }
+}
+
+protocol squareColorChangeDelegate: class {
+    func colorChange(_ SquareCell : UICollectionViewCell)
+}
+
+class SquareCell : UICollectionViewCell {
+
+    var singleDayInfo : SingleDayInfo?
+    
+    @IBOutlet weak var squareImage: UIImageView!
+    
+    @IBOutlet weak var buttonOutlet: UIButton!
+    @IBAction func buttonPressed(_ sender: UIButton) {
+        if squareImage.image == UIImage(named: "WarningSquare") {
+            print(singleDayInfo!)
+            if let singleInfo = singleDayInfo {
+                let dayNum = ["cellDayNum":singleInfo.dayNum]
+                NotificationCenter.default.post(name: checkTheDateNoti, object: nil, userInfo: dayNum)
+            }
+        }
+    }
+    
+    func updateSquares(info: SingleDayInfo){
+        self.singleDayInfo = info
+        let now = Calendar.current.dateComponents(in:.current, from: Date()) //<<--- 추후 삭제
+        let 더하기 = DateComponents(year: now.year, month: now.month, day: now.day!+(7))//<<--- 추후 삭제
+        let 기준일 = Calendar.current.date(from: 더하기)!//<<--- 추후 삭제
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMdd"
+        let today = formatter.string(from: 기준일) //<<--- 추후 기준일로 변경
+        let savedDate = Calendar.current.date(from: info.date)
+        let infoDateString = formatter.string(from: savedDate!)
+        
+        if info.userChecked {
+            if info.success {
+                squareImage.image = #imageLiteral(resourceName: "SuccessSquare")
+                buttonOutlet.isEnabled = false
+            } else {
+                squareImage.image = #imageLiteral(resourceName: "FailSquare")
+                buttonOutlet.isEnabled = false
+            }
+        } else {
+        //      저장된날짜      오늘
+            if infoDateString > today {
+                squareImage.image = #imageLiteral(resourceName: "EmptySquare")
+                buttonOutlet.isEnabled = false
+            } else if  infoDateString == today {
+                squareImage.image = #imageLiteral(resourceName: "todaySquare")
+                buttonOutlet.isEnabled = false
+            } else {
+                squareImage.image = #imageLiteral(resourceName: "WarningSquare")
+                buttonOutlet.isEnabled = true
+            }
+        }
+    }
+    
+    
+//    override var isSelected: Bool {
+//        didSet {
+//            if isSelected {
+//
+//            }
+//        }
+//
+//    }
 }

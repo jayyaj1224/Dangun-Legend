@@ -13,19 +13,18 @@ let db = Firestore.firestore()
 
 
 protocol GoalUIManagerDelegate : class {
-    func updateView(_ caveAddVC: CaveAddViewController,_ data: String)
+    func newGoalAddedUpdateView(_ caveAddVC: CaveAddViewController,_ data: NewGoal)
     func didFailwithError(error: Error)
 }
 
 
-class CaveAddViewController: UIViewController {
+class CaveAddViewController: UIViewController{
 
-    var caveVC = CaveViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        goalTextView.delegate = self
         getDate()
-        self.delegate = caveVC
         print(type(of: self),#function)
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -38,45 +37,52 @@ class CaveAddViewController: UIViewController {
     }
 
 
-    @IBOutlet weak var goalUserInput: UITextView!
+    @IBOutlet weak var goalTextView: UITextView!
     @IBOutlet weak var startDate: UILabel!
     @IBOutlet weak var endDate: UILabel!
+    
+    @IBOutlet weak var failAllowOutput: UISegmentedControl!
+  
     
     @IBAction func backPressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
     
     
-    weak var delegate : GoalUIManagerDelegate?
+    static var delegate : GoalUIManagerDelegate?
     
     //처음 저장
     @IBAction func startPressed(_ sender: UIButton) {
+        let now = Calendar.current.dateComponents(in:.current, from: Date())
+        let todaysDate = DateComponents(year: now.year, month: now.month, day: now.day!)
+        let lastDay = DateComponents(year: now.year, month: now.month, day: now.day!+(99))
         
-//        if let description = goalUserInput.text,
-//           let userID = defaults.value(forKey: K.currentUser) as? String,
-//           let goalIndex = defaults.value(forKey: "goalIndex") as? Int
-//        {
-//            let goalID = "\(userID)-\(goalIndex+1)"
-//            let newGoal = NewGoal(userID: userID, goalID: goalID, trialNumber: 1, description: description, startDate: startDate.text!)
-            //로컬에 저장
-//            defaults.set(newGoal, forKey: "currentRunning")
-//            defaults.set(true, forKey: "goalExisitence")
-//            db.collection(K.goals).document(userID).setData([
-//                "userID": userID,
-//                "goalID": goalID,
-//                "startDate": startDate.text!,
-//                "trialNumber": 1
-//            ])
-//            {(error) in
-//                if let e = error {
-//                    print("There was an issue saving user's info: \(e)")
-//                } else {
-//                    print("New goal saved successfully")
-//                }}
-        print("--->>> delegate: \(delegate!)")
-        delegate?.updateView(self,"Clean")
-        dismiss(animated: true, completion: nil)
-//         }
+        let encoder = JSONEncoder()
+        if let description = goalTextView.text,
+           let userID = defaults.value(forKey: K.currentUser) as? String
+        {
+            let usersFailAllowInput = failAllowOutput.selectedSegmentIndex
+            let newGoal = NewGoal(userID: userID, goalID: "\(userID)_\(now)", trialNumber: 1, description: description, startDate: todaysDate, endDate: lastDay, failAllowance: usersFailAllowInput, numOfDays: 100)
+            if let encoded = try? encoder.encode(newGoal) {
+                defaults.set(encoded, forKey: K.currentGoal)
+            }
+            defaults.set(true, forKey: K.goalExistence)
+            //서버에 저장
+            //                db.collection(K.goals).document(userID).setData([
+            //                    "userID": userID,
+            //                    "goalID": "\(userID)_\(goalIndex+1)",
+            //                    "startDate": startDate.text!,
+            //                ])
+            //                {(error) in
+            //                    if let e = error {
+            //                        print("There was an issue saving user's info: \(e)")
+            //                    } else {
+            //                        print("New goal saved successfully")
+            //                    }}
+            //print("--->>> delegate: \(delegate!)")
+            dismiss(animated: true, completion: nil)
+            CaveAddViewController.delegate?.newGoalAddedUpdateView(self,newGoal)
+        }
     }
  
     
@@ -93,4 +99,24 @@ class CaveAddViewController: UIViewController {
             self.endDate.text = lastDate
         }
     }
+}
+
+extension CaveAddViewController: UITextViewDelegate {
+    
+    // TextView Place Holder
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.systemGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+        
+    }
+    // TextView Place Holder
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "도전하고 싶은 목표를 적어주세요."
+            textView.textColor = UIColor.systemGray
+        }
+    }
+    
 }
