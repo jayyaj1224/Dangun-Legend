@@ -597,19 +597,52 @@
                                     <constraint firstAttribute="bottom" secondItem="POO-z4-kA8" secondAttribute="bottom" constant="6" id="r6h-fp-32c"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="36k-TM-T3d">
-                                <rect key="frame" x="0.0" y="110" width="414" height="703"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TRB-lC-KZD">
+                                <rect key="frame" x="0.0" y="110" width="414" height="200"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="연속 성공 평균:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NmI-Pd-BYJ">
+                                        <rect key="frame" x="31" y="135" width="102" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="총 도전 횟수:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TOb-SW-Ty7">
+                                        <rect key="frame" x="31" y="103" width="87" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="총 도전 횟수:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Te-He-6mL">
+                                        <rect key="frame" x="31" y="74" width="87" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="36k-TM-T3d">
+                                <rect key="frame" x="0.0" y="310" width="414" height="503"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="36k-TM-T3d" secondAttribute="height" multiplier="414:503" id="Pc2-0v-BKl"/>
+                                </constraints>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="dMM-I0-Dah"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="dMM-I0-Dah" firstAttribute="trailing" secondItem="TRB-lC-KZD" secondAttribute="trailing" id="7zC-GB-Xb7"/>
                             <constraint firstItem="s2U-Kx-H8B" firstAttribute="leading" secondItem="dMM-I0-Dah" secondAttribute="leading" id="9Qq-YN-PPr"/>
+                            <constraint firstItem="TRB-lC-KZD" firstAttribute="leading" secondItem="dMM-I0-Dah" secondAttribute="leading" id="Crv-jX-IOQ"/>
                             <constraint firstItem="36k-TM-T3d" firstAttribute="bottom" secondItem="dMM-I0-Dah" secondAttribute="bottom" id="Kb0-sm-Qoo"/>
+                            <constraint firstItem="36k-TM-T3d" firstAttribute="top" secondItem="TRB-lC-KZD" secondAttribute="bottom" id="Pg3-fa-o4G"/>
                             <constraint firstItem="s2U-Kx-H8B" firstAttribute="trailing" secondItem="dMM-I0-Dah" secondAttribute="trailing" id="VIe-ai-PcL"/>
+                            <constraint firstItem="TRB-lC-KZD" firstAttribute="top" secondItem="s2U-Kx-H8B" secondAttribute="bottom" id="joO-bf-4tY"/>
                             <constraint firstItem="36k-TM-T3d" firstAttribute="trailing" secondItem="dMM-I0-Dah" secondAttribute="trailing" id="oup-J1-j75"/>
-                            <constraint firstItem="36k-TM-T3d" firstAttribute="top" secondItem="s2U-Kx-H8B" secondAttribute="bottom" id="prK-fo-55k"/>
                             <constraint firstItem="s2U-Kx-H8B" firstAttribute="top" secondItem="ezx-oL-fea" secondAttribute="top" id="qc1-7B-xg4"/>
                             <constraint firstItem="36k-TM-T3d" firstAttribute="leading" secondItem="dMM-I0-Dah" secondAttribute="leading" id="xzi-Ih-nZE"/>
                         </constraints>
@@ -1016,7 +1049,7 @@
         <image name="envelope" catalog="system" width="128" height="93"/>
         <image name="goalbox" width="626" height="208"/>
         <image name="person.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="signinbox" width="128" height="128"/>
+        <image name="signinbox" width="410" height="150"/>
         <image name="timelapse" catalog="system" width="128" height="122"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
