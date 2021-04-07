@@ -140,7 +140,7 @@
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="매일 아침 4시반에 하루를 시작하겠다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="pBA-YE-idq">
                                                                         <rect key="frame" x="0.0" y="34" width="333" height="24"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="24" id="OkR-pV-YnB"/>
+                                                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="85" id="OkR-pV-YnB"/>
                                                                             <constraint firstAttribute="width" constant="333" id="uTa-kC-fvj"/>
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -165,12 +165,12 @@
                                                                 </constraints>
                                                             </view>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z61-Tj-eTh">
-                                                                <rect key="frame" x="39" y="233" width="122" height="33"/>
+                                                                <rect key="frame" x="39" y="233" width="200" height="33"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="122" id="1M1-6G-4K6"/>
+                                                                    <constraint firstAttribute="width" constant="200" id="1M1-6G-4K6"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
-                                                                <state key="normal" title="오늘 체크하기" backgroundImage="signinbox">
+                                                                <state key="normal" title="00월0일 오늘 체크하기" backgroundImage="signinbox">
                                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
                                                                 <connections>
@@ -181,7 +181,7 @@
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="bottom" secondItem="8we-GG-IEy" secondAttribute="bottom" constant="10" id="1VQ-38-fhv"/>
-                                                            <constraint firstItem="Z61-Tj-eTh" firstAttribute="width" secondItem="Z61-Tj-eTh" secondAttribute="height" multiplier="10:2.9" constant="8.2068965517241281" id="6BF-2g-3gp"/>
+                                                            <constraint firstItem="Z61-Tj-eTh" firstAttribute="width" secondItem="Z61-Tj-eTh" secondAttribute="height" multiplier="10:2.9" constant="86.206896551724128" id="6BF-2g-3gp"/>
                                                             <constraint firstItem="Z61-Tj-eTh" firstAttribute="leading" secondItem="8we-GG-IEy" secondAttribute="leading" constant="19" id="Bco-rk-P8b"/>
                                                             <constraint firstItem="0ii-fs-wvl" firstAttribute="centerY" secondItem="8we-GG-IEy" secondAttribute="centerY" constant="-12" id="VJW-UA-Ldt"/>
                                                             <constraint firstAttribute="trailing" secondItem="8we-GG-IEy" secondAttribute="trailing" constant="20" id="WUq-q0-e7m"/>
@@ -221,9 +221,16 @@
                                                                                 <action selector="buttonPressed:" destination="YgS-JJ-2DW" eventType="touchUpInside" id="M44-4y-qqD"/>
                                                                             </connections>
                                                                         </button>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오늘" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Sx-5F-Ywx">
+                                                                            <rect key="frame" x="9" y="12" width="19.5" height="13.5"/>
+                                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
+                                                                        <constraint firstItem="5Sx-5F-Ywx" firstAttribute="centerY" secondItem="tkG-vO-ihy" secondAttribute="centerY" id="0Lg-eZ-Bee"/>
                                                                         <constraint firstAttribute="bottom" secondItem="hiN-0e-n1H" secondAttribute="bottom" id="6ym-Ad-SAd"/>
                                                                         <constraint firstItem="hiN-0e-n1H" firstAttribute="leading" secondItem="aRH-2C-gEd" secondAttribute="leading" id="JUZ-yc-fRQ"/>
                                                                         <constraint firstItem="tkG-vO-ihy" firstAttribute="leading" secondItem="aRH-2C-gEd" secondAttribute="leading" id="S8O-e4-VdH"/>
@@ -231,6 +238,7 @@
                                                                         <constraint firstAttribute="trailing" secondItem="tkG-vO-ihy" secondAttribute="trailing" id="Wrw-cY-sCI"/>
                                                                         <constraint firstItem="hiN-0e-n1H" firstAttribute="top" secondItem="aRH-2C-gEd" secondAttribute="top" id="amX-ZZ-1Tr"/>
                                                                         <constraint firstItem="tkG-vO-ihy" firstAttribute="top" secondItem="aRH-2C-gEd" secondAttribute="top" id="dhG-9m-k3I"/>
+                                                                        <constraint firstItem="5Sx-5F-Ywx" firstAttribute="centerX" secondItem="tkG-vO-ihy" secondAttribute="centerX" id="kOV-yW-cK8"/>
                                                                         <constraint firstAttribute="trailing" secondItem="hiN-0e-n1H" secondAttribute="trailing" id="ydA-zj-SPB"/>
                                                                     </constraints>
                                                                 </collectionViewCellContentView>
@@ -238,6 +246,7 @@
                                                                 <connections>
                                                                     <outlet property="buttonOutlet" destination="tkG-vO-ihy" id="uQc-Yb-pIw"/>
                                                                     <outlet property="squareImage" destination="hiN-0e-n1H" id="hQB-lL-Hzn"/>
+                                                                    <outlet property="todayLabel" destination="5Sx-5F-Ywx" id="6fi-AW-HGt"/>
                                                                 </connections>
                                                             </collectionViewCell>
                                                         </cells>
@@ -375,6 +384,7 @@
                     <tabBarItem key="tabBarItem" title="Cave" image="circle.bottomhalf.fill" catalog="system" id="pGS-YH-Eri"/>
                     <connections>
                         <outlet property="caveView" destination="lp5-AB-Wji" id="xib-vy-dsf"/>
+                        <outlet property="checkToday" destination="Z61-Tj-eTh" id="nlc-0e-Zzv"/>
                         <outlet property="dateLabel" destination="Db7-us-Yhn" id="Wr2-Jh-ep8"/>
                         <outlet property="failAllowanceLabel" destination="lpH-oh-mtn" id="otk-Fy-qaV"/>
                         <outlet property="goalDescriptionLabel" destination="pBA-YE-idq" id="aYQ-rP-4as"/>
@@ -432,7 +442,6 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="registerPressed:" destination="YFG-xd-U6B" eventType="touchUpInside" id="sKZ-z7-cH8"/>
                                     <action selector="startPressed:" destination="QC1-uU-tXY" eventType="touchUpInside" id="3QP-vs-4oJ"/>
                                 </connections>
                             </button>
@@ -588,13 +597,21 @@
                                     <constraint firstAttribute="bottom" secondItem="POO-z4-kA8" secondAttribute="bottom" constant="6" id="r6h-fp-32c"/>
                                 </constraints>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="36k-TM-T3d">
+                                <rect key="frame" x="0.0" y="110" width="414" height="703"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="dMM-I0-Dah"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="s2U-Kx-H8B" firstAttribute="leading" secondItem="dMM-I0-Dah" secondAttribute="leading" id="9Qq-YN-PPr"/>
+                            <constraint firstItem="36k-TM-T3d" firstAttribute="bottom" secondItem="dMM-I0-Dah" secondAttribute="bottom" id="Kb0-sm-Qoo"/>
                             <constraint firstItem="s2U-Kx-H8B" firstAttribute="trailing" secondItem="dMM-I0-Dah" secondAttribute="trailing" id="VIe-ai-PcL"/>
+                            <constraint firstItem="36k-TM-T3d" firstAttribute="trailing" secondItem="dMM-I0-Dah" secondAttribute="trailing" id="oup-J1-j75"/>
+                            <constraint firstItem="36k-TM-T3d" firstAttribute="top" secondItem="s2U-Kx-H8B" secondAttribute="bottom" id="prK-fo-55k"/>
                             <constraint firstItem="s2U-Kx-H8B" firstAttribute="top" secondItem="ezx-oL-fea" secondAttribute="top" id="qc1-7B-xg4"/>
+                            <constraint firstItem="36k-TM-T3d" firstAttribute="leading" secondItem="dMM-I0-Dah" secondAttribute="leading" id="xzi-Ih-nZE"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="History" image="timelapse" catalog="system" id="4D0-uM-yNu"/>

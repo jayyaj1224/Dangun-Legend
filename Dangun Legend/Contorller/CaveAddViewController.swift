@@ -11,7 +11,6 @@ import Firebase
 
 let db = Firestore.firestore()
 
-
 protocol GoalUIManagerDelegate : class {
     func newGoalAddedUpdateView(_ caveAddVC: CaveAddViewController,_ data: NewGoal)
     func didFailwithError(error: Error)
@@ -20,6 +19,7 @@ protocol GoalUIManagerDelegate : class {
 
 class CaveAddViewController: UIViewController{
 
+    let dateManager = DateManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,25 +61,32 @@ class CaveAddViewController: UIViewController{
         if let description = goalTextView.text,
            let userID = defaults.value(forKey: K.currentUser) as? String
         {
+            let dateForDB = dateManager.dateFormat(type: "yyMMdd", date: Date())
+            
             let usersFailAllowInput = failAllowOutput.selectedSegmentIndex
-            let newGoal = NewGoal(userID: userID, goalID: "\(userID)_\(now)", trialNumber: 1, description: description, startDate: todaysDate, endDate: lastDay, failAllowance: usersFailAllowInput, numOfDays: 100)
+            let newGoal = NewGoal(userID: userID, goalID: "\(userID)-\(dateForDB)", trialNumber: 1, description: description, startDate: todaysDate, endDate: lastDay, failAllowance: usersFailAllowInput, numOfDays: 100)
             if let encoded = try? encoder.encode(newGoal) {
                 defaults.set(encoded, forKey: K.currentGoal)
             }
             defaults.set(true, forKey: K.goalExistence)
             //서버에 저장
-            //                db.collection(K.goals).document(userID).setData([
-            //                    "userID": userID,
-            //                    "goalID": "\(userID)_\(goalIndex+1)",
-            //                    "startDate": startDate.text!,
-            //                ])
-            //                {(error) in
-            //                    if let e = error {
-            //                        print("There was an issue saving user's info: \(e)")
-            //                    } else {
-            //                        print("New goal saved successfully")
-            //                    }}
-            //print("--->>> delegate: \(delegate!)")
+            db.collection("User.Goal.History").document(userID).setData([
+                "\(dateForDB)" : [
+                    "completed?" : false,
+                    "success": false,
+                    "description" : description,
+                    "userID": userID,
+                    "trialNumber" : 1,
+                    "failAllowance" : usersFailAllowInput,
+                    "startDate": startDate.text!
+                ]
+            ])
+            {(error) in
+                if let e = error {
+                    print("There was an issue saving user's info: \(e)")
+                } else {
+                    print("New goal saved successfully")
+                }}
             dismiss(animated: true, completion: nil)
             CaveAddViewController.delegate?.newGoalAddedUpdateView(self,newGoal)
         }
@@ -87,16 +94,13 @@ class CaveAddViewController: UIViewController{
  
     
     func getDate(){
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        let today = formatter.string(from: Date())
         let hundredInterval = DateInterval(start: Date(), duration: 86400*99)
         let lastDay = hundredInterval.end
-        let lastDate = formatter.string(from: lastDay)
-        
+        let startDate = dateManager.dateFormat(type: "yyyy-MM-dd", date: Date())
+        let endDate = dateManager.dateFormat(type: "yyyy-MM-dd", date: lastDay)
         DispatchQueue.main.async {
-            self.startDate.text = today
-            self.endDate.text = lastDate
+            self.startDate.text = startDate
+            self.endDate.text = endDate
         }
     }
 }

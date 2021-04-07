@@ -18,10 +18,14 @@
 		A420E01B261724D10039F2C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A420E019261724D10039F2C8 /* LaunchScreen.storyboard */; };
 		A420E026261724D10039F2C8 /* Dangun_LegendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E025261724D10039F2C8 /* Dangun_LegendTests.swift */; };
 		A420E031261724D10039F2C8 /* Dangun_LegendUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E030261724D10039F2C8 /* Dangun_LegendUITests.swift */; };
+		A442B2CA261D7C5A00B4CD12 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A442B2C9261D7C5A00B4CD12 /* DateManager.swift */; };
 		A47775FB261821D8002D866C /* RegisterEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47775FA261821D8002D866C /* RegisterEmailVC.swift */; };
 		A477762326182966002D866C /* InitialLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A477762226182966002D866C /* InitialLoginViewController.swift */; };
 		A477762B26182E00002D866C /* GoogleSignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A477762A26182E00002D866C /* GoogleSignInVC.swift */; };
 		A4777630261884DA002D866C /* Contants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A477762F261884DA002D866C /* Contants.swift */; };
+		A482219F261DB95A005DFA43 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A482219E261DB95A005DFA43 /* HistoryViewController.swift */; };
+		A48221A8261DE49B005DFA43 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48221A6261DE49B005DFA43 /* HistoryTableViewCell.swift */; };
+		A48221A9261DE49B005DFA43 /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48221A7261DE49B005DFA43 /* HistoryTableViewCell.xib */; };
 		A49E4314261AADAC00E98619 /* GoalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49E4313261AADAC00E98619 /* GoalManager.swift */; };
 		A4CDF1ED261809A400A08809 /* CaveAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */; };
 		A4CDF1F8261809FC00A08809 /* CaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CDF1F7261809FC00A08809 /* CaveViewController.swift */; };
@@ -67,10 +71,14 @@
 		A420E02C261724D10039F2C8 /* Dangun LegendUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dangun LegendUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A420E030261724D10039F2C8 /* Dangun_LegendUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dangun_LegendUITests.swift; sourceTree = "<group>"; };
 		A420E032261724D10039F2C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A442B2C9261D7C5A00B4CD12 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		A47775FA261821D8002D866C /* RegisterEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterEmailVC.swift; sourceTree = "<group>"; };
 		A477762226182966002D866C /* InitialLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialLoginViewController.swift; sourceTree = "<group>"; };
 		A477762A26182E00002D866C /* GoogleSignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInVC.swift; sourceTree = "<group>"; };
 		A477762F261884DA002D866C /* Contants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contants.swift; sourceTree = "<group>"; };
+		A482219E261DB95A005DFA43 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		A48221A6261DE49B005DFA43 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
+		A48221A7261DE49B005DFA43 /* HistoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryTableViewCell.xib; sourceTree = "<group>"; };
 		A49E4313261AADAC00E98619 /* GoalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalManager.swift; sourceTree = "<group>"; };
 		A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveAddViewController.swift; sourceTree = "<group>"; };
 		A4CDF1F7261809FC00A08809 /* CaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveViewController.swift; sourceTree = "<group>"; };
@@ -184,10 +192,11 @@
 		A4CDF1E62618093300A08809 /* Contorller */ = {
 			isa = PBXGroup;
 			children = (
+				A47775FF261827DF002D866C /* Login_Register */,
 				A420E012261724D00039F2C8 /* HomeViewController.swift */,
 				A4CDF1F7261809FC00A08809 /* CaveViewController.swift */,
 				A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */,
-				A47775FF261827DF002D866C /* Login_Register */,
+				A482219E261DB95A005DFA43 /* HistoryViewController.swift */,
 			);
 			path = Contorller;
 			sourceTree = "<group>";
@@ -198,6 +207,7 @@
 				A420E017261724D10039F2C8 /* Assets.xcassets */,
 				A477762F261884DA002D866C /* Contants.swift */,
 				A49E4313261AADAC00E98619 /* GoalManager.swift */,
+				A442B2C9261D7C5A00B4CD12 /* DateManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -207,6 +217,8 @@
 			children = (
 				A420E019261724D10039F2C8 /* LaunchScreen.storyboard */,
 				A420E014261724D00039F2C8 /* Main.storyboard */,
+				A48221A6261DE49B005DFA43 /* HistoryTableViewCell.swift */,
+				A48221A7261DE49B005DFA43 /* HistoryTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -339,6 +351,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A420E01B261724D10039F2C8 /* LaunchScreen.storyboard in Resources */,
+				A48221A9261DE49B005DFA43 /* HistoryTableViewCell.xib in Resources */,
 				A411E5022619CD970057FAD3 /* GoogleService-Info.plist in Resources */,
 				A420E018261724D10039F2C8 /* Assets.xcassets in Resources */,
 				A420E016261724D00039F2C8 /* Main.storyboard in Resources */,
@@ -505,11 +518,14 @@
 			files = (
 				A4CDF1F8261809FC00A08809 /* CaveViewController.swift in Sources */,
 				A420E013261724D00039F2C8 /* HomeViewController.swift in Sources */,
+				A48221A8261DE49B005DFA43 /* HistoryTableViewCell.swift in Sources */,
 				A4CDF1ED261809A400A08809 /* CaveAddViewController.swift in Sources */,
+				A482219F261DB95A005DFA43 /* HistoryViewController.swift in Sources */,
 				A420E00F261724D00039F2C8 /* AppDelegate.swift in Sources */,
 				A477762326182966002D866C /* InitialLoginViewController.swift in Sources */,
 				A47775FB261821D8002D866C /* RegisterEmailVC.swift in Sources */,
 				A4777630261884DA002D866C /* Contants.swift in Sources */,
+				A442B2CA261D7C5A00B4CD12 /* DateManager.swift in Sources */,
 				A420E011261724D00039F2C8 /* SceneDelegate.swift in Sources */,
 				A49E4314261AADAC00E98619 /* GoalManager.swift in Sources */,
 				A477762B26182E00002D866C /* GoogleSignInVC.swift in Sources */,
