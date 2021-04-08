@@ -12,7 +12,7 @@ import Firebase
 let db = Firestore.firestore()
 
 protocol GoalUIManagerDelegate : class {
-    func newGoalAddedUpdateView(_ caveAddVC: CaveAddViewController,_ data: NewGoal)
+    func newGoalAddedUpdateView(_ caveAddVC: CaveAddViewController,_ data: GoalStruct)
     func didFailwithError(error: Error)
 }
 
@@ -25,16 +25,8 @@ class CaveAddViewController: UIViewController{
         super.viewDidLoad()
         goalTextView.delegate = self
         getDate()
-        print(type(of: self),#function)
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        print(type(of: self),#function)
-    }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(true)
-        print(type(of: self),#function)
-    }
+
 
 
     @IBOutlet weak var goalTextView: UITextView!
@@ -61,34 +53,43 @@ class CaveAddViewController: UIViewController{
         if let description = goalTextView.text,
            let userID = defaults.value(forKey: K.currentUser) as? String
         {
-            let dateForDB = dateManager.dateFormat(type: "yyMMdd", date: Date())
+            let dateForDB = dateManager.dateFormat(type: "yyMMddHHmmss", date: Date())
             
             let usersFailAllowInput = failAllowOutput.selectedSegmentIndex
-            let newGoal = NewGoal(userID: userID, goalID: "\(userID)-\(dateForDB)", trialNumber: 1, description: description, startDate: todaysDate, endDate: lastDay, failAllowance: usersFailAllowInput, numOfDays: 100)
+            let newGoal = GoalStruct(userID: userID, goalID: dateForDB, executedDays: 0, trialNumber: 1, description: description, startDate: todaysDate, endDate: lastDay, failAllowance: usersFailAllowInput, numOfDays: 100, completed: false, success: false)
             if let encoded = try? encoder.encode(newGoal) {
                 defaults.set(encoded, forKey: K.currentGoal)
+            } else {
+                print("--->>> encode failed \(K.currentGoal)")
             }
             defaults.set(true, forKey: K.goalExistence)
+            
+            
             //서버에 저장
-            db.collection("User.Goal.History").document(userID).setData([
-                "\(dateForDB)" : [
-                    "completed?" : false,
-                    "success": false,
-                    "description" : description,
-                    "userID": userID,
-                    "trialNumber" : 1,
-                    "failAllowance" : usersFailAllowInput,
-                    "startDate": startDate.text!
+            db.collection(K.History).document(userID).setData([
+                dateForDB : [
+                    G.goalID : dateForDB,
+                    G.completed : false,
+                    G.success: false,
+                    G.description : description,
+                    G.userID: userID,
+                    G.trialNumber : 1,
+                    G.failAllowance : usersFailAllowInput,
+                    G.startDate: Date(),
+                    G.endDate: lastDay,
+                    G.numOfDays: 100,
+                    G.executedDays: 0
                 ]
-            ])
+            ], merge: true)
             {(error) in
                 if let e = error {
                     print("There was an issue saving user's info: \(e)")
                 } else {
                     print("New goal saved successfully")
                 }}
-            dismiss(animated: true, completion: nil)
             CaveAddViewController.delegate?.newGoalAddedUpdateView(self,newGoal)
+            NotificationCenter.default.post(name: goalAddNotifyHistoryViewNoti, object: nil, userInfo: nil)
+            dismiss(animated: true, completion: nil)
         }
     }
  

@@ -29,12 +29,10 @@ class InitialLoginViewController: UIViewController, GIDSignInDelegate {
                     print(e.localizedDescription)
                 } else {
                     defaults.set(email, forKey: K.currentUser)
-                    defaults.set(true, forKey: K.loginStatus)
                     self.dismiss(animated: true, completion: nil)
                 }
             }
         }
-        defaults.set(true, forKey: K.loginStatus)
         presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
         dismiss(animated: true, completion: nil)
     }
@@ -51,7 +49,6 @@ class InitialLoginViewController: UIViewController, GIDSignInDelegate {
         if (error == nil) {
             let userID = String(user.userID)
             defaults.set(userID, forKey: K.currentUser)
-            defaults.set(true, forKey: K.loginStatus)
             presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
             dismiss(animated: true, completion: nil)
         } else {

@@ -23,7 +23,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
         IQKeyboardManager.shared.enableAutoToolbar = true
         IQKeyboardManager.shared.keyboardDistanceFromTextField = 120.0
-        
+
+        if defaults.bool(forKey: K.firstLaunch) == false {
+            defaults.set(true, forKey: K.firstLaunch)
+            defaults.set(false, forKey: K.goalExistence)
+            // show how to use
+            // currentGoal, currentArray -> Dummy Item Set
+        }
         
         Thread.sleep(forTimeInterval: 0.8)
         

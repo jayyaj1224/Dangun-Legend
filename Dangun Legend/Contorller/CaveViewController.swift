@@ -33,8 +33,8 @@ class CaveViewController: UIViewController {
     
     let dateManager = DateManager()
     var caveGoalAddVC = CaveAddViewController()
-    var goalManager = DaysViewModel()
-    var currentGoal : NewGoal?
+    var goalManager = GoalManager()
+    var currentGoal : GoalStruct?
     var currentDaysArray : [SingleDayInfo]?
     
     override func viewDidLoad() {
@@ -149,7 +149,7 @@ class CaveViewController: UIViewController {
     func updateDescription() {
         if let savedData = defaults.object(forKey: K.currentGoal) as? Data {
             let decoder = JSONDecoder()
-            if let data = try? decoder.decode(NewGoal.self, from: savedData) {
+            if let data = try? decoder.decode(GoalStruct.self, from: savedData) {
                 self.currentGoal = data
                 let start = dateManager.dateFormat(type: "yyyy년M월d일", dateComponets: data.startDate)
                 let end = dateManager.dateFormat(type: "yyyy년M월d일", dateComponets: data.endDate)
@@ -158,7 +158,6 @@ class CaveViewController: UIViewController {
                     self.dateLabel.text = "기간: \(start) - \(end)"
                     self.failAllowanceLabel.text = "잔여 실패허용횟수: \(data.failAllowance)회 / \(data.failAllowance)회"
                     self.trialNumLabel.text = "\(data.trialNumber)"
-                    print(self.currentGoal!)
                 }
             }
         }
@@ -168,12 +167,14 @@ class CaveViewController: UIViewController {
 
 extension CaveViewController: GoalUIManagerDelegate {
     
-    func newGoalAddedUpdateView(_ caveAddVC: CaveAddViewController,_ data: NewGoal) {
+    func newGoalAddedUpdateView(_ caveAddVC: CaveAddViewController,_ data: GoalStruct) {
         showGoalManageScrollView(true)
         let array = goalManager.daysArray(newGoal: data)
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(array) {
             defaults.set(encoded, forKey: K.currentDaysArray)
+        } else {
+            print("--->>> encode failed: \(K.currentDaysArray)")
         }
         updateDescription()
         updateCollectionView()

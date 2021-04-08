@@ -9,7 +9,7 @@ import Foundation
 
 
 class DateManager {
-    
+
     func dateFormat(type: String, dateComponets: DateComponents) -> String {
         let yearMonthDay = DateFormatter()
         yearMonthDay.dateFormat = "yyyy년M월d일"
@@ -55,7 +55,7 @@ class DateManager {
         let yearMonthDay3 = DateFormatter()
         yearMonthDay3.dateFormat = "yyyy-MM-dd"
         let yearMonthDay4 = DateFormatter()
-        yearMonthDay4.dateFormat = "yyMMdd"
+        yearMonthDay4.dateFormat = "yyMMddHHmmss"
             
         switch type {
         case "yyyy-MM-dd":
@@ -66,7 +66,7 @@ class DateManager {
             return yearMonthDay.string(from :date)
         case "M월d일":
             return monthDay.string(from: date)
-        case "yyMMdd":
+        case "yyMMddHHmmss":
             return yearMonthDay4.string(from: date)
         case "e":
             let whatDay = whichDay.string(from: date)
