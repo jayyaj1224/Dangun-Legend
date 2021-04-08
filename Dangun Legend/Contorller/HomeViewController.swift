@@ -33,6 +33,7 @@
 
 import UIKit
 import Firebase
+import Foundation
 
 
 let defaults = UserDefaults.standard
@@ -45,20 +46,9 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         mainImage.alpha = 0
         //defaults.set(false, forKey: "goalExisitence")
-        
-        let now = Calendar.current.dateComponents(in:.current, from: Date())
-        let hundredInterval = DateInterval(start: now, duration: 86400*99)
-
-        
-        print("--->>>\(todaysDate)")
-        print("--->>>\(lastDay)")
- 
     }
     
-    /*
-     calendar: gregorian (current) timeZone: Asia/Seoul (current) era: 1 year: 2021 month: 4 day: 8 hour: 18 minute: 27 second: 32 nanosecond: 389297962 weekday: 5 weekdayOrdinal: 2 quarter: 0 weekOfMonth: 2 weekOfYear: 15 yearForWeekOfYear: 2021 isLeapMonth: false
-     -->> User Logged In: 1048
-     */
+
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)

@@ -77,12 +77,12 @@ class CaveViewController: UIViewController {
     
     @IBAction func checkTodayPressed(_ sender: UIButton) {
         let start = currentGoal!.startDate
-        let 기준일 = DateComponents(year: start.year, month: start.month, day: start.day!+(7))///<---추후삭제
-        let 기준일Date = Calendar.current.date(from: 기준일)!
+        let today = Date()
+        let 기준일 = Calendar.current.date(byAdding: .day, value: 7, to: today) ///<---추후삭제
         
         let asking = todayAskString()
-        let startDate = Calendar.current.date(from: currentGoal!.startDate)!
-        let dayToDay = Calendar.current.dateComponents([.day], from: startDate, to: 기준일Date).day! as Int
+        let dayToDay = Calendar.current.dateComponents([.day], from: start, to: 기준일!).day! as Int
+        
         let dayNum = dayToDay + 1
         print("--->>> \(dayNum)")
 
@@ -151,8 +151,8 @@ class CaveViewController: UIViewController {
             let decoder = JSONDecoder()
             if let data = try? decoder.decode(GoalStruct.self, from: savedData) {
                 self.currentGoal = data
-                let start = dateManager.dateFormat(type: "yyyy년M월d일", dateComponets: data.startDate)
-                let end = dateManager.dateFormat(type: "yyyy년M월d일", dateComponets: data.endDate)
+                let start = dateManager.dateFormat(type: "yyyy년M월d일", date: data.startDate)
+                let end = dateManager.dateFormat(type: "yyyy년M월d일", date: data.endDate)
                 DispatchQueue.main.async {
                     self.goalDescriptionLabel.text = data.description
                     self.dateLabel.text = "기간: \(start) - \(end)"

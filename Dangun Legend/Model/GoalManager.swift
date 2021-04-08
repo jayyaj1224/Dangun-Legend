@@ -14,14 +14,12 @@ class GoalManager {
     
     func daysArray(newGoal: GoalStruct) -> [SingleDayInfo] {
         var daysArray : [SingleDayInfo] = []
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "yyyyMMdd"
+
         let numOfDays = newGoal.numOfDays
         for i in 1...numOfDays {
-            let start = newGoal.startDate
+            let start = Calendar.current.dateComponents(in: .current, from: newGoal.startDate)
             let date = DateComponents(year: start.year, month: start.month, day: start.day!+(i-1))
-//            let date = Calendar.current.date(from: dayAfter)!
-//            let theDate = formatter.string(from: date)
+
             let singleDay = SingleDayInfo(date: date, dayNum: i, success: false, userChecked: false)
             daysArray.append(singleDay)
         }
@@ -32,8 +30,7 @@ class GoalManager {
     //3번의 시도 후, 100일 중 98일의 실행으로 목표 달성 성공
     func historyGoalAnalysis(goal : GoalStruct) -> String {
         
-        let startDate = Calendar.current.date(from: goal.startDate) ?? Date()
-        let distanceday = Calendar.current.dateComponents([.day], from: startDate, to: Date()).day! as Int
+        let distanceday = Calendar.current.dateComponents([.day], from: goal.startDate, to: Date()).day! as Int
         
         if goal.completed {
             //성공했을 때
@@ -68,8 +65,8 @@ struct GoalStruct: Codable {
     let executedDays : Int
     let trialNumber : Int
     let description: String
-    let startDate : DateComponents
-    let endDate: DateComponents
+    let startDate : Date
+    let endDate: Date
     let failAllowance: Int
     let numOfDays: Int
     let completed: Bool

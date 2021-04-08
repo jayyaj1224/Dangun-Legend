@@ -45,9 +45,19 @@ class CaveAddViewController: UIViewController{
     
     //처음 저장
     @IBAction func startPressed(_ sender: UIButton) {
-        let now = Calendar.current.dateComponents(in:.current, from: Date())
-        let todaysDate = DateComponents(year: now.year, month: now.month, day: now.day!)
-        let lastDay = DateComponents(year: now.year, month: now.month, day: now.day!+(99))
+        
+        let startDate = Date()
+        let lastDate = Calendar.current.date(byAdding: .day, value: 99, to: startDate)!
+        
+//        let hundredInterval = DateInterval(start: Date(), duration: 86400*99)
+//
+//        let nowDc = Calendar.current.dateComponents(in:.current, from: Date())
+//        let after100Dc = Calendar.current.dateComponents(in:.current, from: hundredInterval.end)
+//
+//        let after100Dt = Calendar.current.date(from: after100Dc)
+//
+//        let firstDate = DateComponents(year: nowDc.year, month: nowDc.month, day: nowDc.day)
+//        let lastDate = DateComponents(year: after100Dc.year, month: after100Dc.month, day: after100Dc.day)
         
         let encoder = JSONEncoder()
         if let description = goalTextView.text,
@@ -56,7 +66,7 @@ class CaveAddViewController: UIViewController{
             let dateForDB = dateManager.dateFormat(type: "yyMMddHHmmss", date: Date())
             
             let usersFailAllowInput = failAllowOutput.selectedSegmentIndex
-            let newGoal = GoalStruct(userID: userID, goalID: dateForDB, executedDays: 0, trialNumber: 1, description: description, startDate: todaysDate, endDate: lastDay, failAllowance: usersFailAllowInput, numOfDays: 100, completed: false, success: false)
+            let newGoal = GoalStruct(userID: userID, goalID: dateForDB, executedDays: 0, trialNumber: 1, description: description, startDate: startDate, endDate: lastDate, failAllowance: usersFailAllowInput, numOfDays: 100, completed: false, success: false)
             if let encoded = try? encoder.encode(newGoal) {
                 defaults.set(encoded, forKey: K.currentGoal)
             } else {
@@ -76,7 +86,7 @@ class CaveAddViewController: UIViewController{
                     G.trialNumber : 1,
                     G.failAllowance : usersFailAllowInput,
                     G.startDate: Date(),
-                    G.endDate: lastDay,
+                    G.endDate: lastDate,
                     G.numOfDays: 100,
                     G.executedDays: 0
                 ]
