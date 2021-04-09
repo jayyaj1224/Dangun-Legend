@@ -21,20 +21,42 @@ struct K {
     
     static let cellDayNum = "cellDayNum"
     static let NoOne = "NoOne"
+    static let none = "none"
     static let firstLaunch = "firstLaunch"
+    
+    static let nickName = "nickName"
+    
+
+    static let Loaded = "Loaded"
+    static let auto = "auto"
+    static let success = "success"
+    static let fail = "fail"
+    static let daysPassed = "daysPassed"
+    
+    static let crrNumOfSucc = "crrNumOfSucc"
+    static let crrNumOfFail = "crrNumOfFail"
+    static let crrGoalID = "crrGoalID"
+    
+    static let userData = "userData"
 }
 
+
 struct G {
-    static let goalID = "goalID"
-    static let completed = "completed"
-    static let success = "success"
-    static let description = "description"
     static let userID = "userID"
-    static let trialNumber = "trialNumber"
-    static let failAllowance = "failAllowance"
+    static let goalID = "goalID"
     static let startDate = "startDate"
     static let endDate = "endDate"
+    
+    static let trialNumber = "trialNumber"
+    static let failAllowance = "failAllowance"
+    static let description = "description"
+    
     static let numOfDays = "numOfDays"
-    static let executedDays = "executedDays"
+    static let completed = "completed"
+    static let goalAchieved = "goalAchieved"
+
+    static let numOfSuccess = "numOfSuccess"
+    static let numOfFail = "numOfFail"
+    static let progress = "progress"
 }
 

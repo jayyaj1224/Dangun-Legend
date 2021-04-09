@@ -21,13 +21,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="432" height="167"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="caveUpperBox" translatesAutoresizingMaskIntoConstraints="NO" id="OAd-PF-cwd">
-                                <rect key="frame" x="8" y="15" width="416" height="150"/>
+                                <rect key="frame" x="8" y="8.5" width="416" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="OAd-PF-cwd" secondAttribute="height" multiplier="400:144" id="nnS-pG-jmj"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="매일 새벽 4시30분에 하루를 시작하고, 책을읽고, 강아지를 산책시킨 후에 아침을 먹겠다." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="L3l-rH-VHM">
-                                <rect key="frame" x="33" y="27" width="377" height="79"/>
+                                <rect key="frame" x="33" y="20.5" width="377" height="79"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -39,7 +39,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3번의 시도 후, 100일 중 98일의 실행으로 목표 달성 성공" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="X2Q-fW-gt2">
-                                <rect key="frame" x="23" y="112.5" width="391" height="19.5"/>
+                                <rect key="frame" x="23" y="106" width="391" height="19.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="400" id="Sd4-Ia-1Lg"/>
                                 </constraints>
@@ -55,11 +55,11 @@
                             <constraint firstItem="X2Q-fW-gt2" firstAttribute="leading" secondItem="2cX-vT-zcC" secondAttribute="leading" constant="23" id="BsC-Bl-oVr"/>
                             <constraint firstAttribute="trailing" secondItem="OAd-PF-cwd" secondAttribute="trailing" constant="8" id="IJE-P8-UX4"/>
                             <constraint firstItem="X2Q-fW-gt2" firstAttribute="centerX" secondItem="2cX-vT-zcC" secondAttribute="centerX" constant="2.5" id="Mhy-22-Zcd"/>
+                            <constraint firstItem="OAd-PF-cwd" firstAttribute="centerY" secondItem="2cX-vT-zcC" secondAttribute="centerY" id="ORR-Ru-Q8J"/>
                             <constraint firstItem="L3l-rH-VHM" firstAttribute="leading" secondItem="OAd-PF-cwd" secondAttribute="leading" constant="25" id="TlD-lT-0eI"/>
                             <constraint firstItem="L3l-rH-VHM" firstAttribute="trailing" secondItem="OAd-PF-cwd" secondAttribute="trailing" constant="-14" id="b66-Ju-FBQ"/>
                             <constraint firstAttribute="trailing" secondItem="YoQ-ZM-amu" secondAttribute="trailing" constant="16" id="buX-tF-FNc"/>
                             <constraint firstItem="L3l-rH-VHM" firstAttribute="bottom" secondItem="OAd-PF-cwd" secondAttribute="bottom" constant="-59" id="cPg-5t-N9N"/>
-                            <constraint firstItem="OAd-PF-cwd" firstAttribute="top" secondItem="2cX-vT-zcC" secondAttribute="top" constant="15" id="o5K-hY-WMW"/>
                             <constraint firstAttribute="bottom" secondItem="YoQ-ZM-amu" secondAttribute="bottom" constant="12.5" id="rtZ-nK-a3y"/>
                             <constraint firstItem="X2Q-fW-gt2" firstAttribute="top" secondItem="OAd-PF-cwd" secondAttribute="bottom" constant="-52.5" id="sr3-hX-SMq"/>
                             <constraint firstAttribute="width" secondItem="2cX-vT-zcC" secondAttribute="height" multiplier="106:41" id="uLN-4E-DM8"/>

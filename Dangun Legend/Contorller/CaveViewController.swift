@@ -4,23 +4,7 @@
 //
 //  Created by JAY LEE on 2021/04/03.
 //
-/*
- 
- Cave View에서
- 
- 진행중인 Project가 있는지?     Yes -> 진행중인 프로젝트 화면
-                            No -> 시작하기Button        -> AddVC
- 
- 
- 서버에는: 현재 진행중인 목표 / 성공한 목표 2가지 -> 아이디헤더로 저장
- 로컬에는: 현재 진행중인 목표만 저장
- 
- 
- [ToDoList]
- - 히스토리: 모든 Goal생성 기록 TableView
- - 보드: 성공한 Goal 표시
- - 성공한 셀에 DayNum 표시
- */
+
 
 
 import UIKit
@@ -49,6 +33,9 @@ class CaveViewController: UIViewController {
         super.viewWillAppear(true)
         updateDescription()  // currentGoal currentArray Update
         updateCollectionView()
+        
+        //printUserdefaults()
+        
     }
 
     @IBOutlet var caveView: UIView!
@@ -77,21 +64,20 @@ class CaveViewController: UIViewController {
     
     @IBAction func checkTodayPressed(_ sender: UIButton) {
         let start = currentGoal!.startDate
-        let today = Date()
-        let 기준일 = Calendar.current.date(byAdding: .day, value: 7, to: today) ///<---추후삭제
-        
-        let asking = todayAskString()
-        let dayToDay = Calendar.current.dateComponents([.day], from: start, to: 기준일!).day! as Int
-        
-        let dayNum = dayToDay + 1
-        print("--->>> \(dayNum)")
 
-        let checkTodayAlert = UIAlertController.init(title: "오늘하루 어떠셨나요 :)", message: asking, preferredStyle: .alert)
+        let asking = todayAskString()
+        let dayToDay = Calendar.current.dateComponents([.day], from: start, to: Date()).day! as Int
+        let dayNum = dayToDay + 1
+
+        let checkTodayAlert = UIAlertController.init(title: "오늘하루 어떠셨나요 :)", message: asking, preferredStyle: .actionSheet)
         checkTodayAlert.addAction(UIAlertAction(title: "실패", style: .default, handler: { (UIAlertAction) in
             self.userCheckSuccess(bool: false, dayNum: dayNum)
+            self.goalManager.failCount()
         }))
+        
         checkTodayAlert.addAction(UIAlertAction(title: "성공", style: .destructive, handler: { (UIAlertAction) in
             self.userCheckSuccess(bool: true, dayNum: dayNum)
+            self.goalManager.successCount()
         }))
         present(checkTodayAlert, animated: true, completion: nil)
         checkTodayButtonUIChange()
@@ -104,20 +90,20 @@ class CaveViewController: UIViewController {
         checkTheDayPressed.addAction(UIAlertAction(title: "실패", style: .default, handler: { (UIAlertAction) in
             if let dayNumber = noti.userInfo?[K.cellDayNum] as? Int {
                 self.userCheckSuccess(bool: false, dayNum: dayNumber)
+                self.goalManager.failCount()
             }
         }))
         checkTheDayPressed.addAction(UIAlertAction(title: "성공", style: .destructive, handler: { (UIAlertAction) in
             if let dayNumber = noti.userInfo?[K.cellDayNum] as? Int {
                 self.userCheckSuccess(bool: true, dayNum: dayNumber)
+                self.goalManager.successCount()
             }
         }))
         present(checkTheDayPressed, animated: true, completion: nil)
     }
     
     
-    
     func userCheckSuccess(bool: Bool,dayNum: Int){
-        // dayNum(index) -> singleDayInfo  updateSquares(info: SingleDayInfo)
         if var theArray = currentDaysArray {
             let index = dayNum - 1
             theArray[index].success = bool
@@ -133,6 +119,7 @@ class CaveViewController: UIViewController {
         }
     }
     
+    
     func updateCollectionView() {
         let decoder = JSONDecoder()
         if let savedData = defaults.data(forKey: K.currentDaysArray) as Data?
@@ -145,6 +132,7 @@ class CaveViewController: UIViewController {
             }
         }
     }
+  
     
     func updateDescription() {
         if let savedData = defaults.object(forKey: K.currentGoal) as? Data {
@@ -160,6 +148,7 @@ class CaveViewController: UIViewController {
                     self.trialNumLabel.text = "\(data.trialNumber)"
                 }
             }
+            
         }
     }
     
@@ -169,7 +158,7 @@ extension CaveViewController: GoalUIManagerDelegate {
     
     func newGoalAddedUpdateView(_ caveAddVC: CaveAddViewController,_ data: GoalStruct) {
         showGoalManageScrollView(true)
-        let array = goalManager.daysArray(newGoal: data)
+        let array = goalManager.daysArray(newGoal: data)///
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(array) {
             defaults.set(encoded, forKey: K.currentDaysArray)
@@ -183,9 +172,25 @@ extension CaveViewController: GoalUIManagerDelegate {
     func didFailwithError(error: Error) {
         print("")
     }
+    
+    
+    func printUserdefaults(){
+        let decoder = JSONDecoder()
+        if let savedArray = defaults.data(forKey: K.currentDaysArray) as Data?,
+           let savedGoal = defaults.data(forKey: K.currentGoal) as Data?
+        {
+            if let decodedArrray = try? decoder.decode([SingleDayInfo].self, from: savedArray),
+               let decodedGoal = try? decoder.decode(GoalStruct.self, from: savedGoal){
+                print("--->>> startDate: \(decodedGoal.startDate)")
+                print("--->>> startDate: \(decodedGoal.endDate)")
+                for single in decodedArrray{
+                    print(single)
+                }
+            }
+        }
+    }
 
 }
-
 
 
 extension CaveViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -207,10 +212,6 @@ extension CaveViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return cell
     }
 
-
-
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//    }
 }
 
 
@@ -220,9 +221,7 @@ class SquareCell : UICollectionViewCell {
     var singleDayInfo : SingleDayInfo?
     let dateManager = DateManager()
     @IBOutlet weak var todayLabel: UILabel!
-    
     @IBOutlet weak var squareImage: UIImageView!
-    
     @IBOutlet weak var buttonOutlet: UIButton!
     @IBAction func buttonPressed(_ sender: UIButton) {
         if let singleInfo = singleDayInfo {
@@ -233,35 +232,37 @@ class SquareCell : UICollectionViewCell {
 
     func updateSquares(info: SingleDayInfo){
         self.singleDayInfo = info
-        let now = Calendar.current.dateComponents(in:.current, from: Date()) //<<--- 추후 삭제
-        let 기준일 = DateComponents(year: now.year, month: now.month, day: now.day!+(7))//<<--- 추후 삭제
-
-        let today = dateManager.dateFormat(type: "yyyyMMdd", dateComponets: 기준일)
-        let cellsDay = dateManager.dateFormat(type: "yyyyMMdd", dateComponets: info.date)
-        
+        let today = dateManager.dateFormat(type: "yyyyMMdd", date: Date())
+        let cellsDay = dateManager.dateFormat(type: "yyyyMMdd", date: info.date)
         
         
         if cellsDay > today {
             squareImage.image = #imageLiteral(resourceName: "EmptySquare")
             buttonOutlet.isEnabled = false
-        } else if cellsDay < today {
             
+            todayLabel.alpha = 1
+            todayLabel.text = String(info.dayNum)
+            todayLabel.textColor = .systemGray5
+            
+        } else if cellsDay < today {
             if info.userChecked {
+                todayLabel.alpha = 0
                 buttonOutlet.isEnabled = false
                 if info.success {
                     squareImage.image = #imageLiteral(resourceName: "SuccessSquare")
                 } else {
                     squareImage.image = #imageLiteral(resourceName: "FailSquare")
                 }
-            } else {
-                    squareImage.image = #imageLiteral(resourceName: "WarningSquare")
-                    buttonOutlet.isEnabled = true
                 
+            } else {
+                squareImage.image = #imageLiteral(resourceName: "WarningSquare")
+                buttonOutlet.isEnabled = true
+                todayLabel.alpha = 0
             }
-        }
-        
-        if cellsDay == today {
+        } else {
             todayLabel.alpha = 1
+            todayLabel.text = "오늘"
+            todayLabel.textColor = .black
             if info.userChecked {
                 if info.success {
                     squareImage.image = #imageLiteral(resourceName: "todaySuccess")
@@ -271,9 +272,8 @@ class SquareCell : UICollectionViewCell {
             } else {
                 squareImage.image = #imageLiteral(resourceName: "todayEmpty")
             }
-        } else {
-            todayLabel.alpha = 0
         }
+        
         
     }
 }

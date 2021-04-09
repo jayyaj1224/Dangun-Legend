@@ -4,6 +4,7 @@
 //
 //  Created by JAY LEE on 2021/04/02.
 //
+
 /*
  func printingData(){
      for key in UserDefaults.standard.dictionaryRepresentation().keys {
@@ -13,22 +14,29 @@
      }
  }
  
- 
+ [User Default Data]
  firstLaunch: true or false
  currentUser: 사용자 ID or NoOne
- 
  goalExistence: true or false
- currentGoal: encoded goal data
+ 
+
+    ->>>> 삭제-->>> currentGoal: encoded goal data
+ 
+ 
  currentDaysArray : encoded days Array
+ crrGoalID : currentlyRunning Goal ID
+ crrNumOfSucc:
+ crrNumOfFail:
+ crrGoalStart:
+ crrFailAllowance:
  
  
-                    <삭제>
-                 currentRunning
-                 runningGoal
-                 loginStatus
-                 usedBefore?
-                 goalIndex
-                 goalExisitence
+ 
+ 
+ [ToDoList]
+- 히스토리 삭제 기능 추가
+- DateManager, CaveAdd 테스트 가정들 전부 삭제
+ 
  */
 
 import UIKit
@@ -46,6 +54,8 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         mainImage.alpha = 0
         //defaults.set(false, forKey: "goalExisitence")
+
+        
     }
     
 
@@ -58,8 +68,10 @@ class HomeViewController: UIViewController {
         } else {
             welcome()
         }
-        
     }
+    
+
+
 
     @IBAction func logoutPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "InitialVC", sender: self)

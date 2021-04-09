@@ -10,6 +10,23 @@ import Foundation
 
 class DateManager {
 
+    func subtractionDays(start: Date, end: Date) -> Int {
+        let a = Int(dateFormat(type: "yyyyMMdd", date: start))!
+        let b = Int(dateFormat(type: "yyyyMMdd", date: end))!
+        return b-a
+    }
+
+    func dateFromString(string: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyMMddHHmmss"
+        if let aDate = dateFormatter.date(from: string) {
+            return aDate
+        } else {
+            print("-->>> dateManager.dateFromString failed")
+            return Date()
+        }
+    }
+    
     func dateFormat(type: String, dateComponets: DateComponents) -> String {
         let yearMonthDay = DateFormatter()
         yearMonthDay.dateFormat = "yyyy년M월d일"
@@ -19,7 +36,12 @@ class DateManager {
         whichDay.dateFormat = "e"
         let yearMonthDay2 = DateFormatter()
         yearMonthDay2.dateFormat = "yyyyMMdd"
+        let yearToSeconds = DateFormatter()
+        yearToSeconds.dateFormat = "yyMMddHHmmss"
+        
         switch type {
+        case "yearToSeconds":
+            return yearToSeconds.string(from: (Calendar.current.date(from: dateComponets)!))
         case "yyyyMMdd":
             return yearMonthDay2.string(from: (Calendar.current.date(from: dateComponets)!))
         case "yyyy년M월d일":
@@ -54,8 +76,8 @@ class DateManager {
         yearMonthDay2.dateFormat = "yyyyMMdd"
         let yearMonthDay3 = DateFormatter()
         yearMonthDay3.dateFormat = "yyyy-MM-dd"
-        let yearMonthDay4 = DateFormatter()
-        yearMonthDay4.dateFormat = "yyMMddHHmmss"
+        let yearToSeconds = DateFormatter()
+        yearToSeconds.dateFormat = "yyMMddHHmmss"
             
         switch type {
         case "yyyy-MM-dd":
@@ -66,8 +88,8 @@ class DateManager {
             return yearMonthDay.string(from :date)
         case "M월d일":
             return monthDay.string(from: date)
-        case "yyMMddHHmmss":
-            return yearMonthDay4.string(from: date)
+        case "yearToSeconds":
+            return yearToSeconds.string(from: date)
         case "e":
             let whatDay = whichDay.string(from: date)
             switch whatDay {
