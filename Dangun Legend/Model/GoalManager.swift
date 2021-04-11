@@ -103,14 +103,31 @@ class GoalManager {
                 G.numOfFail: numOfFail
             ]], merge: true)
     }
+    
+    func successDbUpdate(){
+        let info = loadGeneralInfo()
+        let userID = defaults.string(forKey: keyForDf.crrUser)!
+        
+        db.collection(K.userData).document(userID).setData([
+            keyForDf.GI_generalInfo : [
+                keyForDf.GI_totalTrial : info.totalTrial,
+                keyForDf.GI_totalAchievement : info.totalAchievement,
+                keyForDf.GI_successPerHundred : info.successPerHundred,
+                keyForDf.GI_usersAbility : info.usersAbility
+            ]
+        ], merge: true)
+    }
  
     
     func loadGeneralInfo() -> UsersGeneralInfo {
         let userID = defaults.string(forKey: keyForDf.crrUser)!
+        let defaultValue = UsersGeneralInfo(totalTrial: 0, totalAchievement: 0, successPerHundred: 0, usersAbility: 0.0)
+        var infoArray : [UsersGeneralInfo] = []
         let idDocument = db.collection(K.userData).document(userID)
         idDocument.getDocument { (querySnapshot, error) in
             if let e = error {
                 print("load doc failed: \(e.localizedDescription)")
+                infoArray.append(defaultValue)
                 ///디폴트값 세팅
             } else {
                 if let idDoc = querySnapshot?.data() {
@@ -120,8 +137,13 @@ class GoalManager {
                         let sucPerHund = idGeneralData[keyForDf.GI_successPerHundred] as! Int
                         let ability = idGeneralData[keyForDf.GI_usersAbility] as! Double
                         let currentGeneralInfo = UsersGeneralInfo(totalTrial: totalTrial, totalAchievement: numOfAchieve, successPerHundred: sucPerHund, usersAbility: ability)
-                        return currentGeneralInfo
+                        infoArray.append(currentGeneralInfo)
                     }}}}
+        if let info = infoArray.first {
+            return info
+        } else {
+            return defaultValue
+        }
     }
     
 

@@ -50,6 +50,7 @@ class CaveAddViewController: UIViewController{
         let startDate = Calendar.current.date(byAdding: .day, value: -37, to: Date())! /// 추후 삭제
         let lastDate = Calendar.current.date(byAdding: .day, value: 99, to: startDate)!
         let encoder = JSONEncoder()
+        var generalInfo = goalManager.loadGeneralInfo()
         if let description = goalTextView.text,
            let userID = defaults.value(forKey: keyForDf.crrUser) as? String
         {
@@ -68,8 +69,6 @@ class CaveAddViewController: UIViewController{
             defaults.set(startDateForDB, forKey: keyForDf.crrGoalID)
             defaults.set(0, forKey: keyForDf.crrNumOfSucc)
             defaults.set(0, forKey: keyForDf.crrNumOfFail)
-            
-//            goalManager.setGeneralInfo(info: <#T##UsersGeneralInfo#>, userID: userID)
             
             db.collection(K.userData).document(userID).setData([
                 startDateForDB : [
@@ -97,6 +96,13 @@ class CaveAddViewController: UIViewController{
                 }}
             CaveAddViewController.delegate?.newGoalAddedUpdateView(self,newGoal)
             NotificationCenter.default.post(name: goalAddedHistoryUpdateNoti, object: nil, userInfo: nil)
+            generalInfo.totalTrial += 1
+            db.collection(K.userData).document(userID).setData([
+                keyForDf.GI_generalInfo : [
+                    keyForDf.GI_totalTrial : generalInfo.totalTrial
+                ]
+            ], merge: true)
+            
             dismiss(animated: true, completion: nil)
         }
     }

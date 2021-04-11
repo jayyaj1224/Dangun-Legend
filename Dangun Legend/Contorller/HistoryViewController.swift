@@ -41,6 +41,7 @@ class HistoryViewController: UIViewController {
         self.loadingLabel.alpha = 1
         self.historyIsEmptyLabel.alpha = 0
         idControl()
+        setGeneralInfo()
         tableView.register(UINib(nibName: "HistoryTableViewCell", bundle: nil), forCellReuseIdentifier: "historyCell")
         NotificationCenter.default.addObserver(self, selector: #selector(self.goalAddedHistoryUpdate(_:)), name: goalAddedHistoryUpdateNoti, object: nil)
         loadHistory()
