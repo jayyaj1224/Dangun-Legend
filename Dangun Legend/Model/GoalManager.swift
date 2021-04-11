@@ -31,18 +31,7 @@ class GoalManager {
         var daysArray : [SingleDayInfo] = []
 
         let numOfDays = newGoal.numOfDays
-        for i in 1...37 {
-            let start = newGoal.startDate
-            let date = Calendar.current.date(byAdding: .day, value: (i-1), to: start)!
-            if i % 11 == 0 {
-                let singleDay = SingleDayInfo(date: date, dayNum: i, success: false, userChecked: true)///추후삭제
-                daysArray.append(singleDay)
-            } else {
-                let singleDay = SingleDayInfo(date: date, dayNum: i, success: true, userChecked: true)
-                daysArray.append(singleDay)
-            }
-        }
-        for i in 38...numOfDays {
+        for i in 1...numOfDays {
             let start = newGoal.startDate
             let date = Calendar.current.date(byAdding: .day, value: (i-1), to: start)!
             let singleDay = SingleDayInfo(date: date, dayNum: i, success: false, userChecked: false)
@@ -82,19 +71,60 @@ class GoalManager {
         }
     }
     
+    func resetCurrent(){
+        defaults.set(0, forKey: keyForDf.crrNumOfSucc)
+        defaults.set(0, forKey: keyForDf.crrNumOfFail)
+        defaults.removeObject(forKey: keyForDf.crrGoalID)
+        defaults.removeObject(forKey: keyForDf.crrGoal)
+        defaults.removeObject(forKey: keyForDf.crrDaysArray)
+    }
+    
     
     func successCount(){
-        var numOfsuccess = defaults.integer(forKey: K.crrNumOfSucc) as Int
+        let userID = defaults.string(forKey: keyForDf.crrUser)!
+        let goalID = defaults.string(forKey: keyForDf.crrGoalID)!
+        var numOfsuccess = defaults.integer(forKey: keyForDf.crrNumOfSucc) as Int
         numOfsuccess += 1
-        defaults.set(numOfsuccess, forKey: K.crrNumOfSucc)
+        defaults.set(numOfsuccess, forKey: keyForDf.crrNumOfSucc)
+        db.collection(K.userData).document(userID).setData(
+            [goalID: [
+                G.numOfSuccess: numOfsuccess
+            ]], merge: true)
     }
     
     func failCount(){
-        var numOfFail = defaults.integer(forKey: K.crrNumOfFail) as Int
+        let userID = defaults.string(forKey: keyForDf.crrUser)!
+        let goalID = defaults.string(forKey: keyForDf.crrGoalID)!
+        var numOfFail = defaults.integer(forKey: keyForDf.crrNumOfFail) as Int
         numOfFail += 1
-        defaults.set(numOfFail, forKey: K.crrNumOfFail)
+        defaults.set(numOfFail, forKey: keyForDf.crrNumOfFail)
+        db.collection(K.userData).document(userID).setData(
+            [goalID: [
+                G.numOfFail: numOfFail
+            ]], merge: true)
+    }
+ 
+    
+    func loadGeneralInfo() -> UsersGeneralInfo {
+        let userID = defaults.string(forKey: keyForDf.crrUser)!
+        let idDocument = db.collection(K.userData).document(userID)
+        idDocument.getDocument { (querySnapshot, error) in
+            if let e = error {
+                print("load doc failed: \(e.localizedDescription)")
+                ///디폴트값 세팅
+            } else {
+                if let idDoc = querySnapshot?.data() {
+                    if let idGeneralData = idDoc[keyForDf.GI_generalInfo] as? [String:Any] {
+                        let totalTrial = idGeneralData[keyForDf.GI_totalTrial] as! Int
+                        let numOfAchieve = idGeneralData[keyForDf.GI_totalAchievement] as! Int
+                        let sucPerHund = idGeneralData[keyForDf.GI_successPerHundred] as! Int
+                        let ability = idGeneralData[keyForDf.GI_usersAbility] as! Double
+                        let currentGeneralInfo = UsersGeneralInfo(totalTrial: totalTrial, totalAchievement: numOfAchieve, successPerHundred: sucPerHund, usersAbility: ability)
+                        return currentGeneralInfo
+                    }}}}
     }
     
+
 }
 
 ///Firebase & UserDefault
@@ -126,27 +156,12 @@ struct SingleDayInfo: Codable {
     var userChecked : Bool
 }
 
-/*
- 
- [User Default Data]
- firstLaunch: true or false
- currentUser: 사용자 ID or NoOne
- goalExistence: true or false
+struct UsersGeneralInfo {
+    var totalTrial: Int
+    var totalAchievement: Int
+    var successPerHundred: Int
+    var usersAbility: Double
+}
 
-    ->>>> 삭제-->>> currentGoal: encoded goal data
 
- currentDaysArray : encoded days Array
- crrGoalID : currentlyRunning Goal ID
- 
- crrNumOfSucc:
- crrNumOfFail:
 
- 
- 
- 
- 
- [ToDoList]
-- 히스토리 삭제 기능 추가
-- DateManager, CaveAdd 테스트 가정들 전부 삭제
- 
- */

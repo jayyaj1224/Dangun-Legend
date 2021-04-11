@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import IQKeyboardManagerSwift
 
 let goalAddedHistoryUpdateNoti : Notification.Name = Notification.Name("goalAddedHistoryUpdateNoti")
 
@@ -19,6 +20,7 @@ class HistoryViewController: UIViewController {
     @IBOutlet weak var successPerAttemptLabel: UILabel!
     @IBOutlet weak var averageSuccessDayLabel: UILabel!
     @IBOutlet weak var commitAbilityPercentageLabel: UILabel!
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingLabel: UIView!
     @IBOutlet weak var historyIsEmptyLabel: UIView!
@@ -29,6 +31,7 @@ class HistoryViewController: UIViewController {
     @IBAction func idSaveButton(_ sender: Any) {
         savePressed()
     }
+    
     //1. 새로 목표 추가되어 바로, 히스토리가 무조건 있는 경우 --> Clear
     //2. 추가안하고 바로 -> 히스토리가 비어있는경우 -->
     //3. 추가안하고 바로 -> 히스토리가 있어서 로딩되는경우 --> Clear
@@ -52,7 +55,7 @@ class HistoryViewController: UIViewController {
     
     func loadHistory(){
         var newHistory : [GoalStruct] = []
-        let userID = defaults.string(forKey: K.currentUser)!
+        let userID = defaults.string(forKey: keyForDf.crrUser)!
         loadingLabelControl()
         
         let idDocument = db.collection(K.userData).document(userID)
@@ -108,26 +111,29 @@ class HistoryViewController: UIViewController {
             idInput.isHidden = false
             idSaveButtonOutlet.setTitle("Save", for: .normal)
             userIDLabel.isHidden = true
+            defaults.set(K.none, forKey: keyForDf.nickName)
         } else {
+            idInput.resignFirstResponder()
             let name = idInput.text!
+            idInput.text = ""
             userIDLabel.isHidden = false
-            defaults.set(name, forKey: K.nickName)
+            defaults.set(name, forKey: keyForDf.nickName)
             userIDLabel.text = name
             idInput.isHidden = true
-            idSaveButtonOutlet.setTitle("Renew", for: .normal)
+            idSaveButtonOutlet.setTitle("Clear", for: .normal)
         }
     }
     
     func idControl() {
-        if defaults.string(forKey: K.nickName) == K.none {
+        if defaults.string(forKey: keyForDf.nickName) == K.none {
             userIDLabel.isHidden = true
             idInput.isHidden = false
             idSaveButtonOutlet.setTitle("Save", for: .normal)
         } else {
             userIDLabel.isHidden = false
             idInput.isHidden = true
-            userIDLabel.text = defaults.string(forKey: K.nickName)
-            idSaveButtonOutlet.setTitle("Renew", for: .normal)
+            userIDLabel.text = defaults.string(forKey: keyForDf.nickName)
+            idSaveButtonOutlet.setTitle("Clear", for: .normal)
         }
     }
     
@@ -143,15 +149,39 @@ class HistoryViewController: UIViewController {
         }
     }
     
-    
-    
     func loadingLabelControl() {
         loadingLabel.alpha = 0
         historyIsEmptyLabel.alpha = 0
     }
     
     
+    func setGeneralInfo(){
+        let info = goalManager.loadGeneralInfo()
+        let ability = String(format: "%.1f", info.usersAbility)
+        DispatchQueue.main.async {
+            self.successPerAttemptLabel.text = "총 \(info.totalTrial)번의 시도, \(info.totalAchievement)번의 목표달성에 성공"
+            self.averageSuccessDayLabel.text = "100일 중 평균 \(info.successPerHundred)일 성공"
+            self.commitAbilityPercentageLabel.text = "실행 능력 확률 \(ability)%"
+        }
+    }
+    
+    
+    
+        
+//        db.collection(K.userData).document(userID).setData([
+//            keyForDf.GI_generalInfo : [
+//                keyForDf.GI_totalTrial : info.totalTrial,
+//                keyForDf.GI_totalAchievement : info.totalAchievement,
+//                keyForDf.GI_successPerHundred : info.successPerHundred,
+//                keyForDf.GI_usersAbility : info.usersAbility
+//            ]
+//        ], merge: true)
+   
+    
+    
 }
+
+
 
 
 extension HistoryViewController: UITableViewDataSource, UITableViewDelegate {

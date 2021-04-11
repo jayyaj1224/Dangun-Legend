@@ -6,6 +6,18 @@
 //
 
 /*
+ [ToDoList]
+ 
+- 히스토리 삭제 기능 추가
+- DateManager, CaveAdd 테스트 가정들 전부 삭제
+
+ 
+ 
+ 
+ 
+ 
+ [Memo]
+ 
  func printingData(){
      for key in UserDefaults.standard.dictionaryRepresentation().keys {
          var arr : [String] = []
@@ -14,28 +26,17 @@
      }
  }
  
+ 
+ 
+ 
+ 
  [User Default Data]
- firstLaunch: true or false
- currentUser: 사용자 ID or NoOne
- goalExistence: true or false
  
+ -->>UserDefaults Keys: ["Default.Key: currentUser"]
+ -->>UserDefaults Keys: ["Default.Key: nickName"]
+ -->>UserDefaults Keys: ["Default.Key: usedBefore"]
+ -->>UserDefaults Keys: ["Default.Key: goalExistence"]
 
-    ->>>> 삭제-->>> currentGoal: encoded goal data
- 
- 
- currentDaysArray : encoded days Array
- crrGoalID : currentlyRunning Goal ID
- crrNumOfSucc:
- crrNumOfFail:
- crrGoalStart:
- crrFailAllowance:
- 
- 
- 
- 
- [ToDoList]
-- 히스토리 삭제 기능 추가
-- DateManager, CaveAdd 테스트 가정들 전부 삭제
  
  */
 
@@ -45,6 +46,7 @@ import Foundation
 
 
 let defaults = UserDefaults.standard
+let db = Firestore.firestore()
 
 class HomeViewController: UIViewController {
 
@@ -53,21 +55,20 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         mainImage.alpha = 0
-        //defaults.set(false, forKey: "goalExisitence")
-
-        
     }
     
 
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        print("-->> User Logged In: \(defaults.string(forKey: K.currentUser)!)")
-        if defaults.string(forKey: K.currentUser) == K.NoOne {
+        if defaults.string(forKey: keyForDf.crrUser) == K.none {
             performSegue(withIdentifier: "InitialVC", sender: self)
         } else {
             welcome()
+            print("-->> User Logged In: \(defaults.string(forKey: keyForDf.crrUser)!)")
         }
+        
+        printUserDefaultKeys()
     }
     
 
@@ -75,7 +76,7 @@ class HomeViewController: UIViewController {
 
     @IBAction func logoutPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "InitialVC", sender: self)
-        defaults.set(K.NoOne, forKey: K.currentUser)
+        defaults.set(K.none, forKey: keyForDf.crrUser)
     }
     
     func welcome() {
@@ -86,6 +87,15 @@ class HomeViewController: UIViewController {
         }
         
         
+    }
+    
+    func printUserDefaultKeys(){
+        for key in UserDefaults.standard.dictionaryRepresentation().keys {
+            var arr : [String] = []
+            arr.append(key)
+            print("-->>UserDefaults Keys: \(arr)")
+        }
+
     }
     
 

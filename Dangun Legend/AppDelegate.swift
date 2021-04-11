@@ -16,18 +16,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-    
-        
+
         FirebaseApp.configure()
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
         IQKeyboardManager.shared.enableAutoToolbar = true
         IQKeyboardManager.shared.keyboardDistanceFromTextField = 120.0
 
-        if defaults.bool(forKey: K.firstLaunch) {
-            defaults.set(false, forKey: K.firstLaunch)
-            defaults.set(false, forKey: K.goalExistence)
-            defaults.set(K.none, forKey: K.nickName)
+        if defaults.bool(forKey: keyForDf.usedBefore) == false {
+            defaults.set(true, forKey: keyForDf.usedBefore)
+            defaults.set(false, forKey: keyForDf.goalExistence)
+            defaults.set(K.none, forKey: keyForDf.nickName)
+            defaults.set(K.none, forKey: keyForDf.crrUser)
             // show how to use
             // currentGoal, currentArray -> Dummy Item Set
         }

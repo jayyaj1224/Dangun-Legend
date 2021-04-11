@@ -9,7 +9,6 @@ import UIKit
 import IQKeyboardManagerSwift
 import Firebase
 
-let db = Firestore.firestore()
 
 protocol GoalUIManagerDelegate : class {
     func newGoalAddedUpdateView(_ caveAddVC: CaveAddViewController,_ data: GoalStruct)
@@ -20,6 +19,7 @@ protocol GoalUIManagerDelegate : class {
 class CaveAddViewController: UIViewController{
 
     let dateManager = DateManager()
+    let goalManager = GoalManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +51,7 @@ class CaveAddViewController: UIViewController{
         let lastDate = Calendar.current.date(byAdding: .day, value: 99, to: startDate)!
         let encoder = JSONEncoder()
         if let description = goalTextView.text,
-           let userID = defaults.value(forKey: K.currentUser) as? String
+           let userID = defaults.value(forKey: keyForDf.crrUser) as? String
         {
             let startDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: startDate)
             let lastDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: lastDate)
@@ -60,12 +60,17 @@ class CaveAddViewController: UIViewController{
             let newGoal = GoalStruct(userID: userID, goalID: startDateForDB, startDate: startDate, endDate: lastDate, failAllowance: usersFailAllowInput, trialNumber: 1, description: description, numOfDays: 100, completed: false, goalAchieved: false, numOfSuccess: 0, numOfFail: 0, progress: 0)
             
             if let encoded = try? encoder.encode(newGoal) {
-                defaults.set(encoded, forKey: K.currentGoal)
+                defaults.set(encoded, forKey: keyForDf.crrGoal)
             } else {
-                print("--->>> encode failed \(K.currentGoal)")
+                print("--->>> encode failed \(keyForDf.crrGoal)")
             }
-            defaults.set(true, forKey: K.goalExistence)
-            //서버에 저장
+            defaults.set(true, forKey: keyForDf.goalExistence)
+            defaults.set(startDateForDB, forKey: keyForDf.crrGoalID)
+            defaults.set(0, forKey: keyForDf.crrNumOfSucc)
+            defaults.set(0, forKey: keyForDf.crrNumOfFail)
+            
+//            goalManager.setGeneralInfo(info: <#T##UsersGeneralInfo#>, userID: userID)
+            
             db.collection(K.userData).document(userID).setData([
                 startDateForDB : [
                     G.userID: userID,

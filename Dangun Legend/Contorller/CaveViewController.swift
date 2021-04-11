@@ -25,7 +25,7 @@ class CaveViewController: UIViewController {
         super.viewDidLoad()
         CaveAddViewController.delegate = self
         checkTodayButtonUIChange()
-        showGoalManageScrollView(defaults.bool(forKey: K.goalExistence))
+        showGoalManageScrollView(defaults.bool(forKey: keyForDf.goalExistence))
         NotificationCenter.default.addObserver(self, selector: #selector(self.checkAlert(_:)), name: checkTheDateNoti, object: nil)
     }
     
@@ -44,9 +44,14 @@ class CaveViewController: UIViewController {
     
     @IBOutlet weak var goalDescriptionLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var failAllowanceLabel: UILabel!
     @IBOutlet weak var trialNumLabel: UILabel!
     @IBOutlet weak var squareCollectionView: UICollectionView!
+    
+    @IBOutlet weak var desFirstLine: UILabel!
+    @IBOutlet weak var desSecondLine: UILabel!
+    @IBOutlet weak var executePercentageLabel: UILabel!
+    @IBOutlet weak var daysLeftLabel: UILabel!
+    
     
     @IBOutlet weak var checkToday: UIButton!
     
@@ -79,6 +84,7 @@ class CaveViewController: UIViewController {
             self.userCheckSuccess(bool: true, dayNum: dayNum)
             self.goalManager.successCount()
         }))
+        
         present(checkTodayAlert, animated: true, completion: nil)
         checkTodayButtonUIChange()
     }
@@ -91,19 +97,28 @@ class CaveViewController: UIViewController {
             if let dayNumber = noti.userInfo?[K.cellDayNum] as? Int {
                 self.userCheckSuccess(bool: false, dayNum: dayNumber)
                 self.goalManager.failCount()
-            }
-        }))
+            }}))
+        
         checkTheDayPressed.addAction(UIAlertAction(title: "성공", style: .destructive, handler: { (UIAlertAction) in
             if let dayNumber = noti.userInfo?[K.cellDayNum] as? Int {
                 self.userCheckSuccess(bool: true, dayNum: dayNumber)
                 self.goalManager.successCount()
-            }
-        }))
+            }}))
+        
         present(checkTheDayPressed, animated: true, completion: nil)
     }
     
+//    db.collection(K.userData).document(userID).setData([
+//        keyForDf.GI_generalInfo : [
+//            keyForDf.GI_totalTrial : info.totalTrial,
+//            keyForDf.GI_totalAchievement : info.totalAchievement,
+//            keyForDf.GI_successPerHundred : info.successPerHundred,
+//            keyForDf.GI_usersAbility : info.usersAbility
+//        ]
+//    ], merge: true)
     
     func userCheckSuccess(bool: Bool,dayNum: Int){
+        ///numOfSuccess, numOfFail db update
         if var theArray = currentDaysArray {
             let index = dayNum - 1
             theArray[index].success = bool
@@ -111,18 +126,19 @@ class CaveViewController: UIViewController {
             self.currentDaysArray = theArray
             DispatchQueue.main.async {
                 self.squareCollectionView.reloadData()
+                self.updateDescription()
             }
             let encoder = JSONEncoder()
             if let encoded = try? encoder.encode(theArray) {
-                defaults.set(encoded, forKey: K.currentDaysArray)
+                defaults.set(encoded, forKey: keyForDf.crrDaysArray)
             }
         }
     }
     
-    
+
     func updateCollectionView() {
         let decoder = JSONDecoder()
-        if let savedData = defaults.data(forKey: K.currentDaysArray) as Data?
+        if let savedData = defaults.data(forKey: keyForDf.crrDaysArray) as Data?
         {
             if let decodedArrray = try? decoder.decode([SingleDayInfo].self, from: savedData) {
                 self.currentDaysArray = decodedArrray
@@ -135,20 +151,43 @@ class CaveViewController: UIViewController {
   
     
     func updateDescription() {
-        if let savedData = defaults.object(forKey: K.currentGoal) as? Data {
+        if let savedData = defaults.object(forKey: keyForDf.crrGoal) as? Data {
+            let numOfSuccess = defaults.integer(forKey: keyForDf.crrNumOfSucc)
+            let numOfFail = defaults.integer(forKey: keyForDf.crrNumOfFail)
             let decoder = JSONDecoder()
             if let data = try? decoder.decode(GoalStruct.self, from: savedData) {
                 self.currentGoal = data
+                let leftChance = data.failAllowance - numOfFail
+                let daysPast = Calendar.current.dateComponents([.day], from: data.startDate, to: Date()).day! as Int
                 let start = dateManager.dateFormat(type: "yyyy년M월d일", date: data.startDate)
                 let end = dateManager.dateFormat(type: "yyyy년M월d일", date: data.endDate)
+                let executePercent = String(format: "%.1f", Double(numOfSuccess)/Double(daysPast-1)*100)
+                let failAllowed = data.failAllowance
                 DispatchQueue.main.async {
+                    self.desFirstLine.text = "\(numOfSuccess)일 실행 성공  /  \(numOfFail)일 불이행"
+                    self.resetWarningText(leftChance:leftChance, chance: failAllowed)
+                    print(leftChance)
+                    self.executePercentageLabel.text = "\(executePercent)%"
+                    self.daysLeftLabel.text = "\(100-daysPast-1)일"
                     self.goalDescriptionLabel.text = data.description
                     self.dateLabel.text = "기간: \(start) - \(end)"
-                    self.failAllowanceLabel.text = "잔여 실패허용횟수: \(data.failAllowance)회 / \(data.failAllowance)회"
                     self.trialNumLabel.text = "\(data.trialNumber)"
+                    
                 }
             }
             
+        }
+    }
+    
+    func resetWarningText(leftChance:Int, chance: Int){
+        if leftChance == 0 {
+            let warning = "한번 더 목표 불이행 시 목표는 리셋됩니다."
+            desSecondLine.text = warning
+            desSecondLine.textColor = .systemRed
+        } else {
+            let warning = "잔여 실패허용 횟수: \(leftChance + 1)/\(chance)번"
+            desSecondLine.text = warning
+            desSecondLine.textColor = .black
         }
     }
     
@@ -158,12 +197,12 @@ extension CaveViewController: GoalUIManagerDelegate {
     
     func newGoalAddedUpdateView(_ caveAddVC: CaveAddViewController,_ data: GoalStruct) {
         showGoalManageScrollView(true)
-        let array = goalManager.daysArray(newGoal: data)///
+        let array = goalManager.daysArray(newGoal: data)
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(array) {
-            defaults.set(encoded, forKey: K.currentDaysArray)
+            defaults.set(encoded, forKey: keyForDf.crrDaysArray)
         } else {
-            print("--->>> encode failed: \(K.currentDaysArray)")
+            print("--->>> encode failed: \(keyForDf.crrDaysArray)")
         }
         updateDescription()
         updateCollectionView()
@@ -174,28 +213,26 @@ extension CaveViewController: GoalUIManagerDelegate {
     }
     
     
-    func printUserdefaults(){
-        let decoder = JSONDecoder()
-        if let savedArray = defaults.data(forKey: K.currentDaysArray) as Data?,
-           let savedGoal = defaults.data(forKey: K.currentGoal) as Data?
-        {
-            if let decodedArrray = try? decoder.decode([SingleDayInfo].self, from: savedArray),
-               let decodedGoal = try? decoder.decode(GoalStruct.self, from: savedGoal){
-                print("--->>> startDate: \(decodedGoal.startDate)")
-                print("--->>> startDate: \(decodedGoal.endDate)")
-                for single in decodedArrray{
-                    print(single)
-                }
-            }
-        }
-    }
+//    func printUserdefaults(){
+//        let decoder = JSONDecoder()
+//        if let savedArray = defaults.data(forKey: K.currentDaysArray) as Data?,
+//           let savedGoal = defaults.data(forKey: K.currentGoal) as Data?
+//        {
+//            if let decodedArrray = try? decoder.decode([SingleDayInfo].self, from: savedArray),
+//               let decodedGoal = try? decoder.decode(GoalStruct.self, from: savedGoal){
+//                print("--->>> startDate: \(decodedGoal.startDate)")
+//                print("--->>> startDate: \(decodedGoal.endDate)")
+//                for single in decodedArrray{
+//                    print(single)
+//                }
+//            }
+//        }
+//    }
 
 }
 
 
 extension CaveViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    ///userDefaults에서 newGoal불러와서 collectionViewupdate
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let numOfItems = currentDaysArray?.count ?? 100
         return numOfItems
@@ -285,8 +322,8 @@ extension CaveViewController {
         let alertQuitPressed = UIAlertController.init(title: "그만두기", message: "진행중인 목표를 중단합니다.", preferredStyle: .alert)
         alertQuitPressed.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
         alertQuitPressed.addAction(UIAlertAction(title: "그만두기", style: .destructive, handler: { (UIAlertAction) in
-            defaults.set(false, forKey: K.goalExistence)
-            defaults.removeObject(forKey: K.currentGoal)
+            defaults.set(false, forKey: keyForDf.goalExistence)
+            self.goalManager.resetCurrent()
             self.showGoalManageScrollView(false)
         }))
         present(alertQuitPressed, animated: true, completion: nil)
@@ -294,17 +331,21 @@ extension CaveViewController {
     
     
     @IBAction func resetPressed(_ sender: UIButton) {
+        ///trial Number Update
         let trialNum = Int(trialNumLabel.text!) ?? 1
-        let nextTry = trialNum + 1
-        let alertResetPressed = UIAlertController.init(title: "Reset", message: "진행중인 목표를 \(nextTry)회차로 다시 시작합니다.", preferredStyle: .alert)
+        let tryOneMore = trialNum + 1
+        let alertResetPressed = UIAlertController.init(title: "Reset", message: "진행중인 목표를 \(tryOneMore)회차로 다시 시작합니다.", preferredStyle: .alert)
+        
         alertResetPressed.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
+        
         alertResetPressed.addAction(UIAlertAction(title: "다시시작", style: .destructive, handler: { [self] (UIAlertAction) in
             updateDescription()
             updateCollectionView()
+            self.goalManager.resetCurrent()
             DispatchQueue.main.async {
-                self.trialNumLabel.text = "\(nextTry)"
-            }
-        }))
+                self.trialNumLabel.text = "\(tryOneMore)"
+            }}))
+        
         present(alertResetPressed, animated: true, completion: nil)
     }
     

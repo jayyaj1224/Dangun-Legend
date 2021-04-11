@@ -11,6 +11,8 @@ import Firebase
 
 class RegisterEmailVC: UIViewController {
     
+    let goalManager = GoalManager()
+    
     @IBOutlet weak var emailInput: UITextField!
     @IBOutlet weak var passwordOne: UITextField!
     @IBOutlet weak var passwordTwo: UITextField!
@@ -37,7 +39,7 @@ class RegisterEmailVC: UIViewController {
                 if let e = error {
                     print(e.localizedDescription)
                 } else {
-                    defaults.set(true, forKey: K.loginStatus)
+                    defaults.set(email, forKey: keyForDf.crrUser)
                     self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
                     self.dismiss(animated: true, completion: nil)
                 }

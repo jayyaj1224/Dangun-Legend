@@ -8,35 +8,16 @@
 import Foundation
 
 struct K {
-    
     static let History = "History"
     static let goals = "goals"
-    static let loginStatus = "loginStatus"
-    static let currentUser = "currentUser"
     static let userID = "userID"
-    static let goalExistence = "goalExistence"
-    
-    static let currentGoal = "currentGoal"
-    static let currentDaysArray = "currentDaysArray"
-    
     static let cellDayNum = "cellDayNum"
-    static let NoOne = "NoOne"
     static let none = "none"
-    static let firstLaunch = "firstLaunch"
-    
-    static let nickName = "nickName"
-    
-
     static let Loaded = "Loaded"
     static let auto = "auto"
     static let success = "success"
     static let fail = "fail"
     static let daysPassed = "daysPassed"
-    
-    static let crrNumOfSucc = "crrNumOfSucc"
-    static let crrNumOfFail = "crrNumOfFail"
-    static let crrGoalID = "crrGoalID"
-    
     static let userData = "userData"
 }
 
@@ -60,3 +41,25 @@ struct G {
     static let progress = "progress"
 }
 
+
+struct keyForDf {
+    static let usedBefore = "Default.Key: usedBefore"
+    static let goalExistence = "Default.Key: goalExistence"
+    
+    static let crrNumOfSucc = "Default.Key: crrNumOfSucc"
+    static let crrNumOfFail = "Default.Key.crrNumOfFail"
+    static let crrGoalID = "Default.Key: crrGoalID"
+    static let crrGoal = "Default.Key: currentGoal"
+    static let crrDaysArray = "Default.Key: currentDaysArray"
+    static let crrUser = "Default.Key: currentUser"
+    
+    static let nickName = "Default.Key: nickName"
+    
+    static let GI_generalInfo = "Default.Key: GI_generalInfo"
+    static let GI_totalTrial = "Default.Key: totalTrial"
+    static let GI_totalAchievement = "Default.Key: totalAchievement"
+    static let GI_successPerHundred = "Default.Key: successPerHundred"
+    static let GI_usersAbility = "Default.Key: usersAbility"
+    
+
+}

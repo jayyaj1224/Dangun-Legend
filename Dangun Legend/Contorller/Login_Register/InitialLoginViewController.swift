@@ -12,6 +12,8 @@ import IQKeyboardManagerSwift
 
 class InitialLoginViewController: UIViewController, GIDSignInDelegate {
     
+    let goalManager = GoalManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         GIDSignIn.sharedInstance()?.presentingViewController = self
@@ -28,7 +30,7 @@ class InitialLoginViewController: UIViewController, GIDSignInDelegate {
                 if let e = error {
                     print(e.localizedDescription)
                 } else {
-                    defaults.set(email, forKey: K.currentUser)
+                    defaults.set(email, forKey: keyForDf.crrUser)
                     self.dismiss(animated: true, completion: nil)
                 }
             }
@@ -48,7 +50,7 @@ class InitialLoginViewController: UIViewController, GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if (error == nil) {
             let userID = String(user.userID)
-            defaults.set(userID, forKey: K.currentUser)
+            defaults.set(userID, forKey: keyForDf.crrUser)
             presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
             dismiss(animated: true, completion: nil)
         } else {
