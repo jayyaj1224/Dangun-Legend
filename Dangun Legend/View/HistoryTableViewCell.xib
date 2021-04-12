@@ -38,8 +38,8 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3번의 시도 후, 100일 중 98일의 실행으로 목표 달성 성공 -첫번째 시도, 38일째" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="X2Q-fW-gt2">
-                                <rect key="frame" x="30" y="103.5" width="372" height="41"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100일 중 98일의 실행으로 목표 달성 성공 , 38일째" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="X2Q-fW-gt2">
+                                <rect key="frame" x="30" y="95.5" width="372" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -53,7 +53,7 @@
                             <constraint firstAttribute="trailing" secondItem="OAd-PF-cwd" secondAttribute="trailing" constant="8" id="IJE-P8-UX4"/>
                             <constraint firstItem="OAd-PF-cwd" firstAttribute="centerY" secondItem="2cX-vT-zcC" secondAttribute="centerY" id="ORR-Ru-Q8J"/>
                             <constraint firstItem="L3l-rH-VHM" firstAttribute="leading" secondItem="OAd-PF-cwd" secondAttribute="leading" constant="25" id="TlD-lT-0eI"/>
-                            <constraint firstItem="X2Q-fW-gt2" firstAttribute="top" secondItem="L3l-rH-VHM" secondAttribute="bottom" constant="10" id="a6A-sy-9vu"/>
+                            <constraint firstItem="X2Q-fW-gt2" firstAttribute="top" secondItem="L3l-rH-VHM" secondAttribute="bottom" constant="2" id="a6A-sy-9vu"/>
                             <constraint firstItem="L3l-rH-VHM" firstAttribute="trailing" secondItem="OAd-PF-cwd" secondAttribute="trailing" constant="-14" id="b66-Ju-FBQ"/>
                             <constraint firstAttribute="trailing" secondItem="YoQ-ZM-amu" secondAttribute="trailing" constant="16" id="buX-tF-FNc"/>
                             <constraint firstItem="L3l-rH-VHM" firstAttribute="bottom" secondItem="OAd-PF-cwd" secondAttribute="bottom" constant="-65" id="cPg-5t-N9N"/>

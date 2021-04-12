@@ -13,6 +13,7 @@ import IQKeyboardManagerSwift
 class InitialLoginViewController: UIViewController, GIDSignInDelegate {
     
     let goalManager = GoalManager()
+    let dateManager = DateManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,15 +29,17 @@ class InitialLoginViewController: UIViewController, GIDSignInDelegate {
         if let email = emailTextfield.text, let password = pwTextfield.text {
             Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
                 if let e = error {
-                    print(e.localizedDescription)
+                    print("error-->>>\(e.localizedDescription)")
                 } else {
+                    defaults.set(true, forKey: keyForDf.loginStatus)
                     defaults.set(email, forKey: keyForDf.crrUser)
-                    self.dismiss(animated: true, completion: nil)
+                    self.goalManager.initialDataSetForIdAndGeneralInfo(id: email)
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true, completion: nil)
+                    }
                 }
             }
         }
-        presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
-        dismiss(animated: true, completion: nil)
     }
     
 
@@ -50,12 +53,16 @@ class InitialLoginViewController: UIViewController, GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if (error == nil) {
             let userID = String(user.userID)
+            defaults.set(true, forKey: keyForDf.loginStatus)
             defaults.set(userID, forKey: keyForDf.crrUser)
+            goalManager.initialDataSetForIdAndGeneralInfo(id: userID)
             presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
             dismiss(animated: true, completion: nil)
         } else {
             print("\(error.localizedDescription)")
         }
     }
+    
+
     
 }

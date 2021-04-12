@@ -41,9 +41,13 @@ class HistoryViewController: UIViewController {
         self.loadingLabel.alpha = 1
         self.historyIsEmptyLabel.alpha = 0
         idControl()
-        setGeneralInfo()
         tableView.register(UINib(nibName: "HistoryTableViewCell", bundle: nil), forCellReuseIdentifier: "historyCell")
         NotificationCenter.default.addObserver(self, selector: #selector(self.goalAddedHistoryUpdate(_:)), name: goalAddedHistoryUpdateNoti, object: nil)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        setUpperBoxDescription()
         loadHistory()
     }
     
@@ -57,16 +61,16 @@ class HistoryViewController: UIViewController {
     func loadHistory(){
         var newHistory : [GoalStruct] = []
         let userID = defaults.string(forKey: keyForDf.crrUser)!
+        print("***********\(userID)")
         loadingLabelControl()
         
-        let idDocument = db.collection(K.userData).document(userID)
+        let idDocument = db.collection(K.FS_userGoal).document(userID)
         idDocument.getDocument { (querySnapshot, error) in
             if let e = error {
                 print("load doc failed: \(e.localizedDescription)")
                 self.loadingLabelControl(array: newHistory)
             } else {
                 if let usersHistory = querySnapshot?.data() {
-                    print(usersHistory.count)
                     for history in usersHistory {
                         if let aGoal = history.value as? [String:Any] {
                             if let compl = aGoal[G.completed] as? Bool,
@@ -78,17 +82,16 @@ class HistoryViewController: UIViewController {
                                let end = aGoal[G.endDate] as? String,
                                
                                let goalAch = aGoal[G.goalAchieved] as? Bool,
-                               let tri = aGoal[G.trialNumber] as? Int,
+        
                                let uID = aGoal[G.userID] as? String,
                                let daysNum = aGoal[G.numOfDays] as? Int,
                                let numOfSuc = aGoal[G.numOfSuccess] as? Int,
-                               let numOfFail = aGoal[G.numOfFail] as? Int,
-                               let progress = aGoal[G.progress] as? Int
+                               let numOfFail = aGoal[G.numOfFail] as? Int
+                               
                             {
                                 let startDate = self.dateManager.dateFromString(string: start)
                                 let endDate = self.dateManager.dateFromString(string: end)
-                                print("------\(startDate)---\(endDate)---")
-                                let aHistory = GoalStruct(userID: uID, goalID: gID, startDate: startDate, endDate: endDate, failAllowance: fail, trialNumber: tri, description: des, numOfDays: daysNum, completed: compl, goalAchieved: goalAch, numOfSuccess: numOfSuc, numOfFail: numOfFail, progress: progress)
+                                let aHistory = GoalStruct(userID: uID, goalID: gID, startDate: startDate, endDate: endDate, failAllowance: fail, description: des, numOfDays: daysNum, completed: compl, goalAchieved: goalAch, numOfSuccess: numOfSuc, numOfFail: numOfFail)
                                 newHistory.append(aHistory)
                                 self.goalHistory = newHistory
                                 self.goalHistory.sort(by: { $0.goalID > $1.goalID} )
@@ -140,11 +143,9 @@ class HistoryViewController: UIViewController {
     
     func loadingLabelControl(array: Array<Any>){
         if array.isEmpty {
-            print("array.isEmpty")
             loadingLabel.alpha = 0
             historyIsEmptyLabel.alpha = 1
         } else {
-            print("array.Not Empty")
             loadingLabel.alpha = 0
             historyIsEmptyLabel.alpha = 0
         }
@@ -156,29 +157,41 @@ class HistoryViewController: UIViewController {
     }
     
     
-    func setGeneralInfo(){
-        let info = goalManager.loadGeneralInfo()
-        let ability = String(format: "%.1f", info.usersAbility)
-        DispatchQueue.main.async {
-            self.successPerAttemptLabel.text = "총 \(info.totalTrial)번의 시도, \(info.totalAchievement)번의 목표달성에 성공"
-            self.averageSuccessDayLabel.text = "100일 중 평균 \(info.successPerHundred)일 성공"
-            self.commitAbilityPercentageLabel.text = "실행 능력 확률 \(ability)%"
+    func setUpperBoxDescription(){
+        goalManager.loadGeneralInfo { (UsersGeneralInfo) in
+            print(UsersGeneralInfo)
+            self.averageSuccessDayLabel.text = "100일 중 평균 \(UsersGeneralInfo.successPerHundred)일 성공"
+            if UsersGeneralInfo.totalSuccess == 0 {
+                self.commitAbilityPercentageLabel.text = "실행 능력 확률 0.0%"
+            } else {
+                let ability = (Double(UsersGeneralInfo.totalSuccess)/Double(UsersGeneralInfo.totalDaysBeenThrough))*100
+                let abilityString = String(format: "%.1f", ability)
+                self.commitAbilityPercentageLabel.text = "실행 능력 확률 \(abilityString)%"
+            }
+            self.successPerAttemptLabel.text = "총 \(UsersGeneralInfo.totalTrial)번의 시도, \(UsersGeneralInfo.totalAchievement)번의 목표달성에 성공"
         }
     }
     
-    
-    
-        
-//        db.collection(K.userData).document(userID).setData([
-//            keyForDf.GI_generalInfo : [
-//                keyForDf.GI_totalTrial : info.totalTrial,
-//                keyForDf.GI_totalAchievement : info.totalAchievement,
-//                keyForDf.GI_successPerHundred : info.successPerHundred,
-//                keyForDf.GI_usersAbility : info.usersAbility
-//            ]
-//        ], merge: true)
-   
-    
+//        let userID = defaults.string(forKey: keyForDf.crrUser)!
+//        let idDocument = db.collection(K.userData).document(userID)
+//        idDocument.getDocument { (querySnapshot, error) in
+//            if let e = error {
+//                print("load doc failed: \(e.localizedDescription)")
+//            } else {
+//                if let idDoc = querySnapshot?.data() {
+//                    if let idGeneralData = idDoc[keyForDf.GI_generalInfo] as? [String:Any] {
+//                        let totalTrial = idGeneralData[keyForDf.GI_totalTrial] as? Int ?? 0
+//                        let numOfAchieve = idGeneralData[keyForDf.GI_totalAchievement] as? Int ?? 0
+//                        let sucPerHund = idGeneralData[keyForDf.GI_successPerHundred] as? Int ?? 0
+//                        let ability = idGeneralData[keyForDf.GI_usersAbility] as? Double ?? 0.0
+//                        let abilityString = String(format: "%.1f", ability)
+//                        DispatchQueue.main.async {
+//                            self.successPerAttemptLabel.text = "총 \(totalTrial)번의 시도, \(numOfAchieve)번의 목표달성에 성공"
+//                            self.averageSuccessDayLabel.text = "100일 중 평균 \(sucPerHund)일 성공"
+//                            self.commitAbilityPercentageLabel.text = "실행 능력 확률 \(abilityString)%"
+//                        }
+//                    }}}}}
+//
     
 }
 

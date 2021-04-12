@@ -11,13 +11,14 @@ import Firebase
 
 
 protocol GoalUIManagerDelegate : class {
-    func newGoalAddedUpdateView(_ caveAddVC: CaveAddViewController,_ data: GoalStruct)
+    func newGoalAddedUpdateView(_ data: GoalStruct)
     func didFailwithError(error: Error)
 }
 
 
 class CaveAddViewController: UIViewController{
 
+    let DangunQueue = DispatchQueue(label: "DG")
     let dateManager = DateManager()
     let goalManager = GoalManager()
     
@@ -50,7 +51,7 @@ class CaveAddViewController: UIViewController{
         let startDate = Calendar.current.date(byAdding: .day, value: -37, to: Date())! /// 추후 삭제
         let lastDate = Calendar.current.date(byAdding: .day, value: 99, to: startDate)!
         let encoder = JSONEncoder()
-        var generalInfo = goalManager.loadGeneralInfo()
+        
         if let description = goalTextView.text,
            let userID = defaults.value(forKey: keyForDf.crrUser) as? String
         {
@@ -58,19 +59,22 @@ class CaveAddViewController: UIViewController{
             let lastDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: lastDate)
             
             let usersFailAllowInput = failAllowOutput.selectedSegmentIndex
-            let newGoal = GoalStruct(userID: userID, goalID: startDateForDB, startDate: startDate, endDate: lastDate, failAllowance: usersFailAllowInput, trialNumber: 1, description: description, numOfDays: 100, completed: false, goalAchieved: false, numOfSuccess: 0, numOfFail: 0, progress: 0)
+            let newGoal = GoalStruct(userID: userID, goalID: startDateForDB, startDate: startDate, endDate: lastDate, failAllowance: usersFailAllowInput, description: description, numOfDays: 100, completed: false, goalAchieved: false, numOfSuccess: 0, numOfFail: 0)
             
             if let encoded = try? encoder.encode(newGoal) {
                 defaults.set(encoded, forKey: keyForDf.crrGoal)
             } else {
                 print("--->>> encode failed \(keyForDf.crrGoal)")
             }
+            
             defaults.set(true, forKey: keyForDf.goalExistence)
             defaults.set(startDateForDB, forKey: keyForDf.crrGoalID)
             defaults.set(0, forKey: keyForDf.crrNumOfSucc)
             defaults.set(0, forKey: keyForDf.crrNumOfFail)
             
-            db.collection(K.userData).document(userID).setData([
+            db.collection(K.FS_userCurrentGID).document(userID).setData([G.currentGoal: startDateForDB], merge: true)
+            
+            db.collection(K.FS_userGoal).document(userID).setData([
                 startDateForDB : [
                     G.userID: userID,
                     G.goalID : startDateForDB,
@@ -82,7 +86,6 @@ class CaveAddViewController: UIViewController{
                     G.numOfDays: 100,
                     G.completed : false,
                     G.goalAchieved: false,
-            
                     G.numOfSuccess: 0,
                     G.numOfFail: 0,
                     G.progress: 0
@@ -94,14 +97,17 @@ class CaveAddViewController: UIViewController{
                 } else {
                     print("New goal saved successfully")
                 }}
-            CaveAddViewController.delegate?.newGoalAddedUpdateView(self,newGoal)
+            
+            CaveAddViewController.delegate?.newGoalAddedUpdateView(newGoal)
             NotificationCenter.default.post(name: goalAddedHistoryUpdateNoti, object: nil, userInfo: nil)
-            generalInfo.totalTrial += 1
-            db.collection(K.userData).document(userID).setData([
-                keyForDf.GI_generalInfo : [
-                    keyForDf.GI_totalTrial : generalInfo.totalTrial
-                ]
-            ], merge: true)
+            goalManager.loadGeneralInfo { (UsersGeneralInfo) in
+                let update = UsersGeneralInfo.totalTrial + 1
+                db.collection(K.FS_userGeneral).document(userID).setData([
+                    fb.GI_generalInfo : [
+                        fb.GI_totalTrial : update
+                    ]
+                ], merge: true)
+            }
             
             dismiss(animated: true, completion: nil)
         }

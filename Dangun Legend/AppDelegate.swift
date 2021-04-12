@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.set(true, forKey: keyForDf.usedBefore)
             defaults.set(false, forKey: keyForDf.goalExistence)
             defaults.set(K.none, forKey: keyForDf.nickName)
-            defaults.set(K.none, forKey: keyForDf.crrUser)
+            defaults.set(false, forKey: keyForDf.loginStatus)
             // show how to use
             // currentGoal, currentArray -> Dummy Item Set
         }

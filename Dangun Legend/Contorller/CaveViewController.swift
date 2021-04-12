@@ -44,7 +44,6 @@ class CaveViewController: UIViewController {
     
     @IBOutlet weak var goalDescriptionLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var trialNumLabel: UILabel!
     @IBOutlet weak var squareCollectionView: UICollectionView!
     
     @IBOutlet weak var desFirstLine: UILabel!
@@ -119,6 +118,7 @@ class CaveViewController: UIViewController {
     
     func userCheckSuccess(bool: Bool,dayNum: Int){
         ///numOfSuccess, numOfFail db update
+        let userID = defaults.string(forKey: keyForDf.crrUser)!
         if var theArray = currentDaysArray {
             let index = dayNum - 1
             theArray[index].success = bool
@@ -133,6 +133,12 @@ class CaveViewController: UIViewController {
                 defaults.set(encoded, forKey: keyForDf.crrDaysArray)
             }
         }
+        ///currentGoal Array 에 저장
+        db.collection(K.FS_userCurrentArr).document(userID).setData(
+            ["day \(dayNum)": [
+                sd.success: bool,
+                sd.userChecked: true
+            ]], merge: true)
     }
     
 
@@ -170,9 +176,7 @@ class CaveViewController: UIViewController {
                     self.executePercentageLabel.text = "\(executePercent)%"
                     self.daysLeftLabel.text = "\(100-daysPast-1)일"
                     self.goalDescriptionLabel.text = data.description
-                    self.dateLabel.text = "기간: \(start) - \(end)"
-                    self.trialNumLabel.text = "\(data.trialNumber)"
-                    
+                    self.dateLabel.text = "기간: \(start) - \(end)"                    
                 }
             }
             
@@ -185,7 +189,7 @@ class CaveViewController: UIViewController {
             desSecondLine.text = warning
             desSecondLine.textColor = .systemRed
         } else {
-            let warning = "잔여 실패허용 횟수: \(leftChance + 1)/\(chance)번"
+            let warning = "잔여 실패허용 횟수: \(leftChance)/\(chance)번"
             desSecondLine.text = warning
             desSecondLine.textColor = .black
         }
@@ -195,7 +199,7 @@ class CaveViewController: UIViewController {
 
 extension CaveViewController: GoalUIManagerDelegate {
     
-    func newGoalAddedUpdateView(_ caveAddVC: CaveAddViewController,_ data: GoalStruct) {
+    func newGoalAddedUpdateView(_ data: GoalStruct) {
         showGoalManageScrollView(true)
         let array = goalManager.daysArray(newGoal: data)
         let encoder = JSONEncoder()
@@ -211,6 +215,7 @@ extension CaveViewController: GoalUIManagerDelegate {
     func didFailwithError(error: Error) {
         print("")
     }
+    
     
     
 //    func printUserdefaults(){
@@ -323,31 +328,13 @@ extension CaveViewController {
         alertQuitPressed.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
         alertQuitPressed.addAction(UIAlertAction(title: "그만두기", style: .destructive, handler: { (UIAlertAction) in
             defaults.set(false, forKey: keyForDf.goalExistence)
-            self.goalManager.resetCurrent()
+            self.goalManager.quitTheGoal()
             self.showGoalManageScrollView(false)
         }))
         present(alertQuitPressed, animated: true, completion: nil)
     }
     
-    
-    @IBAction func resetPressed(_ sender: UIButton) {
-        ///trial Number Update
-        let trialNum = Int(trialNumLabel.text!) ?? 1
-        let tryOneMore = trialNum + 1
-        let alertResetPressed = UIAlertController.init(title: "Reset", message: "진행중인 목표를 \(tryOneMore)회차로 다시 시작합니다.", preferredStyle: .alert)
-        
-        alertResetPressed.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
-        
-        alertResetPressed.addAction(UIAlertAction(title: "다시시작", style: .destructive, handler: { [self] (UIAlertAction) in
-            updateDescription()
-            updateCollectionView()
-            self.goalManager.resetCurrent()
-            DispatchQueue.main.async {
-                self.trialNumLabel.text = "\(tryOneMore)"
-            }}))
-        
-        present(alertResetPressed, animated: true, completion: nil)
-    }
+
     
     
     func todayAskString() -> String {
