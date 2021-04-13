@@ -74,21 +74,19 @@ class CaveAddViewController: UIViewController{
             
             db.collection(K.FS_userCurrentGID).document(userID).setData([G.currentGoal: startDateForDB], merge: true)
             
-            db.collection(K.FS_userGoal).document(userID).setData([
+            db.collection(K.FS_userCurrentGoal).document(userID).setData([
                 startDateForDB : [
                     G.userID: userID,
                     G.goalID : startDateForDB,
                     G.startDate: startDateForDB,
                     G.endDate: lastDateForDB,
                     G.failAllowance : usersFailAllowInput,
-                    G.trialNumber : 1,
                     G.description : description,
                     G.numOfDays: 100,
                     G.completed : false,
                     G.goalAchieved: false,
                     G.numOfSuccess: 0,
-                    G.numOfFail: 0,
-                    G.progress: 0
+                    G.numOfFail: 0
                 ]
             ], merge: true)
             {(error) in
@@ -99,8 +97,8 @@ class CaveAddViewController: UIViewController{
                 }}
             
             CaveAddViewController.delegate?.newGoalAddedUpdateView(newGoal)
-            NotificationCenter.default.post(name: goalAddedHistoryUpdateNoti, object: nil, userInfo: nil)
-            goalManager.loadGeneralInfo { (UsersGeneralInfo) in
+//            NotificationCenter.default.post(name: goalAddedHistoryUpdateNoti, object: nil, userInfo: nil)
+            goalManager.loadGeneralInfo(forDelegate: false) { (UsersGeneralInfo) in
                 let update = UsersGeneralInfo.totalTrial + 1
                 db.collection(K.FS_userGeneral).document(userID).setData([
                     fb.GI_generalInfo : [

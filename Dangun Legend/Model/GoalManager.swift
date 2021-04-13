@@ -51,21 +51,21 @@ class GoalManager {
     
     
     //3번의 시도 후, 100일 중 98일의 실행으로 목표 달성 성공
-    func historyGoalAnalysis(goal : GoalStruct) -> String {
+    func historyGoalAnalysis(goal : GoalStruct) -> Analysis {
         
         let distanceday = Calendar.current.dateComponents([.day], from: goal.startDate, to: Date()).day! as Int
         
         if goal.completed {
             //성공했을 때
             if goal.goalAchieved {
-                let analysis = "\(goal.numOfDays)일 중 \(goal.numOfSuccess)일의 실행으로 목표 달성 성공!"
+                let analysis = Analysis(analysis: "\(goal.numOfDays)일 중 \(goal.numOfSuccess)일의 실행으로 목표 달성 성공!", type: 1 )
                 return analysis
             } else {
-                let analysis = "100일 중 \(goal.numOfSuccess)일의 실행으로 목표 달성 실패"
+                let analysis = Analysis(analysis:"100일 중 \(goal.numOfSuccess)일의 실행으로 목표 달성 실패" , type: 2 )
                 return analysis
             }
         } else {
-            let analysis = "\(goal.numOfDays)일 중 \(goal.numOfSuccess)일의 실행으로 목표 달성 진행중 - \(distanceday+1)일째 "
+            let analysis =  Analysis(analysis: "\(goal.numOfDays)일 중 \(goal.numOfSuccess)일의 실행으로 목표 달성 진행중 - \(distanceday+1)일째 " , type: 3 )
             return analysis
         }
     }
@@ -80,7 +80,7 @@ class GoalManager {
         defaults.set(oneMore, forKey: keyForDf.crrNumOfSucc)
         
         ///goal info 에 저장
-        db.collection(K.FS_userGoal).document(userID).setData(
+        db.collection(K.FS_userCurrentGoal).document(userID).setData(
             [goalID: [
                 G.numOfSuccess: oneMore
             ]], merge: true)
@@ -88,7 +88,7 @@ class GoalManager {
 
         
         ///general info에 저장
-        loadGeneralInfo { (UsersGeneralInfo) in
+        loadGeneralInfo(forDelegate: false) { (UsersGeneralInfo) in
             var info = UsersGeneralInfo
             info.totalSuccess += 1
             info.totalDaysBeenThrough += 1
@@ -108,12 +108,12 @@ class GoalManager {
         var numOfFail = defaults.integer(forKey: keyForDf.crrNumOfFail) as Int
         numOfFail += 1
         defaults.set(numOfFail, forKey: keyForDf.crrNumOfFail)
-        db.collection(K.FS_userGoal).document(userID).setData(
+        db.collection(K.FS_userCurrentGoal).document(userID).setData(
             [goalID: [
                 G.numOfFail: numOfFail
             ]], merge: true)
         
-        loadGeneralInfo { (UsersGeneralInfo) in
+        loadGeneralInfo(forDelegate: false) { (UsersGeneralInfo) in
             var info = UsersGeneralInfo
             info.totalDaysBeenThrough += 1
             db.collection(K.FS_userGeneral).document(userID).setData([
@@ -126,7 +126,7 @@ class GoalManager {
     }
     
     
-    func loadGeneralInfo(_ completion: @escaping (_ data: UsersGeneralInfo) -> Void ) {
+    func loadGeneralInfo(forDelegate: Bool, _ completion: @escaping (_ data: UsersGeneralInfo)->Void) {
         let userID = defaults.string(forKey: keyForDf.crrUser)!
         let idDocument = db.collection(K.FS_userGeneral).document(userID)
         DangunQueue.sync {
@@ -142,7 +142,11 @@ class GoalManager {
                             let sucPerHund = idGeneralData[fb.GI_successPerHundred] as! Int
                             let totalSuc = idGeneralData[fb.GI_totalSuccess] as! Int
                             let currentGeneralInfo = UsersGeneralInfo(totalTrial: totalTrial, totalAchievement: numOfAchieve, successPerHundred: sucPerHund, totalDaysBeenThrough: totalDays, totalSuccess: totalSuc)
-                            completion(currentGeneralInfo)
+                            if forDelegate {
+                                self.delegate?.setUpperBoxDescription(self, info: currentGeneralInfo)
+                            } else {
+                                completion(currentGeneralInfo)
+                            }
                         }}}}
         }
     }
@@ -180,31 +184,40 @@ class GoalManager {
 
                 } else {
                     ///존재하는 id로 로그인했다면.
-                    
-                    
-                    
-                    
-                }
-            }
-        }
-    }
+                }}}}
+
     
     
     
     func quitTheGoal() {
         let userID = defaults.string(forKey: keyForDf.crrUser)!
-        let goalID = defaults.string(forKey: keyForDf.crrGoalID)!
-    
+        let decoder = JSONDecoder()
+        if let savedData = defaults.data(forKey: keyForDf.crrGoal) as Data?
+        {
+            if let arr = try? decoder.decode(GoalStruct.self, from: savedData) {
+                let startDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: arr.startDate)
+                let lastDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: arr.endDate)
+                db.collection(K.FS_userHistory).document(userID).setData([
+                    arr.goalID : [
+                        G.userID: userID,
+                        G.goalID : arr.goalID,
+                        G.startDate: startDateForDB,
+                        G.endDate: lastDateForDB,
+                        G.failAllowance : arr.failAllowance,
+                        G.description : arr.description,
+                        G.numOfDays: 100,
+                        G.completed : true,
+                        G.goalAchieved: false,
+                        G.numOfSuccess: arr.numOfSuccess,
+                        G.numOfFail: arr.numOfFail
+                    ]
+                ], merge: true)
+                
+            }
+        }
         db.collection(K.FS_userCurrentGID).document(userID).setData([G.currentGoal: ""])
-        ///2. goalID: completed = true
-        db.collection(K.FS_userGoal).document(userID).setData(
-            [goalID: [
-                G.completed: true
-            ]], merge: true)
-        
-        ///3. DaysArray 삭제
         db.collection(K.FS_userCurrentArr).document(userID).delete()
- 
+        db.collection(K.FS_userCurrentGoal).document(userID).delete()
         defaults.set(0, forKey: keyForDf.crrNumOfSucc)
         defaults.set(0, forKey: keyForDf.crrNumOfFail)
         defaults.removeObject(forKey: keyForDf.crrGoalID)
@@ -212,9 +225,55 @@ class GoalManager {
         defaults.removeObject(forKey: keyForDf.crrDaysArray)
     }
     
+    var delegate: HistoryUpdateDelegate?
+    
+    func loadHistory() {
+        let userID = defaults.string(forKey: keyForDf.crrUser)!
+        let historyDoc = db.collection(K.FS_userHistory).document(userID)
+        let currentDoc = db.collection(K.FS_userCurrentGoal).document(userID)
+        self.loadFromDocRef(docRef: historyDoc)
+        self.loadFromDocRef(docRef: currentDoc)
+    }
+
+    func loadFromDocRef(docRef: DocumentReference) {
+        docRef.getDocument { (querySnapshot, error) in
+            if let e = error {
+                print("load doc failed: \(e.localizedDescription)")
+            } else {
+                if let usersHistory = querySnapshot?.data() {
+                    for history in usersHistory {
+                        if let aGoal = history.value as? [String:Any] {
+                            if let compl = aGoal[G.completed] as? Bool,
+                               let des = aGoal[G.description] as? String,
+                               let end = aGoal[G.endDate] as? String,
+                               let fail = aGoal[G.failAllowance] as? Int,
+                               let goalAch = aGoal[G.goalAchieved] as? Bool,
+                               let gID = aGoal[G.goalID] as? String,
+                               let daysNum = aGoal[G.numOfDays] as? Int,
+                               let start = aGoal[G.startDate] as? String,
+                               let numOfFail = aGoal[G.numOfFail] as? Int,
+                               let numOfSuc = aGoal[G.numOfSuccess] as? Int,
+                               let uID = aGoal[G.userID] as? String
+                            {
+                                let startDate = self.dateManager.dateFromString(string: start)
+                                let endDate = self.dateManager.dateFromString(string: end)
+                                let aHistory = GoalStruct(userID: uID, goalID: gID, startDate: startDate, endDate: endDate, failAllowance: fail, description: des, numOfDays: daysNum, completed: compl, goalAchieved: goalAch, numOfSuccess: numOfSuc, numOfFail: numOfFail)
+                                print(aHistory)
+                                self.delegate?.loadHistory(self, history: aHistory)
+                            }}}}}}}
+
+
+    
     
     
 }
+
+
+
+
+
+
+//MARK: - Structs
 
 ///Firebase & UserDefault
 struct GoalStruct: Codable {
@@ -227,11 +286,11 @@ struct GoalStruct: Codable {
     let description: String
 
     let numOfDays: Int
-    let completed: Bool
-    let goalAchieved: Bool
+    var completed: Bool
+    var goalAchieved: Bool
     
-    let numOfSuccess : Int
-    let numOfFail : Int
+    var numOfSuccess : Int
+    var numOfFail : Int
 }
 
 ///Array로 UserDefault
@@ -252,3 +311,7 @@ struct UsersGeneralInfo {
 
 
 
+struct Analysis {
+    let analysis : String
+    let type : Int
+}

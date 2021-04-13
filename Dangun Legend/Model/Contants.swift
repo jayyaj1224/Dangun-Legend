@@ -24,7 +24,9 @@ struct K {
     static let FS_userCurrentArr = "userCurrentArr"
     static let FS_userCurrentGID = "userCurrentGID"
     static let FS_userGeneral = "userGeneral"
-    static let FS_userGoal = "userGoal"
+    static let FS_userCurrentGoal = "userCurrentGoal"
+    static let FS_userHistory = "userHistory"
+
     
 }
 
