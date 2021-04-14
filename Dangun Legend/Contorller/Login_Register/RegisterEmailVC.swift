@@ -19,6 +19,10 @@ class RegisterEmailVC: UIViewController {
     @IBOutlet weak var pwConfirmed: UILabel!
 
     
+    @IBAction func cancelPressed(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func pw1Edit(_ sender: UITextField) {
 
         let pw1 = passwordOne.text

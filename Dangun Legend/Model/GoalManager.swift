@@ -71,15 +71,22 @@ class GoalManager {
         }
     }
     
+    func goalAccomplishment(){
+        
+        
+    }
     
     func successCount(){
         let userID = defaults.string(forKey: keyForDf.crrUser)!
         let goalID = defaults.string(forKey: keyForDf.crrGoalID)!
         
         let numOfsuccess = defaults.integer(forKey: keyForDf.crrNumOfSucc) as Int
+        if numOfsuccess == 99 {
+            goalAccomplishment()
+        }
+        
         let oneMore = numOfsuccess + 1
         defaults.set(oneMore, forKey: keyForDf.crrNumOfSucc)
-        
         ///goal info 에 저장
         db.collection(K.FS_userCurrentGoal).document(userID).setData(
             [goalID: [
@@ -87,7 +94,6 @@ class GoalManager {
             ]], merge: true)
         
 
-        
         ///general info에 저장
         loadGeneralInfo(forDelegate: false) { (UsersGeneralInfo) in
             var info = UsersGeneralInfo

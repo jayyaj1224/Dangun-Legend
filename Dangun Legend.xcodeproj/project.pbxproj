@@ -26,6 +26,7 @@
 		A482219F261DB95A005DFA43 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A482219E261DB95A005DFA43 /* HistoryViewController.swift */; };
 		A48221A8261DE49B005DFA43 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48221A6261DE49B005DFA43 /* HistoryTableViewCell.swift */; };
 		A48221A9261DE49B005DFA43 /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48221A7261DE49B005DFA43 /* HistoryTableViewCell.xib */; };
+		A49D013D2626F3A10059971B /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49D013C2626F3A10059971B /* ResultViewController.swift */; };
 		A49E4314261AADAC00E98619 /* GoalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49E4313261AADAC00E98619 /* GoalManager.swift */; };
 		A4CDF1ED261809A400A08809 /* CaveAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */; };
 		A4CDF1F8261809FC00A08809 /* CaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CDF1F7261809FC00A08809 /* CaveViewController.swift */; };
@@ -79,6 +80,7 @@
 		A482219E261DB95A005DFA43 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		A48221A6261DE49B005DFA43 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		A48221A7261DE49B005DFA43 /* HistoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryTableViewCell.xib; sourceTree = "<group>"; };
+		A49D013C2626F3A10059971B /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		A49E4313261AADAC00E98619 /* GoalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalManager.swift; sourceTree = "<group>"; };
 		A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveAddViewController.swift; sourceTree = "<group>"; };
 		A4CDF1F7261809FC00A08809 /* CaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveViewController.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				A4CDF1F7261809FC00A08809 /* CaveViewController.swift */,
 				A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */,
 				A482219E261DB95A005DFA43 /* HistoryViewController.swift */,
+				A49D013C2626F3A10059971B /* ResultViewController.swift */,
 			);
 			path = Contorller;
 			sourceTree = "<group>";
@@ -525,6 +528,7 @@
 				A477762326182966002D866C /* InitialLoginViewController.swift in Sources */,
 				A47775FB261821D8002D866C /* RegisterEmailVC.swift in Sources */,
 				A4777630261884DA002D866C /* Contants.swift in Sources */,
+				A49D013D2626F3A10059971B /* ResultViewController.swift in Sources */,
 				A442B2CA261D7C5A00B4CD12 /* DateManager.swift in Sources */,
 				A420E011261724D00039F2C8 /* SceneDelegate.swift in Sources */,
 				A49E4314261AADAC00E98619 /* GoalManager.swift in Sources */,

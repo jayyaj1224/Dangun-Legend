@@ -43,13 +43,19 @@ let db = Firestore.firestore()
 
 class HomeViewController: UIViewController {
 
-    @IBOutlet weak var mainImage: UIImageView!
+
+    
+    @IBOutlet weak var typoLogoImage: UIImageView!
+    @IBOutlet weak var text: UIImageView!
+    @IBOutlet weak var caveImage: UIImageView!
+    
     var goToLoginPage = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        mainImage.alpha = 0
-
+        typoLogoImage.alpha = 0
+        text.alpha = 0
+        caveImage.alpha = 0
     }
     
     
@@ -87,7 +93,9 @@ class HomeViewController: UIViewController {
     func welcome() {
         for n in 1...100 {
             Timer.scheduledTimer(withTimeInterval: 0.015*Double(n), repeats: false) { (timer) in
-                self.mainImage.alpha = CGFloat(n)*0.01
+                self.typoLogoImage.alpha = CGFloat(n)*0.01
+                self.caveImage.alpha = CGFloat(n)*0.01
+                self.text.alpha = CGFloat(n)*0.01
             }
         }
         
