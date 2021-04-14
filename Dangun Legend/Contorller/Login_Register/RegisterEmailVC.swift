@@ -38,6 +38,7 @@ class RegisterEmailVC: UIViewController {
             Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
                 if let e = error {
                     print(e.localizedDescription)
+                    self.loginErrorOcurred()
                 } else {
                     ///Defaults Clear하기
                     self.InitialVC.setDefaultValues(userID: email)
@@ -48,6 +49,11 @@ class RegisterEmailVC: UIViewController {
         }
     }
     
+    func loginErrorOcurred(){
+        let loginErrorAlert = UIAlertController.init(title: "아이디와 비밀번호를 확인해주세요.", message: nil, preferredStyle: .alert)
+        loginErrorAlert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
+        present(loginErrorAlert, animated: true, completion: nil)
+    }
 
 }
 

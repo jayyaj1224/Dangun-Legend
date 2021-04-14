@@ -175,7 +175,7 @@ class HistoryViewController: UIViewController {
 extension HistoryViewController: HistoryUpdateDelegate {
     
     func setUpperBoxDescription(_ goalManager: GoalManager, info: UsersGeneralInfo) {
-        self.averageSuccessDayLabel.text = "100일 중 평균 \(info.successPerHundred)일 성공"
+        self.averageSuccessDayLabel.text = "목표한 100일 중 평균 \(info.successPerHundred)일 성공"
         if info.totalSuccess == 0 {
             self.commitAbilityPercentageLabel.text = "실행 능력 확률 0.0%"
         } else {

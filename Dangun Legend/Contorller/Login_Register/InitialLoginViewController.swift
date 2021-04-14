@@ -22,6 +22,8 @@ class InitialLoginViewController: UIViewController, GIDSignInDelegate {
         GIDSignIn.sharedInstance()?.delegate = self
     }
     
+    
+    
     @IBOutlet weak var emailTextfield: UITextField!
     @IBOutlet weak var pwTextfield: UITextField!
     
@@ -29,6 +31,7 @@ class InitialLoginViewController: UIViewController, GIDSignInDelegate {
         if let email = emailTextfield.text, let password = pwTextfield.text {
             Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
                 if let e = error {
+                    self.loginErrorOcurred()
                     print("error-->>>\(e.localizedDescription)")
                 } else {
                     defaults.set(true, forKey: keyForDf.loginStatus)
@@ -40,6 +43,12 @@ class InitialLoginViewController: UIViewController, GIDSignInDelegate {
                 }
             }
         }
+    }
+    
+    func loginErrorOcurred(){
+        let loginErrorAlert = UIAlertController.init(title: "로그인 오류", message: "아이디와 비밀번호를 확인해주세요.", preferredStyle: .alert)
+        loginErrorAlert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
+        present(loginErrorAlert, animated: true, completion: nil)
     }
     
 
@@ -59,6 +68,7 @@ class InitialLoginViewController: UIViewController, GIDSignInDelegate {
             presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
             dismiss(animated: true, completion: nil)
         } else {
+            self.loginErrorOcurred()
             print("\(error.localizedDescription)")
         }
     }

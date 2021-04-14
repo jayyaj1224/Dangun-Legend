@@ -45,8 +45,7 @@ class CaveAddViewController: UIViewController{
     @IBAction func startPressed(_ sender: UIButton) {
         
         let startDate = Date()
-        let deleteDate = Calendar.current.date(byAdding: .day, value: -90, to: startDate)!
-        let lastDate = Calendar.current.date(byAdding: .day, value: 99, to: deleteDate)!
+        let lastDate = Calendar.current.date(byAdding: .day, value: 99, to: startDate)!
         let encoder = JSONEncoder()
         
         if let description = goalTextView.text,
@@ -142,3 +141,75 @@ extension CaveAddViewController: UITextViewDelegate {
     }
     
 }
+
+
+/*
+ 테스트할때 @IBAction func startPressed 뒤에 복붙
+ 
+ {
+     
+     let startDate = Date()
+     let deleteDate = Calendar.current.date(byAdding: .day, value: -90, to: startDate)!
+     let lastDate = Calendar.current.date(byAdding: .day, value: 99, to: deleteDate)!
+     let encoder = JSONEncoder()
+     
+     if let description = goalTextView.text,
+        let userID = defaults.value(forKey: keyForDf.crrUser) as? String
+     {
+         let startDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: deleteDate)
+         let lastDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: lastDate)
+         
+         let usersFailAllowInput = failAllowOutput.selectedSegmentIndex
+         let newGoal = GoalStruct(userID: userID, goalID: startDateForDB, startDate: deleteDate, endDate: lastDate, failAllowance: usersFailAllowInput, description: description, numOfDays: 100, completed: false, goalAchieved: false, numOfSuccess: 0, numOfFail: 0)
+         
+         if let encoded = try? encoder.encode(newGoal) {
+             defaults.set(encoded, forKey: keyForDf.crrGoal)
+         } else {
+             print("--->>> encode failed \(keyForDf.crrGoal)")
+         }
+         
+         defaults.set(true, forKey: keyForDf.goalExistence)
+         defaults.set(startDateForDB, forKey: keyForDf.crrGoalID)
+         defaults.set(0, forKey: keyForDf.crrNumOfSucc)
+         defaults.set(0, forKey: keyForDf.crrNumOfFail)
+         defaults.set(usersFailAllowInput, forKey: keyForDf.crrFailAllowance)
+         
+         db.collection(K.FS_userCurrentGID).document(userID).setData([G.currentGoal: startDateForDB], merge: true)
+         
+         db.collection(K.FS_userCurrentGoal).document(userID).setData([
+             startDateForDB : [
+                 G.userID: userID,
+                 G.goalID : startDateForDB,
+                 G.startDate: startDateForDB,
+                 G.endDate: lastDateForDB,
+                 G.failAllowance : usersFailAllowInput,
+                 G.description : description,
+                 G.numOfDays: 100,
+                 G.completed : false,
+                 G.goalAchieved: false,
+                 G.numOfSuccess: 0,
+                 G.numOfFail: 0
+             ]
+         ], merge: true)
+         {(error) in
+             if let e = error {
+                 print("There was an issue saving user's info: \(e)")
+             } else {
+                 print("New goal saved successfully")
+             }}
+     
+         CaveAddViewController.delegate?.newGoalAddedUpdateView(newGoal)
+
+         goalManager.loadGeneralInfo(forDelegate: false) { (UsersGeneralInfo) in
+             let update = UsersGeneralInfo.totalTrial + 1
+             db.collection(K.FS_userGeneral).document(userID).setData([
+                 fb.GI_generalInfo : [
+                     fb.GI_totalTrial : update
+                 ]
+             ], merge: true)
+         }
+         
+         dismiss(animated: true, completion: nil)
+     }
+ }
+ */

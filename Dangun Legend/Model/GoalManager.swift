@@ -66,7 +66,7 @@ class GoalManager {
                 return analysis
             }
         } else {
-            let analysis =  Analysis(analysis: "\(goal.numOfDays)일 중 \(goal.numOfSuccess)일의 실행으로 목표 달성 진행중 - \(distanceday+1)일째 " , type: 3 )
+            let analysis =  Analysis(analysis: "\(goal.numOfDays)일 중 \(goal.numOfSuccess)일의 실행으로 목표 달성 진행중: \(distanceday+1)일째 " , type: 3 )
             return analysis
         }
     }
@@ -144,7 +144,7 @@ class GoalManager {
                             let totalTrial = idGeneralData[fb.GI_totalTrial] as! Int
                             let numOfAchieve = idGeneralData[fb.GI_totalAchievement] as! Int
                             let totalDays = idGeneralData[fb.GI_totalDaysBeenThrough] as! Int
-                            let sucPerHund = idGeneralData[fb.GI_successPerHundred] as! Int
+                            let sucPerHund = idGeneralData[fb.GI_successPerHundred] as! Double
                             let totalSuc = idGeneralData[fb.GI_totalSuccess] as! Int
                             let currentGeneralInfo = UsersGeneralInfo(totalTrial: totalTrial, totalAchievement: numOfAchieve, successPerHundred: sucPerHund, totalDaysBeenThrough: totalDays, totalSuccess: totalSuc)
                             if forDelegate {
@@ -157,7 +157,24 @@ class GoalManager {
     }
     
     
-
+    func updateSuccessPerHundred(userID: String){
+        let idDocument = db.collection(K.FS_userGeneral).document(userID)
+        idDocument.getDocument { (querySnapshot, error) in
+            if let e = error {
+                print("load doc failed: \(e.localizedDescription)")
+            } else {
+                if let idDoc = querySnapshot?.data() {
+                    if let idGeneralData = idDoc[fb.GI_generalInfo] as? [String:Any] {
+                        let totalTrial = idGeneralData[fb.GI_totalTrial] as! Double
+                        let totalSuc = idGeneralData[fb.GI_totalSuccess] as! Double
+                        let newSucPerHun = round((totalSuc)/(totalTrial)*10)/10
+                        db.collection(K.FS_userGeneral).document(userID).setData([
+                            fb.GI_generalInfo : [
+                                fb.GI_successPerHundred : newSucPerHun
+                            ]
+                        ], merge: true)
+                    }}}}
+    }
     
     
     
@@ -187,6 +204,7 @@ class GoalManager {
                             G.numOfFail: numFail
                         ]
                     ], merge: true)
+                    self.updateSuccessPerHundred(userID: userID)
                 }
                 DangunQueue.async {
                     db.collection(K.FS_userCurrentGID).document(userID).delete()
@@ -286,7 +304,7 @@ struct SingleDayInfo: Codable {
 struct UsersGeneralInfo {
     var totalTrial: Int
     var totalAchievement: Int
-    var successPerHundred: Int
+    var successPerHundred: Double
     var totalDaysBeenThrough: Int
     var totalSuccess: Int
 }

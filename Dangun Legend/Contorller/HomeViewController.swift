@@ -9,11 +9,9 @@
  [ToDoList]
 
 - 로그인 실패 시, Alert설정
-- Goal Array Setting(Cave CollectionView)
-- cave view 실행능력 확률
-- historyview 에서 -번도전 중 -번 성공
-- 히스토리 안내페이지
- 
+
+
+
 
  [Memo]
  

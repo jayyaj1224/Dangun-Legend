@@ -179,10 +179,10 @@ class CaveViewController: UIViewController {
                 let daysPast = Calendar.current.dateComponents([.day], from: data.startDate, to: Date()).day! as Int
                 let start = dateManager.dateFormat(type: "yyyy년M월d일", date: data.startDate)
                 let end = dateManager.dateFormat(type: "yyyy년M월d일", date: data.endDate)
-                let executePercent = String(format: "%.1f", Double(numOfSuccess)/Double(daysPast-1)*100)
+                let executePercent = String(format: "%.1f", Double(numOfSuccess)/Double(daysPast+1)*100)
                 let failAllowed = data.failAllowance
                 DispatchQueue.main.async {
-                    self.desFirstLine.text = "\(numOfSuccess)일 실행 성공  /  \(numOfFail)일 불이행"
+                    self.desFirstLine.text = "실행 성공: \(numOfSuccess)일   / 실패: \(numOfFail)일"
                     self.resetWarningText(leftChance:leftChance, chance: failAllowed)
                     print(leftChance)
                     self.executePercentageLabel.text = "\(executePercent)%"
