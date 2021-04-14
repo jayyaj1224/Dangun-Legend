@@ -15,7 +15,6 @@ protocol GoalUIManagerDelegate : class {
     func didFailwithError(error: Error)
 }
 
-
 class CaveAddViewController: UIViewController{
 
     let DangunQueue = DispatchQueue(label: "DG")
@@ -27,8 +26,6 @@ class CaveAddViewController: UIViewController{
         goalTextView.delegate = self
         getDate()
     }
-
-
 
     @IBOutlet weak var goalTextView: UITextView!
     @IBOutlet weak var startDate: UILabel!
@@ -47,9 +44,9 @@ class CaveAddViewController: UIViewController{
     //처음 저장
     @IBAction func startPressed(_ sender: UIButton) {
         
-        ///let StartDate = Date()  <---- 원래 값
-        let startDate = Calendar.current.date(byAdding: .day, value: -37, to: Date())! /// 추후 삭제
-        let lastDate = Calendar.current.date(byAdding: .day, value: 99, to: startDate)!
+        let startDate = Date()
+        let deleteDate = Calendar.current.date(byAdding: .day, value: -90, to: startDate)!
+        let lastDate = Calendar.current.date(byAdding: .day, value: 99, to: deleteDate)!
         let encoder = JSONEncoder()
         
         if let description = goalTextView.text,
@@ -71,6 +68,7 @@ class CaveAddViewController: UIViewController{
             defaults.set(startDateForDB, forKey: keyForDf.crrGoalID)
             defaults.set(0, forKey: keyForDf.crrNumOfSucc)
             defaults.set(0, forKey: keyForDf.crrNumOfFail)
+            defaults.set(usersFailAllowInput, forKey: keyForDf.crrFailAllowance)
             
             db.collection(K.FS_userCurrentGID).document(userID).setData([G.currentGoal: startDateForDB], merge: true)
             
@@ -95,9 +93,9 @@ class CaveAddViewController: UIViewController{
                 } else {
                     print("New goal saved successfully")
                 }}
-            
+        
             CaveAddViewController.delegate?.newGoalAddedUpdateView(newGoal)
-//            NotificationCenter.default.post(name: goalAddedHistoryUpdateNoti, object: nil, userInfo: nil)
+
             goalManager.loadGeneralInfo(forDelegate: false) { (UsersGeneralInfo) in
                 let update = UsersGeneralInfo.totalTrial + 1
                 db.collection(K.FS_userGeneral).document(userID).setData([
@@ -110,6 +108,7 @@ class CaveAddViewController: UIViewController{
             dismiss(animated: true, completion: nil)
         }
     }
+    
  
     
     func getDate(){

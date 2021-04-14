@@ -11,7 +11,7 @@ import Firebase
 
 class RegisterEmailVC: UIViewController {
     
-    let goalManager = GoalManager()
+    let InitialVC = InitialLoginViewController()
     
     @IBOutlet weak var emailInput: UITextField!
     @IBOutlet weak var passwordOne: UITextField!
@@ -40,9 +40,7 @@ class RegisterEmailVC: UIViewController {
                     print(e.localizedDescription)
                 } else {
                     ///Defaults Clear하기
-                    defaults.set(email, forKey: keyForDf.crrUser)
-                    defaults.set(true, forKey: keyForDf.loginStatus)
-                    self.goalManager.initialDataSetForIdAndGeneralInfo(id: email)
+                    self.InitialVC.setDefaultValues(userID: email)
                     self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
                     self.dismiss(animated: true, completion: nil)
                 }

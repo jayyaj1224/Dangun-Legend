@@ -23,11 +23,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enableAutoToolbar = true
         IQKeyboardManager.shared.keyboardDistanceFromTextField = 120.0
 
-        if defaults.bool(forKey: keyForDf.usedBefore) == false {
-            defaults.set(true, forKey: keyForDf.usedBefore)
+        if defaults.bool(forKey: keyForDf.firstLaunch) {
+            defaults.set(false, forKey: keyForDf.firstLaunch)
             defaults.set(false, forKey: keyForDf.goalExistence)
             defaults.set(K.none, forKey: keyForDf.nickName)
             defaults.set(false, forKey: keyForDf.loginStatus)
+            defaults.set(K.none, forKey: keyForDf.crrUser)
             // show how to use
             // currentGoal, currentArray -> Dummy Item Set
         }

@@ -7,45 +7,27 @@
 
 /*
  [ToDoList]
- 
-- 히스토리 삭제 기능 추가
-- DateManager, CaveAdd 테스트 가정들 전부 삭제
+
 - 로그인 실패 시, Alert설정
-- currentUser와 로그인 유저 다를 시, 커런유저데이터 셋업하는 작업
+- Goal Array Setting(Cave CollectionView)
+- cave view 실행능력 확률
+- historyview 에서 -번도전 중 -번 성공
+- 히스토리 안내페이지
  
- 
- 
- 
- 
+
  [Memo]
  
- func printingData(){
-     for key in UserDefaults.standard.dictionaryRepresentation().keys {
-         var arr : [String] = []
-         arr.append(key)
-         print("-->>UserDefaults Keys: \(arr)")
-     }
- }
+
  
- 
- 
- 
+
  
  [User Default Data]
  
- -->>UserDefaults Keys: ["Default.Key: goalExistence"]
- -->>UserDefaults Keys: ["Default.Key.crrNumOfFail"]
- -->>UserDefaults Keys: ["Default.Key: currentUser"]
- -->>UserDefaults Keys: ["Default.Key: crrNumOfSucc"]
- -->>UserDefaults Keys: ["Default.Key: nickName"]
- -->>UserDefaults Keys: ["Default.Key: usedBefore"]
- -->>UserDefaults Keys: ["Default.Key: crrGoalID"]
- -->>UserDefaults Keys: ["Default.Key: currentDaysArray"]
- -->>UserDefaults Keys: ["Default.Key: currentGoal"]
- -->>UserDefaults Keys: ["Default.Key: loginStatus"]
+ -->>UserDefaults Keys
+// -->>> 초기 세팅값:currentUser  crrGoalID  goalExistence  crrFailAllowance  loginStatus
+//                  currentGoal   nickName  crrNumOfFail  currentDaysArray  crrNumOfSucc
 
 
- 
                     DB              Default
 목표 추가 ->       generalInfo
                  goal한개Info       goal한개Info
@@ -82,14 +64,26 @@ class HomeViewController: UIViewController {
             welcome()
             print("-->> User Logged In: \(defaults.string(forKey: keyForDf.crrUser)!)")
         }
-        //printUserDefaultKeys()
+//        printUserDefaultKeys()
     }
     
-
+    // -->>> 초기 세팅값:    goalExistence  crrFailAllowance
+    //
     @IBAction func logoutPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "InitialVC", sender: self)
         defaults.set(false, forKey: keyForDf.loginStatus)
         defaults.removeObject(forKey: keyForDf.crrUser)
+        defaults.set(K.none, forKey: keyForDf.nickName)
+        
+        defaults.removeObject(forKey: keyForDf.crrDaysArray)
+        defaults.removeObject(forKey: keyForDf.crrGoal)
+        defaults.removeObject(forKey: keyForDf.crrGoalID)
+        
+        defaults.removeObject(forKey: keyForDf.crrNumOfSucc)
+        defaults.removeObject(forKey: keyForDf.crrNumOfFail)
+        
+        defaults.removeObject(forKey: keyForDf.crrFailAllowance)
+        defaults.removeObject(forKey: keyForDf.goalExistence)
     }
     
     func welcome() {
@@ -104,14 +98,10 @@ class HomeViewController: UIViewController {
     
     func printUserDefaultKeys(){
         for key in UserDefaults.standard.dictionaryRepresentation().keys {
-            var arr : [String] = []
-            arr.append(key)
-            print("-->>UserDefaults Keys: \(arr)")
-        }
-
-    }
+            if key.localizedStandardContains("Default.Key"){
+                print("-->>UserDefaults Keys: \(key)")}}}
     
-
-
+    
 }
+
 

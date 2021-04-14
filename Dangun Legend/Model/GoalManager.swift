@@ -35,14 +35,15 @@ class GoalManager {
         for i in 1...numOfDays {
             let start = newGoal.startDate
             let date = Calendar.current.date(byAdding: .day, value: (i-1), to: start)!
-            let singleDay = SingleDayInfo(date: date, dayNum: i, success: false, userChecked: false)
+            let DateForDB = dateManager.dateFormat(type: "yyyyMMdd", date: date)
+            let singleDay = SingleDayInfo(date: DateForDB, dayNum: i, success: false, userChecked: false)
             daysArray.append(singleDay)
             db.collection(K.FS_userCurrentArr).document(newGoal.userID).setData(
                 ["day \(i)": [
-                    sd.date: date,
+                    sd.date: DateForDB,
                     sd.dayNum: i,
                     sd.success: false,
-                    sd.userChecked: false
+                    sd.userChecked: false,
                 ]
             ], merge: true)
         }
@@ -99,30 +100,34 @@ class GoalManager {
                 ]
             ], merge: true)
         }
-        NotificationCenter.default.post(name: goalAddedHistoryUpdateNoti, object: nil, userInfo: nil)
     }
         
     func failCount(){
         let userID = defaults.string(forKey: keyForDf.crrUser)!
+        let failAllowance = defaults.integer(forKey: keyForDf.crrFailAllowance)
         let goalID = defaults.string(forKey: keyForDf.crrGoalID)!
         var numOfFail = defaults.integer(forKey: keyForDf.crrNumOfFail) as Int
-        numOfFail += 1
-        defaults.set(numOfFail, forKey: keyForDf.crrNumOfFail)
-        db.collection(K.FS_userCurrentGoal).document(userID).setData(
-            [goalID: [
-                G.numOfFail: numOfFail
-            ]], merge: true)
-        
-        loadGeneralInfo(forDelegate: false) { (UsersGeneralInfo) in
-            var info = UsersGeneralInfo
-            info.totalDaysBeenThrough += 1
-            db.collection(K.FS_userGeneral).document(userID).setData([
-                fb.GI_generalInfo : [
-                    fb.GI_totalDaysBeenThrough : info.totalDaysBeenThrough
-                ]
-            ], merge: true)
+        print("### numOfFail:\(numOfFail) - failAllowance: \(failAllowance)")
+        if failAllowance == numOfFail {
+            NotificationCenter.default.post(Notification(name: failedNoti))
+        } else {
+            numOfFail += 1
+            defaults.set(numOfFail, forKey: keyForDf.crrNumOfFail)
+            db.collection(K.FS_userCurrentGoal).document(userID).setData(
+                [goalID: [
+                    G.numOfFail: numOfFail
+                ]], merge: true)
+            
+            loadGeneralInfo(forDelegate: false) { (UsersGeneralInfo) in
+                var info = UsersGeneralInfo
+                info.totalDaysBeenThrough += 1
+                db.collection(K.FS_userGeneral).document(userID).setData([
+                    fb.GI_generalInfo : [
+                        fb.GI_totalDaysBeenThrough : info.totalDaysBeenThrough
+                    ]
+                ], merge: true)
+            }
         }
-        NotificationCenter.default.post(name: goalAddedHistoryUpdateNoti, object: nil, userInfo: nil)
     }
     
     
@@ -152,77 +157,52 @@ class GoalManager {
     }
     
     
-    //아이디가 없으면
-    func initialDataSetForIdAndGeneralInfo(id:String) {
-        let date = dateManager.dateFormat(type: "yyyy년M월d일", date: Date())
-        let idList = db.collection(K.userIdList).document(id)
-        idList.getDocument { (document, error) in
-            if let doc = document {
-                if doc.exists == false {
-                    ///첫 로그인
-                    print("No saved general info about \(id)")
-                    
-                    db.collection(K.FS_userGeneral).document(id).setData([
-                        fb.GI_generalInfo : [
-                            fb.GI_totalTrial : 0,
-                            fb.GI_totalDaysBeenThrough : 0,
-                            fb.GI_totalSuccess : 0,
-                            fb.GI_totalAchievement : 0,
-                            fb.GI_successPerHundred : 0
-                        ]
-                    ], merge: true)
-                    db.collection(K.userIdList).document(id).setData([
-                        "date" : date
-                    ], merge: true)
-                    defaults.set(false, forKey: keyForDf.goalExistence)
-                    defaults.set(K.none, forKey: keyForDf.nickName)
-                    defaults.set(0, forKey: keyForDf.crrNumOfSucc)
-                    defaults.set(0, forKey: keyForDf.crrNumOfFail)
-                    defaults.removeObject(forKey: keyForDf.crrGoalID)
-                    defaults.removeObject(forKey: keyForDf.crrGoal)
-                    defaults.removeObject(forKey: keyForDf.crrDaysArray)
-
-                } else {
-                    ///존재하는 id로 로그인했다면.
-                }}}}
 
     
     
     
     func quitTheGoal() {
         let userID = defaults.string(forKey: keyForDf.crrUser)!
+        let numSucc = defaults.integer(forKey: keyForDf.crrNumOfSucc)
+        let numFail = defaults.integer(forKey: keyForDf.crrNumOfFail)
         let decoder = JSONDecoder()
         if let savedData = defaults.data(forKey: keyForDf.crrGoal) as Data?
         {
             if let arr = try? decoder.decode(GoalStruct.self, from: savedData) {
                 let startDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: arr.startDate)
                 let lastDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: arr.endDate)
-                db.collection(K.FS_userHistory).document(userID).setData([
-                    arr.goalID : [
-                        G.userID: userID,
-                        G.goalID : arr.goalID,
-                        G.startDate: startDateForDB,
-                        G.endDate: lastDateForDB,
-                        G.failAllowance : arr.failAllowance,
-                        G.description : arr.description,
-                        G.numOfDays: 100,
-                        G.completed : true,
-                        G.goalAchieved: false,
-                        G.numOfSuccess: arr.numOfSuccess,
-                        G.numOfFail: arr.numOfFail
-                    ]
-                ], merge: true)
+                DangunQueue.async {
+                    db.collection(K.FS_userHistory).document(userID).setData([
+                        arr.goalID : [
+                            G.userID: userID,
+                            G.goalID : arr.goalID,
+                            G.startDate: startDateForDB,
+                            G.endDate: lastDateForDB,
+                            G.failAllowance : arr.failAllowance,
+                            G.description : arr.description,
+                            G.numOfDays: 100,
+                            G.completed : true,
+                            G.goalAchieved: false,
+                            G.numOfSuccess: numSucc,
+                            G.numOfFail: numFail
+                        ]
+                    ], merge: true)
+                }
+                DangunQueue.async {
+                    db.collection(K.FS_userCurrentGID).document(userID).delete()
+                    db.collection(K.FS_userCurrentArr).document(userID).delete()
+                    db.collection(K.FS_userCurrentGoal).document(userID).delete()
+                    defaults.set(0, forKey: keyForDf.crrNumOfSucc)
+                    defaults.set(0, forKey: keyForDf.crrNumOfFail)
+                    defaults.removeObject(forKey: keyForDf.crrGoalID)
+                    defaults.removeObject(forKey: keyForDf.crrGoal)
+                    defaults.removeObject(forKey: keyForDf.crrDaysArray)
+                    self.loadHistory()
+                }
                 
             }
         }
-        db.collection(K.FS_userCurrentGID).document(userID).setData([G.currentGoal: ""])
-        db.collection(K.FS_userCurrentArr).document(userID).delete()
-        db.collection(K.FS_userCurrentGoal).document(userID).delete()
-        defaults.set(0, forKey: keyForDf.crrNumOfSucc)
-        defaults.set(0, forKey: keyForDf.crrNumOfFail)
-        defaults.removeObject(forKey: keyForDf.crrGoalID)
-        defaults.removeObject(forKey: keyForDf.crrGoal)
-        defaults.removeObject(forKey: keyForDf.crrDaysArray)
+
     }
     
     var delegate: HistoryUpdateDelegate?
@@ -231,11 +211,11 @@ class GoalManager {
         let userID = defaults.string(forKey: keyForDf.crrUser)!
         let historyDoc = db.collection(K.FS_userHistory).document(userID)
         let currentDoc = db.collection(K.FS_userCurrentGoal).document(userID)
-        self.loadFromDocRef(docRef: historyDoc)
-        self.loadFromDocRef(docRef: currentDoc)
+        self.loadFromDocRef(docRef: historyDoc, current: false)
+        self.loadFromDocRef(docRef: currentDoc, current: true)
     }
 
-    func loadFromDocRef(docRef: DocumentReference) {
+    func loadFromDocRef(docRef: DocumentReference, current: Bool) {
         docRef.getDocument { (querySnapshot, error) in
             if let e = error {
                 print("load doc failed: \(e.localizedDescription)")
@@ -258,9 +238,11 @@ class GoalManager {
                                 let startDate = self.dateManager.dateFromString(string: start)
                                 let endDate = self.dateManager.dateFromString(string: end)
                                 let aHistory = GoalStruct(userID: uID, goalID: gID, startDate: startDate, endDate: endDate, failAllowance: fail, description: des, numOfDays: daysNum, completed: compl, goalAchieved: goalAch, numOfSuccess: numOfSuc, numOfFail: numOfFail)
-                                print(aHistory)
                                 self.delegate?.loadHistory(self, history: aHistory)
-                            }}}}}}}
+                            }}}}}
+            NotificationCenter.default.post(Notification(name: labelControlNoti, object: nil, userInfo: nil))
+        }
+    }
 
 
     
@@ -295,7 +277,7 @@ struct GoalStruct: Codable {
 
 ///Array로 UserDefault
 struct SingleDayInfo: Codable {
-    let date: Date
+    let date: String
     let dayNum: Int
     var success: Bool
     var userChecked : Bool

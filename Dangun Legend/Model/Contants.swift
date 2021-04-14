@@ -9,7 +9,7 @@ import Foundation
 
 struct K {
     static let History = "History"
-    static let userIdList = "userIdList"
+
     static let goals = "goals"
     static let userID = "userID"
     static let cellDayNum = "cellDayNum"
@@ -20,12 +20,13 @@ struct K {
     static let fail = "fail"
     static let daysPassed = "daysPassed"
     
-    
+    static let FS_userIdList = "userIdList"
     static let FS_userCurrentArr = "userCurrentArr"
     static let FS_userCurrentGID = "userCurrentGID"
     static let FS_userGeneral = "userGeneral"
     static let FS_userCurrentGoal = "userCurrentGoal"
     static let FS_userHistory = "userHistory"
+    static let FS_userNickName = "userNickName"
 
     
 }
@@ -54,7 +55,7 @@ struct G {
 
 
 struct keyForDf {
-    static let usedBefore = "Default.Key: usedBefore"
+    static let firstLaunch = "Default.Key: usedBefore"
     static let goalExistence = "Default.Key: goalExistence"
     static let loginStatus = "Default.Key: loginStatus"
     
@@ -64,6 +65,8 @@ struct keyForDf {
     static let crrGoal = "Default.Key: currentGoal"
     static let crrDaysArray = "Default.Key: currentDaysArray"
     static let crrUser = "Default.Key: currentUser"
+    static let crrFailAllowance = "Default.Key: crrFailAllowance"
+    
     
     static let nickName = "Default.Key: nickName"
     
@@ -85,4 +88,5 @@ struct sd {
     static let dayNum = "dayNum"
     static let success = "success"
     static let userChecked = "userChecked"
+    static let startDate = "startDate"
 }

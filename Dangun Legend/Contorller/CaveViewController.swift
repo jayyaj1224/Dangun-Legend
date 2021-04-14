@@ -11,7 +11,7 @@ import UIKit
 import Firebase
 
 let checkTheDateNoti : Notification.Name = Notification.Name("CheckTheDateNotification")
-let colorNoti: Notification.Name = Notification.Name("colorNotification")
+let failedNoti: Notification.Name = Notification.Name("failedNotification")
 
 class CaveViewController: UIViewController {
     
@@ -20,22 +20,22 @@ class CaveViewController: UIViewController {
     var goalManager = GoalManager()
     var currentGoal : GoalStruct?
     var currentDaysArray : [SingleDayInfo]?
+    @IBOutlet weak var collectionVw: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         CaveAddViewController.delegate = self
-        checkTodayButtonUIChange()
-        showGoalManageScrollView(defaults.bool(forKey: keyForDf.goalExistence))
         NotificationCenter.default.addObserver(self, selector: #selector(self.checkAlert(_:)), name: checkTheDateNoti, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.goalFailed(_:)), name: failedNoti, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         updateDescription()  // currentGoal currentArray Update
         updateCollectionView()
-        
-        //printUserdefaults()
-        
+        checkTodayButtonUIChange()
+        collectionVw.reloadData()
+        showGoalManageScrollView(defaults.bool(forKey: keyForDf.goalExistence))
     }
 
     @IBOutlet var caveView: UIView!
@@ -68,13 +68,14 @@ class CaveViewController: UIViewController {
     
     @IBAction func checkTodayPressed(_ sender: UIButton) {
         let start = currentGoal!.startDate
-
         let asking = todayAskString()
         let dayToDay = Calendar.current.dateComponents([.day], from: start, to: Date()).day! as Int
         let dayNum = dayToDay + 1
 
         let checkTodayAlert = UIAlertController.init(title: "오늘하루 어떠셨나요 :)", message: asking, preferredStyle: .actionSheet)
-        checkTodayAlert.addAction(UIAlertAction(title: "실패", style: .default, handler: { (UIAlertAction) in
+        checkTodayAlert.addAction(UIAlertAction(title: "실패", style: .default, handler: {
+            
+            (UIAlertAction) in
             self.userCheckSuccess(bool: false, dayNum: dayNum)
             self.goalManager.failCount()
         }))
@@ -102,9 +103,20 @@ class CaveViewController: UIViewController {
             if let dayNumber = noti.userInfo?[K.cellDayNum] as? Int {
                 self.userCheckSuccess(bool: true, dayNum: dayNumber)
                 self.goalManager.successCount()
+
             }}))
         
         present(checkTheDayPressed, animated: true, completion: nil)
+    }
+    
+    @objc func goalFailed(_ noti: Notification) {
+        let failedAlert = UIAlertController.init(title: "목표달성 실패", message: "허용가능한 불이행 횟수를 초과하여 목표달성에 실패하였습니다.", preferredStyle: .alert)
+        failedAlert.addAction(UIAlertAction(title: "확인", style: . destructive, handler: { (UIAlertAction) in
+            defaults.set(false, forKey: keyForDf.goalExistence)
+            self.goalManager.quitTheGoal()
+            self.showGoalManageScrollView(false)
+        }))
+        present(failedAlert, animated: true, completion: nil)
     }
     
 //    db.collection(K.userData).document(userID).setData([
@@ -275,10 +287,8 @@ class SquareCell : UICollectionViewCell {
     func updateSquares(info: SingleDayInfo){
         self.singleDayInfo = info
         let today = dateManager.dateFormat(type: "yyyyMMdd", date: Date())
-        let cellsDay = dateManager.dateFormat(type: "yyyyMMdd", date: info.date)
         
-        
-        if cellsDay > today {
+        if info.date > today {
             squareImage.image = #imageLiteral(resourceName: "EmptySquare")
             buttonOutlet.isEnabled = false
             
@@ -286,7 +296,7 @@ class SquareCell : UICollectionViewCell {
             todayLabel.text = String(info.dayNum)
             todayLabel.textColor = .systemGray5
             
-        } else if cellsDay < today {
+        } else if info.date < today {
             if info.userChecked {
                 todayLabel.alpha = 0
                 buttonOutlet.isEnabled = false

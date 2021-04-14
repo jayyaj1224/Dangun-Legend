@@ -421,6 +421,7 @@
                     <connections>
                         <outlet property="caveView" destination="lp5-AB-Wji" id="xib-vy-dsf"/>
                         <outlet property="checkToday" destination="Z61-Tj-eTh" id="nlc-0e-Zzv"/>
+                        <outlet property="collectionVw" destination="oUD-h1-dNa" id="nAL-Bh-uUQ"/>
                         <outlet property="dateLabel" destination="Db7-us-Yhn" id="Wr2-Jh-ep8"/>
                         <outlet property="daysLeftLabel" destination="UD4-ea-5wC" id="ZjZ-EY-ltM"/>
                         <outlet property="desFirstLine" destination="uwi-Xy-eSV" id="kvo-7a-oYF"/>
@@ -732,12 +733,12 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WQd-TD-txA">
-                                        <rect key="frame" x="274" y="257" width="125" height="31"/>
+                                        <rect key="frame" x="276" y="256" width="125" height="31"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="125" id="2dW-ye-zEs"/>
                                             <constraint firstAttribute="height" constant="31" id="mIw-Ca-e25"/>
                                         </constraints>
-                                        <state key="normal" title="Clean History" backgroundImage="signinbox">
+                                        <state key="normal" title="Clear History" backgroundImage="signinbox">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -750,8 +751,8 @@
                                     <constraint firstItem="TOb-SW-Ty7" firstAttribute="top" secondItem="F0s-4A-lPe" secondAttribute="bottom" constant="30" id="1N5-Mv-G6r"/>
                                     <constraint firstItem="wGM-O3-ZFW" firstAttribute="leading" secondItem="TRB-lC-KZD" secondAttribute="leading" id="3Lb-0M-jAI"/>
                                     <constraint firstItem="NmI-Pd-BYJ" firstAttribute="leading" secondItem="TOb-SW-Ty7" secondAttribute="leading" id="5cu-GH-onc"/>
-                                    <constraint firstAttribute="trailing" secondItem="WQd-TD-txA" secondAttribute="trailing" constant="15" id="A2V-Kv-UOe"/>
-                                    <constraint firstAttribute="bottom" secondItem="WQd-TD-txA" secondAttribute="bottom" constant="19" id="A5G-za-WSZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="WQd-TD-txA" secondAttribute="trailing" constant="13" id="A2V-Kv-UOe"/>
+                                    <constraint firstAttribute="bottom" secondItem="WQd-TD-txA" secondAttribute="bottom" constant="20" id="A5G-za-WSZ"/>
                                     <constraint firstItem="U6A-jf-hbE" firstAttribute="top" secondItem="TOb-SW-Ty7" secondAttribute="bottom" constant="8" id="CDt-Cz-Gj7"/>
                                     <constraint firstItem="oty-Eh-bBK" firstAttribute="leading" secondItem="Q14-Io-Swx" secondAttribute="leading" id="EdD-G2-6Gd"/>
                                     <constraint firstItem="NmI-Pd-BYJ" firstAttribute="top" secondItem="U6A-jf-hbE" secondAttribute="bottom" constant="20" id="HlH-8v-6fL"/>
@@ -1231,7 +1232,6 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="KuI-WU-K6Q"/>
                         <segue destination="5Ra-og-sYO" kind="relationship" relationship="viewControllers" id="fGQ-Dd-sIx"/>
                         <segue destination="Bbh-NF-GFa" kind="relationship" relationship="viewControllers" id="gs0-Dd-QSF"/>
-                        <segue destination="NTh-fi-MQq" kind="relationship" relationship="viewControllers" id="8IM-V6-60A"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PnW-wJ-P9K" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

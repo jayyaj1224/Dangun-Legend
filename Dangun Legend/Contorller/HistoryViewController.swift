@@ -5,11 +5,17 @@
 //  Created by JAY LEE on 2021/04/07.
 //
 
+
+ ///1. viewDidLoad:
+ ///2. Cave Added:
+ ///3. Cave Quit:
+
+
 import UIKit
 import Firebase
 import IQKeyboardManagerSwift
 
-let goalAddedHistoryUpdateNoti : Notification.Name = Notification.Name("goalAddedHistoryUpdateNoti")
+let labelControlNoti : Notification.Name = Notification.Name("labelControlNoti")
 
 protocol HistoryUpdateDelegate {
     func loadHistory(_ goalManager: GoalManager, history: GoalStruct)
@@ -42,30 +48,31 @@ class HistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         goalManager.delegate = self
+        self.userIDLabel.isHidden = true
         self.loadingLabel.alpha = 1
         self.historyIsEmptyLabel.alpha = 0
-        idControl()
         tableView.register(UINib(nibName: "HistoryTableViewCell", bundle: nil), forCellReuseIdentifier: "historyCell")
-        NotificationCenter.default.addObserver(self, selector: #selector(self.hitoryUpdate(_:)), name: goalAddedHistoryUpdateNoti, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.labelControl(_:)), name: labelControlNoti, object: nil)
     }
 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        idControl()
+        self.goalManager.loadGeneralInfo(forDelegate: true, { (UsersGeneralInfo) in })
         goalHistory = []
-        self.goalManager.loadGeneralInfo(forDelegate: true, { (UsersGeneralInfo) in print("delegated")})
         self.goalManager.loadHistory()
+        tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        self.loadingLabelControl(array: self.goalHistory)
+        //        self.loadingLabelControl(array: self.goalHistory)
     }
-
     
-    @objc func hitoryUpdate(_ noti: Notification) {
-        print("noti")
-        self.goalManager.loadHistory()
+    
+    @objc func labelControl(_ noti: Notification) {
+        loadingLabelControl()
     }
     
     
@@ -78,7 +85,9 @@ class HistoryViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    
     func resetHitoryData(){
+        self.goalHistory = []
         let userID = defaults.string(forKey: keyForDf.crrUser)!
         db.collection(K.FS_userGeneral).document(userID).setData([
             fb.GI_generalInfo : [
@@ -89,11 +98,15 @@ class HistoryViewController: UIViewController {
                 fb.GI_successPerHundred : 0
             ]
         ], merge: true)
-        db.collection(K.FS_userCurrentGID).document(userID).delete()
-        db.collection(K.FS_userCurrentArr).document(userID).delete()
+
+//        db.collection(K.FS_userCurrentGID).document(userID).delete()
+//        db.collection(K.FS_userCurrentArr).document(userID).delete()
         db.collection(K.FS_userHistory).document(userID).delete()
         dgQueue.async {
             self.goalManager.loadHistory()
+        }
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
     }
     
@@ -101,27 +114,53 @@ class HistoryViewController: UIViewController {
     
     func savePressed(){
         if idInput.isHidden {
+            ///reset눌렀을때
             idInput.isHidden = false
             idSaveButtonOutlet.setTitle("Save", for: .normal)
             userIDLabel.isHidden = true
             defaults.set(K.none, forKey: keyForDf.nickName)
         } else {
+            ///닉네임 save눌렀을때
             idInput.resignFirstResponder()
             let name = idInput.text!
             idInput.text = ""
             userIDLabel.isHidden = false
             defaults.set(name, forKey: keyForDf.nickName)
+            saveNickNameOnDB(name)
             userIDLabel.text = name
             idInput.isHidden = true
             idSaveButtonOutlet.setTitle("Clear", for: .normal)
         }
     }
     
+    func saveNickNameOnDB(_ nickName: String){
+        if let userID = defaults.string(forKey: keyForDf.crrUser) {
+            db.collection(K.FS_userNickName).document(userID).setData(["nickName":nickName])
+        }
+    }
+    
     func idControl() {
+        let userID = defaults.string(forKey: keyForDf.crrUser)!
         if defaults.string(forKey: keyForDf.nickName) == K.none {
-            userIDLabel.isHidden = true
-            idInput.isHidden = false
-            idSaveButtonOutlet.setTitle("Save", for: .normal)
+            let nickNameDocument = db.collection(K.FS_userNickName).document(userID)
+            nickNameDocument.getDocument { (document, error) in
+                if let doc = document {
+                    if doc.exists {
+                        if let data = doc.data() {
+                            if let nickName = data["nickName"] as? String {
+                                self.userIDLabel.isHidden = false
+                                self.idInput.isHidden = true
+                                self.userIDLabel.text = nickName
+                                self.idSaveButtonOutlet.setTitle("Clear", for: .normal)
+                            }
+                        }
+                    } else {
+                        self.userIDLabel.isHidden = true
+                        self.idInput.isHidden = false
+                        self.idSaveButtonOutlet.setTitle("Save", for: .normal)
+                    }
+                }
+            }
         } else {
             userIDLabel.isHidden = false
             idInput.isHidden = true
@@ -147,19 +186,17 @@ extension HistoryViewController: HistoryUpdateDelegate {
         self.successPerAttemptLabel.text = "총 \(info.totalTrial)번의 시도, \(info.totalAchievement)번의 목표달성에 성공"
     }
     
-    
     func loadHistory(_ goalManager: GoalManager, history: GoalStruct) {
         self.goalHistory.append(history)
         self.goalHistory.sort(by: { $0.goalID > $1.goalID} )
         DispatchQueue.main.async {
-            print("---->>>>\(self.goalHistory)")
-            self.loadingLabelControl(array: self.goalHistory)
+            self.loadingLabelControl()
             self.tableView.reloadData()
         }
     }
     
-    func loadingLabelControl(array: Array<Any>){
-        if array.isEmpty {
+    func loadingLabelControl() {
+        if self.goalHistory.isEmpty {
             loadingLabel.alpha = 0
             historyIsEmptyLabel.alpha = 1
         } else {
@@ -167,12 +204,6 @@ extension HistoryViewController: HistoryUpdateDelegate {
             historyIsEmptyLabel.alpha = 0
         }
     }
-    
-    func loadingLabelControl() {
-        loadingLabel.alpha = 0
-        historyIsEmptyLabel.alpha = 0
-    }
-    
     
 }
 
