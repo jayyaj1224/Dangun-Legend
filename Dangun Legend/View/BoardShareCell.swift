@@ -19,6 +19,9 @@ class BoardShareCell: UITableViewCell {
     
     
     
+    @IBOutlet weak var caveupperBoxImage: UIImageView!
+    @IBOutlet weak var terrificOutlet: UIView!
+    @IBOutlet weak var superOutlet: UIView!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var goalLabel: UILabel!
     @IBOutlet var achieveLabel: UILabel!

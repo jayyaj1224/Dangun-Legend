@@ -61,7 +61,7 @@ class BoardViewController: UIViewController {
                         let endDate = self.dateManager.dateFromString(string: end)
                         let bordInfo = GoalStructForBoard(userID: uID, goalID: gID, nickName: nickName, startDate: startDate, endDate: endDate, description: des, numOfSuccess: numOfSuc)
                         newboardGoals.append(bordInfo)
-                        newboardGoals.sort(by: { $0.goalID > $1.goalID} )
+                        newboardGoals.sort(by: { $0.numOfSuccess > $1.numOfSuccess} )
                         self.boardGoals = newboardGoals
                         print("*** crruserID :\(userID)")
                         print("*** board userID :\(uID)")
@@ -116,10 +116,25 @@ extension BoardViewController : UITableViewDataSource, UITableViewDelegate {
             cell.deleteOutlet.isHidden = true
         }
        
+        switch goal.numOfSuccess {
+        case 100:
+            cell.terrificOutlet.isHidden = true
+            cell.superOutlet.isHidden = false
+            cell.caveupperBoxImage.image = UIImage(named: "masterBox")
+        case 97...99:
+            cell.terrificOutlet.isHidden = false
+            cell.superOutlet.isHidden = true
+            cell.caveupperBoxImage.image = UIImage(named: "caveUpperBox")
+        default:
+            cell.terrificOutlet.isHidden = true
+            cell.superOutlet.isHidden = true
+            cell.caveupperBoxImage.image = UIImage(named: "caveUpperBox")
+        }
+        
         cell.goalID = goal.goalID
         cell.nameLabel.text = goal.nickName
         cell.goalLabel.text = goal.description
-        cell.achieveLabel.text = "100일 중 \(goal.numOfSuccess)일의 실행으로 목표달성 성공"
+        cell.achieveLabel.text = "\(goal.numOfSuccess)일"
         cell.dateLabel.text = "\(startDate) - \(endDate)"
         
         return cell

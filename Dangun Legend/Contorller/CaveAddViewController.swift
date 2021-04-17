@@ -43,8 +43,7 @@ class CaveAddViewController: UIViewController{
     
     //처음 저장
     @IBAction func startPressed(_ sender: UIButton) {
-        
-        let startDate = Calendar.current.date(byAdding: .day, value: -99, to: Date())!
+        let startDate = Date()
         let lastDate = Calendar.current.date(byAdding: .day, value: 99, to: startDate)!
         let encoder = JSONEncoder()
         
@@ -55,7 +54,7 @@ class CaveAddViewController: UIViewController{
             let lastDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: lastDate)
             
             let usersFailAllowInput = failAllowOutput.selectedSegmentIndex
-            let newGoal = GoalStruct(userID: userID, goalID: startDateForDB, startDate: startDate, endDate: lastDate, failAllowance: usersFailAllowInput, description: description, numOfDays: 100, completed: false, goalAchieved: false, numOfSuccess: 98, numOfFail: 0)
+            let newGoal = GoalStruct(userID: userID, goalID: startDateForDB, startDate: startDate, endDate: lastDate, failAllowance: usersFailAllowInput, description: description, numOfDays: 100, completed: false, goalAchieved: false, numOfSuccess: 0, numOfFail: 0)
             
             if let encoded = try? encoder.encode(newGoal) {
                 defaults.set(encoded, forKey: keyForDf.crrGoal)
@@ -65,7 +64,7 @@ class CaveAddViewController: UIViewController{
             
             defaults.set(true, forKey: keyForDf.goalExistence)
             defaults.set(startDateForDB, forKey: keyForDf.crrGoalID)
-            defaults.set(98, forKey: keyForDf.crrNumOfSucc)
+            defaults.set(0, forKey: keyForDf.crrNumOfSucc)
             defaults.set(0, forKey: keyForDf.crrNumOfFail)
             defaults.set(usersFailAllowInput, forKey: keyForDf.crrFailAllowance)
             
@@ -82,7 +81,7 @@ class CaveAddViewController: UIViewController{
                     G.numOfDays: 100,
                     G.completed : false,
                     G.goalAchieved: false,
-                    G.numOfSuccess: 95,
+                    G.numOfSuccess: 0,
                     G.numOfFail: 0
                 ]
             ], merge: true)

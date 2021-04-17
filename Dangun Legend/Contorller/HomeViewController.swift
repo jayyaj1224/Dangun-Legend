@@ -85,25 +85,27 @@ class HomeViewController: UIViewController {
     
     
     @IBOutlet weak var logoutOutlet: UIButton!
+    
+    
     @IBAction func resetDB(_ sender: Any) {
-        let userID = defaults.string(forKey: keyForDf.crrUser)!
-        db.collection(K.FS_userCurrentGID).document(userID).delete()
-        db.collection(K.FS_userCurrentArr).document(userID).delete()
-        db.collection(K.FS_userCurrentGoal).document(userID).delete()
-        db.collection(K.FS_userIdList).document(userID).delete()
-        db.collection(K.FS_userNickName).document(userID).delete()
-        db.collection(K.FS_userHistory).document(userID).delete()
-
-        db.collection(K.FS_userGeneral).document(userID).setData([
-            fb.GI_generalInfo : [
-                fb.GI_totalTrial : 0,
-                fb.GI_totalDaysBeenThrough : 0,
-                fb.GI_totalSuccess : 0,
-                fb.GI_totalAchievement : 0,
-                fb.GI_successPerHundred : 0
-            ]
-        ], merge: true)
-        logoutOutlet.sendActions(for: .touchUpInside)
+//        let userID = defaults.string(forKey: keyForDf.crrUser)!
+//        db.collection(K.FS_userCurrentGID).document(userID).delete()
+//        db.collection(K.FS_userCurrentArr).document(userID).delete()
+//        db.collection(K.FS_userCurrentGoal).document(userID).delete()
+//        db.collection(K.FS_userIdList).document(userID).delete()
+//        db.collection(K.FS_userNickName).document(userID).delete()
+//        db.collection(K.FS_userHistory).document(userID).delete()
+//
+//        db.collection(K.FS_userGeneral).document(userID).setData([
+//            fb.GI_generalInfo : [
+//                fb.GI_totalTrial : 0,
+//                fb.GI_totalDaysBeenThrough : 0,
+//                fb.GI_totalSuccess : 0,
+//                fb.GI_totalAchievement : 0,
+//                fb.GI_successPerHundred : 0
+//            ]
+//        ], merge: true)
+//        logoutOutlet.sendActions(for: .touchUpInside)
     }
     
     
