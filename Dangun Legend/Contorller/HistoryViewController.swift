@@ -134,6 +134,7 @@ class HistoryViewController: UIViewController {
 
     
     func savePressed(){
+
         if idInput.isHidden {
             ///reset눌렀을때
             idInput.isHidden = false
@@ -142,15 +143,20 @@ class HistoryViewController: UIViewController {
             defaults.set(K.none, forKey: keyForDf.nickName)
         } else {
             ///닉네임 save눌렀을때
-            idInput.resignFirstResponder()
-            let name = idInput.text!
-            idInput.text = ""
-            userIDLabel.isHidden = false
-            defaults.set(name, forKey: keyForDf.nickName)
-            saveNickNameOnDB(name)
-            userIDLabel.text = name
-            idInput.isHidden = true
-            idSaveButtonOutlet.setTitle("Clear", for: .normal)
+            if idInput.text == "" {
+                
+            } else {
+                idInput.resignFirstResponder()
+                let name = idInput.text!
+                idInput.text = ""
+                userIDLabel.isHidden = false
+                defaults.set(name, forKey: keyForDf.nickName)
+                saveNickNameOnDB(name)
+                userIDLabel.text = name
+                idInput.isHidden = true
+                idSaveButtonOutlet.setTitle("Clear", for: .normal)
+            }
+            
         }
     }
     

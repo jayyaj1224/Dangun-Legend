@@ -30,7 +30,6 @@ class ResultViewController: UIViewController {
     @IBOutlet weak var firstCongrats: UIImageView!
     @IBOutlet weak var goalDescriptionLabel: UILabel!
     @IBOutlet weak var accomplishedLabel: UILabel!
-    @IBOutlet weak var howWasItLabel: UILabel!
     
     @IBOutlet weak var ifWeEndureLabel: UILabel!
     @IBOutlet weak var weCanDoItLabel: UILabel!
@@ -70,30 +69,17 @@ class ResultViewController: UIViewController {
             }
         }
         
-        Timer.scheduledTimer(withTimeInterval: 10.7, repeats: false) { (timer) in
-            for n in 1...100 {
-                Timer.scheduledTimer(withTimeInterval: 0.02*Double(n), repeats: false) { (timer) in
-                    self.howWasItLabel.alpha = CGFloat(n)*0.01
-                }
-            }
-        }
         
-        Timer.scheduledTimer(withTimeInterval: 13.7, repeats: false) { (timer) in
+        Timer.scheduledTimer(withTimeInterval: 10.7, repeats: false) { (timer) in
             for n in 1...100 {
                 Timer.scheduledTimer(withTimeInterval: 0.02*Double(n), repeats: false) { (timer) in
                     self.ifWeEndureLabel.alpha = CGFloat(n)*0.01
                 }
             }
         }
-        Timer.scheduledTimer(withTimeInterval: 13.0, repeats: false) { (timer) in
-            for n in 1...100 {
-                Timer.scheduledTimer(withTimeInterval: 0.01*Double(n), repeats: false) { (timer) in
-                    self.howWasItLabel.alpha = CGFloat(100-n)*0.01
-                }
-            }
-        }
+
         
-        Timer.scheduledTimer(withTimeInterval: 16.5, repeats: false) { (timer) in
+        Timer.scheduledTimer(withTimeInterval: 13.5, repeats: false) { (timer) in
             for n in 1...100 {
                 Timer.scheduledTimer(withTimeInterval: 0.02*Double(n), repeats: false) { (timer) in
                     self.weCanDoItLabel.alpha = CGFloat(n)*0.01
@@ -101,21 +87,23 @@ class ResultViewController: UIViewController {
             }
         }
         
-        Timer.scheduledTimer(withTimeInterval: 19.5, repeats: false) { (timer) in
-            
-            self.caveIlluImage.alpha = 1
+        Timer.scheduledTimer(withTimeInterval: 16.5, repeats: false) { (timer) in
+            for n in 1...100 {
+                Timer.scheduledTimer(withTimeInterval: 0.005*Double(n), repeats: false) { (timer) in
+                    self.typoLabelImage.alpha = CGFloat(n)*0.01
+                }}
         }
         
-        Timer.scheduledTimer(withTimeInterval: 20.2, repeats: false) { (timer) in
+        Timer.scheduledTimer(withTimeInterval: 17.2, repeats: false) { (timer) in
             for n in 1...100 {
                 Timer.scheduledTimer(withTimeInterval: 0.02*Double(n), repeats: false) { (timer) in
-                    self.typoLabelImage.alpha = CGFloat(n)*0.01
+                    self.caveIlluImage.alpha = CGFloat(n)*0.01
                 }
             }
         }
         
         
-        Timer.scheduledTimer(withTimeInterval: 21.5, repeats: false) { (timer) in
+        Timer.scheduledTimer(withTimeInterval: 18.5, repeats: false) { (timer) in
             self.backButton.alpha = 1
             self.shareButtonOutlet.alpha = 1
         }
@@ -141,7 +129,6 @@ class ResultViewController: UIViewController {
         firstCongrats.alpha = 0
         goalDescriptionLabel.alpha = 0
         accomplishedLabel.alpha = 0
-        howWasItLabel.alpha = 0
         weCanDoItLabel.alpha = 0
         typoLabelImage.alpha = 0
         caveIlluImage.alpha = 0
