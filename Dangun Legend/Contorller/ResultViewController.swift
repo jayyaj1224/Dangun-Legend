@@ -12,6 +12,8 @@ import Firebase
 
 class ResultViewController: UIViewController {
     
+    let goalManager = GoalManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setDescription()
@@ -35,6 +37,7 @@ class ResultViewController: UIViewController {
     @IBOutlet weak var typoLabelImage: UIImageView!
     @IBOutlet weak var caveIlluImage: UIImageView!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var shareButtonOutlet: UIButton!
     
     func showResult(){
         Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (timer) in
@@ -114,6 +117,7 @@ class ResultViewController: UIViewController {
         
         Timer.scheduledTimer(withTimeInterval: 21.5, repeats: false) { (timer) in
             self.backButton.alpha = 1
+            self.shareButtonOutlet.alpha = 1
         }
         
         
@@ -142,10 +146,16 @@ class ResultViewController: UIViewController {
         typoLabelImage.alpha = 0
         caveIlluImage.alpha = 0
         resultBox.alpha = 0
+        shareButtonOutlet.alpha = 0
     }
     
     
     
+    @IBAction func shareBoardPressed(_ sender: UIButton) {
+        let alert = UIAlertController.init(title: "나의 성공 공유하기", message: "History 페이지에서 나의 성공을 공유할 수 있습니다 :-)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
     
     @IBAction func backPressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)

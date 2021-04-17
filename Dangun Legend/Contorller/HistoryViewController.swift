@@ -16,15 +16,17 @@ import Firebase
 import IQKeyboardManagerSwift
 
 let labelControlNoti : Notification.Name = Notification.Name("labelControlNoti")
+let shareSuccessNoti : Notification.Name = Notification.Name("shareSuccessNoti")
 
 protocol HistoryUpdateDelegate {
-    func loadHistory(_ goalManager: GoalManager, history: GoalStruct)
+    func loadHistory(_ goalManager: GoalManager, history: GoalStructForHistory)
     func setUpperBoxDescription(_ goalManager: GoalManager, info: UsersGeneralInfo)
+    func reloadTableView(_ goalManager: GoalManager)
 }
 
 class HistoryViewController: UIViewController {
     
-    var goalHistory : [GoalStruct] = []
+    var goalHistory : [GoalStructForHistory] = []
     let dateManager = DateManager()
     let goalManager = GoalManager()
     let dgQueue = DispatchQueue.init(label: "dgQueue")
@@ -53,6 +55,7 @@ class HistoryViewController: UIViewController {
         self.historyIsEmptyLabel.alpha = 0
         tableView.register(UINib(nibName: "HistoryTableViewCell", bundle: nil), forCellReuseIdentifier: "historyCell")
         NotificationCenter.default.addObserver(self, selector: #selector(self.labelControl(_:)), name: labelControlNoti, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.shareSuccess(_:)), name: shareSuccessNoti, object: nil)
     }
 
     
@@ -75,6 +78,25 @@ class HistoryViewController: UIViewController {
         loadingLabelControl()
     }
     
+    @objc func shareSuccess(_ noti: Notification) {
+        let load = defaults.string(forKey: keyForDf.nickName) ?? "닉네임 없음"
+        var nickName : String {
+            if load == K.none {
+                return "닉네임 없음"
+            } else {
+                return load
+            }
+        }
+        
+        let alert = UIAlertController.init(title: "Share to Board", message: "\(nickName) 이름으로 업적을 Board 페이지에 공유하시겠습니까?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "네", style: .default, handler: { (UIAlertAction) in
+            let goalID = noti.object as! String
+            self.shareSuccess(goalID: goalID)
+        }))
+        alert.addAction(UIAlertAction(title: "아니오", style: .destructive, handler:nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
     
     @IBAction func cleanHistoryPressed(_ sender: UIButton) {
         let alert = UIAlertController.init(title: "Clean History", message: "사용자의 정보를 초기화합니다.", preferredStyle: .alert)
@@ -84,6 +106,7 @@ class HistoryViewController: UIViewController {
         }))
         present(alert, animated: true, completion: nil)
     }
+    
     
     
     func resetHitoryData(){
@@ -98,13 +121,11 @@ class HistoryViewController: UIViewController {
                 fb.GI_successPerHundred : 0
             ]
         ], merge: true)
-
-//        db.collection(K.FS_userCurrentGID).document(userID).delete()
-//        db.collection(K.FS_userCurrentArr).document(userID).delete()
         db.collection(K.FS_userHistory).document(userID).delete()
         dgQueue.async {
             self.goalManager.loadHistory()
         }
+        self.goalManager.loadGeneralInfo(forDelegate: true, { (UsersGeneralInfo) in })
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -169,6 +190,55 @@ class HistoryViewController: UIViewController {
         }
     }
     
+    func shareSuccess(goalID: String) {
+        let userID = defaults.string(forKey: keyForDf.crrUser)!
+        let idDocument = db.collection(K.FS_userHistory).document(userID)
+        let load = defaults.string(forKey: keyForDf.nickName) ?? "닉네임 없음"
+        var nickName : String {
+            if load == K.none {
+                return "닉네임 없음"
+            } else {
+                return load
+            }
+        }
+        
+        idDocument.getDocument { (querySnapshot, error) in
+            if let e = error {
+                print("load doc failed: \(e.localizedDescription)")
+            } else {
+                if let idDoc = querySnapshot?.data() {
+                    if let aGoal = idDoc[goalID] as? [String:Any] {
+                        if let des = aGoal[G.description] as? String,
+                           let end = aGoal[G.endDate] as? String,
+                           let start = aGoal[G.startDate] as? String,
+                           let numOfSuc = aGoal[G.numOfSuccess] as? Int {
+                            db.collection(K.FS_board).document(goalID).setData([
+                                
+                                G.userID: userID,
+                                G.goalID : goalID,
+                                G.startDate: start,
+                                G.endDate: end,
+                                G.description : des,
+                                G.completed : true,
+                                G.goalAchieved: true,
+                                G.numOfSuccess: numOfSuc,
+                                G.nickName:  nickName
+                                
+                            ], merge: true)
+                            
+                            db.collection(K.FS_userHistory).document(userID).setData([
+                                goalID : [
+                                    G.shared: true
+                                ]
+                            ], merge: true)
+                        }
+                        DispatchQueue.main.async {
+                            self.goalHistory = []
+                            self.goalManager.loadHistory()
+
+                        }
+                    }}}}}
+    
 }
 
 
@@ -181,12 +251,12 @@ extension HistoryViewController: HistoryUpdateDelegate {
         } else {
             let ability = (Double(info.totalSuccess)/Double(info.totalDaysBeenThrough))*100
             let abilityString = String(format: "%.1f", ability)
-            self.commitAbilityPercentageLabel.text = "실행 능력 확률 \(abilityString)%"
+            self.commitAbilityPercentageLabel.text = "나의 성공확률 \(abilityString)%"
         }
         self.successPerAttemptLabel.text = "총 \(info.totalTrial)번의 시도, \(info.totalAchievement)번의 목표달성에 성공"
     }
     
-    func loadHistory(_ goalManager: GoalManager, history: GoalStruct) {
+    func loadHistory(_ goalManager: GoalManager, history: GoalStructForHistory) {
         self.goalHistory.append(history)
         self.goalHistory.sort(by: { $0.goalID > $1.goalID} )
         DispatchQueue.main.async {
@@ -194,6 +264,11 @@ extension HistoryViewController: HistoryUpdateDelegate {
             self.tableView.reloadData()
         }
     }
+    
+    func reloadTableView(_ goalManager: GoalManager) {
+        tableView.reloadData()
+    }
+    
     
     func loadingLabelControl() {
         if self.goalHistory.isEmpty {
@@ -222,20 +297,34 @@ extension HistoryViewController: UITableViewDataSource, UITableViewDelegate {
         let endDate = dateManager.dateFormat(type: "yyyy년M월d일", date: goal.endDate)
         let goalAnalysis = goalManager.historyGoalAnalysis(goal: goal)
         
+        cell.goalID = goal.goalID
+        
         cell.dateLabel.text = "\(startDate) - \(endDate)"
+        
+        if goal.shared {
+            cell.shareOutlet.tintColor = .darkGray
+            cell.shareOutlet.isEnabled = false
+        } else {
+            cell.shareOutlet.tintColor = .systemBlue
+            cell.shareOutlet.isEnabled = true
+        }
+        
         switch goalAnalysis.type {
         case 1:
             cell.goalResultLabel.text = goalAnalysis.analysis
             cell.progressLabel.text = "성공"
             cell.progressLabel.textColor = .systemBlue
+            cell.shareOutlet.isHidden = false
         case 2:
             cell.goalResultLabel.text = goalAnalysis.analysis
             cell.progressLabel.text = "실패"
             cell.progressLabel.textColor = .systemRed
+            cell.shareOutlet.isHidden = true
         case 3:
             cell.goalResultLabel.text = goalAnalysis.analysis
             cell.progressLabel.text = "진행중"
             cell.progressLabel.textColor = .systemGreen
+            cell.shareOutlet.isHidden = true
         default:
             cell.goalResultLabel.text = goalAnalysis.analysis
         }

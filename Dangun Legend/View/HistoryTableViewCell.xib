@@ -48,13 +48,23 @@
                                 <color key="textColor" systemColor="systemGreenColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dzM-uT-ZzM">
+                                <rect key="frame" x="291" y="7" width="111" height="30"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                <state key="normal" title="Board에 공유하기"/>
+                                <connections>
+                                    <action selector="sharePressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xwy-Y4-c5a"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="YoQ-ZM-amu" secondAttribute="trailing" constant="15" id="0Aw-E9-LQ9"/>
                             <constraint firstItem="L3l-rH-VHM" firstAttribute="leading" secondItem="KdG-WY-ila" secondAttribute="leading" constant="24" id="8Wj-Qu-V9d"/>
+                            <constraint firstItem="dzM-uT-ZzM" firstAttribute="top" secondItem="OAd-PF-cwd" secondAttribute="top" constant="7" id="9C6-q5-J2p"/>
                             <constraint firstAttribute="bottom" secondItem="YoQ-ZM-amu" secondAttribute="bottom" constant="10" id="AaE-n7-fdp"/>
                             <constraint firstItem="fWf-b1-Tkz" firstAttribute="leading" secondItem="L3l-rH-VHM" secondAttribute="leading" id="JGJ-v5-zcO"/>
+                            <constraint firstItem="dzM-uT-ZzM" firstAttribute="trailing" secondItem="OAd-PF-cwd" secondAttribute="trailing" constant="-14" id="Nlp-rq-Fnk"/>
                             <constraint firstItem="X2Q-fW-gt2" firstAttribute="leading" secondItem="L3l-rH-VHM" secondAttribute="leading" id="PPI-Vv-GeX"/>
                             <constraint firstItem="YoQ-ZM-amu" firstAttribute="top" secondItem="X2Q-fW-gt2" secondAttribute="bottom" constant="6" id="Rpx-fq-jbi"/>
                             <constraint firstItem="OAd-PF-cwd" firstAttribute="leading" secondItem="KdG-WY-ila" secondAttribute="leading" id="XX9-3i-oof"/>
@@ -83,6 +93,7 @@
                 <outlet property="goalDescriptionLabel" destination="L3l-rH-VHM" id="4yV-kW-bWK"/>
                 <outlet property="goalResultLabel" destination="X2Q-fW-gt2" id="pil-yB-3vZ"/>
                 <outlet property="progressLabel" destination="fWf-b1-Tkz" id="Hzw-JU-R7n"/>
+                <outlet property="shareOutlet" destination="dzM-uT-ZzM" id="8iW-Cb-2Sv"/>
             </connections>
             <point key="canvasLocation" x="133.33333333333334" y="171.09375"/>
         </tableViewCell>

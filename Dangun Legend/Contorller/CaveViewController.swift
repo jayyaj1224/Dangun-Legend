@@ -37,6 +37,9 @@ class CaveViewController: UIViewController {
         collectionVw.reloadData()
         showGoalManageScrollView(defaults.bool(forKey: keyForDf.goalExistence))
     }
+    
+    
+    
 
     @IBOutlet var caveView: UIView!
     @IBOutlet weak var startYour100DaysView: UIView!
@@ -48,12 +51,12 @@ class CaveViewController: UIViewController {
     
     @IBOutlet weak var desFirstLine: UILabel!
     @IBOutlet weak var desSecondLine: UILabel!
-    @IBOutlet weak var executePercentageLabel: UILabel!
     @IBOutlet weak var daysLeftLabel: UILabel!
     
     
     @IBOutlet weak var checkToday: UIButton!
     
+
     
     func showGoalManageScrollView(_ bool: Bool) {
         if bool {
@@ -74,36 +77,33 @@ class CaveViewController: UIViewController {
 
         let checkTodayAlert = UIAlertController.init(title: "오늘하루 어떠셨나요 :)", message: asking, preferredStyle: .actionSheet)
         checkTodayAlert.addAction(UIAlertAction(title: "실패", style: .default, handler: {
-            
             (UIAlertAction) in
-            self.userCheckSuccess(bool: false, dayNum: dayNum)
-            self.goalManager.failCount()
+            self.checkToday(successed: false, dayNum: dayNum)
         }))
         
         checkTodayAlert.addAction(UIAlertAction(title: "성공", style: .destructive, handler: { (UIAlertAction) in
-            self.userCheckSuccess(bool: true, dayNum: dayNum)
-            self.goalManager.successCount()
+            self.checkToday(successed: true, dayNum: dayNum)
         }))
         
         present(checkTodayAlert, animated: true, completion: nil)
-        checkTodayButtonUIChange()
+        let now = dateManager.dateFormat(type: "M월d일", date: Date())
+        let date = dateManager.dateFormat(type: "e", date: Date())
+        defaults.set(now, forKey: keyForDf.pressedMoment)
+        checkToday.isEnabled = false
+        checkToday.setTitle("\(now) \(date) 확인 완료", for: .normal)
     }
-    
     
     @objc func checkAlert(_ noti: Notification) {
         let checkTheDayPressed = UIAlertController.init(title: "미확인 날짜 체크", message: "이날 목표는 성공하셨나요?", preferredStyle: .alert)
         
         checkTheDayPressed.addAction(UIAlertAction(title: "실패", style: .default, handler: { (UIAlertAction) in
             if let dayNumber = noti.userInfo?[K.cellDayNum] as? Int {
-                self.userCheckSuccess(bool: false, dayNum: dayNumber)
-                self.goalManager.failCount()
+                self.checkToday(successed: false, dayNum: dayNumber)
             }}))
         
         checkTheDayPressed.addAction(UIAlertAction(title: "성공", style: .destructive, handler: { (UIAlertAction) in
             if let dayNumber = noti.userInfo?[K.cellDayNum] as? Int {
-                self.userCheckSuccess(bool: true, dayNum: dayNumber)
-                self.goalManager.successCount()
-
+                self.checkToday(successed: true, dayNum: dayNumber)
             }}))
         
         present(checkTheDayPressed, animated: true, completion: nil)
@@ -119,16 +119,44 @@ class CaveViewController: UIViewController {
         present(failedAlert, animated: true, completion: nil)
     }
     
-//    db.collection(K.userData).document(userID).setData([
-//        keyForDf.GI_generalInfo : [
-//            keyForDf.GI_totalTrial : info.totalTrial,
-//            keyForDf.GI_totalAchievement : info.totalAchievement,
-//            keyForDf.GI_successPerHundred : info.successPerHundred,
-//            keyForDf.GI_usersAbility : info.usersAbility
-//        ]
-//    ], merge: true)
     
-    func userCheckSuccess(bool: Bool,dayNum: Int){
+    func checkToday(successed: Bool, dayNum: Int){
+        let numOfsuccess = defaults.integer(forKey: keyForDf.crrNumOfSucc)
+        let numOfFail = defaults.integer(forKey: keyForDf.crrNumOfFail)
+        let decoder = JSONDecoder()
+        let coded = defaults.data(forKey: keyForDf.crrGoal)!
+        if let goal = try? decoder.decode(GoalStruct.self, from: coded){
+            let today = dateManager.dateFormat(type: "yyyyMMdd", date: Date())
+            let lastDay = dateManager.dateFormat(type: "yyyyMMdd", date: goal.endDate)
+            
+            if numOfsuccess+numOfFail == 99 {
+                ///Goal끝나는 경우
+                goalManager.lastDayControl(successed: successed, goal: goal)
+                performSegue(withIdentifier: "acc", sender: self)
+            } else {
+                
+                ArrayLocalAndDBupdate(bool: successed, dayNum: dayNum)
+                
+                if successed {
+                    goalManager.successCount()
+                } else {
+                    goalManager.failCount()
+                }
+                
+                if today == lastDay {
+                    let alert = UIAlertController.init(title: "미확인 날짜 존재", message: "아직 확인하지 못한 날짜를 체크해주세요.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
+                    present(alert, animated: true, completion: nil)
+                }
+                
+            }
+        }
+        
+    }
+    
+    
+    
+    func ArrayLocalAndDBupdate(bool: Bool,dayNum: Int){
         ///numOfSuccess, numOfFail db update
         let userID = defaults.string(forKey: keyForDf.crrUser)!
         if var theArray = currentDaysArray {
@@ -145,6 +173,7 @@ class CaveViewController: UIViewController {
                 defaults.set(encoded, forKey: keyForDf.crrDaysArray)
             }
         }
+        
         ///currentGoal Array 에 저장
         db.collection(K.FS_userCurrentArr).document(userID).setData(
             ["day \(dayNum)": [
@@ -179,21 +208,19 @@ class CaveViewController: UIViewController {
                 let daysPast = Calendar.current.dateComponents([.day], from: data.startDate, to: Date()).day! as Int
                 let start = dateManager.dateFormat(type: "yyyy년M월d일", date: data.startDate)
                 let end = dateManager.dateFormat(type: "yyyy년M월d일", date: data.endDate)
-                let executePercent = String(format: "%.1f", Double(numOfSuccess)/Double(daysPast+1)*100)
                 let failAllowed = data.failAllowance
                 DispatchQueue.main.async {
                     self.desFirstLine.text = "실행 성공: \(numOfSuccess)일   / 실패: \(numOfFail)일"
                     self.resetWarningText(leftChance:leftChance, chance: failAllowed)
                     print(leftChance)
-                    self.executePercentageLabel.text = "\(executePercent)%"
                     self.daysLeftLabel.text = "\(100-daysPast-1)일"
                     self.goalDescriptionLabel.text = data.description
                     self.dateLabel.text = "기간: \(start) - \(end)"                    
                 }
             }
-            
         }
     }
+    
     
     func resetWarningText(leftChance:Int, chance: Int){
         if leftChance == 0 {
@@ -228,23 +255,7 @@ extension CaveViewController: GoalUIManagerDelegate {
         print("")
     }
     
-    
-    
-//    func printUserdefaults(){
-//        let decoder = JSONDecoder()
-//        if let savedArray = defaults.data(forKey: K.currentDaysArray) as Data?,
-//           let savedGoal = defaults.data(forKey: K.currentGoal) as Data?
-//        {
-//            if let decodedArrray = try? decoder.decode([SingleDayInfo].self, from: savedArray),
-//               let decodedGoal = try? decoder.decode(GoalStruct.self, from: savedGoal){
-//                print("--->>> startDate: \(decodedGoal.startDate)")
-//                print("--->>> startDate: \(decodedGoal.endDate)")
-//                for single in decodedArrray{
-//                    print(single)
-//                }
-//            }
-//        }
-//    }
+
 
 }
 
@@ -358,8 +369,16 @@ extension CaveViewController {
     func checkTodayButtonUIChange(){
         let today = dateManager.dateFormat(type: "M월d일", date: Date())
         let date = dateManager.dateFormat(type: "e", date: Date())
-        checkToday.setTitle("\(today) \(date) 오늘 체크하기", for: .normal)
-        
+        let pressedMoment = defaults.string(forKey: keyForDf.pressedMoment)
+        if today == pressedMoment {
+            checkToday.isEnabled = false
+            checkToday.setTitle("\(today) \(date) 확인 완료", for: .normal)
+        } else {
+            checkToday.isEnabled = true
+            checkToday.setTitle("\(today) \(date) 오늘 체크하기", for: .normal)
+        }
     }
+
+    
     
 }

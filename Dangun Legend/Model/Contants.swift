@@ -26,6 +26,7 @@ struct K {
     static let FS_userGeneral = "userGeneral"
     static let FS_userCurrentGoal = "userCurrentGoal"
     static let FS_userHistory = "userHistory"
+    static let FS_board = "board"
     static let FS_userNickName = "userNickName"
 
     
@@ -51,6 +52,9 @@ struct G {
     static let progress = "progress"
     
     static let currentGoal = "currentGoal"
+    
+    static let nickName = "nickName"
+    static let shared = "shared"
 }
 
 
@@ -66,6 +70,7 @@ struct keyForDf {
     static let crrDaysArray = "Default.Key: currentDaysArray"
     static let crrUser = "Default.Key: currentUser"
     static let crrFailAllowance = "Default.Key: crrFailAllowance"
+    static let pressedMoment = "Default.Key: pressedMoment"
     
     
     static let nickName = "Default.Key: nickName"
