@@ -120,19 +120,19 @@ extension BoardViewController : UITableViewDataSource, UITableViewDelegate {
         case 100:
             cell.terrificOutlet.isHidden = true
             cell.superOutlet.isHidden = false
-            cell.caveupperBoxImage.image = UIImage(named: "masterBox")
+           
         case 97...99:
             cell.terrificOutlet.isHidden = false
             cell.superOutlet.isHidden = true
-            cell.caveupperBoxImage.image = UIImage(named: "caveUpperBox")
+
         default:
             cell.terrificOutlet.isHidden = true
             cell.superOutlet.isHidden = true
-            cell.caveupperBoxImage.image = UIImage(named: "caveUpperBox")
+
         }
         
         cell.goalID = goal.goalID
-        cell.nameLabel.text = goal.nickName
+        cell.nameLabel.text = "\(goal.nickName) 님의 업적"
         cell.goalLabel.text = goal.description
         cell.achieveLabel.text = "\(goal.numOfSuccess)일"
         cell.dateLabel.text = "\(startDate) - \(endDate)"
