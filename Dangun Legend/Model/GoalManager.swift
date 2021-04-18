@@ -99,17 +99,19 @@ class GoalManager {
             let start = newGoal.startDate
             let date = Calendar.current.date(byAdding: .day, value: (i-1), to: start)!
             let DateForDB = dateManager.dateFormat(type: "yyyyMMdd", date: date)
+            
             let singleDay = SingleDayInfo(date: DateForDB, dayNum: i, success: false, userChecked: false)
             daysArray.append(singleDay)
             db.collection(K.FS_userCurrentArr).document(newGoal.userID).setData(
                 ["day \(i)": [
                     sd.date: DateForDB,
                     sd.dayNum: i,
-                    sd.success: true,
-                    sd.userChecked: true
+                    sd.success: false,
+                    sd.userChecked: false
                 ]
-            ], merge: true)
+                ], merge: true)
         }
+        
         return daysArray
     }
     

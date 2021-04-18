@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="ipad12_9" orientation="portrait" layout="fullscreen" appearance="light"/>
+    <device id="retina6_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -13,14 +13,14 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xYM-wG-Qhq">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="683"/>
+                                <rect key="frame" x="0.0" y="44" width="428" height="463"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DANGUNMAINLOGO" translatesAutoresizingMaskIntoConstraints="NO" id="sMi-Xy-7Zo">
-                                        <rect key="frame" x="442.5" y="351" width="139" height="101"/>
+                                        <rect key="frame" x="151" y="246" width="126" height="91"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="sMi-Xy-7Zo" secondAttribute="height" multiplier="112:81" id="cni-pT-UMz"/>
                                         </constraints>
@@ -34,41 +34,51 @@
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ILLUMAIN" translatesAutoresizingMaskIntoConstraints="NO" id="ycr-Fo-ssY">
-                                <rect key="frame" x="0.0" y="858.5" width="1024" height="507.5"/>
+                                <rect key="frame" x="0.0" y="582" width="428" height="344"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch Text" translatesAutoresizingMaskIntoConstraints="NO" id="sDE-Wh-8jS">
-                                <rect key="frame" x="304" y="734.5" width="416" height="96"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="무제ㅇㅇㅇ 1" translatesAutoresizingMaskIntoConstraints="NO" id="JtZ-3X-5Zh">
+                                <rect key="frame" x="76" y="496.99999999999994" width="276" height="70.333333333333314"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="sDE-Wh-8jS" secondAttribute="height" multiplier="135:31" id="qkC-j7-xZX"/>
+                                    <constraint firstAttribute="width" secondItem="JtZ-3X-5Zh" secondAttribute="height" multiplier="407:104" id="dgJ-7o-ice"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="3333" translatesAutoresizingMaskIntoConstraints="NO" id="swH-cU-7k5">
+                                <rect key="frame" x="169" y="429" width="90" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="swH-cU-7k5" secondAttribute="height" multiplier="3:2" id="2jB-R6-aMf"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="R9X-1x-eTf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="sDE-Wh-8jS" firstAttribute="centerX" secondItem="R9X-1x-eTf" secondAttribute="centerX" id="5eV-IT-Y4b"/>
                             <constraint firstItem="ycr-Fo-ssY" firstAttribute="trailing" secondItem="R9X-1x-eTf" secondAttribute="trailing" id="8Ew-5Z-HTa"/>
+                            <constraint firstItem="JtZ-3X-5Zh" firstAttribute="centerX" secondItem="R9X-1x-eTf" secondAttribute="centerX" id="EBa-89-GAh"/>
                             <constraint firstItem="xYM-wG-Qhq" firstAttribute="leading" secondItem="R9X-1x-eTf" secondAttribute="leading" id="EmF-d6-82k"/>
                             <constraint firstAttribute="bottom" secondItem="ycr-Fo-ssY" secondAttribute="bottom" id="Eur-Ns-xU7"/>
                             <constraint firstItem="ycr-Fo-ssY" firstAttribute="height" secondItem="Ze5-6b-2t3" secondAttribute="height" multiplier="0.371652" id="LQv-pI-Zbd"/>
                             <constraint firstItem="xYM-wG-Qhq" firstAttribute="height" secondItem="Ze5-6b-2t3" secondAttribute="height" multiplier="0.5" id="Ney-48-Obo"/>
                             <constraint firstItem="xYM-wG-Qhq" firstAttribute="top" secondItem="R9X-1x-eTf" secondAttribute="top" id="VWZ-vg-Qqc"/>
                             <constraint firstItem="R9X-1x-eTf" firstAttribute="trailing" secondItem="xYM-wG-Qhq" secondAttribute="trailing" id="VnD-iD-eFN"/>
-                            <constraint firstItem="ycr-Fo-ssY" firstAttribute="top" secondItem="sDE-Wh-8jS" secondAttribute="bottom" constant="28" id="YxM-39-MeD"/>
-                            <constraint firstItem="sDE-Wh-8jS" firstAttribute="height" secondItem="Ze5-6b-2t3" secondAttribute="height" multiplier="0.07" id="gFa-Ie-OAt"/>
+                            <constraint firstItem="swH-cU-7k5" firstAttribute="height" secondItem="Ze5-6b-2t3" secondAttribute="height" multiplier="0.0647948" id="ZB7-8j-n5l"/>
+                            <constraint firstItem="JtZ-3X-5Zh" firstAttribute="height" secondItem="Ze5-6b-2t3" secondAttribute="height" multiplier="0.0761347" id="bEk-gP-7x7"/>
+                            <constraint firstItem="JtZ-3X-5Zh" firstAttribute="top" secondItem="swH-cU-7k5" secondAttribute="bottom" constant="8" symbolic="YES" id="hvs-TA-vhD"/>
+                            <constraint firstItem="swH-cU-7k5" firstAttribute="centerX" secondItem="R9X-1x-eTf" secondAttribute="centerX" id="vev-0i-onG"/>
+                            <constraint firstItem="ycr-Fo-ssY" firstAttribute="top" secondItem="JtZ-3X-5Zh" secondAttribute="bottom" constant="14.5" id="yc9-r7-C2e"/>
                             <constraint firstItem="ycr-Fo-ssY" firstAttribute="leading" secondItem="R9X-1x-eTf" secondAttribute="leading" id="zTZ-Yx-x1y"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="52.173913043478265" y="375"/>
+            <point key="canvasLocation" x="50.467289719626166" y="373.86609071274302"/>
         </scene>
     </scenes>
     <resources>
+        <image name="3333" width="2006" height="1338"/>
         <image name="DANGUNMAINLOGO" width="233" height="161"/>
         <image name="ILLUMAIN" width="1106" height="1136"/>
-        <image name="launch Text" width="1152" height="238"/>
+        <image name="무제ㅇㅇㅇ 1" width="3272" height="818"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

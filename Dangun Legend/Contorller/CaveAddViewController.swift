@@ -43,6 +43,16 @@ class CaveAddViewController: UIViewController{
     
     //처음 저장
     @IBAction func startPressed(_ sender: UIButton) {
+        if goalTextView.text != "" && goalTextView.text != "도전하고 싶은 목표를 적어주세요." {
+            saveGoal()
+        } else {
+            let alert = UIAlertController.init(title: "목표 미입력", message: "목표를 입력해주세요 :-)", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func saveGoal(){
         let startDate = Date()
         let lastDate = Calendar.current.date(byAdding: .day, value: 99, to: startDate)!
         let encoder = JSONEncoder()
@@ -81,7 +91,7 @@ class CaveAddViewController: UIViewController{
                     G.numOfDays: 100,
                     G.completed : false,
                     G.goalAchieved: false,
-                    G.numOfSuccess: 0,
+                    G.numOfSuccess: 76,
                     G.numOfFail: 0
                 ]
             ], merge: true)
@@ -107,9 +117,9 @@ class CaveAddViewController: UIViewController{
         }
     }
     
- 
     
-    func getDate(){
+    
+    func getDate() {
         let hundredInterval = DateInterval(start: Date(), duration: 86400*99)
         let lastDay = hundredInterval.end
         let startDate = dateManager.dateFormat(type: "yyyy-MM-dd", date: Date())

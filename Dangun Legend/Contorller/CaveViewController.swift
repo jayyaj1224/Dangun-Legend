@@ -281,10 +281,10 @@ extension CaveViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let itemSpacing: CGFloat = 0
         
         let textAreaHeight: CGFloat = 0
-        
+
         let width: CGFloat = (collectionView.bounds.width - itemSpacing)/10
         let height: CGFloat = width * 1 + textAreaHeight
-        
+
         return CGSize(width: width, height: height)
     }
     
