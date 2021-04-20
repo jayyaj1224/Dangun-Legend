@@ -52,7 +52,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
+    func applicationWillResignActive(_ application: UIApplication) {
+        
+    }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        <#code#>
+    }
 
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        <#code#>
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        <#code#>
+    }
     
     
 }

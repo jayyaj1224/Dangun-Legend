@@ -134,14 +134,8 @@ class CaveViewController: UIViewController {
                 goalManager.lastDayControl(successed: successed, goal: goal)
                 performSegue(withIdentifier: "acc", sender: self)
             } else {
-                
                 ArrayLocalAndDBupdate(bool: successed, dayNum: dayNum)
-                
-                if successed {
-                    goalManager.successCount()
-                } else {
-                    goalManager.failCount()
-                }
+                successed ? goalManager.successCount() : goalManager.failCount()
                 
                 if today == lastDay {
                     let alert = UIAlertController.init(title: "미확인 날짜 존재", message: "아직 확인하지 못한 날짜를 체크해주세요.", preferredStyle: .alert)
@@ -326,11 +320,7 @@ class SquareCell : UICollectionViewCell {
             if info.userChecked {
                 todayLabel.alpha = 0
                 buttonOutlet.isEnabled = false
-                if info.success {
-                    squareImage.image = #imageLiteral(resourceName: "SuccessSquare")
-                } else {
-                    squareImage.image = #imageLiteral(resourceName: "FailSquare")
-                }
+                squareImage.image = info.success ? #imageLiteral(resourceName: "SuccessSquare") : #imageLiteral(resourceName: "FailSquare")
                 
             } else {
                 squareImage.image = #imageLiteral(resourceName: "WarningSquare")
@@ -342,11 +332,7 @@ class SquareCell : UICollectionViewCell {
             todayLabel.text = "오늘"
             todayLabel.textColor = .black
             if info.userChecked {
-                if info.success {
-                    squareImage.image = #imageLiteral(resourceName: "todaySuccess")
-                } else {
-                    squareImage.image = #imageLiteral(resourceName: "todayFail")
-                }
+                squareImage.image = info.success ? #imageLiteral(resourceName: "todaySuccess") : #imageLiteral(resourceName: "todaySuccess")
             } else {
                 squareImage.image = #imageLiteral(resourceName: "todayEmpty")
             }

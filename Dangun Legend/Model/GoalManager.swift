@@ -222,11 +222,7 @@ class GoalManager {
                 self.loadGeneralInfo(forDelegate: false) { (UsersGeneralInfo) in
                     let info = UsersGeneralInfo
                     var totalSuc : Int {
-                        if successed {
-                            return info.totalSuccess + 1
-                        } else {
-                            return info.totalSuccess
-                        }
+                        return successed ? (info.totalSuccess + 1) : info.totalSuccess
                     }
                     let totalDays = info.totalDaysBeenThrough + 1
                     let totalAch = info.totalAchievement + 1
@@ -380,11 +376,7 @@ class GoalManager {
         var successNumber = 0
         var failNumber = 0
         for day in daysArray {
-            if day.success == true {
-                successNumber += 1
-            } else {
-                failNumber += 1
-            }
+            day.success ? (successNumber += 1) : (failNumber += 1)
         }
         let analysis = [K.success:successNumber, K.fail:failNumber]
         return analysis
