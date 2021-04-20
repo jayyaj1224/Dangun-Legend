@@ -236,6 +236,9 @@ class CaveViewController: UIViewController {
     
 }
 
+
+
+
 extension CaveViewController: GoalUIManagerDelegate {
     
     func newGoalAddedUpdateView(_ data: GoalStruct) {
