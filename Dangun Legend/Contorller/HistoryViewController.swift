@@ -81,11 +81,7 @@ class HistoryViewController: UIViewController {
     @objc func shareSuccess(_ noti: Notification) {
         let load = defaults.string(forKey: keyForDf.nickName) ?? "닉네임 없음"
         var nickName : String {
-            if load == K.none {
-                return "닉네임 없음"
-            } else {
-                return load
-            }
+            return load == K.none ? "닉네임 없음" : load
         }
         
         let alert = UIAlertController.init(title: "Share to Board", message: "\(nickName) 이름으로 업적을 Board 페이지에 공유하시겠습니까?", preferredStyle: .alert)
@@ -201,11 +197,7 @@ class HistoryViewController: UIViewController {
         let idDocument = db.collection(K.FS_userHistory).document(userID)
         let load = defaults.string(forKey: keyForDf.nickName) ?? "닉네임 없음"
         var nickName : String {
-            if load == K.none {
-                return "닉네임 없음"
-            } else {
-                return load
-            }
+            return load == K.none ? "닉네임 없음" : load
         }
         
         idDocument.getDocument { (querySnapshot, error) in
