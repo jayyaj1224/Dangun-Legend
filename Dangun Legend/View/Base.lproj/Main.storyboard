@@ -1904,7 +1904,7 @@
         <image name="goalbox" width="626" height="208"/>
         <image name="questionmark.circle" catalog="system" width="128" height="121"/>
         <image name="resultBox" width="639" height="158"/>
-        <image name="signinbox" width="128" height="128"/>
+        <image name="signinbox" width="410" height="150"/>
         <image name="stopwatch" catalog="system" width="121" height="128"/>
         <image name="timelapse" catalog="system" width="128" height="122"/>
         <image name="tortoise" catalog="system" width="128" height="68"/>

@@ -41,34 +41,44 @@ class BoardViewController: UIViewController {
     }
     
     func loadBoardGoals(){
+        let serialQueue = DispatchQueue.init(label: "serialQueue")
         var newboardGoals : [GoalStructForBoard] = []
         let userID = defaults.string(forKey: keyForDf.crrUser)!
         db.collection(K.FS_board).getDocuments() { (querySnapshot, err) in
             if let e = err {
                 print("load doc failed: \(e.localizedDescription)")
             } else {
-                for document in querySnapshot!.documents {
-                    let board = document.data()
-                    if let des = board[G.description] as? String,
-                       let end = board[G.endDate] as? String,
-                       let gID = board[G.goalID] as? String,
-                       let start = board[G.startDate] as? String,
-                       let numOfSuc = board[G.numOfSuccess] as? Int,
-                       let uID = board[G.userID] as? String,
-                       let nickName = board[G.nickName] as? String
-                    {
-                        let startDate = self.dateManager.dateFromString(string: start)
-                        let endDate = self.dateManager.dateFromString(string: end)
-                        let bordInfo = GoalStructForBoard(userID: uID, goalID: gID, nickName: nickName, startDate: startDate, endDate: endDate, description: des, numOfSuccess: numOfSuc)
-                        newboardGoals.append(bordInfo)
-                        newboardGoals.sort(by: { $0.numOfSuccess > $1.numOfSuccess} )
-                        self.boardGoals = newboardGoals
-                        print("*** crruserID :\(userID)")
-                        print("*** board userID :\(uID)")
-                        DispatchQueue.main.async {
-                            self.boardTableView.reloadData()
+                serialQueue.async {
+                    for document in querySnapshot!.documents {
+                        let board = document.data()
+                        if let des = board[G.description] as? String,
+                           let end = board[G.endDate] as? String,
+                           let gID = board[G.goalID] as? String,
+                           let start = board[G.startDate] as? String,
+                           let numOfSuc = board[G.numOfSuccess] as? Int,
+                           let uID = board[G.userID] as? String,
+                           let nickName = board[G.nickName] as? String
+                        {
+                            let startDate = self.dateManager.dateFromString(string: start)
+                            let endDate = self.dateManager.dateFromString(string: end)
+                            let bordInfo = GoalStructForBoard(userID: uID, goalID: gID, nickName: nickName, startDate: startDate, endDate: endDate, description: des, numOfSuccess: numOfSuc)
+                            newboardGoals.append(bordInfo)
+                            newboardGoals.sort(by: { $0.numOfSuccess > $1.numOfSuccess} )
+                            print("*** crruserID :\(userID)")
+                            print("*** board userID :\(uID)")
                         }
                     }
+                }
+                serialQueue.async {
+                    for goal in newboardGoals {
+                        if goal.userID == userID {
+                            newboardGoals.insert(goal, at: 0)
+                        }
+                        self.boardGoals = newboardGoals
+                    }
+                }
+                DispatchQueue.main.async {
+                    self.boardTableView.reloadData()
                 }
             }
         }

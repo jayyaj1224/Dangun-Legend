@@ -99,6 +99,46 @@ class GoalManager {
         return daysArray
     }
     
+    func daysArrayForTest(newGoal: GoalStruct) -> [SingleDayInfo] {
+        var daysArray : [SingleDayInfo] = []
+        //let numOfDays = newGoal.numOfDays
+        for i in 1...97 {
+            let start = newGoal.startDate
+            let date = Calendar.current.date(byAdding: .day, value: (i-1), to: start)!
+            let DateForDB = dateManager.dateFormat(type: "yyyyMMdd", date: date)
+            
+            let singleDay = SingleDayInfo(date: DateForDB, dayNum: i, success: true, userChecked: true)
+            daysArray.append(singleDay)
+            db.collection(K.FS_userCurrentArr).document(newGoal.userID).setData(
+                ["day \(i)": [
+                    sd.date: DateForDB,
+                    sd.dayNum: i,
+                    sd.success: true,
+                    sd.userChecked: true
+                ]
+                ], merge: true)
+        }
+        
+        for i in 98...100 {
+            let start = newGoal.startDate
+            let date = Calendar.current.date(byAdding: .day, value: (i-1), to: start)!
+            let DateForDB = dateManager.dateFormat(type: "yyyyMMdd", date: date)
+            
+            let singleDay = SingleDayInfo(date: DateForDB, dayNum: i, success: false, userChecked: false)
+            daysArray.append(singleDay)
+            db.collection(K.FS_userCurrentArr).document(newGoal.userID).setData(
+                ["day \(i)": [
+                    sd.date: DateForDB,
+                    sd.dayNum: i,
+                    sd.success: false,
+                    sd.userChecked: false
+                ]
+                ], merge: true)
+        }
+        
+        return daysArray
+    }
+    
     
     
     

@@ -248,6 +248,19 @@ extension CaveViewController: GoalUIManagerDelegate {
         updateCollectionView()
     }
     
+    func newGoalAddedUpdateViewforTest(_ data: GoalStruct) {
+        showGoalManageScrollView(true)
+        let array = goalManager.daysArrayForTest(newGoal: data)
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(array) {
+            defaults.set(encoded, forKey: keyForDf.crrDaysArray)
+        } else {
+            print("--->>> encode failed: \(keyForDf.crrDaysArray)")
+        }
+        updateDescription()
+        updateCollectionView()
+    }
+    
     func didFailwithError(error: Error) {
         print("")
     }
