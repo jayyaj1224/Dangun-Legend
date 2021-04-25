@@ -28,25 +28,9 @@ struct GoalStruct: Codable {
     
     var numOfSuccess : Int
     var numOfFail : Int
-}
-
-struct GoalStructForHistory: Codable {
-    let userID: String
-    let goalID: String
-    let startDate : Date
-    let endDate: Date
-    
-    let failAllowance: Int
-    let description: String
-
-    let numOfDays: Int
-    var completed: Bool
-    var goalAchieved: Bool
-    
-    var numOfSuccess : Int
-    var numOfFail : Int
     var shared: Bool
 }
+
 
 ///Array로 UserDefault
 struct SingleDayInfo: Codable {
@@ -291,7 +275,7 @@ class GoalManager {
                     self.loadGeneralInfo(forDelegate: false) { (UsersGeneralInfo) in
                         let info = UsersGeneralInfo
                         let totalDays = info.totalDaysBeenThrough + 1
-                        let sucPerHun = info.totalSuccess/info.totalTrial
+                        let sucPerHun = info.totalSuccess/info.totalTrial 
                         db.collection(K.FS_userGeneral).document(userID).setData([
                             fb.GI_generalInfo : [
                                 fb.GI_totalDaysBeenThrough : totalDays,
@@ -346,6 +330,7 @@ class GoalManager {
                 if let usersHistory = querySnapshot?.data() {
                     for history in usersHistory {
                         if let aGoal = history.value as? [String:Any] {
+                            
                             if let compl = aGoal[G.completed] as? Bool,
                                let des = aGoal[G.description] as? String,
                                let end = aGoal[G.endDate] as? String,
@@ -362,7 +347,8 @@ class GoalManager {
                             {
                                 let startDate = self.dateManager.dateFromString(string: start)
                                 let endDate = self.dateManager.dateFromString(string: end)
-                                let aHistory = GoalStructForHistory(userID: uID, goalID: gID, startDate: startDate, endDate: endDate, failAllowance: fail, description: des, numOfDays: daysNum, completed: compl, goalAchieved: goalAch, numOfSuccess: numOfSuc, numOfFail: numOfFail, shared: shared)
+                                let aHistory = GoalStruct(userID: uID, goalID: gID, startDate: startDate, endDate: endDate, failAllowance: fail, description: des, numOfDays: daysNum, completed: compl, goalAchieved: goalAch, numOfSuccess: numOfSuc, numOfFail: numOfFail, shared: shared)
+                                
                                 self.delegate?.loadHistory(self, history: aHistory)
                             }}}}}
             NotificationCenter.default.post(Notification(name: labelControlNoti, object: nil, userInfo: nil))
@@ -384,7 +370,7 @@ class GoalManager {
     
     
     //3번의 시도 후, 100일 중 98일의 실행으로 목표 달성 성공
-    func historyGoalAnalysis(goal : GoalStructForHistory) -> Analysis {
+    func historyGoalAnalysis(goal : GoalStruct) -> Analysis {
         
         let distanceday = Calendar.current.dateComponents([.day], from: goal.startDate, to: Date()).day! as Int
         

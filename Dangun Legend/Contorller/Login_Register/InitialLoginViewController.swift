@@ -161,11 +161,12 @@ class InitialLoginViewController: UIViewController, GIDSignInDelegate {
                                let start = aGoal[G.startDate] as? String,
                                let numOfFail = aGoal[G.numOfFail] as? Int,
                                let numOfSuc = aGoal[G.numOfSuccess] as? Int,
-                               let uID = aGoal[G.userID] as? String
+                               let uID = aGoal[G.userID] as? String,
+                               let shared = aGoal[G.shared] as? Bool
                             {
                                 let startDate = self.dateManager.dateFromString(string: start)
                                 let endDate = self.dateManager.dateFromString(string: end)
-                                let crrHistory = GoalStruct(userID: uID, goalID: gID, startDate: startDate, endDate: endDate, failAllowance: failAllw, description: des, numOfDays: daysNum, completed: compl, goalAchieved: goalAch, numOfSuccess: numOfSuc, numOfFail: numOfFail)
+                                let crrHistory = GoalStruct(userID: uID, goalID: gID, startDate: startDate, endDate: endDate, failAllowance: failAllw, description: des, numOfDays: daysNum, completed: compl, goalAchieved: goalAch, numOfSuccess: numOfSuc, numOfFail: numOfFail, shared: shared)
                                 defaults.set(true, forKey: keyForDf.goalExistence)
                                 defaults.set(gID, forKey: keyForDf.crrGoalID)
                                 defaults.set(numOfSuc, forKey: keyForDf.crrNumOfSucc)
@@ -215,6 +216,7 @@ class InitialLoginViewController: UIViewController, GIDSignInDelegate {
                     }}}}
     }
     
+
 
 }
 

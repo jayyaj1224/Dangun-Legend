@@ -19,14 +19,14 @@ let labelControlNoti : Notification.Name = Notification.Name("labelControlNoti")
 let shareSuccessNoti : Notification.Name = Notification.Name("shareSuccessNoti")
 
 protocol HistoryUpdateDelegate {
-    func loadHistory(_ goalManager: GoalManager, history: GoalStructForHistory)
+    func loadHistory(_ goalManager: GoalManager, history: GoalStruct)
     func setUpperBoxDescription(_ goalManager: GoalManager, info: UsersGeneralInfo)
     func reloadTableView(_ goalManager: GoalManager)
 }
 
 class HistoryViewController: UIViewController {
     
-    var goalHistory : [GoalStructForHistory] = []
+    var goalHistory : [GoalStruct] = []
     let dateManager = DateManager()
     let goalManager = GoalManager()
     let dgQueue = DispatchQueue.init(label: "dgQueue")
@@ -108,11 +108,19 @@ class HistoryViewController: UIViewController {
     func resetHitoryData(){
         self.goalHistory = []
         let userID = defaults.string(forKey: keyForDf.crrUser)!
+        let crrNumberOfSuccess = defaults.integer(forKey: keyForDf.crrNumOfSucc)
+        let crrNumberOfFail = defaults.integer(forKey: keyForDf.crrNumOfFail)
+        let goalExists = defaults.bool(forKey: keyForDf.goalExistence )
+        var currentlyRunning : Int { return goalExists ?  1 : 0 }
+//        print("crrNumberOfSuccess: \(crrNumberOfSuccess)")
+//        print("crrNumberOfFail: \(crrNumberOfFail)")
+//        print("goalExists: \(goalExists)")
+//        print("currentlyRunning: \(currentlyRunning)")
         db.collection(K.FS_userGeneral).document(userID).setData([
             fb.GI_generalInfo : [
-                fb.GI_totalTrial : 0,
-                fb.GI_totalDaysBeenThrough : 0,
-                fb.GI_totalSuccess : 0,
+                fb.GI_totalTrial : 0+currentlyRunning,
+                fb.GI_totalDaysBeenThrough : 0 + crrNumberOfSuccess + crrNumberOfFail,
+                fb.GI_totalSuccess : 0+crrNumberOfSuccess,
                 fb.GI_totalAchievement : 0,
                 fb.GI_successPerHundred : 0
             ]
@@ -254,7 +262,7 @@ extension HistoryViewController: HistoryUpdateDelegate {
         self.successPerAttemptLabel.text = "총 \(info.totalTrial)번의 시도, \(info.totalAchievement)번의 목표달성에 성공"
     }
     
-    func loadHistory(_ goalManager: GoalManager, history: GoalStructForHistory) {
+    func loadHistory(_ goalManager: GoalManager, history: GoalStruct) {
         self.goalHistory.append(history)
         self.goalHistory.sort(by: { $0.goalID > $1.goalID} )
         DispatchQueue.main.async {

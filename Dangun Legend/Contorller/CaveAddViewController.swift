@@ -66,7 +66,7 @@ class CaveAddViewController: UIViewController{
             let lastDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: lastDate)
             
             let usersFailAllowInput = failAllowOutput.selectedSegmentIndex
-            let newGoal = GoalStruct(userID: userID, goalID: startDateForDB, startDate: startDate, endDate: lastDate, failAllowance: usersFailAllowInput, description: description, numOfDays: 100, completed: false, goalAchieved: false, numOfSuccess: 0, numOfFail: 0)
+            let newGoal = GoalStruct(userID: userID, goalID: startDateForDB, startDate: startDate, endDate: lastDate, failAllowance: usersFailAllowInput, description: description, numOfDays: 100, completed: false, goalAchieved: false, numOfSuccess: 0, numOfFail: 0, shared: false)
             
             if let encoded = try? encoder.encode(newGoal) {
                 defaults.set(encoded, forKey: keyForDf.crrGoal)
@@ -94,7 +94,8 @@ class CaveAddViewController: UIViewController{
                     G.completed : false,
                     G.goalAchieved: false,
                     G.numOfSuccess: 76,
-                    G.numOfFail: 0
+                    G.numOfFail: 0,
+                    G.shared: false
                 ]
             ], merge: true)
             {(error) in

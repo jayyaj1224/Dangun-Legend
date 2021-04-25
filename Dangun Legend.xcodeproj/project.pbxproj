@@ -36,7 +36,6 @@
 		A4BBCC8F26297024007D2DE3 /* BoardShareCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4BBCC8D26297024007D2DE3 /* BoardShareCell.xib */; };
 		A4CDF1ED261809A400A08809 /* CaveAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */; };
 		A4CDF1F8261809FC00A08809 /* CaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CDF1F7261809FC00A08809 /* CaveViewController.swift */; };
-		A4D1439A262FD3D8006A4ED8 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A4D14398262FD3D8006A4ED8 /* DataModel.xcdatamodeld */; };
 		A7ECF3464CCD675C0876FD85 /* Pods_Dangun_LegendTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4115F978D496C1738E38CB8 /* Pods_Dangun_LegendTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +62,7 @@
 		482E835E189B783CE527223F /* Pods_Dangun_Legend.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dangun_Legend.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8552188C1427050E47DD9103 /* Pods-Dangun Legend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun Legend.debug.xcconfig"; path = "Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend.debug.xcconfig"; sourceTree = "<group>"; };
 		9DD87C6A75BA537906D5E6F7 /* Pods-Dangun Legend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun Legend.release.xcconfig"; path = "Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend.release.xcconfig"; sourceTree = "<group>"; };
+		A40CECDC2635123800F0CAC8 /* Dangun Legend.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Dangun Legend.entitlements"; sourceTree = "<group>"; };
 		A4115F978D496C1738E38CB8 /* Pods_Dangun_LegendTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dangun_LegendTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A411E5012619CD970057FAD3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		A420E00B261724D00039F2C8 /* Dangun Legend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dangun Legend.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,7 +95,6 @@
 		A4BBCC8D26297024007D2DE3 /* BoardShareCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BoardShareCell.xib; sourceTree = "<group>"; };
 		A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveAddViewController.swift; sourceTree = "<group>"; };
 		A4CDF1F7261809FC00A08809 /* CaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveViewController.swift; sourceTree = "<group>"; };
-		A4D14399262FD3D8006A4ED8 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		B994897BFF1A5C7482915A99 /* Pods_Dangun_Legend_Dangun_LegendUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dangun_Legend_Dangun_LegendUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1FC980DD9320AFA99CD0CD4 /* Pods-Dangun Legend-Dangun LegendUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun Legend-Dangun LegendUITests.debug.xcconfig"; path = "Target Support Files/Pods-Dangun Legend-Dangun LegendUITests/Pods-Dangun Legend-Dangun LegendUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		F25226CD8D48169F35EC8321 /* Pods-Dangun LegendTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun LegendTests.release.xcconfig"; path = "Target Support Files/Pods-Dangun LegendTests/Pods-Dangun LegendTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -164,6 +163,7 @@
 		A420E00D261724D00039F2C8 /* Dangun Legend */ = {
 			isa = PBXGroup;
 			children = (
+				A40CECDC2635123800F0CAC8 /* Dangun Legend.entitlements */,
 				A4CDF1E72618094700A08809 /* Model */,
 				A4CDF1EB2618098200A08809 /* View */,
 				A4CDF1E62618093300A08809 /* Contorller */,
@@ -225,7 +225,6 @@
 				A477762F261884DA002D866C /* Contants.swift */,
 				A49E4313261AADAC00E98619 /* GoalManager.swift */,
 				A442B2C9261D7C5A00B4CD12 /* DateManager.swift */,
-				A4D14398262FD3D8006A4ED8 /* DataModel.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -554,7 +553,6 @@
 				A442B2CA261D7C5A00B4CD12 /* DateManager.swift in Sources */,
 				A420E011261724D00039F2C8 /* SceneDelegate.swift in Sources */,
 				A49E4314261AADAC00E98619 /* GoalManager.swift in Sources */,
-				A4D1439A262FD3D8006A4ED8 /* DataModel.xcdatamodeld in Sources */,
 				A477762B26182E00002D866C /* GoogleSignInVC.swift in Sources */,
 				A445B5B5262D6B76003F4A1F /* AboutDangunVC.swift in Sources */,
 			);
@@ -733,6 +731,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Dangun Legend/Dangun Legend.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6TUZG6LW7U;
 				INFOPLIST_FILE = "Dangun Legend/Info.plist";
@@ -741,6 +740,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.02;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JL.Dangun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -754,6 +754,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Dangun Legend/Dangun Legend.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6TUZG6LW7U;
 				INFOPLIST_FILE = "Dangun Legend/Info.plist";
@@ -762,6 +763,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.02;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JL.Dangun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -897,19 +899,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		A4D14398262FD3D8006A4ED8 /* DataModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				A4D14399262FD3D8006A4ED8 /* DataModel.xcdatamodel */,
-			);
-			currentVersion = A4D14399262FD3D8006A4ED8 /* DataModel.xcdatamodel */;
-			path = DataModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = A420E003261724D00039F2C8 /* Project object */;
 }
