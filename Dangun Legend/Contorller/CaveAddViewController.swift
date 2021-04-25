@@ -46,7 +46,11 @@ class CaveAddViewController: UIViewController{
     @IBAction func startPressed(_ sender: UIButton) {
         if goalTextView.text != "" && goalTextView.text != "도전하고 싶은 목표를 적어주세요." {
             let userID = defaults.string(forKey: keyForDf.crrUser)
-            userID == "104864712019161330556" ? saveGoalForTest() : saveGoal()
+            if userID == "104864712019161330556" {
+                saveGoalForTest()
+            } else {
+                saveGoal()
+            }
         } else {
             let alert = UIAlertController.init(title: "목표 미입력", message: "목표를 입력해주세요 :-)", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
@@ -180,7 +184,7 @@ extension CaveAddViewController {
             
             defaults.set(true, forKey: keyForDf.goalExistence)
             defaults.set(startDateForDB, forKey: keyForDf.crrGoalID)
-            defaults.set(0, forKey: keyForDf.crrNumOfSucc)
+            defaults.set(97, forKey: keyForDf.crrNumOfSucc)
             defaults.set(0, forKey: keyForDf.crrNumOfFail)
             defaults.set(usersFailAllowInput, forKey: keyForDf.crrFailAllowance)
             
@@ -209,13 +213,15 @@ extension CaveAddViewController {
                     print("New goal saved successfully")
                 }}
         
-            CaveAddViewController.delegate?.newGoalAddedUpdateView(newGoal)
+            CaveAddViewController.delegate?.newGoalAddedUpdateViewForTest(newGoal)
 
             goalManager.loadGeneralInfo(forDelegate: false) { (UsersGeneralInfo) in
                 let update = UsersGeneralInfo.totalTrial + 1
                 db.collection(K.FS_userGeneral).document(userID).setData([
                     fb.GI_generalInfo : [
-                        fb.GI_totalTrial : update
+                        fb.GI_totalTrial : update,
+                        fb.GI_totalSuccess: 97,
+                        fb.GI_totalDaysBeenThrough: 97
                     ]
                 ], merge: true)
             }

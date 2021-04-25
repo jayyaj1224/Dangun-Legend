@@ -68,13 +68,18 @@ class BoardViewController: UIViewController {
                             print("*** board userID :\(uID)")
                         }
                     }
+                     
                 }
                 serialQueue.async {
+                    var i = 0
                     for goal in newboardGoals {
                         if goal.userID == userID {
-                            newboardGoals.insert(goal, at: 0)
+                            let g = goal
+                            newboardGoals.remove(at:i)
+                            newboardGoals.insert(g, at: 0)
+                            self.boardGoals = newboardGoals
                         }
-                        self.boardGoals = newboardGoals
+                        i+=1
                     }
                 }
                 DispatchQueue.main.async {
@@ -115,7 +120,7 @@ extension BoardViewController : UITableViewDataSource, UITableViewDelegate {
             return UITableViewCell()
         }
         
-        let userID = defaults.string(forKey: keyForDf.crrUser)
+        let userID = defaults.string(forKey: keyForDf.crrUser)!
         let goal = boardGoals[indexPath.row]
         let startDate = dateManager.dateFormat(type: "yyyy년M월d일", date: goal.startDate)
         let endDate = dateManager.dateFormat(type: "yyyy년M월d일", date: goal.endDate)

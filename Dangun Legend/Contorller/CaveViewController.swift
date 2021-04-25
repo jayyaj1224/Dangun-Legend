@@ -234,10 +234,9 @@ class CaveViewController: UIViewController {
 
 
 extension CaveViewController: GoalUIManagerDelegate {
-    
-    func newGoalAddedUpdateView(_ data: GoalStruct) {
+    func newGoalAddedUpdateViewForTest(_ data: GoalStruct) {
         showGoalManageScrollView(true)
-        let array = goalManager.daysArray(newGoal: data)
+        let array = goalManager.daysArrayForTest(newGoal: data)
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(array) {
             defaults.set(encoded, forKey: keyForDf.crrDaysArray)
@@ -248,9 +247,10 @@ extension CaveViewController: GoalUIManagerDelegate {
         updateCollectionView()
     }
     
-    func newGoalAddedUpdateViewforTest(_ data: GoalStruct) {
+    
+    func newGoalAddedUpdateView(_ data: GoalStruct) {
         showGoalManageScrollView(true)
-        let array = goalManager.daysArrayForTest(newGoal: data)
+        let array = goalManager.daysArray(newGoal: data)
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(array) {
             defaults.set(encoded, forKey: keyForDf.crrDaysArray)
