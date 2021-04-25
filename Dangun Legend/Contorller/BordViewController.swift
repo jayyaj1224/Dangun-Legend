@@ -64,8 +64,7 @@ class BoardViewController: UIViewController {
                             let bordInfo = GoalStructForBoard(userID: uID, goalID: gID, nickName: nickName, startDate: startDate, endDate: endDate, description: des, numOfSuccess: numOfSuc)
                             newboardGoals.append(bordInfo)
                             newboardGoals.sort(by: { $0.numOfSuccess > $1.numOfSuccess} )
-                            print("*** crruserID :\(userID)")
-                            print("*** board userID :\(uID)")
+                            print(newboardGoals)
                         }
                     }
                      
@@ -77,13 +76,16 @@ class BoardViewController: UIViewController {
                             let g = goal
                             newboardGoals.remove(at:i)
                             newboardGoals.insert(g, at: 0)
-                            self.boardGoals = newboardGoals
+                            print("-->>\(newboardGoals)")
                         }
+                        self.boardGoals = newboardGoals
                         i+=1
                     }
-                }
-                DispatchQueue.main.async {
-                    self.boardTableView.reloadData()
+                    print("-->>\(newboardGoals)")
+                    DispatchQueue.main.async {
+                        print("-->>>>>>\(newboardGoals)")
+                        self.boardTableView.reloadData()
+                    }
                 }
             }
         }
