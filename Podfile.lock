@@ -316,12 +316,20 @@ PODS:
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - PromisesObjC (1.2.12)
+  - RxCocoa (6.1.0):
+    - RxRelay (= 6.1.0)
+    - RxSwift (= 6.1.0)
+  - RxRelay (6.1.0):
+    - RxSwift (= 6.1.0)
+  - RxSwift (6.1.0)
 
 DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Firestore
   - GoogleSignIn
   - IQKeyboardManagerSwift
+  - RxCocoa
+  - RxSwift
 
 SPEC REPOS:
   trunk:
@@ -344,6 +352,9 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - PromisesObjC
+    - RxCocoa
+    - RxRelay
+    - RxSwift
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -365,7 +376,10 @@ SPEC CHECKSUMS:
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
+  RxCocoa: 5c51f02d562cbd94629f6c26cf0c80fe4ab8d343
+  RxRelay: 483e1a19fad961b41f0b0c0bee506f46c1ae14fe
+  RxSwift: a834e5c538e89eca0cae86f403f4fbf0336786ce
 
-PODFILE CHECKSUM: 6a44e0005f2b606a316e9db3d8f25ae39cb0649f
+PODFILE CHECKSUM: 76b5501f41eea2c9f47259bf6e270606aa18c1ce
 
 COCOAPODS: 1.10.1

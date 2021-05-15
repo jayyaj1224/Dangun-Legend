@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0CED58BDF824657E973F7047 /* Pods_Dangun_Legend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 482E835E189B783CE527223F /* Pods_Dangun_Legend.framework */; };
-		349BA7D36F202ECC22BB17BA /* Pods_Dangun_Legend_Dangun_LegendUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B994897BFF1A5C7482915A99 /* Pods_Dangun_Legend_Dangun_LegendUITests.framework */; };
 		A411E5022619CD970057FAD3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A411E5012619CD970057FAD3 /* GoogleService-Info.plist */; };
 		A420E00F261724D00039F2C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E00E261724D00039F2C8 /* AppDelegate.swift */; };
 		A420E011261724D00039F2C8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E010261724D00039F2C8 /* SceneDelegate.swift */; };
@@ -36,7 +35,10 @@
 		A4BBCC8F26297024007D2DE3 /* BoardShareCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4BBCC8D26297024007D2DE3 /* BoardShareCell.xib */; };
 		A4CDF1ED261809A400A08809 /* CaveAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */; };
 		A4CDF1F8261809FC00A08809 /* CaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CDF1F7261809FC00A08809 /* CaveViewController.swift */; };
-		A7ECF3464CCD675C0876FD85 /* Pods_Dangun_LegendTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4115F978D496C1738E38CB8 /* Pods_Dangun_LegendTests.framework */; };
+		A4EF048E264F858200CBA656 /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EF048D264F858200CBA656 /* BoardViewModel.swift */; };
+		A4EF0491264F87CE00CBA656 /* FireBaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EF0490264F87CE00CBA656 /* FireBaseService.swift */; };
+		A4EF0498264F897800CBA656 /* BoardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EF0497264F897800CBA656 /* BoardModel.swift */; };
+		A4EF049B264F8A4F00CBA656 /* Firestore + Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EF049A264F8A4F00CBA656 /* Firestore + Board.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,13 +59,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2A2D3246262D955BF55FB0B0 /* Pods-Dangun Legend-Dangun LegendUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun Legend-Dangun LegendUITests.release.xcconfig"; path = "Target Support Files/Pods-Dangun Legend-Dangun LegendUITests/Pods-Dangun Legend-Dangun LegendUITests.release.xcconfig"; sourceTree = "<group>"; };
-		45776546CA269910ED9E287D /* Pods-Dangun LegendTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun LegendTests.debug.xcconfig"; path = "Target Support Files/Pods-Dangun LegendTests/Pods-Dangun LegendTests.debug.xcconfig"; sourceTree = "<group>"; };
 		482E835E189B783CE527223F /* Pods_Dangun_Legend.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dangun_Legend.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8552188C1427050E47DD9103 /* Pods-Dangun Legend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun Legend.debug.xcconfig"; path = "Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend.debug.xcconfig"; sourceTree = "<group>"; };
 		9DD87C6A75BA537906D5E6F7 /* Pods-Dangun Legend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun Legend.release.xcconfig"; path = "Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend.release.xcconfig"; sourceTree = "<group>"; };
 		A40CECDC2635123800F0CAC8 /* Dangun Legend.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Dangun Legend.entitlements"; sourceTree = "<group>"; };
-		A4115F978D496C1738E38CB8 /* Pods_Dangun_LegendTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dangun_LegendTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A411E5012619CD970057FAD3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		A420E00B261724D00039F2C8 /* Dangun Legend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dangun Legend.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A420E00E261724D00039F2C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -95,9 +94,10 @@
 		A4BBCC8D26297024007D2DE3 /* BoardShareCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BoardShareCell.xib; sourceTree = "<group>"; };
 		A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveAddViewController.swift; sourceTree = "<group>"; };
 		A4CDF1F7261809FC00A08809 /* CaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveViewController.swift; sourceTree = "<group>"; };
-		B994897BFF1A5C7482915A99 /* Pods_Dangun_Legend_Dangun_LegendUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dangun_Legend_Dangun_LegendUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D1FC980DD9320AFA99CD0CD4 /* Pods-Dangun Legend-Dangun LegendUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun Legend-Dangun LegendUITests.debug.xcconfig"; path = "Target Support Files/Pods-Dangun Legend-Dangun LegendUITests/Pods-Dangun Legend-Dangun LegendUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		F25226CD8D48169F35EC8321 /* Pods-Dangun LegendTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun LegendTests.release.xcconfig"; path = "Target Support Files/Pods-Dangun LegendTests/Pods-Dangun LegendTests.release.xcconfig"; sourceTree = "<group>"; };
+		A4EF048D264F858200CBA656 /* BoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewModel.swift; sourceTree = "<group>"; };
+		A4EF0490264F87CE00CBA656 /* FireBaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseService.swift; sourceTree = "<group>"; };
+		A4EF0497264F897800CBA656 /* BoardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardModel.swift; sourceTree = "<group>"; };
+		A4EF049A264F8A4F00CBA656 /* Firestore + Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firestore + Board.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +113,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A7ECF3464CCD675C0876FD85 /* Pods_Dangun_LegendTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,7 +120,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				349BA7D36F202ECC22BB17BA /* Pods_Dangun_Legend_Dangun_LegendUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,8 +130,6 @@
 			isa = PBXGroup;
 			children = (
 				482E835E189B783CE527223F /* Pods_Dangun_Legend.framework */,
-				B994897BFF1A5C7482915A99 /* Pods_Dangun_Legend_Dangun_LegendUITests.framework */,
-				A4115F978D496C1738E38CB8 /* Pods_Dangun_LegendTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -163,14 +159,21 @@
 		A420E00D261724D00039F2C8 /* Dangun Legend */ = {
 			isa = PBXGroup;
 			children = (
-				A40CECDC2635123800F0CAC8 /* Dangun Legend.entitlements */,
-				A4CDF1E72618094700A08809 /* Model */,
-				A4CDF1EB2618098200A08809 /* View */,
-				A4CDF1E62618093300A08809 /* Contorller */,
+				A420E014261724D00039F2C8 /* Main.storyboard */,
+				A420E019261724D10039F2C8 /* LaunchScreen.storyboard */,
+				A477762F261884DA002D866C /* Contants.swift */,
+				A4EF048B264F84E800CBA656 /* 0.Login */,
+				A4EF0486264F84B400CBA656 /* 1. Home */,
+				A4EF0488264F84BE00CBA656 /* 2.Cave */,
+				A4EF0489264F84D100CBA656 /* 3.History */,
+				A4EF048A264F84D500CBA656 /* 4.Board */,
+				A4EF048F264F874600CBA656 /* Services */,
+				A420E017261724D10039F2C8 /* Assets.xcassets */,
 				A420E00E261724D00039F2C8 /* AppDelegate.swift */,
 				A420E010261724D00039F2C8 /* SceneDelegate.swift */,
 				A420E01C261724D10039F2C8 /* Info.plist */,
 				A411E5012619CD970057FAD3 /* GoogleService-Info.plist */,
+				A49D4384264F812A009C3C26 /* Entitlement */,
 			);
 			path = "Dangun Legend";
 			sourceTree = "<group>";
@@ -193,53 +196,130 @@
 			path = "Dangun LegendUITests";
 			sourceTree = "<group>";
 		};
-		A47775FF261827DF002D866C /* Login_Register */ = {
+		A49D4384264F812A009C3C26 /* Entitlement */ = {
 			isa = PBXGroup;
 			children = (
-				A47775FA261821D8002D866C /* RegisterEmailVC.swift */,
-				A477762226182966002D866C /* InitialLoginViewController.swift */,
-				A477762A26182E00002D866C /* GoogleSignInVC.swift */,
+				A40CECDC2635123800F0CAC8 /* Dangun Legend.entitlements */,
 			);
-			path = Login_Register;
+			path = Entitlement;
 			sourceTree = "<group>";
 		};
-		A4CDF1E62618093300A08809 /* Contorller */ = {
+		A4EF0486264F84B400CBA656 /* 1. Home */ = {
 			isa = PBXGroup;
 			children = (
-				A47775FF261827DF002D866C /* Login_Register */,
 				A420E012261724D00039F2C8 /* HomeViewController.swift */,
+			);
+			path = "1. Home";
+			sourceTree = "<group>";
+		};
+		A4EF0488264F84BE00CBA656 /* 2.Cave */ = {
+			isa = PBXGroup;
+			children = (
 				A4CDF1F7261809FC00A08809 /* CaveViewController.swift */,
 				A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */,
-				A482219E261DB95A005DFA43 /* HistoryViewController.swift */,
 				A49D013C2626F3A10059971B /* ResultViewController.swift */,
-				A4BBCC6826295939007D2DE3 /* BordViewController.swift */,
 				A445B5B4262D6B76003F4A1F /* AboutDangunVC.swift */,
 			);
-			path = Contorller;
+			path = 2.Cave;
 			sourceTree = "<group>";
 		};
-		A4CDF1E72618094700A08809 /* Model */ = {
+		A4EF0489264F84D100CBA656 /* 3.History */ = {
 			isa = PBXGroup;
 			children = (
-				A420E017261724D10039F2C8 /* Assets.xcassets */,
-				A477762F261884DA002D866C /* Contants.swift */,
+				A4EF0496264F88FB00CBA656 /* Cell */,
+				A4EF0495264F88F700CBA656 /* View */,
+				A482219E261DB95A005DFA43 /* HistoryViewController.swift */,
+			);
+			path = 3.History;
+			sourceTree = "<group>";
+		};
+		A4EF048A264F84D500CBA656 /* 4.Board */ = {
+			isa = PBXGroup;
+			children = (
+				A4EF0493264F88BC00CBA656 /* Model */,
+				A4EF0492264F88B900CBA656 /* View */,
+				A4EF048C264F856000CBA656 /* ViewModel */,
+				A4EF0499264F8A3900CBA656 /* Service */,
+				A4EF0494264F88C900CBA656 /* Cell */,
+			);
+			path = 4.Board;
+			sourceTree = "<group>";
+		};
+		A4EF048B264F84E800CBA656 /* 0.Login */ = {
+			isa = PBXGroup;
+			children = (
+				A477762226182966002D866C /* InitialLoginViewController.swift */,
+				A477762A26182E00002D866C /* GoogleSignInVC.swift */,
+				A47775FA261821D8002D866C /* RegisterEmailVC.swift */,
+			);
+			path = 0.Login;
+			sourceTree = "<group>";
+		};
+		A4EF048C264F856000CBA656 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				A4EF048D264F858200CBA656 /* BoardViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		A4EF048F264F874600CBA656 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A4EF0490264F87CE00CBA656 /* FireBaseService.swift */,
 				A49E4313261AADAC00E98619 /* GoalManager.swift */,
 				A442B2C9261D7C5A00B4CD12 /* DateManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A4EF0492264F88B900CBA656 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A4BBCC6826295939007D2DE3 /* BordViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A4EF0493264F88BC00CBA656 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A4EF0497264F897800CBA656 /* BoardModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
 		};
-		A4CDF1EB2618098200A08809 /* View */ = {
+		A4EF0494264F88C900CBA656 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				A420E019261724D10039F2C8 /* LaunchScreen.storyboard */,
-				A420E014261724D00039F2C8 /* Main.storyboard */,
-				A48221A6261DE49B005DFA43 /* HistoryTableViewCell.swift */,
-				A48221A7261DE49B005DFA43 /* HistoryTableViewCell.xib */,
 				A4BBCC8C26297024007D2DE3 /* BoardShareCell.swift */,
 				A4BBCC8D26297024007D2DE3 /* BoardShareCell.xib */,
 			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		A4EF0495264F88F700CBA656 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		A4EF0496264F88FB00CBA656 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				A48221A6261DE49B005DFA43 /* HistoryTableViewCell.swift */,
+				A48221A7261DE49B005DFA43 /* HistoryTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		A4EF0499264F8A3900CBA656 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				A4EF049A264F8A4F00CBA656 /* Firestore + Board.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		F8104C9A3DD1E56C3F0249D6 /* Pods */ = {
@@ -247,10 +327,6 @@
 			children = (
 				8552188C1427050E47DD9103 /* Pods-Dangun Legend.debug.xcconfig */,
 				9DD87C6A75BA537906D5E6F7 /* Pods-Dangun Legend.release.xcconfig */,
-				D1FC980DD9320AFA99CD0CD4 /* Pods-Dangun Legend-Dangun LegendUITests.debug.xcconfig */,
-				2A2D3246262D955BF55FB0B0 /* Pods-Dangun Legend-Dangun LegendUITests.release.xcconfig */,
-				45776546CA269910ED9E287D /* Pods-Dangun LegendTests.debug.xcconfig */,
-				F25226CD8D48169F35EC8321 /* Pods-Dangun LegendTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -274,8 +350,6 @@
 			dependencies = (
 			);
 			name = "Dangun Legend";
-			packageProductDependencies = (
-			);
 			productName = "Dangun Legend";
 			productReference = A420E00B261724D00039F2C8 /* Dangun Legend.app */;
 			productType = "com.apple.product-type.application";
@@ -284,7 +358,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A420E038261724D10039F2C8 /* Build configuration list for PBXNativeTarget "Dangun LegendTests" */;
 			buildPhases = (
-				AFBEFF1E601A27DACBDDAFA1 /* [CP] Check Pods Manifest.lock */,
 				A420E01D261724D10039F2C8 /* Sources */,
 				A420E01E261724D10039F2C8 /* Frameworks */,
 				A420E01F261724D10039F2C8 /* Resources */,
@@ -303,12 +376,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A420E03B261724D10039F2C8 /* Build configuration list for PBXNativeTarget "Dangun LegendUITests" */;
 			buildPhases = (
-				302D8B6F9740D2728C842BA4 /* [CP] Check Pods Manifest.lock */,
 				A420E028261724D10039F2C8 /* Sources */,
 				A420E029261724D10039F2C8 /* Frameworks */,
 				A420E02A261724D10039F2C8 /* Resources */,
-				604D04DB751EFFC2E7477648 /* [CP] Embed Pods Frameworks */,
-				2A4042999E44E22BDB8FAC30 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -351,8 +421,6 @@
 				Base,
 			);
 			mainGroup = A420E002261724D00039F2C8;
-			packageReferences = (
-			);
 			productRefGroup = A420E00C261724D00039F2C8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -397,84 +465,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2A4042999E44E22BDB8FAC30 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend-Dangun LegendUITests/Pods-Dangun Legend-Dangun LegendUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend-Dangun LegendUITests/Pods-Dangun Legend-Dangun LegendUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend-Dangun LegendUITests/Pods-Dangun Legend-Dangun LegendUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		302D8B6F9740D2728C842BA4 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Dangun Legend-Dangun LegendUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		604D04DB751EFFC2E7477648 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend-Dangun LegendUITests/Pods-Dangun Legend-Dangun LegendUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend-Dangun LegendUITests/Pods-Dangun Legend-Dangun LegendUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend-Dangun LegendUITests/Pods-Dangun Legend-Dangun LegendUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AFBEFF1E601A27DACBDDAFA1 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Dangun LegendTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C84D3D49CCC5BD94685794BC /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -540,12 +530,16 @@
 			files = (
 				A4CDF1F8261809FC00A08809 /* CaveViewController.swift in Sources */,
 				A4BBCC8E26297024007D2DE3 /* BoardShareCell.swift in Sources */,
+				A4EF0491264F87CE00CBA656 /* FireBaseService.swift in Sources */,
 				A420E013261724D00039F2C8 /* HomeViewController.swift in Sources */,
 				A48221A8261DE49B005DFA43 /* HistoryTableViewCell.swift in Sources */,
 				A4CDF1ED261809A400A08809 /* CaveAddViewController.swift in Sources */,
+				A4EF048E264F858200CBA656 /* BoardViewModel.swift in Sources */,
 				A482219F261DB95A005DFA43 /* HistoryViewController.swift in Sources */,
+				A4EF0498264F897800CBA656 /* BoardModel.swift in Sources */,
 				A420E00F261724D00039F2C8 /* AppDelegate.swift in Sources */,
 				A477762326182966002D866C /* InitialLoginViewController.swift in Sources */,
+				A4EF049B264F8A4F00CBA656 /* Firestore + Board.swift in Sources */,
 				A47775FB261821D8002D866C /* RegisterEmailVC.swift in Sources */,
 				A4BBCC6926295939007D2DE3 /* BordViewController.swift in Sources */,
 				A4777630261884DA002D866C /* Contants.swift in Sources */,
@@ -773,7 +767,6 @@
 		};
 		A420E039261724D10039F2C8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 45776546CA269910ED9E287D /* Pods-Dangun LegendTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -796,7 +789,6 @@
 		};
 		A420E03A261724D10039F2C8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F25226CD8D48169F35EC8321 /* Pods-Dangun LegendTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -819,7 +811,6 @@
 		};
 		A420E03C261724D10039F2C8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1FC980DD9320AFA99CD0CD4 /* Pods-Dangun Legend-Dangun LegendUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -840,7 +831,6 @@
 		};
 		A420E03D261724D10039F2C8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2A2D3246262D955BF55FB0B0 /* Pods-Dangun Legend-Dangun LegendUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
