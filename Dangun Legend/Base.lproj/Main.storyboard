@@ -1563,10 +1563,10 @@
             </objects>
             <point key="canvasLocation" x="603" y="675"/>
         </scene>
-        <!--Initial Login View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="rHI-kI-ukR">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="w7x-ng-G3M" customClass="InitialLoginViewController" customModule="Dangun_Legend" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="w7x-ng-G3M" customClass="LoginViewController" customModule="Dangun_Legend" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="kuZ-ZG-BZf">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

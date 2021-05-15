@@ -13,10 +13,35 @@ import RxSwift
 
 struct BoardService {
     
-    func loadBoardGoals(_ completion: @escaping ([BoardData])->()) {
+    func sortedBoardList(_ completion: @escaping ([BoardData])->()){
+        let serialQueue = DispatchQueue.init(label: "serialQueue")
+        let userID = defaults.string(forKey: keyForDf.crrUser)!
+        loadBoardData { BoardList in
+            var sortedBoardList = BoardList
+            serialQueue.async {
+                sortedBoardList.sort(by: { $0.numOfSuccess > $1.numOfSuccess} )
+            }
+            serialQueue.async {
+                var i = 0
+                for goal in sortedBoardList {
+                    if goal.userID == userID {
+                        let g = goal
+                        sortedBoardList.remove(at:i)
+                        sortedBoardList.insert(g, at: 0)
+                    }
+                    i+=1
+                }
+            }
+            serialQueue.async {
+                completion(sortedBoardList)
+            }
+        }
+    }
+    
+    
+    func loadBoardData(_ completion: @escaping ([BoardData])->()) {
         let serialQueue = DispatchQueue.init(label: "serialQueue")
         var newboardGoals : [BoardData] = []
-        let userID = defaults.string(forKey: keyForDf.crrUser)!
         db.collection(K.FS_board).getDocuments() { (querySnapshot, err) in
             if let e = err {
                 print("load doc failed: \(e.localizedDescription)")
@@ -37,26 +62,9 @@ struct BoardService {
                             let endDate = DateManager().dateFromString(string: end)
                             let bordInfo = BoardData(userID: uID, goalID: gID, nickName: nickName, startDate: startDate, endDate: endDate, description: des, numOfSuccess: numOfSuc)
                             newboardGoals.append(bordInfo)
-                            newboardGoals.sort(by: { $0.numOfSuccess > $1.numOfSuccess} )
-                            //print(newboardGoals)
+                            completion(newboardGoals)
                         }
                     }
-                     
-                }
-                serialQueue.async {
-                    var i = 0
-                    for goal in newboardGoals {
-                        if goal.userID == userID {
-                            let g = goal
-                            newboardGoals.remove(at:i)
-                            newboardGoals.insert(g, at: 0)
-                            //print("-->>\(newboardGoals)")
-                        }
-                        i+=1
-                    }
-                }
-                serialQueue.async {
-                    completion(newboardGoals)
                 }
             }
         }

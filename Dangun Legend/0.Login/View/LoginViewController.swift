@@ -10,10 +10,9 @@ import Firebase
 import GoogleSignIn
 import IQKeyboardManagerSwift
 
-class InitialLoginViewController: UIViewController, GIDSignInDelegate {
+class LoginViewController: UIViewController, GIDSignInDelegate {
     
-    let goalManager = GoalManager()
-    let dateManager = DateManager()
+    private let dateManager = DateManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()

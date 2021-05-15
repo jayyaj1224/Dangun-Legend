@@ -7,9 +7,7 @@
 
 import UIKit
 import GoogleSignIn
-import Firebase
 import IQKeyboardManagerSwift
-
 
 class GoogleSignInVC: UIViewController {
     override func viewDidLoad() {
@@ -17,8 +15,6 @@ class GoogleSignInVC: UIViewController {
         GIDSignIn.sharedInstance()?.presentingViewController = self
         GIDSignIn.sharedInstance().signIn()
     }
-    
-    
-    
+
 }
 

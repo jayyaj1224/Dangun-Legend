@@ -33,7 +33,7 @@ class BoardViewController: UIViewController {
 
     
     private func loadBoard(){
-        self.boardService.loadBoardGoals { goalStructList in
+        self.boardService.sortedBoardList { goalStructList in
             return Observable.just(goalStructList)
                 .subscribe(onNext: { goalStructList in
                     let achievementList = BoardListViewModel.init(goalStructList)

@@ -9,9 +9,9 @@ import UIKit
 import IQKeyboardManagerSwift
 import Firebase
 
-class RegisterEmailVC: UIViewController {
+class RegisterViewController: UIViewController {
     
-    let InitialVC = InitialLoginViewController()
+    let InitialVC = LoginViewController()
     
     @IBOutlet weak var emailInput: UITextField!
     @IBOutlet weak var passwordOne: UITextField!
