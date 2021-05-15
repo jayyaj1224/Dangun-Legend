@@ -13,13 +13,11 @@ class BoardShareCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     var goalID = ""
-    let goalManager = GoalManager()
     
+    private let boardVC = BoardViewController()
     
-    
-    @IBOutlet weak var caveupperBoxImage: UIImageView!
     @IBOutlet weak var terrificOutlet: UIView!
     @IBOutlet weak var superOutlet: UIView!
     @IBOutlet var nameLabel: UILabel!
@@ -30,13 +28,31 @@ class BoardShareCell: UITableViewCell {
     @IBAction func deletePressed(_ sender: UIButton) {
         NotificationCenter.default.post(Notification(name: boardDeleteNoti, object: goalID, userInfo: nil))
     }
-    
-    
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+   
+    func deleteButtonControl(id: String){
+        let userID = defaults.string(forKey: keyForDf.crrUser)
+        if id == userID {
+            deleteOutlet.isHidden = false
+        } else {
+            deleteOutlet.isHidden = true
+        }
     }
+    
+    func badgeControl(numOfSuccess: Int){
+        switch numOfSuccess {
+        case 100:
+            self.terrificOutlet.isHidden = true
+            self.superOutlet.isHidden = false
+
+        case 97...99:
+            self.terrificOutlet.isHidden = false
+            self.superOutlet.isHidden = true
+
+        default:
+            self.terrificOutlet.isHidden = true
+            self.superOutlet.isHidden = true
+        }
+    }
+
     
 }

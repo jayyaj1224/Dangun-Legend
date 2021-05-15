@@ -36,9 +36,8 @@
 		A4CDF1ED261809A400A08809 /* CaveAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */; };
 		A4CDF1F8261809FC00A08809 /* CaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CDF1F7261809FC00A08809 /* CaveViewController.swift */; };
 		A4EF048E264F858200CBA656 /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EF048D264F858200CBA656 /* BoardViewModel.swift */; };
-		A4EF0491264F87CE00CBA656 /* FireBaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EF0490264F87CE00CBA656 /* FireBaseService.swift */; };
 		A4EF0498264F897800CBA656 /* BoardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EF0497264F897800CBA656 /* BoardModel.swift */; };
-		A4EF049B264F8A4F00CBA656 /* Firestore + Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EF049A264F8A4F00CBA656 /* Firestore + Board.swift */; };
+		A4EF049B264F8A4F00CBA656 /* BoardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EF049A264F8A4F00CBA656 /* BoardService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,9 +94,8 @@
 		A4CDF1EC261809A400A08809 /* CaveAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveAddViewController.swift; sourceTree = "<group>"; };
 		A4CDF1F7261809FC00A08809 /* CaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveViewController.swift; sourceTree = "<group>"; };
 		A4EF048D264F858200CBA656 /* BoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewModel.swift; sourceTree = "<group>"; };
-		A4EF0490264F87CE00CBA656 /* FireBaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseService.swift; sourceTree = "<group>"; };
 		A4EF0497264F897800CBA656 /* BoardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardModel.swift; sourceTree = "<group>"; };
-		A4EF049A264F8A4F00CBA656 /* Firestore + Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firestore + Board.swift"; sourceTree = "<group>"; };
+		A4EF049A264F8A4F00CBA656 /* BoardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,7 +264,6 @@
 		A4EF048F264F874600CBA656 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				A4EF0490264F87CE00CBA656 /* FireBaseService.swift */,
 				A49E4313261AADAC00E98619 /* GoalManager.swift */,
 				A442B2C9261D7C5A00B4CD12 /* DateManager.swift */,
 			);
@@ -317,7 +314,7 @@
 		A4EF0499264F8A3900CBA656 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				A4EF049A264F8A4F00CBA656 /* Firestore + Board.swift */,
+				A4EF049A264F8A4F00CBA656 /* BoardService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -530,7 +527,6 @@
 			files = (
 				A4CDF1F8261809FC00A08809 /* CaveViewController.swift in Sources */,
 				A4BBCC8E26297024007D2DE3 /* BoardShareCell.swift in Sources */,
-				A4EF0491264F87CE00CBA656 /* FireBaseService.swift in Sources */,
 				A420E013261724D00039F2C8 /* HomeViewController.swift in Sources */,
 				A48221A8261DE49B005DFA43 /* HistoryTableViewCell.swift in Sources */,
 				A4CDF1ED261809A400A08809 /* CaveAddViewController.swift in Sources */,
@@ -539,7 +535,7 @@
 				A4EF0498264F897800CBA656 /* BoardModel.swift in Sources */,
 				A420E00F261724D00039F2C8 /* AppDelegate.swift in Sources */,
 				A477762326182966002D866C /* InitialLoginViewController.swift in Sources */,
-				A4EF049B264F8A4F00CBA656 /* Firestore + Board.swift in Sources */,
+				A4EF049B264F8A4F00CBA656 /* BoardService.swift in Sources */,
 				A47775FB261821D8002D866C /* RegisterEmailVC.swift in Sources */,
 				A4BBCC6926295939007D2DE3 /* BordViewController.swift in Sources */,
 				A4777630261884DA002D866C /* Contants.swift in Sources */,

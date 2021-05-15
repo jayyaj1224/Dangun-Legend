@@ -53,15 +53,6 @@ struct Analysis {
     let type : Int
 }
 
-struct GoalStructForBoard: Codable {
-    let userID: String
-    let goalID: String
-    let nickName: String
-    let startDate : Date
-    let endDate: Date
-    let description: String
-    var numOfSuccess : Int
-}
 
 
 class GoalManager {

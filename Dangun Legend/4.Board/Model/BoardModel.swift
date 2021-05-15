@@ -7,16 +7,25 @@
 
 import Foundation
 
-
-struct BoardList {
-    let boardList : [Board]
-    
+struct AchievementList {
+    let achievementList : [Achievement]
 }
 
-struct Board {
-    let achievementTitle: String
+struct Achievement {
+    let title: String
     let goal: String
-    let badgeAppearance: Bool
-    let achievmentDescription: String
+    let numOfSuccess: Int
     let date: String
+    let userID: String
+    let goalID: String
+}
+
+struct BoardData: Codable {
+    let userID: String
+    let goalID: String
+    let nickName: String
+    let startDate : Date
+    let endDate: Date
+    let description: String
+    var numOfSuccess : Int
 }
