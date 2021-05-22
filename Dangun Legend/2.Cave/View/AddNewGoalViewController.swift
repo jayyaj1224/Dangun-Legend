@@ -71,11 +71,17 @@ class AddNewGoalViewController: UIViewController{
     }
     
     private func createNewGoal() {
+        let userID = defaults.string(forKey: keyForDf.crrUser)
         let userInput = UsersInputForNewGoal(goalDescripteion: self.goalTextView.text, failAllowance: self.failAllowOutput.selectedSegmentIndex)
-        
-        ///let totalGoalInfo = self.goalManager.createNewGoal(userInput)
-        let totalGoalInfo = self.goalManager.createNewGoalFORTEST()
-        ///TESTING
+       
+        var totalGoalInfo : TotalGoalInfo {
+            if userID == "test@test.com" {
+                return self.goalManager.createNewGoalFORTEST()
+            } else {
+                return self.goalManager.createNewGoal(userInput)
+            }
+        }
+
         self.newGoalSubject.onNext(totalGoalInfo)
         self.dataManager.saveNewGoalOnFS(totalGoalInfo)
         

@@ -13,7 +13,6 @@ import RxSwift
 import RxCocoa
 
 let checkTheDateNoti : Notification.Name = Notification.Name("CheckTheDateNotification")
-let failedNoti: Notification.Name = Notification.Name("failedNotification")
 
 class CaveViewController: UIViewController {
     
@@ -28,9 +27,7 @@ class CaveViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
-    private var goalExixtence : Bool {
-        return defaults.bool(forKey: keyForDf.goalExistence)
-    }
+    private var goalExixtence = defaults.bool(forKey: keyForDf.goalExistence)
     
     @IBOutlet var caveView: UIView!
     @IBOutlet weak var startYour100DaysView: UIView!
@@ -47,15 +44,13 @@ class CaveViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(self.checkAlert(_:)), name: checkTheDateNoti, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.goalFailed(_:)), name: failedNoti, object: nil)
-        self.viewModelSetting()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        print("-------goalExixtence \(goalExixtence)")
         showGoalManageScrollView(goalExixtence)
-        self.collectionVw.reloadData()
-       
+        checkIfViewModelSettingIsNeeded()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -73,17 +68,30 @@ class CaveViewController: UIViewController {
         }
     }
     
+    private func checkIfViewModelSettingIsNeeded(){
+        if defaults.bool(forKey:keyForDf.needToSetViewModel) {
+            print("-------viewModelSetting")
+            self.viewModelSetting()
+            defaults.set(false, forKey: keyForDf.needToSetViewModel)
+        }
+    }
+        
     private func viewModelSetting(){
         if goalExixtence == true {
             self.dataManager.loadDefaultsCurrentGoalInfo { goal in
+                print("sdafasfasfdasfdsf")
                 let goalVM = GoalViewModel.init(goal)
                 self.goalVM = goalVM
                 self.goalBinding()
             }
             self.dataManager.loadDefaultsCurrentDaysArrayInfo { daysArr in
+                print("1232132131231")
                 let collectionViewVM = DaysViewModel.init(daysArr)
                 self.daysVM = collectionViewVM
                 self.checkTodayButtonSetting()
+                DispatchQueue.main.async {
+                    self.collectionVw.reloadData()
+                }
             }
         }
     }
@@ -101,8 +109,18 @@ class CaveViewController: UIViewController {
             .drive(self.numbersOfSuccessAndFailLabel.rx.text)
             .disposed(by: disposeBag)
 
-        goalVM.leftFailAllowancd.asDriver(onErrorJustReturn: "")
-            .drive(self.leftFailAllowanceLabel.rx.text)
+        goalVM.leftFailAllowancd.asDriver(onErrorJustReturn: 1)
+            .drive(onNext: { leftChance in
+                if leftChance == 1 {
+                    let string = "마지막 1번 추가 목표 불이행 시, 목표는 실패합니다."
+                    self.leftFailAllowanceLabel.text = string
+                    self.leftFailAllowanceLabel.textColor = .red
+                } else {
+                    let string = "잔여 목표 불이행 허용 횟수: \(leftChance)회"
+                    self.leftFailAllowanceLabel.text = string
+                    self.leftFailAllowanceLabel.textColor = .black
+                }
+            })
             .disposed(by: disposeBag)
 
         goalVM.leftDays.asDriver(onErrorJustReturn: "")
@@ -140,13 +158,7 @@ class CaveViewController: UIViewController {
             goalManageScrollView.isHidden = true
         }
     }
-//    
-//    private func checkTodayButtonClose(){
-//        let today = dateManager.dateFormat(type: "M월d일", date: Date())
-//        let date = dateManager.dateFormat(type: "e", date: Date())
-//        checkToday.isEnabled = false
-//        checkToday.setTitle("\(today) \(date) 확인 완료", for: .normal)
-//    }
+
 
 }
 
@@ -162,9 +174,8 @@ extension CaveViewController {
         }))
         present(alertQuitPressed, animated: true, completion: nil)
     }
-    
+
     private func quitCurrentGoal(){
-        defaults.set(false, forKey: keyForDf.goalExistence)
         self.dataManager.removeCurrentGoal(self.goalVM.goal)
         self.showGoalManageScrollView(false)
     }
@@ -227,67 +238,66 @@ extension CaveViewController {
         present(checkTheDayPressed, animated: true, completion: nil)
     }
     
-    ///%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    ///%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    @objc func goalFailed(_ noti: Notification) {
-        let failedAlert = UIAlertController.init(title: "목표달성 실패", message: "허용가능한 불이행 횟수를 초과하여 목표달성에 실패하였습니다.", preferredStyle: .alert)
-        failedAlert.addAction(UIAlertAction(title: "확인", style: . destructive, handler: { (UIAlertAction) in
-            defaults.set(false, forKey: keyForDf.goalExistence)
-            //self.dataManager.quitTheGoal()
-            self.showGoalManageScrollView(false)
-        }))
-        present(failedAlert, animated: true, completion: nil)
-    }
-    
-    
+
     func setTodaysResult(bool: Bool, dayNum: Int){
-        let goal = goalVM.goal!
         let today = dateManager.dateFormat(type: "yyyyMMdd", date: Date())
         let lastDay = dateManager.dateFormat(type: "yyyyMMdd", date: self.goalVM.goal.endDate)
         
-        if goal.numOfSuccess + goal.numOfFail == 99 {
-            ///Goal끝나는 경우 lastDayControl
-            self.goalManager.lastDayControl(successed: bool, goal: goal)
-            performSegue(withIdentifier: "acc", sender: self)
+        self.updateGoalVM(bool: bool, completion: { newGoal in
             
-        } else {
-            self.updateGoalVM(bool: bool)
-            self.updateDaysVM(bool: bool, index: dayNum-1)
-            self.goalBinding()
-            self.checkTodayButtonSetting()
-            if today == lastDay {
-                uncheckedDaysExistOnLastDayAlertPresent()
+            /// 실패 횟수 초과
+            if newGoal.failAllowance + 1 == newGoal.numOfFail {
+                self.overFailAllowance(newGoal: newGoal)
+                
+            /// 목표 달성 100일
+            } else if newGoal.numOfFail + newGoal.numOfSuccess >= 100 {
+                performSegue(withIdentifier: "ResultViewController", sender: self)
+                var achievedGoal = newGoal
+                achievedGoal.goalAchieved = true
+                self.showGoalManageScrollView(false)
+                Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (timer) in
+                    self.dataManager.removeCurrentGoal(achievedGoal)
+                    self.dataManager.updateGeneralInfo(goal: achievedGoal)
+                }
+            } else {
+                if today == lastDay {
+                    uncheckedDaysExistOnLastDayAlertPresent()
+                }
             }
-        }
+            
+        })
+        
+        self.updateDaysVM(bool: bool, index: dayNum-1)
+        self.goalBinding()
+        self.checkTodayButtonSetting()
+
     }
     
-    private func updateGoalVM(bool: Bool){
+    private func updateGoalVM(bool: Bool, completion:(Goal)->()){
         if bool {
             self.goalVM.countSuccess { newGoal in
                 self.dataManager.fs_SaveGoalData(newGoal)
                 self.dataManager.df_SaveGoalInfo(newGoal)
+                completion(newGoal)
             }
         } else {
             self.goalVM.countFail { newGoal in
                 self.dataManager.fs_SaveGoalData(newGoal)
                 self.dataManager.df_SaveGoalInfo(newGoal)
+                completion(newGoal)
             }
         }
     }
 
-    
-    ///%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    ///%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    private func overFailAllowanceCheck(newGoal: Goal) {
-        if newGoal.failAllowance == newGoal.numOfFail {
-            let failedAlert = UIAlertController.init(title: "목표달성 실패", message: "허용가능한 불이행 횟수를 초과하여 목표달성에 실패하였습니다.", preferredStyle: .alert)
-            failedAlert.addAction(UIAlertAction(title: "확인", style: . destructive, handler: { (UIAlertAction) in
-                defaults.set(false, forKey: keyForDf.goalExistence)
-                //self.dataManager.quitTheGoal()
-                self.showGoalManageScrollView(false)
-            }))
-            present(failedAlert, animated: true, completion: nil)
-        }
+    private func overFailAllowance(newGoal: Goal) {
+        let failedAlert = UIAlertController.init(title: "목표달성 실패", message: "허용가능한 불이행 횟수를 초과하여 목표달성에 실패하였습니다.", preferredStyle: .alert)
+        failedAlert.addAction(UIAlertAction(title: "확인", style: . destructive, handler: { (UIAlertAction) in
+            defaults.set(false, forKey: keyForDf.goalExistence)
+            self.quitCurrentGoal()
+            self.showGoalManageScrollView(false)
+        }))
+        present(failedAlert, animated: true, completion: nil)
+        
     }
     
     private func updateDaysVM(bool: Bool, index: Int){

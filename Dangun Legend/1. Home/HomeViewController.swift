@@ -23,6 +23,10 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var text: UIImageView!
     @IBOutlet weak var caveImage: UIImageView!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        defaults.set(true, forKey: keyForDf.needToSetViewModel)
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -32,6 +36,7 @@ class HomeViewController: UIViewController {
     @IBAction func logoutPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "InitialVC", sender: self)
         self.loginService.logOutRemoveDefaults()
+        defaults.set(true, forKey: keyForDf.needToSetViewModel)
     }
     
     private func checkLoginStatus() {

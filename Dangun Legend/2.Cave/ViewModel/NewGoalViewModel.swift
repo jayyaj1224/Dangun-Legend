@@ -67,9 +67,9 @@ struct GoalViewModel {
         return Observable<String>.just(description)
     }
     
-    var leftFailAllowancd : Observable<String> {
-        let description = "\(goal.failAllowance-goal.numOfFail+1)번 목표 불이행 시 목표는 실패합니다."
-        return Observable<String>.just(description)
+    var leftFailAllowancd : Observable<Int> {
+        let leftChance = goal.failAllowance-goal.numOfFail+1
+        return Observable<Int>.just(leftChance)
     }
     
     var leftDays : Observable<String> {

@@ -9,14 +9,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-///     * Input
-///      - emailTextField: BehaviorRelay
-///      - pwTextField: BehaviorRelay
-///
-///     * Output
-///      - emailText 값과 pwText값의 유효성에 따른 결과값: Observable
-
-///         결과에 따라서 Login버튼의 Alpha값과 isEnabled 컨트롤
 
 struct LoginViewModel {
     

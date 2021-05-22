@@ -49,8 +49,6 @@ enum DayStatus: String, Codable  {
 struct UsersGeneralInfo {
     var totalTrial: Int
     var totalAchievement: Int
-    var successPerHundred: Int
-    var totalDaysBeenThrough: Int
     var totalSuccess: Int
 }
 

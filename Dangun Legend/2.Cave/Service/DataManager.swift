@@ -16,11 +16,7 @@ struct DataManager {
         let goal = totalGoalInfo.goal
         let daysInfo = totalGoalInfo.days
         defaults.set(true, forKey: keyForDf.goalExistence)
-        defaults.set(goal.goalID, forKey: keyForDf.crrGoalID)
-//        defaults.set(goal.numOfSuccess, forKey: keyForDf.crrNumOfSucc)
-//        defaults.set(goal.numOfFail, forKey: keyForDf.crrNumOfFail)
-        defaults.set(goal.failAllowance, forKey: keyForDf.crrFailAllowance)
-        
+        print("defaults.set(true, forKey: keyForDf.goalExistence)")
         self.fs_SaveGoalData(goal)
         
         self.fs_SaveNewGoalID(userID: goal.userID, goalID: goal.goalID)
@@ -139,57 +135,34 @@ extension DataManager {
     
     
     func removeCurrentGoal(_ goal: Goal) {
-        let dpg = DispatchGroup()
-        dpg.enter()
-        goalEndedUpdateUsersGeneralInfo()
+
         removeCurrentGoalFSData(goal)
-        dpg.leave()
-
-        dpg.notify(queue: .main) {
-            removeCurrentGoalDefaultsData()
-        }
-
+        removeCurrentGoalDefaultsData()
+        updateGeneralInfo(goal: goal)
     }
-    
-    
-    
-    private func goalEndedUpdateUsersGeneralInfo(){
-        self.goalManager.loadGeneralInfo { info in
-            let userID = defaults.string(forKey: keyForDf.crrUser)!
-            let totalDays = info.totalDaysBeenThrough + 1
-            let sucPerHun = info.totalSuccess/info.totalTrial
-            db.collection(K.FS_userGeneral).document(userID).setData([
-                fb.GI_generalInfo : [
-                    fb.GI_totalDaysBeenThrough : totalDays,
-                    fb.GI_successPerHundred: sucPerHun
-                ]
-            ], merge: true)
-        }
-    }
+
     
     private func removeCurrentGoalFSData(_ goal: Goal){
-        let serialQueue = DispatchQueue.init(label: "serialQueue")
         let startDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: goal.startDate)
         let lastDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: goal.endDate)
         let userID = goal.userID
-        serialQueue.async {
-            db.collection(K.FS_userHistory).document(userID).setData([
-                goal.goalID : [
-                    G.userID: goal.userID,
-                    G.goalID : goal.goalID,
-                    G.startDate: startDateForDB,
-                    G.endDate: lastDateForDB,
-                    G.failAllowance : goal.failAllowance,
-                    G.description : goal.description,
-                    G.numOfDays: 100,
-                    G.completed : true,
-                    G.goalAchieved: goal.goalAchieved,
-                    G.numOfSuccess: goal.numOfSuccess,
-                    G.numOfFail: goal.numOfFail,
-                    G.shared: false
-                ]
-            ], merge: true)
-        }
+        db.collection(K.FS_userHistory).document(userID).setData([
+            goal.goalID : [
+                G.userID: goal.userID,
+                G.goalID : goal.goalID,
+                G.startDate: startDateForDB,
+                G.endDate: lastDateForDB,
+                G.failAllowance : goal.failAllowance,
+                G.description : goal.description,
+                G.numOfDays: 100,
+                G.completed : true,
+                G.goalAchieved: goal.goalAchieved,
+                G.numOfSuccess: goal.numOfSuccess,
+                G.numOfFail: goal.numOfFail,
+                G.shared: false
+            ]
+        ], merge: true)
+        
     }
     
     private func removeCurrentGoalDefaultsData(){
@@ -197,12 +170,36 @@ extension DataManager {
         db.collection(K.FS_userCurrentGID).document(userID).delete()
         db.collection(K.FS_userCurrentArr).document(userID).delete()
         db.collection(K.FS_userCurrentGoal).document(userID).delete()
-//        defaults.set(0, forKey: keyForDf.crrNumOfSucc)
-//        defaults.set(0, forKey: keyForDf.crrNumOfFail)
-        defaults.removeObject(forKey: keyForDf.crrGoalID)
+        defaults.set(false, forKey: keyForDf.goalExistence)
         defaults.removeObject(forKey: keyForDf.crrGoal)
         defaults.removeObject(forKey: keyForDf.crrDaysArray)
     }
     
 }
 
+//MARK: - Update
+
+extension DataManager {
+    
+    func updateGeneralInfo(goal: Goal) {
+        self.goalManager.loadGeneralInfo { info in
+            let userID = defaults.string(forKey: keyForDf.crrUser)!
+            let updateTotalSuccess = info.totalSuccess + goal.numOfSuccess
+            var updateTotalAchievement : Int {
+                if goal.goalAchieved {
+                    return info.totalAchievement + 1
+                } else {
+                    return info.totalAchievement
+                }
+            }
+            
+            db.collection(K.FS_userGeneral).document(userID).setData([
+                fb.GI_generalInfo : [
+                    fb.GI_totalSuccess : updateTotalSuccess,
+                    fb.GI_totalAchievement: updateTotalAchievement
+                ]
+            ], merge: true)
+        }
+        
+    }
+}

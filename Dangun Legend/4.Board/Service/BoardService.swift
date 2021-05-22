@@ -19,7 +19,7 @@ struct BoardService {
         loadBoardData { BoardList in
             var sortedBoardList = BoardList
             serialQueue.async {
-                sortedBoardList.sort(by: { $0.numOfSuccess > $1.numOfSuccess} )
+                sortedBoardList.sort(by: { $0.numOfSuccess > $1.numOfSuccess } )
             }
             serialQueue.async {
                 var i = 0

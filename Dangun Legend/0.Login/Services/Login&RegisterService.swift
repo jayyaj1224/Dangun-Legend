@@ -4,11 +4,6 @@
 //
 //  Created by JAY LEE on 2021/05/15.
 
-/// 첫 로그인        첫사용자                   A: Initial Setting
-///           기존 사용자               B: Load User Info
-
-/// 재 로그인        첫 사용자                   A: Initial Setting      -> 둘 다 id     previousUser != id
-///           기존 사용자              B: Load User Info
 
 import Foundation
 
@@ -44,10 +39,10 @@ struct LoginAndRegisterService {
         idList.getDocument { (document, error) in
             if let doc = document {
                 if doc.exists {
-                    print("*** goalID exists >>>  setting current goal and goal Arr")
+                    print("*** goal exists >>>  setting current goal and goal Arr")
                     self.setCurrentGoal(userID: userID)
                 } else {
-                    print("*** goalID doesn't exists >>>  setting goal existence: false")
+                    print("*** goal doesn't exists >>>  setting goal existence: false")
                     defaults.set(false, forKey: keyForDf.goalExistence)
                 }
             }
@@ -108,10 +103,6 @@ struct LoginAndRegisterService {
                                 let endDate = self.dateManager.dateFromString(string: end)
                                 let crrHistory = Goal(userID: uID, goalID: gID, startDate: startDate, endDate: endDate, failAllowance: failAllw, description: des, numOfDays: daysNum, completed: compl, goalAchieved: goalAch, numOfSuccess: numOfSuc, numOfFail: numOfFail, shared: shared)
                                 defaults.set(true, forKey: keyForDf.goalExistence)
-                                defaults.set(gID, forKey: keyForDf.crrGoalID)
-//                                defaults.set(numOfSuc, forKey: keyForDf.crrNumOfSucc)
-//                                defaults.set(numOfFail, forKey: keyForDf.crrNumOfFail)
-                                defaults.set(failAllw, forKey: keyForDf.crrFailAllowance)
                                 if let encoded = try? encoder.encode(crrHistory) {
                                     defaults.set(encoded, forKey: keyForDf.crrGoal)
                                 } else {
@@ -159,15 +150,8 @@ struct LoginAndRegisterService {
         defaults.set(false, forKey: keyForDf.loginStatus)
         defaults.removeObject(forKey: keyForDf.crrUser)
         defaults.set(K.none, forKey: keyForDf.nickName)
-        
         defaults.removeObject(forKey: keyForDf.crrDaysArray)
         defaults.removeObject(forKey: keyForDf.crrGoal)
-        defaults.removeObject(forKey: keyForDf.crrGoalID)
-        
-//        defaults.removeObject(forKey: keyForDf.crrNumOfSucc)
-//        defaults.removeObject(forKey: keyForDf.crrNumOfFail)
-        
-        defaults.removeObject(forKey: keyForDf.crrFailAllowance)
         defaults.removeObject(forKey: keyForDf.goalExistence)
     }
 

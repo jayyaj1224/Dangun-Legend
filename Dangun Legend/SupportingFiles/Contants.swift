@@ -65,14 +65,12 @@ struct keyForDf {
     static let firstLaunch = "Default.Key: usedBefore"
     static let goalExistence = "Default.Key: goalExistence"
     static let loginStatus = "Default.Key: loginStatus"
-    
-//    static let crrNumOfSucc = "Default.Key: crrNumOfSucc"
-//    static let crrNumOfFail = "Default.Key.crrNumOfFail"
-    static let crrGoalID = "Default.Key: crrGoalID"
+    static let needToSetViewModel = "needToSetViewModel"
+
     static let crrGoal = "Default.Key: currentGoal"
     static let crrDaysArray = "Default.Key: currentDaysArray"
     static let crrUser = "Default.Key: currentUser"
-    static let crrFailAllowance = "Default.Key: crrFailAllowance"
+
     
     
     

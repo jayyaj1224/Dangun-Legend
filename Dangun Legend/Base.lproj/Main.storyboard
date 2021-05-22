@@ -537,7 +537,7 @@
                         <outlet property="numbersOfSuccessAndFailLabel" destination="uwi-Xy-eSV" id="kvo-7a-oYF"/>
                         <outlet property="squareCollectionView" destination="oUD-h1-dNa" id="K1N-nH-7dv"/>
                         <outlet property="startYour100DaysView" destination="CPe-M5-t5W" id="pvs-aJ-nVm"/>
-                        <segue destination="X7e-xw-uPb" kind="presentation" identifier="acc" id="PUL-Ov-bWT"/>
+                        <segue destination="X7e-xw-uPb" kind="presentation" identifier="ResultViewController" id="PUL-Ov-bWT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yng-g8-bi5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -789,13 +789,13 @@
                                 <rect key="frame" x="0.0" y="539" width="428" height="387"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ILLUMAIN" translatesAutoresizingMaskIntoConstraints="NO" id="Vtl-u8-i5h">
-                                        <rect key="frame" x="0.0" y="29" width="428" height="358"/>
+                                        <rect key="frame" x="49" y="111" width="330" height="276"/>
                                     </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DANGUNMAINLOGO" translatesAutoresizingMaskIntoConstraints="NO" id="Vvn-R7-ohg">
-                                        <rect key="frame" x="144" y="26" width="140" height="71.333333333333329"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Congratulations!" translatesAutoresizingMaskIntoConstraints="NO" id="Vvn-R7-ohg">
+                                        <rect key="frame" x="128" y="41" width="172" height="44"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="140" id="fdT-2k-nlH"/>
-                                            <constraint firstAttribute="width" secondItem="Vvn-R7-ohg" secondAttribute="height" multiplier="55:28" id="mFP-0c-EU5"/>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="172" id="fdT-2k-nlH"/>
+                                            <constraint firstAttribute="width" secondItem="Vvn-R7-ohg" secondAttribute="height" multiplier="55:28" constant="85.571428571428569" id="mFP-0c-EU5"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
@@ -803,11 +803,11 @@
                                 <constraints>
                                     <constraint firstItem="Vvn-R7-ohg" firstAttribute="centerX" secondItem="zjf-Qo-MDI" secondAttribute="centerX" id="8KN-DE-nrR"/>
                                     <constraint firstAttribute="bottom" secondItem="Vtl-u8-i5h" secondAttribute="bottom" id="AJn-pG-zeB"/>
-                                    <constraint firstItem="Vvn-R7-ohg" firstAttribute="top" secondItem="zjf-Qo-MDI" secondAttribute="top" constant="26" id="Hg2-R0-WzH"/>
+                                    <constraint firstItem="Vvn-R7-ohg" firstAttribute="top" secondItem="zjf-Qo-MDI" secondAttribute="top" constant="41" id="Hg2-R0-WzH"/>
                                     <constraint firstItem="Vtl-u8-i5h" firstAttribute="centerX" secondItem="zjf-Qo-MDI" secondAttribute="centerX" id="IuZ-bP-6n8"/>
-                                    <constraint firstItem="Vtl-u8-i5h" firstAttribute="top" secondItem="zjf-Qo-MDI" secondAttribute="top" constant="29" id="J85-rX-blS"/>
-                                    <constraint firstItem="Vtl-u8-i5h" firstAttribute="leading" secondItem="zjf-Qo-MDI" secondAttribute="leading" id="Pbj-Oi-jVp"/>
-                                    <constraint firstAttribute="trailing" secondItem="Vtl-u8-i5h" secondAttribute="trailing" id="aH5-K9-AhE"/>
+                                    <constraint firstItem="Vtl-u8-i5h" firstAttribute="top" secondItem="zjf-Qo-MDI" secondAttribute="top" constant="111" id="J85-rX-blS"/>
+                                    <constraint firstItem="Vtl-u8-i5h" firstAttribute="leading" secondItem="zjf-Qo-MDI" secondAttribute="leading" constant="49" id="Pbj-Oi-jVp"/>
+                                    <constraint firstAttribute="trailing" secondItem="Vtl-u8-i5h" secondAttribute="trailing" constant="49" id="aH5-K9-AhE"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bLM-Xz-pUF" userLabel="1stView">
@@ -840,7 +840,7 @@
                                             <constraint firstItem="YOL-jJ-b5U" firstAttribute="trailing" secondItem="TXI-d7-7J9" secondAttribute="trailing" constant="10" id="wF7-Ct-Hxs"/>
                                         </constraints>
                                     </view>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Congratulations!" translatesAutoresizingMaskIntoConstraints="NO" id="IKo-q3-uVN">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Congratulations!" translatesAutoresizingMaskIntoConstraints="NO" id="IKo-q3-uVN">
                                         <rect key="frame" x="114" y="207.33333333333334" width="200" height="56.000000000000028"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="CSR-Hb-lxZ"/>
@@ -902,7 +902,7 @@
                             <constraint firstItem="oax-fl-0Ry" firstAttribute="top" secondItem="bLM-Xz-pUF" secondAttribute="bottom" id="JEY-6Y-5wv"/>
                             <constraint firstItem="bLM-Xz-pUF" firstAttribute="leading" secondItem="JbO-nX-Mtj" secondAttribute="leading" id="Nd7-rX-rcC"/>
                             <constraint firstItem="zjf-Qo-MDI" firstAttribute="leading" secondItem="JbO-nX-Mtj" secondAttribute="leading" id="TGV-au-rB5"/>
-                            <constraint firstItem="Vvn-R7-ohg" firstAttribute="width" secondItem="Sa6-XB-3Yn" secondAttribute="width" multiplier="0.28972" priority="750" id="X7t-p1-yWO"/>
+                            <constraint firstItem="Vvn-R7-ohg" firstAttribute="width" secondItem="Sa6-XB-3Yn" secondAttribute="width" multiplier="0.28972" priority="750" constant="47.999840000000006" id="X7t-p1-yWO"/>
                             <constraint firstAttribute="bottom" secondItem="zjf-Qo-MDI" secondAttribute="bottom" id="Z4l-Hg-IiI"/>
                             <constraint firstItem="zjf-Qo-MDI" firstAttribute="height" secondItem="Sa6-XB-3Yn" secondAttribute="height" multiplier="0.449964" constant="-29.666666666666742" id="cMu-B0-41X"/>
                             <constraint firstItem="bLM-Xz-pUF" firstAttribute="height" secondItem="Sa6-XB-3Yn" secondAttribute="height" multiplier="0.4" id="jzS-T8-gP7"/>
@@ -929,7 +929,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1R1-zX-5Cd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3823" y="751"/>
+            <point key="canvasLocation" x="3822.897196261682" y="750.9719222462204"/>
         </scene>
         <!--History-->
         <scene sceneID="vfl-kf-PGr">
@@ -1954,7 +1954,7 @@
         <image name="goalbox" width="626" height="208"/>
         <image name="questionmark.circle" catalog="system" width="128" height="121"/>
         <image name="resultBox" width="639" height="158"/>
-        <image name="signinbox" width="410" height="150"/>
+        <image name="signinbox" width="128" height="128"/>
         <image name="stopwatch" catalog="system" width="121" height="128"/>
         <image name="timelapse" catalog="system" width="128" height="122"/>
         <image name="tortoise" catalog="system" width="128" height="68"/>

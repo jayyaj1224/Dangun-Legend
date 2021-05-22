@@ -62,16 +62,31 @@ class HistoryViewController: UIViewController {
     private func loadHistory(){
         var goalArray = [Goal]()
         self.historyManager.load(completion: { goal in
-            goalArray.append(goal)
-            goalArray.sort { $0.goalID > $1.goalID }
-            let history = HistoryListViewModel.init(goalArray)
-            self.historyListVM = history
-            self.loadingLabelBinding()
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+            self.serialQueue.async {
+                goalArray.append(goal)
+                goalArray.sort { $0.goalID > $1.goalID }
+            }
+            self.serialQueue.async {
+                var i = 0
+                for goal in goalArray {
+                    if goal.goalAchieved {
+                        let g = goal
+                        goalArray.remove(at:i)
+                        goalArray.insert(g, at: 0)
+                    }
+                    i+=1
+                }
+            }
+            self.serialQueue.async {
+                let history = HistoryListViewModel.init(goalArray)
+                self.historyListVM = history
+                self.loadingLabelBinding()
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
         }, completionerror: {
-            let history = HistoryListViewModel.init([Goal]())
+            let history = HistoryListViewModel.init(goalArray)
             self.historyListVM = history
             self.loadingLabelBinding()
             DispatchQueue.main.async {
@@ -85,7 +100,6 @@ class HistoryViewController: UIViewController {
     private func loadingLabelBinding(){
         self.historyListVM.historyEmpty()
             .bind(onNext: { bool in
-                print("*****D*D*D*D*\(bool)")
                 if bool {
                     DispatchQueue.main.async {
                         self.loadingLabel.alpha = 0
@@ -239,8 +253,6 @@ extension HistoryViewController: UITableViewDataSource, UITableViewDelegate {
         cell.shareOutlet.tintColor = .darkGray
         cell.shareOutlet.isEnabled = false
         cell.shareOutlet.isHidden = true
-        print("----******--")
-        print(cell)
     }
     
     
@@ -250,7 +262,6 @@ extension HistoryViewController: UITableViewDataSource, UITableViewDelegate {
         }
     
         let historyVM = historyListVM.historyAt(indexPath.row)
-        print("indexPath: \(indexPath)")
         cell.index = indexPath.row
         
         historyVM.goalDescription.asDriver(onErrorJustReturn: "")
