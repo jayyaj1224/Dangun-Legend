@@ -31,6 +31,8 @@ class HistoryViewController: UIViewController {
     private var historyListVM: HistoryListViewModel!
     private var upperBoxGeneralInfoVM: UpperBoxGeneralInfoViewModel!
     
+    private var nickName = ""
+    
     @IBOutlet weak var successPerAttemptLabel: UILabel!
     @IBOutlet weak var averageSuccessDayLabel: UILabel!
     @IBOutlet weak var commitAbilityPercentageLabel: UILabel!
@@ -50,13 +52,22 @@ class HistoryViewController: UIViewController {
         tableView.register(UINib(nibName: "HistoryTableViewCell", bundle: nil), forCellReuseIdentifier: "historyCell")
         NotificationCenter.default.addObserver(self, selector: #selector(self.shareSuccess(_:)), name: shareSuccessNoti, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.loadHistory(_:)), name: reloadTableViewNoti, object: nil)
-        self.nickNameControll()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.loadUsersGeneralInfo()
         self.loadHistory()
+        self.nickName = ""
+        self.historyManager.loadNickName { nickNameFS in
+            self.nickName = nickNameFS
+            self.nickNameControll()
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        self.nickNameControll()
     }
     
     private func loadHistory(){
@@ -117,14 +128,14 @@ class HistoryViewController: UIViewController {
     
     @objc
     func shareSuccess(_ noti: Notification) {
-        let load = defaults.string(forKey: keyForDf.nickName) ?? "닉네임 없음"
-        var nickName : String {
-            return load == K.none ? "닉네임 없음" : load
+//        let load = defaults.string(forKey: keyForDf.userNickName) ?? "닉네임 없음"
+        var nickNameToShare : String {
+            return self.nickName == "" ? "닉네임 없음" : self.nickName
         }
-        let alert = UIAlertController.init(title: "Share to Board", message: "\(nickName) 이름으로 업적을 Board 페이지에 공유하시겠습니까?", preferredStyle: .alert)
+        let alert = UIAlertController.init(title: "Share to Board", message: "\(nickNameToShare) 이름으로 업적을 Board 페이지에 공유하시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "네", style: .default, handler: { (UIAlertAction) in
             let goalID = noti.object as! String
-            self.historyManager.shareSuccess(goalID)
+            self.historyManager.shareSuccess(goalID, nickName: nickNameToShare)
         }))
         alert.addAction(UIAlertAction(title: "아니오", style: .destructive, handler:nil))
         present(alert, animated: true, completion: nil)
@@ -188,21 +199,27 @@ class HistoryViewController: UIViewController {
     }
     
     private func nickNameControll() {
-        if defaults.string(forKey: keyForDf.nickName) == K.none {
+        if self.nickName == "" {
+            print("nickName : \(self.nickName)")
             self.userIDLabel.isHidden = true
             self.idInput.isHidden = false
             self.idSaveButtonOutlet.setTitle("Save", for: .normal)
         } else {
+            print("nickName : \(self.nickName)")
             userIDLabel.isHidden = false
             idInput.isHidden = true
-            userIDLabel.text = defaults.string(forKey: keyForDf.nickName)!
+            userIDLabel.text = self.nickName
             idSaveButtonOutlet.setTitle("Clear", for: .normal)
         }
     }
     
+}
 
+//MARK: - NickNameControll
+    
 
-
+extension HistoryViewController {
+    
     
     private func nickNameButtonPressed() {
         if idSaveButtonOutlet.titleLabel?.text == "Clear" {
@@ -213,7 +230,8 @@ class HistoryViewController: UIViewController {
     }
     
     private func clearNickName(){
-        defaults.set(K.none, forKey: keyForDf.nickName)
+        //defaults.set(K.none, forKey: keyForDf.userNickName)
+        self.historyManager.deleteNickNameOnDB()
         DispatchQueue.main.async {
             self.idInput.isHidden = false
             self.idSaveButtonOutlet.setTitle("Save", for: .normal)
@@ -225,7 +243,7 @@ class HistoryViewController: UIViewController {
         if idInput.text != "" {
             idInput.resignFirstResponder()
             let name = idInput.text!
-            defaults.set(name, forKey: keyForDf.nickName)
+            //defaults.set(name, forKey: keyForDf.userNickName)
             self.historyManager.saveNickNameOnDB(name)
             DispatchQueue.main.async {
                 self.idInput.text = ""

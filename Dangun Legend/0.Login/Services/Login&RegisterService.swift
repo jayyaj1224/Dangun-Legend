@@ -43,7 +43,7 @@ struct LoginAndRegisterService {
                     self.setCurrentGoal(userID: userID)
                 } else {
                     print("*** goal doesn't exists >>>  setting goal existence: false")
-                    defaults.set(false, forKey: keyForDf.goalExistence)
+                    defaults.set(false, forKey: keyForDf.crrGoalExists)
                 }
             }
         }
@@ -66,17 +66,19 @@ struct LoginAndRegisterService {
         db.collection(K.FS_userIdList).document(userID).setData([
             "date" : date
         ], merge: true)
+
+        
+        
         defaults.set(userID, forKey: keyForDf.crrUser)
         defaults.set(true, forKey: keyForDf.loginStatus)
-        defaults.set(false, forKey: keyForDf.goalExistence)
-        defaults.set(K.none, forKey: keyForDf.nickName)
+        defaults.set(false, forKey: keyForDf.crrGoalExists)
     }
     
     
     
     ///아이디가 있는 currentGoal도 있고.
     func setCurrentGoal(userID: String){
-        defaults.set(true, forKey: keyForDf.goalExistence)
+        defaults.set(true, forKey: keyForDf.crrGoalExists)
         let doc = db.collection(K.FS_userCurrentGoal).document(userID)
         let encoder = JSONEncoder()
         doc.getDocument { (querySnapshot, error) in
@@ -102,7 +104,6 @@ struct LoginAndRegisterService {
                                 let startDate = self.dateManager.dateFromString(string: start)
                                 let endDate = self.dateManager.dateFromString(string: end)
                                 let crrHistory = Goal(userID: uID, goalID: gID, startDate: startDate, endDate: endDate, failAllowance: failAllw, description: des, numOfDays: daysNum, completed: compl, goalAchieved: goalAch, numOfSuccess: numOfSuc, numOfFail: numOfFail, shared: shared)
-                                defaults.set(true, forKey: keyForDf.goalExistence)
                                 if let encoded = try? encoder.encode(crrHistory) {
                                     defaults.set(encoded, forKey: keyForDf.crrGoal)
                                 } else {
@@ -149,10 +150,10 @@ struct LoginAndRegisterService {
         print("------logged out------")
         defaults.set(false, forKey: keyForDf.loginStatus)
         defaults.removeObject(forKey: keyForDf.crrUser)
-        defaults.set(K.none, forKey: keyForDf.nickName)
+        //defaults.set(K.none, forKey: keyForDf.userNickName)
         defaults.removeObject(forKey: keyForDf.crrDaysArray)
         defaults.removeObject(forKey: keyForDf.crrGoal)
-        defaults.removeObject(forKey: keyForDf.goalExistence)
+        defaults.removeObject(forKey: keyForDf.crrGoalExists)
     }
 
     

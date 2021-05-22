@@ -63,7 +63,8 @@ struct G {
 
 struct keyForDf {
     static let firstLaunch = "Default.Key: usedBefore"
-    static let goalExistence = "Default.Key: goalExistence"
+    //static let goalExistence = "Default.Key: goalExistence"
+    static let crrGoalExists = "Default.Key: crrGoalExists"
     static let loginStatus = "Default.Key: loginStatus"
     static let needToSetViewModel = "needToSetViewModel"
 
@@ -71,11 +72,7 @@ struct keyForDf {
     static let crrDaysArray = "Default.Key: currentDaysArray"
     static let crrUser = "Default.Key: currentUser"
 
-    
-    
-    
-    static let nickName = "Default.Key: nickName"
-    
+    //static let nickName = "Default.Key: nickName"
 
 }
 

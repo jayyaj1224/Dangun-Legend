@@ -27,7 +27,7 @@ class CaveViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
-    private var goalExixtence = defaults.bool(forKey: keyForDf.goalExistence)
+    
     
     @IBOutlet var caveView: UIView!
     @IBOutlet weak var startYour100DaysView: UIView!
@@ -48,6 +48,7 @@ class CaveViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        let goalExixtence = defaults.bool(forKey: keyForDf.crrGoalExists)
         print("-------goalExixtence \(goalExixtence)")
         showGoalManageScrollView(goalExixtence)
         checkIfViewModelSettingIsNeeded()
@@ -56,6 +57,7 @@ class CaveViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addNewGoalViewController" {
             let vc = segue.destination as! AddNewGoalViewController
+            
             vc.newGoalSubjectObservable.subscribe(onNext: { totalGoalInfo in
                 let newGoalVM = CaveViewModel.init(totalGoalInfo)
                 self.goalVM = newGoalVM.goalVM
@@ -70,14 +72,15 @@ class CaveViewController: UIViewController {
     
     private func checkIfViewModelSettingIsNeeded(){
         if defaults.bool(forKey:keyForDf.needToSetViewModel) {
-            print("-------viewModelSetting")
             self.viewModelSetting()
             defaults.set(false, forKey: keyForDf.needToSetViewModel)
         }
     }
         
     private func viewModelSetting(){
+        let goalExixtence = defaults.bool(forKey: keyForDf.crrGoalExists)
         if goalExixtence == true {
+            print("-------viewModelSetting")
             self.dataManager.loadDefaultsCurrentGoalInfo { goal in
                 print("sdafasfasfdasfdsf")
                 let goalVM = GoalViewModel.init(goal)
@@ -292,7 +295,7 @@ extension CaveViewController {
     private func overFailAllowance(newGoal: Goal) {
         let failedAlert = UIAlertController.init(title: "목표달성 실패", message: "허용가능한 불이행 횟수를 초과하여 목표달성에 실패하였습니다.", preferredStyle: .alert)
         failedAlert.addAction(UIAlertAction(title: "확인", style: . destructive, handler: { (UIAlertAction) in
-            defaults.set(false, forKey: keyForDf.goalExistence)
+            defaults.set(false, forKey: keyForDf.crrGoalExists)
             self.quitCurrentGoal()
             self.showGoalManageScrollView(false)
         }))

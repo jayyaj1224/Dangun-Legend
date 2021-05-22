@@ -83,6 +83,7 @@ class AddNewGoalViewController: UIViewController{
         }
 
         self.newGoalSubject.onNext(totalGoalInfo)
+        
         self.dataManager.saveNewGoalOnFS(totalGoalInfo)
         
         dismiss(animated: true, completion: nil)

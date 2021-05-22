@@ -15,8 +15,8 @@ struct DataManager {
     func saveNewGoalOnFS(_ totalGoalInfo: TotalGoalInfo){
         let goal = totalGoalInfo.goal
         let daysInfo = totalGoalInfo.days
-        defaults.set(true, forKey: keyForDf.goalExistence)
-        print("defaults.set(true, forKey: keyForDf.goalExistence)")
+        defaults.set(true, forKey: keyForDf.crrGoalExists)
+        print("\(defaults.bool(forKey: keyForDf.crrGoalExists))-----defaults.set(true, forKey: keyForDf.goalExistence)")
         self.fs_SaveGoalData(goal)
         
         self.fs_SaveNewGoalID(userID: goal.userID, goalID: goal.goalID)
@@ -135,7 +135,6 @@ extension DataManager {
     
     
     func removeCurrentGoal(_ goal: Goal) {
-
         removeCurrentGoalFSData(goal)
         removeCurrentGoalDefaultsData()
         updateGeneralInfo(goal: goal)
@@ -170,7 +169,9 @@ extension DataManager {
         db.collection(K.FS_userCurrentGID).document(userID).delete()
         db.collection(K.FS_userCurrentArr).document(userID).delete()
         db.collection(K.FS_userCurrentGoal).document(userID).delete()
-        defaults.set(false, forKey: keyForDf.goalExistence)
+        defaults.set(false, forKey: keyForDf.crrGoalExists)
+        let ddd = defaults.bool(forKey: keyForDf.crrGoalExists)
+        print("\(ddd)----defaults.set(false, forKey: keyForDf.goalExistence)")
         defaults.removeObject(forKey: keyForDf.crrGoal)
         defaults.removeObject(forKey: keyForDf.crrDaysArray)
     }

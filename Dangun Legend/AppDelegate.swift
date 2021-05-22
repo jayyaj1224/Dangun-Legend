@@ -27,8 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         if defaults.bool(forKey: keyForDf.firstLaunch) {
             defaults.set(false, forKey: keyForDf.firstLaunch)
-            defaults.set(false, forKey: keyForDf.goalExistence)
-            defaults.set(K.none, forKey: keyForDf.nickName)
+            defaults.set(false, forKey: keyForDf.crrGoalExists)
+            ///%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            ///%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             defaults.set(false, forKey: keyForDf.loginStatus)
             defaults.set(K.none, forKey: keyForDf.crrUser)
             // show how to use

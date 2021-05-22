@@ -61,7 +61,7 @@ struct GoalManager {
     
 }
     
-//MARK: - Cave
+//MARK: - CreateNewGoalFORTEST
     
 
 extension GoalManager {
@@ -72,7 +72,9 @@ extension GoalManager {
         let id = defaults.string(forKey: keyForDf.crrUser)!
         
         let goal = Goal(userID: id, goalID: startDateForDB, startDate: startDate, endDate: lastDate, failAllowance: 2,description: "This goal is a sample for a test", numOfDays: 100, completed: false, goalAchieved: false, numOfSuccess: 97, numOfFail: 0, shared: false)
+        
         let days = self.createNewDaysArrayFORTEST(goal)
+        
         let newTotalGoalInfo = TotalGoalInfo(goal: goal, days: days)
         return newTotalGoalInfo
     }

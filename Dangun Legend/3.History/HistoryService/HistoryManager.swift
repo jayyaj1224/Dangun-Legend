@@ -62,16 +62,11 @@ struct HistoryManager {
     
     
     
-    
-    func saveNickNameOnDB(_ nickName: String){
-        if let userID = defaults.string(forKey: keyForDf.crrUser) {
-            db.collection(K.FS_userNickName).document(userID).setData(["nickName":nickName])
-        }
-    }
+
     
     func resetHitoryData(){
         let userID = defaults.string(forKey: keyForDf.crrUser)!
-        let goalExists = defaults.bool(forKey: keyForDf.goalExistence )
+        let goalExists = defaults.bool(forKey: keyForDf.crrGoalExists )
         var currentlyRunning : Int { return goalExists ?  1 : 0 }
         let decoder = JSONDecoder()
         let dummyGoal = Goal(userID: userID, goalID: "", startDate: Date(), endDate: Date(), failAllowance: 0, description: "", numOfDays: 0, completed: false, goalAchieved: false, numOfSuccess: 0, numOfFail: 0, shared: false)
@@ -97,15 +92,15 @@ struct HistoryManager {
         db.collection(K.FS_userHistory).document(userID).delete()
         
     }
+
     
-    
-    func shareSuccess(_ goalID: String) {
+    func shareSuccess(_ goalID: String, nickName: String) {
         let userID = defaults.string(forKey: keyForDf.crrUser)!
         let idDocument = db.collection(K.FS_userHistory).document(userID)
-        let load = defaults.string(forKey: keyForDf.nickName) ?? "닉네임 없음"
-        var nickName : String {
-            return load == K.none ? "닉네임 없음" : load
-        }
+        //let load = defaults.string(forKey: keyForDf.nickName) ?? "닉네임 없음"
+//        var nickName : String {
+//            return self.nic ? "닉네임 없음" : load
+//        }
         
         idDocument.getDocument { (querySnapshot, error) in
             if let e = error {
@@ -139,3 +134,36 @@ struct HistoryManager {
                     }}}}}
 }
 
+
+//MARK: - NickNameControll
+
+extension HistoryManager {
+    
+    func loadNickName(completion: @escaping (String)->()){
+        let userID = defaults.string(forKey: keyForDf.crrUser)!
+        let nickNameDoc = db.collection(K.FS_userNickName).document(userID)
+        nickNameDoc.getDocument { querySnapshot, err in
+            if let e = err {
+                print("load doc failed: \(e.localizedDescription)")
+            } else {
+                if let doc = querySnapshot?.data() {
+                    if let nickName = doc["nickName"] as? String {
+                        completion(nickName)
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    func saveNickNameOnDB(_ nickName: String){
+        let userID = defaults.string(forKey: keyForDf.crrUser)!
+        db.collection(K.FS_userNickName).document(userID).setData(["nickName":nickName])
+    }
+    
+    func deleteNickNameOnDB() {
+        let userID = defaults.string(forKey: keyForDf.crrUser)!
+        db.collection(K.FS_userNickName).document(userID).delete()
+    }
+    
+}
