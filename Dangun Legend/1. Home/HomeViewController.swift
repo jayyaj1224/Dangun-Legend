@@ -16,70 +16,49 @@ let defaults = UserDefaults.standard
 let db = Firestore.firestore()
 
 class HomeViewController: UIViewController {
-
-
+    
+    private let loginService = LoginAndRegisterService()
     
     @IBOutlet weak var typoLogoImage: UIImageView!
     @IBOutlet weak var text: UIImageView!
     @IBOutlet weak var caveImage: UIImageView!
     
-    var goToLoginPage = true
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        typoLogoImage.alpha = 0
-        text.alpha = 0
-        caveImage.alpha = 0
-    }
-    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        if defaults.bool(forKey: keyForDf.loginStatus) == false {
-            performSegue(withIdentifier: "InitialVC", sender: self)
-            goToLoginPage = false
-        } else {
-            welcome()
-            print("-->> User Logged In: \(defaults.string(forKey: keyForDf.crrUser)!)")
-        }
-//        printUserDefaultKeys()
+        self.checkLoginStatus()
     }
     
-    // -->>> 초기 세팅값:    goalExistence  crrFailAllowance
-    //
     @IBAction func logoutPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "InitialVC", sender: self)
-        defaults.set(false, forKey: keyForDf.loginStatus)
-        defaults.removeObject(forKey: keyForDf.crrUser)
-        defaults.set(K.none, forKey: keyForDf.nickName)
-        
-        defaults.removeObject(forKey: keyForDf.crrDaysArray)
-        defaults.removeObject(forKey: keyForDf.crrGoal)
-        defaults.removeObject(forKey: keyForDf.crrGoalID)
-        
-        defaults.removeObject(forKey: keyForDf.crrNumOfSucc)
-        defaults.removeObject(forKey: keyForDf.crrNumOfFail)
-        
-        defaults.removeObject(forKey: keyForDf.crrFailAllowance)
-        defaults.removeObject(forKey: keyForDf.goalExistence)
+        self.loginService.logOutRemoveDefaults()
     }
     
-    func welcome() {
-        for n in 1...100 {
-            Timer.scheduledTimer(withTimeInterval: 0.015*Double(n), repeats: false) { (timer) in
-                self.typoLogoImage.alpha = CGFloat(n)*0.01
-                self.caveImage.alpha = CGFloat(n)*0.01
-                self.text.alpha = CGFloat(n)*0.01
+    private func checkLoginStatus() {
+        let status = defaults.bool(forKey: keyForDf.loginStatus)
+        print("loginStatus: \(status)")
+        if status {
+            self.welcomeAnimation()
+        } else {
+            performSegue(withIdentifier: "InitialVC", sender: self)
+        }
+    }
+    
+    func welcomeAnimation() {
+        DispatchQueue.main.async {
+            for n in 1...100 {
+                Timer.scheduledTimer(withTimeInterval: 0.015*Double(n), repeats: false) { (timer) in
+                    self.typoLogoImage.alpha = CGFloat(n)*0.01
+                    self.caveImage.alpha = CGFloat(n)*0.01
+                    self.text.alpha = CGFloat(n)*0.01
+                }
             }
         }
     }
     
-    
-    func printUserDefaultKeys(){
-        for key in UserDefaults.standard.dictionaryRepresentation().keys {
-            if key.localizedStandardContains("Default.Key"){
-                print("-->>UserDefaults Keys: \(key)")}}}
+//    func printUserDefaultKeys(){
+//        for key in UserDefaults.standard.dictionaryRepresentation().keys {
+//            if key.localizedStandardContains("Default.Key"){
+//                print("-->>UserDefaults Keys: \(key)")}}}
 
-    
-    
 }

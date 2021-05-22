@@ -10,10 +10,15 @@ import Foundation
 
 class DateManager {
 
-    func subtractionDays(start: Date, end: Date) -> Int {
-        let a = Int(dateFormat(type: "yyyyMMdd", date: start))!
-        let b = Int(dateFormat(type: "yyyyMMdd", date: end))!
-        return b-a
+//    func subtractionDays(start: Date, end: Date) -> Int {
+//        let a = Int(dateFormat(type: "yyyyMMdd", date: start))!
+//        let b = Int(dateFormat(type: "yyyyMMdd", date: end))!
+//        return b-a
+//    }
+    
+    func howManyDaysBetween(start: Date, end: Date) -> Int {
+        let distanceDay = Calendar.current.dateComponents([.day], from: start, to: end).day ?? 0
+        return distanceDay
     }
 
     func dateFromString(string: String) -> Date {
@@ -78,6 +83,9 @@ class DateManager {
         yearMonthDay3.dateFormat = "yyyy-MM-dd"
         let yearToSeconds = DateFormatter()
         yearToSeconds.dateFormat = "yyMMddHHmmss"
+        
+        let mmdd = DateFormatter()
+        mmdd.dateFormat = "MM월dd일"
             
         switch type {
         case "yyyy-MM-dd":
@@ -90,6 +98,10 @@ class DateManager {
             return monthDay.string(from: date)
         case "yearToSeconds":
             return yearToSeconds.string(from: date)
+            
+        case "MM월dd일" :
+            return mmdd.string(from: date)
+            
         case "e":
             let whatDay = whichDay.string(from: date)
             switch whatDay {

@@ -6,34 +6,33 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class HistoryTableViewCell: UITableViewCell {
 
-    var goalID = ""
-    let goalManager = GoalManager()
+    var goalID : String?
+    var index = 0
     
     @IBOutlet weak var goalDescriptionLabel: UILabel!
     @IBOutlet weak var goalResultLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var progressLabel: UILabel!
+    
     @IBOutlet weak var shareOutlet: UIButton!
+    
     @IBAction func sharePressed(_ sender: Any) {
-        if goalID == "" {
+        
+        if goalID == nil {
             print("####  goal id is empty")
         } else {
-            NotificationCenter.default.post(name: shareSuccessNoti, object: goalID, userInfo: nil)
+            NotificationCenter.default.post(name: shareSuccessNoti, object: goalID, userInfo: ["index":index])
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
 }

@@ -8,37 +8,81 @@
 import UIKit
 import Firebase
 import GoogleSignIn
+import AuthenticationServices
 import IQKeyboardManagerSwift
+import RxSwift
+import RxCocoa
 
 class LoginViewController: UIViewController, GIDSignInDelegate {
     
-    private let dateManager = DateManager()
+    private let loginAndRegisterService = LoginAndRegisterService()
+    private let loginVM = LoginViewModel()
+    private let disposeBag = DisposeBag()
+    
+    @IBOutlet weak var emailTextfield: UITextField!
+    @IBOutlet weak var pwTextfield: UITextField!
+    @IBOutlet weak var loginButton: UIButton!
+    
+    @IBAction func loginPressed(_ sender: UIButton) {
+        self.loginWithEmail()
+    }
+    
+    var appleSIButton: ASAuthorizationAppleIDButton!
+    @IBOutlet weak var appleSignInButton: UIStackView!
+    @IBAction func appleSignInPressed(_ sender: UIButton) {
+        self.appleSIButton.sendActions(for: .touchUpInside)
+    }
+    
+    @IBOutlet var signInButton: GIDSignInButton!
+    @IBAction func googleSignInPressed(_ sender: UIButton) {
+        signInButton.sendActions(for: .touchUpInside)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         GIDSignIn.sharedInstance()?.presentingViewController = self
         GIDSignIn.sharedInstance()?.clientID = "1095031001681-4jc92ro7etesrr4inrms1dskmb41q9f2.apps.googleusercontent.com"
         GIDSignIn.sharedInstance()?.delegate = self
+        self.bindingLoginInfo()
+        self.setupProviderLoginView()
     }
     
+    private func bindingLoginInfo() {
+        emailTextfield.rx.text
+            .orEmpty
+            .bind(to: loginVM.emailTextRelay)
+            .disposed(by: disposeBag)
+        
+        pwTextfield.rx.text
+            .orEmpty
+            .bind(to: loginVM.pwTextRelay)
+            .disposed(by: disposeBag)
+        
+        loginVM.validConfirmed()
+            .bind(to: loginButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        loginVM.validConfirmed()
+            .map { $0 ? 1 : 0.5}
+            .bind(to: loginButton.rx.alpha)
+            .disposed(by: disposeBag)
+    }
+}
+//MARK: - EMAIL SIGNIN
+extension LoginViewController {
     
-    
-    @IBOutlet weak var emailTextfield: UITextField!
-    @IBOutlet weak var pwTextfield: UITextField!
-    
-    @IBAction func loginPressed(_ sender: UIButton) {
-        if let email = emailTextfield.text, let password = pwTextfield.text {
-            Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-                if let e = error {
-                    self.loginErrorOcurred()
-                    print("error-->>>\(e.localizedDescription)")
-                } else {
-                    defaults.set(true, forKey: keyForDf.loginStatus)
-                    defaults.set(email, forKey: keyForDf.crrUser)
-                    self.checkWhichSetIsNeeded(userID: email)
-                    DispatchQueue.main.async {
-                        self.dismiss(animated: true, completion: nil)
-                    }
+    func loginWithEmail(){
+        let info = LoginModel(email: loginVM.emailTextRelay.value, pw: loginVM.pwTextRelay.value)
+        Auth.auth().signIn(withEmail: info.email, password: info.pw) { authResult, error in
+            if let e = error {
+                self.loginErrorOcurred()
+                print("error-->>>\(e.localizedDescription)")
+            } else {
+                defaults.set(true, forKey: keyForDf.loginStatus)
+                defaults.set(info.email, forKey: keyForDf.crrUser)
+                self.loginAndRegisterService.checkWhichSetIsNeeded(userID: info.email)
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true, completion: nil)
                 }
             }
         }
@@ -46,16 +90,14 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     
     func loginErrorOcurred(){
         let loginErrorAlert = UIAlertController.init(title: "로그인 오류", message: "아이디와 비밀번호를 확인해주세요.", preferredStyle: .alert)
-        loginErrorAlert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
+        loginErrorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(loginErrorAlert, animated: true, completion: nil)
     }
     
+}
 
-    @IBOutlet var signInButton: GIDSignInButton!
-    
-    @IBAction func googleSignInPressed(_ sender: UIButton) {
-        signInButton.sendActions(for: .touchUpInside)
-    }
+//MARK: - GOOGLE SIGNIN
+extension LoginViewController {
     
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
@@ -63,160 +105,78 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
             let userID = String(user.userID)
             defaults.set(true, forKey: keyForDf.loginStatus)
             defaults.set(userID, forKey: keyForDf.crrUser)
-            checkWhichSetIsNeeded(userID: userID)
+            self.loginAndRegisterService.checkWhichSetIsNeeded(userID: userID)
             presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
             dismiss(animated: true, completion: nil)
         } else {
-            self.loginErrorOcurred()
             print("\(error.localizedDescription)")
         }
     }
     
-    
-    
-    /// 첫 로그인        첫사용자                   A: Initial Setting
-    /// 재 로그인        첫 사용자                   A: Initial Setting      -> 둘 다 id     previousUser != id
-
-    /// 첫 로그인       기존 사용자               B: Load User Info
-    /// 재로그인        기존 사용자              B: Load User Info
-    
-    func checkWhichSetIsNeeded(userID: String) {
-        let idList = db.collection(K.FS_userIdList).document(userID)
-        idList.getDocument { (document, error) in
-            if let doc = document {
-                if doc.exists {
-                    ///아이디가 있으면(기존회원)
-                    self.checkIfGoalExists(userID: userID)
-                    print("........... checking if goal exists")
-                } else {
-                    ///아이디가 없으면(신규가입자)
-                    self.setDefaultValues(userID: userID)
-                    print("****>>>> default value set")
-                }
-            }
-        }
-    }
-    
-    func checkIfGoalExists(userID: String) {
-        let idList = db.collection(K.FS_userCurrentGID).document(userID)
-        idList.getDocument { (document, error) in
-            if let doc = document {
-                if doc.exists {
-                    print("*** goalID exists >>>  setting current goal and goal Arr")
-                    self.setCurrentGoal(userID: userID)
-                } else {
-                    print("*** goalID doesn't exists >>>  setting goal existence: false")
-                    defaults.set(false, forKey: keyForDf.goalExistence)
-                }
-            }
-        }
-    }
-    
-    
-    
-    ///아이디가 없으면(신규가입자)
-    func setDefaultValues(userID: String){
-        let date = dateManager.dateFormat(type: "yyyy년M월d일", date: Date())
-        db.collection(K.FS_userGeneral).document(userID).setData([
-            fb.GI_generalInfo : [
-                fb.GI_totalTrial : 0,
-                fb.GI_totalDaysBeenThrough : 0,
-                fb.GI_totalSuccess : 0,
-                fb.GI_totalAchievement : 0,
-                fb.GI_successPerHundred : 0
-            ]
-        ], merge: true)
-        
-        db.collection(K.FS_userIdList).document(userID).setData([
-            "date" : date
-        ], merge: true)
-        defaults.set(userID, forKey: keyForDf.crrUser)
-        defaults.set(true, forKey: keyForDf.loginStatus)
-        defaults.set(false, forKey: keyForDf.goalExistence)
-        defaults.set(K.none, forKey: keyForDf.nickName)
-    }
-    
-    
-    
-    ///아이디가 있는 currentGoal도 있고.
-    func setCurrentGoal(userID: String){
-        defaults.set(true, forKey: keyForDf.goalExistence)
-        let doc = db.collection(K.FS_userCurrentGoal).document(userID)
-        let encoder = JSONEncoder()
-        doc.getDocument { (querySnapshot, error) in
-            if let e = error {
-                print("load doc failed: \(e.localizedDescription)")
-            } else {
-                if let usersHistory = querySnapshot?.data() {
-                    for history in usersHistory {
-                        if let aGoal = history.value as? [String:Any] {
-                            if let compl = aGoal[G.completed] as? Bool,
-                               let des = aGoal[G.description] as? String,
-                               let end = aGoal[G.endDate] as? String,
-                               let failAllw = aGoal[G.failAllowance] as? Int,
-                               let goalAch = aGoal[G.goalAchieved] as? Bool,
-                               let gID = aGoal[G.goalID] as? String,
-                               let daysNum = aGoal[G.numOfDays] as? Int,
-                               let start = aGoal[G.startDate] as? String,
-                               let numOfFail = aGoal[G.numOfFail] as? Int,
-                               let numOfSuc = aGoal[G.numOfSuccess] as? Int,
-                               let uID = aGoal[G.userID] as? String,
-                               let shared = aGoal[G.shared] as? Bool
-                            {
-                                let startDate = self.dateManager.dateFromString(string: start)
-                                let endDate = self.dateManager.dateFromString(string: end)
-                                let crrHistory = GoalStruct(userID: uID, goalID: gID, startDate: startDate, endDate: endDate, failAllowance: failAllw, description: des, numOfDays: daysNum, completed: compl, goalAchieved: goalAch, numOfSuccess: numOfSuc, numOfFail: numOfFail, shared: shared)
-                                defaults.set(true, forKey: keyForDf.goalExistence)
-                                defaults.set(gID, forKey: keyForDf.crrGoalID)
-                                defaults.set(numOfSuc, forKey: keyForDf.crrNumOfSucc)
-                                defaults.set(numOfFail, forKey: keyForDf.crrNumOfFail)
-                                defaults.set(failAllw, forKey: keyForDf.crrFailAllowance)
-                                if let encoded = try? encoder.encode(crrHistory) {
-                                    defaults.set(encoded, forKey: keyForDf.crrGoal)
-                                } else {
-                                    print("--->>> encode failed \(keyForDf.crrGoal)")
-                                }
-                                
-                            }}}}}}
-        
-        let serialQueue = DispatchQueue.init(label: "serialQueue")
-        let arrDoc = db.collection(K.FS_userCurrentArr).document(userID)
-        arrDoc.getDocument { (querySnapshot, error) in
-            if let e = error {
-                print("load doc failed: \(e.localizedDescription)")
-            } else {
-                if let daysArray = querySnapshot?.data() {
-                    var arr : [SingleDayInfo] = []
-                    serialQueue.async {
-                        var i = 1
-                        for day in daysArray {
-                            if let singleday = day.value as? [String:Any] {
-                                   
-                                let userchecked = singleday[sd.userChecked] as! Bool
-                                let dayNum = singleday[sd.dayNum] as! Int
-                                let success = singleday[sd.success] as! Bool
-                                let date = singleday[sd.date] as! String
-                                
-                                let aday = SingleDayInfo(date: date, dayNum: dayNum, success: success, userChecked: userchecked)
-                                arr.append(aday)
-                                arr.sort(by: { $0.dayNum < $1.dayNum })
-                            }
-                            i += 1
-                        }
-                    }
-                    serialQueue.async {
-                        print("@@@ \(arr)")
-                        let encoder = JSONEncoder()
-                        if let encoded = try? encoder.encode(arr) {
-                            defaults.set(encoded, forKey: keyForDf.crrDaysArray)
-                        } else {
-                            print("--->>> encode failed: \(keyForDf.crrDaysArray)")
-                        }
-                    }}}}
-    }
-    
-
-
 }
 
 
+//MARK: - APPLE SIGNIN
+
+extension LoginViewController: ASAuthorizationControllerDelegate {
+    /// - Tag: did_complete_authorization
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        switch authorization.credential {
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            let userID = appleIDCredential.user
+            defaults.set(true, forKey: keyForDf.loginStatus)
+            defaults.set(userID, forKey: keyForDf.crrUser)
+            self.loginAndRegisterService.checkWhichSetIsNeeded(userID: userID)
+            presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+            dismiss(animated: true, completion: nil)
+        default:
+            break
+        }
+    }
+    
+    // Apple ID 연동 실패 시
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print(error.localizedDescription)
+    }
+
+}
+
+extension LoginViewController {
+
+    func setupProviderLoginView() {
+        self.appleSIButton = ASAuthorizationAppleIDButton(type: .signIn, style: .whiteOutline)
+        self.appleSIButton.addTarget(self, action: #selector(handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
+        appleSignInButton.addArrangedSubview(self.appleSIButton)
+    }
+    
+    @objc
+    func handleAuthorizationAppleIDButtonPress() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+    
+
+}
+
+extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+}
+
+extension UIViewController {
+    func showLoginViewController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let loginViewController = storyboard.instantiateViewController(withIdentifier: "loginViewController") as? LoginViewController {
+            loginViewController.modalPresentationStyle = .formSheet
+            loginViewController.isModalInPresentation = true
+            self.present(loginViewController, animated: true, completion: nil)
+        }
+    }
+}

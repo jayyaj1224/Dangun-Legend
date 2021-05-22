@@ -14,13 +14,13 @@ target 'Dangun Legend' do
 #
 #  target 'Dangun LegendUITests' do
 #    # Pods for testing
-#  end
+#  ends
 
 pod 'IQKeyboardManagerSwift'
 pod 'Firebase/Auth'
 pod 'GoogleSignIn'
 pod 'Firebase/Firestore' 
 pod 'RxSwift' 
-pod 'RxCocoa' 
+pod 'RxCocoa'
 
 end
