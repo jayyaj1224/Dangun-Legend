@@ -31,18 +31,17 @@ class HistoryViewController: UIViewController {
     private var historyListVM: HistoryListViewModel!
     private var upperBoxGeneralInfoVM: UpperBoxGeneralInfoViewModel!
     
-    private var nickName = ""
-    
     @IBOutlet weak var successPerAttemptLabel: UILabel!
     @IBOutlet weak var averageSuccessDayLabel: UILabel!
     @IBOutlet weak var commitAbilityPercentageLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingLabel: UIView!
     @IBOutlet weak var historyIsEmptyLabel: UIView!
-    @IBOutlet weak var userIDLabel: UILabel!
-    @IBOutlet weak var idInput: UITextField!
-    @IBOutlet weak var idSaveButtonOutlet: UIButton!
-    @IBAction func idSaveButton(_ sender: UIButton) {
+    
+    @IBOutlet weak var nickNameLabel: UILabel!
+    @IBOutlet weak var nickNameInputTextField: UITextField!
+    @IBOutlet weak var nickNameSaveAndClearButton: UIButton!
+    @IBAction func nickNameButtonPressed(_ sender: UIButton) {
         self.nickNameButtonPressed()
     }
     
@@ -58,16 +57,12 @@ class HistoryViewController: UIViewController {
         super.viewWillAppear(true)
         self.loadUsersGeneralInfo()
         self.loadHistory()
-        self.nickName = ""
-        self.historyManager.loadNickName { nickNameFS in
-            self.nickName = nickNameFS
-            self.nickNameControll()
-        }
+        self.setNickName()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        self.nickNameControll()
+       
     }
     
     private func loadHistory(){
@@ -128,14 +123,12 @@ class HistoryViewController: UIViewController {
     
     @objc
     func shareSuccess(_ noti: Notification) {
-//        let load = defaults.string(forKey: keyForDf.userNickName) ?? "닉네임 없음"
-        var nickNameToShare : String {
-            return self.nickName == "" ? "닉네임 없음" : self.nickName
-        }
-        let alert = UIAlertController.init(title: "Share to Board", message: "\(nickNameToShare) 이름으로 업적을 Board 페이지에 공유하시겠습니까?", preferredStyle: .alert)
+        let nickName = defaults.string(forKey: keyForDf.nickName) ?? "닉네임 없음"
+        
+        let alert = UIAlertController.init(title: "Share to Board", message: "\(nickName) 이름으로 업적을 Board 페이지에 공유하시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "네", style: .default, handler: { (UIAlertAction) in
             let goalID = noti.object as! String
-            self.historyManager.shareSuccess(goalID, nickName: nickNameToShare)
+            self.historyManager.shareSuccess(goalID, nickName: nickName)
         }))
         alert.addAction(UIAlertAction(title: "아니오", style: .destructive, handler:nil))
         present(alert, animated: true, completion: nil)
@@ -195,70 +188,63 @@ class HistoryViewController: UIViewController {
         self.upperBoxGeneralInfoVM.successPerctage.asDriver(onErrorJustReturn: "")
             .drive(self.commitAbilityPercentageLabel.rx.text)
             .disposed(by: self.disposeBag)
-        
+
     }
     
-    private func nickNameControll() {
-        if self.nickName == "" {
-            print("nickName : \(self.nickName)")
-            self.userIDLabel.isHidden = true
-            self.idInput.isHidden = false
-            self.idSaveButtonOutlet.setTitle("Save", for: .normal)
-        } else {
-            print("nickName : \(self.nickName)")
-            userIDLabel.isHidden = false
-            idInput.isHidden = true
-            userIDLabel.text = self.nickName
-            idSaveButtonOutlet.setTitle("Clear", for: .normal)
-        }
-    }
+
     
 }
+
+
+
 
 //MARK: - NickNameControll
     
 
 extension HistoryViewController {
     
+    private func setNickName(){
+        if let nickName = defaults.string(forKey: keyForDf.nickName) {
+            self.nickNameLabel.text = nickName
+            self.nickNameIsOnTheScreen()
+        } else {
+            self.noNickNameSaveModeUIChange()
+        }
+    }
+    
+    private func noNickNameSaveModeUIChange(){
+        self.nickNameLabel.isHidden = true
+        self.nickNameInputTextField.isHidden = false
+        self.nickNameSaveAndClearButton.setTitle("Save", for: .normal)
+    }
+    
+    private func nickNameIsOnTheScreen(){
+        nickNameLabel.isHidden = false
+        nickNameInputTextField.isHidden = true
+        nickNameSaveAndClearButton.setTitle("Clear", for: .normal)
+    }
     
     private func nickNameButtonPressed() {
-        if idSaveButtonOutlet.titleLabel?.text == "Clear" {
-            clearNickName()
-        } else if idSaveButtonOutlet.titleLabel?.text == "Save" {
-            saveNickName()
-        }
-    }
-    
-    private func clearNickName(){
-        //defaults.set(K.none, forKey: keyForDf.userNickName)
-        self.historyManager.deleteNickNameOnDB()
-        DispatchQueue.main.async {
-            self.idInput.isHidden = false
-            self.idSaveButtonOutlet.setTitle("Save", for: .normal)
-            self.userIDLabel.isHidden = true
-        }
-    }
-    
-    private func saveNickName(){
-        if idInput.text != "" {
-            idInput.resignFirstResponder()
-            let name = idInput.text!
-            //defaults.set(name, forKey: keyForDf.userNickName)
-            self.historyManager.saveNickNameOnDB(name)
-            DispatchQueue.main.async {
-                self.idInput.text = ""
-                self.userIDLabel.isHidden = false
-                self.userIDLabel.text = name
-                self.idInput.isHidden = true
-                self.idSaveButtonOutlet.setTitle("Clear", for: .normal)
+        if nickNameSaveAndClearButton.titleLabel?.text == "Clear" {
+            noNickNameSaveModeUIChange()
+            defaults.removeObject(forKey: keyForDf.nickName)
+        } else if nickNameSaveAndClearButton.titleLabel?.text == "Save" {
+            if let nickName = self.nickNameInputTextField.text {
+                self.nickNameInputTextField.text = ""
+                self.nickNameLabel.text = nickName
+                nickNameIsOnTheScreen()
+                defaults.set(nickName, forKey: keyForDf.nickName)
             }
         }
+        
     }
     
-
+    
 }
 
 
+
+//MARK: - TableViewController
 
 extension HistoryViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

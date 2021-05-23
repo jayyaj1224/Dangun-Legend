@@ -11,6 +11,7 @@ struct DataManager {
     
     private let goalManager = GoalManager()
     private let dateManager = DateManager()
+    private let userID = defaults.string(forKey: keyForDf.crrUser) ?? ""
     
     func saveNewGoalOnFS(_ totalGoalInfo: TotalGoalInfo){
         let goal = totalGoalInfo.goal
@@ -34,7 +35,6 @@ struct DataManager {
     func fs_SaveDaysInfo(_ daysInfo: [SingleDayInfo]){
         for i in 1...100 {
             let dayi = daysInfo[i-1]
-            let userID = defaults.string(forKey: keyForDf.crrUser)!
             db.collection(K.FS_userCurrentArr).document(userID).setData(
                 [ "Day\(i)" : [
                     FS_daysInfo.status : dayi.status.rawValue,
@@ -72,7 +72,6 @@ struct DataManager {
     }
     
     private func updateUsersGeneralInfoTotalTrial(){
-        let userID = defaults.string(forKey: keyForDf.crrUser) ?? ""
         self.goalManager.loadGeneralInfo { info in
             let update = info.totalTrial + 1
             db.collection(K.FS_userGeneral).document(userID).setData([
@@ -137,14 +136,13 @@ extension DataManager {
     func removeCurrentGoal(_ goal: Goal) {
         removeCurrentGoalFSData(goal)
         removeCurrentGoalDefaultsData()
-        updateGeneralInfo(goal: goal)
+        updateGeneralInfoTotalAchieve(goal: goal)
     }
 
     
     private func removeCurrentGoalFSData(_ goal: Goal){
         let startDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: goal.startDate)
         let lastDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: goal.endDate)
-        let userID = goal.userID
         db.collection(K.FS_userHistory).document(userID).setData([
             goal.goalID : [
                 G.userID: goal.userID,
@@ -165,7 +163,6 @@ extension DataManager {
     }
     
     private func removeCurrentGoalDefaultsData(){
-        let userID = defaults.string(forKey: keyForDf.crrUser)!
         db.collection(K.FS_userCurrentGID).document(userID).delete()
         db.collection(K.FS_userCurrentArr).document(userID).delete()
         db.collection(K.FS_userCurrentGoal).document(userID).delete()
@@ -182,10 +179,9 @@ extension DataManager {
 
 extension DataManager {
     
-    func updateGeneralInfo(goal: Goal) {
+    func updateGeneralInfoTotalAchieve(goal: Goal) {
         self.goalManager.loadGeneralInfo { info in
-            let userID = defaults.string(forKey: keyForDf.crrUser)!
-            let updateTotalSuccess = info.totalSuccess + goal.numOfSuccess
+//            let updateTotalSuccess = info.totalSuccess + goal.numOfSuccess
             var updateTotalAchievement : Int {
                 if goal.goalAchieved {
                     return info.totalAchievement + 1
@@ -196,11 +192,35 @@ extension DataManager {
             
             db.collection(K.FS_userGeneral).document(userID).setData([
                 fb.GI_generalInfo : [
-                    fb.GI_totalSuccess : updateTotalSuccess,
                     fb.GI_totalAchievement: updateTotalAchievement
                 ]
             ], merge: true)
         }
         
+    }
+    
+    func updateGeneralInfoTotalSuccess(){
+        self.goalManager.loadGeneralInfo { info in
+            let oneMoreSuccess = info.totalSuccess + 1
+            print("GI_totalSuccess:  \(oneMoreSuccess)")
+            db.collection(K.FS_userGeneral).document(userID).setData([
+                fb.GI_generalInfo : [
+                    fb.GI_totalSuccess : oneMoreSuccess
+                ]
+            ], merge: true)
+            
+        }
+    }
+    
+    func updateGeneralInfoTotalFail(){
+        self.goalManager.loadGeneralInfo { info in
+            let oneMoreFail = info.totalFail + 1
+            print("GI_totalFail:  \(oneMoreFail)")
+            db.collection(K.FS_userGeneral).document(userID).setData([
+                fb.GI_generalInfo : [
+                    fb.GI_totalFail : oneMoreFail
+                ]
+            ], merge: true)
+        }
     }
 }

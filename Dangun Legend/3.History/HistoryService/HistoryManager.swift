@@ -82,10 +82,9 @@ struct HistoryManager {
         db.collection(K.FS_userGeneral).document(goal.userID).setData([
             fb.GI_generalInfo : [
                 fb.GI_totalTrial : currentlyRunning,
-                fb.GI_totalDaysBeenThrough : goal.numOfSuccess + goal.numOfFail,
                 fb.GI_totalSuccess : goal.numOfSuccess,
                 fb.GI_totalAchievement : 0,
-                fb.GI_successPerHundred : 0
+                fb.GI_totalFail: goal.numOfFail
             ]
         ], merge: true)
         
@@ -134,36 +133,3 @@ struct HistoryManager {
                     }}}}}
 }
 
-
-//MARK: - NickNameControll
-
-extension HistoryManager {
-    
-    func loadNickName(completion: @escaping (String)->()){
-        let userID = defaults.string(forKey: keyForDf.crrUser)!
-        let nickNameDoc = db.collection(K.FS_userNickName).document(userID)
-        nickNameDoc.getDocument { querySnapshot, err in
-            if let e = err {
-                print("load doc failed: \(e.localizedDescription)")
-            } else {
-                if let doc = querySnapshot?.data() {
-                    if let nickName = doc["nickName"] as? String {
-                        completion(nickName)
-                    }
-                }
-            }
-        }
-    }
-    
-    
-    func saveNickNameOnDB(_ nickName: String){
-        let userID = defaults.string(forKey: keyForDf.crrUser)!
-        db.collection(K.FS_userNickName).document(userID).setData(["nickName":nickName])
-    }
-    
-    func deleteNickNameOnDB() {
-        let userID = defaults.string(forKey: keyForDf.crrUser)!
-        db.collection(K.FS_userNickName).document(userID).delete()
-    }
-    
-}

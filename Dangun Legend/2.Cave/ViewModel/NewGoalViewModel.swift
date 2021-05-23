@@ -38,18 +38,13 @@ struct GoalViewModel {
         var newGoal = self.goal
         newGoal?.numOfSuccess += 1
         self.goal = newGoal
-        print("newGoal: ***** \(self.numbersOfSuccessAndFail)")
         completion(newGoal!)
     }
     
     mutating func countFail(completion:(Goal)->()){
         var newGoal = self.goal
-        if goal.failAllowance-1 == goal.numOfFail {
-            ///%%%%%%%%%%%%%%%%%%%%
-        }
         newGoal?.numOfFail += 1
         self.goal = newGoal
-        print("newGoal: ***** \(self.numbersOfSuccessAndFail)")
         completion(newGoal!)
     }
     
@@ -187,43 +182,3 @@ enum DaySquareStatus {
 }
 
 
-
-
-//    if let savedData = defaults.object(forKey: keyForDf.crrGoal) as? Data {
-//        let numOfSuccess = defaults.integer(forKey: keyForDf.crrNumOfSucc)
-//        let numOfFail = defaults.integer(forKey: keyForDf.crrNumOfFail)
-//        let decoder = JSONDecoder()
-//        if let data = try? decoder.decode(Goal.self, from: savedData) {
-//            self.currentGoal = data
-//            let leftChance = data.failAllowance - numOfFail
-//            let daysPast = Calendar.current.dateComponents([.day], from: data.startDate, to: Date()).day! as Int
-//            let start = dateManager.dateFormat(type: "yyyy년M월d일", date: data.startDate)
-//            let end = dateManager.dateFormat(type: "yyyy년M월d일", date: data.endDate)
-//            DispatchQueue.main.async {
-//                self.dateLabel.text = "기간: \(start) - \(end)"
-//            }
-
-
-//    var daySquareStatus : Observable<DaySquareStatus> {
-//        if self.singleDayInfo.date == today {
-//            switch self.singleDayInfo.status {
-//            case DayStatus.failed:
-//                return Observable<DaySquareStatus>.just(DaySquareStatus.todayFailed)
-//            case DayStatus.success:
-//                return Observable<DaySquareStatus>.just(DaySquareStatus.todaySucessed)
-//            case DayStatus.unchecked:
-//                return Observable<DaySquareStatus>.just(DaySquareStatus.todayUnchecked)
-//            }
-//        } else if self.singleDayInfo.date < today {
-//            switch self.singleDayInfo.status {
-//            case DayStatus.failed:
-//                return Observable<DaySquareStatus>.just(DaySquareStatus.failed)
-//            case DayStatus.success:
-//                return Observable<DaySquareStatus>.just(DaySquareStatus.success)
-//            case DayStatus.unchecked:
-//                return Observable<DaySquareStatus>.just(DaySquareStatus.unchecked)
-//            }
-//        } else {
-//            return Observable<DaySquareStatus>.just(DaySquareStatus.unchecked)
-//        }
-//    }

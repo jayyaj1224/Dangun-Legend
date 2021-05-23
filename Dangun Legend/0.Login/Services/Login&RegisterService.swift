@@ -56,10 +56,9 @@ struct LoginAndRegisterService {
         db.collection(K.FS_userGeneral).document(userID).setData([
             fb.GI_generalInfo : [
                 fb.GI_totalTrial : 0,
-                fb.GI_totalDaysBeenThrough : 0,
                 fb.GI_totalSuccess : 0,
                 fb.GI_totalAchievement : 0,
-                fb.GI_successPerHundred : 0
+                fb.GI_totalFail: 0
             ]
         ], merge: true)
         
@@ -150,7 +149,6 @@ struct LoginAndRegisterService {
         print("------logged out------")
         defaults.set(false, forKey: keyForDf.loginStatus)
         defaults.removeObject(forKey: keyForDf.crrUser)
-        //defaults.set(K.none, forKey: keyForDf.userNickName)
         defaults.removeObject(forKey: keyForDf.crrDaysArray)
         defaults.removeObject(forKey: keyForDf.crrGoal)
         defaults.removeObject(forKey: keyForDf.crrGoalExists)

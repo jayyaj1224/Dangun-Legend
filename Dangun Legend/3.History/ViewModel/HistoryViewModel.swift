@@ -5,13 +5,6 @@
 //  Created by JAY LEE on 2021/05/18.
 //
 
-//
-//@IBOutlet weak var goalDescriptionLabel: UILabel!
-//@IBOutlet weak var goalResultLabel: UILabel!
-//@IBOutlet weak var dateLabel: UILabel!
-//@IBOutlet weak var progressLabel: UILabel!
-//@IBOutlet weak var shareOutlet: UIButton!
-//@IBAction func sharePressed(_ sender: Any) {
     
 import Foundation
 import RxSwift
@@ -120,6 +113,7 @@ struct UpperBoxGeneralInfoViewModel {
         let successPerTrialDescription = "총 \(generalInfo.totalTrial)번의 시도, \(generalInfo.totalAchievement)번의 목표달성에 성공"
         return Observable<String>.just(successPerTrialDescription)
     }
+
     
     var averageSuccessPerGoal : Observable<String> {
         var ability : Double {

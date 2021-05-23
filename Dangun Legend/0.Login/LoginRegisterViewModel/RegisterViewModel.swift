@@ -32,7 +32,7 @@ struct RegisterViewModel {
             .map { pwOne, pwTwo in
                 if pwOne == pwTwo && pwOne.count > 5{
                     return ValidStatus.valid
-                } else if pwTwo.count < 6 || pwOne.count < 6 {
+                } else if pwTwo.count < 6 { //pwTwo.count < 6 || pwOne.count < 6 {
                     return ValidStatus.none
                 } else {
                     return ValidStatus.invalid

@@ -50,6 +50,7 @@ struct UsersGeneralInfo {
     var totalTrial: Int
     var totalAchievement: Int
     var totalSuccess: Int
+    var totalFail: Int
 }
 
 struct UsersInputForNewGoal{

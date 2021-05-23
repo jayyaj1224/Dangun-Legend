@@ -50,7 +50,8 @@ struct GoalManager {
                         let totalTrial = idGeneralData[fb.GI_totalTrial] as! Int
                         let numOfAchieve = idGeneralData[fb.GI_totalAchievement] as! Int
                         let totalSuc = idGeneralData[fb.GI_totalSuccess] as! Int
-                        let currentGeneralInfo = UsersGeneralInfo(totalTrial: totalTrial, totalAchievement: numOfAchieve, totalSuccess: totalSuc)
+                        let totalFail = idGeneralData[fb.GI_totalFail] as! Int
+                        let currentGeneralInfo = UsersGeneralInfo(totalTrial: totalTrial, totalAchievement: numOfAchieve, totalSuccess: totalSuc, totalFail: totalFail)
                         completion(currentGeneralInfo)
                     }
                 }

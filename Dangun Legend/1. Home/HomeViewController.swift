@@ -31,20 +31,23 @@ class HomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         self.checkLoginStatus()
-        print("------------------------------------------------")
-        print("------------------------------------------------")
-        print("loginStatus: \(defaults.bool(forKey: keyForDf.loginStatus))")
-        print("userID: \(defaults.string(forKey: keyForDf.crrUser))")
-        print("crrGoal: \(defaults.bool(forKey: keyForDf.crrGoal))")
-        print("goalExistence: \(defaults.bool(forKey: keyForDf.crrGoalExists))")
-        print("needToSetViewModel: \(defaults.bool(forKey: keyForDf.needToSetViewModel))")
-        //print("userNickName: \(defaults.string(forKey: keyForDf.userNickName))")
+//        print("------------------------------------------------")
+//        print("------------------------------------------------")
+//        print("loginStatus: \(defaults.bool(forKey: keyForDf.loginStatus))")
+//        print("userID: \(String(describing: defaults.string(forKey: keyForDf.crrUser)))")
+//        print("crrGoal: \(defaults.bool(forKey: keyForDf.crrGoal))")
+//        print("goalExistence: \(defaults.bool(forKey: keyForDf.crrGoalExists))")
+//        print("needToSetViewModel: \(defaults.bool(forKey: keyForDf.needToSetViewModel))")
+//        print("userNickName: \(String(describing: defaults.string(forKey: keyForDf.nickName)))")
+//        print("------------------------------------------------")
+//        print("------------------------------------------------")
     }
     
     @IBAction func logoutPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "InitialVC", sender: self)
         self.loginService.logOutRemoveDefaults()
         defaults.set(true, forKey: keyForDf.needToSetViewModel)
+        defaults.removeObject(forKey: keyForDf.nickName)
     }
     
     private func checkLoginStatus() {

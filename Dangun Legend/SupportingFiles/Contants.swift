@@ -72,17 +72,17 @@ struct keyForDf {
     static let crrDaysArray = "Default.Key: currentDaysArray"
     static let crrUser = "Default.Key: currentUser"
 
-    //static let nickName = "Default.Key: nickName"
+    static let nickName = "Default.Key: nickName"
+    
+    
 
 }
 
 struct fb {
     static let GI_generalInfo = "GI_generalInfo"
     static let GI_totalTrial = "totalTrial"
-    static let GI_totalDaysBeenThrough = "totalDaysBeenThrough"
     static let GI_totalAchievement = "totalAchievement"
-    static let GI_successPerHundred = "successPerHundred"
-    static let GI_usersAbility = "usersAbility"
+    static let GI_totalFail = "totalFail"
     static let GI_totalSuccess = "totalSuccess"
 }
 

@@ -80,15 +80,14 @@ class CaveViewController: UIViewController {
     private func viewModelSetting(){
         let goalExixtence = defaults.bool(forKey: keyForDf.crrGoalExists)
         if goalExixtence == true {
-            print("-------viewModelSetting")
             self.dataManager.loadDefaultsCurrentGoalInfo { goal in
-                print("sdafasfasfdasfdsf")
+                print("loadDefaultsCurrentGoalInfo")
                 let goalVM = GoalViewModel.init(goal)
                 self.goalVM = goalVM
                 self.goalBinding()
             }
             self.dataManager.loadDefaultsCurrentDaysArrayInfo { daysArr in
-                print("1232132131231")
+                print("loadDefaultsCurrentDaysArrayInfo")
                 let collectionViewVM = DaysViewModel.init(daysArr)
                 self.daysVM = collectionViewVM
                 self.checkTodayButtonSetting()
@@ -260,7 +259,7 @@ extension CaveViewController {
                 self.showGoalManageScrollView(false)
                 Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (timer) in
                     self.dataManager.removeCurrentGoal(achievedGoal)
-                    self.dataManager.updateGeneralInfo(goal: achievedGoal)
+                    self.dataManager.updateGeneralInfoTotalAchieve(goal: achievedGoal)
                 }
             } else {
                 if today == lastDay {
@@ -281,12 +280,14 @@ extension CaveViewController {
             self.goalVM.countSuccess { newGoal in
                 self.dataManager.fs_SaveGoalData(newGoal)
                 self.dataManager.df_SaveGoalInfo(newGoal)
+                self.dataManager.updateGeneralInfoTotalSuccess()
                 completion(newGoal)
             }
         } else {
             self.goalVM.countFail { newGoal in
                 self.dataManager.fs_SaveGoalData(newGoal)
                 self.dataManager.df_SaveGoalInfo(newGoal)
+                self.dataManager.updateGeneralInfoTotalFail()
                 completion(newGoal)
             }
         }
