@@ -36,6 +36,7 @@
 		A4858CC12650150400FC7671 /* Login&RegisterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4858CC02650150400FC7671 /* Login&RegisterService.swift */; };
 		A49D013D2626F3A10059971B /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49D013C2626F3A10059971B /* ResultViewController.swift */; };
 		A49E4314261AADAC00E98619 /* GoalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49E4313261AADAC00E98619 /* GoalManager.swift */; };
+		A4AD4DED265BD1A80080504C /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AD4DEC265BD1A80080504C /* CoreDataService.swift */; };
 		A4BBCC6926295939007D2DE3 /* BordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BBCC6826295939007D2DE3 /* BordViewController.swift */; };
 		A4BBCC7926296F9C007D2DE3 /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48221A7261DE49B005DFA43 /* HistoryTableViewCell.xib */; };
 		A4BBCC7A26296F9C007D2DE3 /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48221A7261DE49B005DFA43 /* HistoryTableViewCell.xib */; };
@@ -109,6 +110,7 @@
 		A4858CC02650150400FC7671 /* Login&RegisterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Login&RegisterService.swift"; sourceTree = "<group>"; };
 		A49D013C2626F3A10059971B /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		A49E4313261AADAC00E98619 /* GoalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalManager.swift; sourceTree = "<group>"; };
+		A4AD4DEC265BD1A80080504C /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		A4BBCC6826295939007D2DE3 /* BordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BordViewController.swift; sourceTree = "<group>"; };
 		A4BBCC8C26297024007D2DE3 /* BoardShareCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardShareCell.swift; sourceTree = "<group>"; };
 		A4BBCC8D26297024007D2DE3 /* BoardShareCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BoardShareCell.xib; sourceTree = "<group>"; };
@@ -181,7 +183,7 @@
 		A420E00D261724D00039F2C8 /* Dangun Legend */ = {
 			isa = PBXGroup;
 			children = (
-				A4588E222650FEF000C432BD /* Dangun LegendRelease.entitlements */,
+				A4EF048F264F874600CBA656 /* Services */,
 				A420E00E261724D00039F2C8 /* AppDelegate.swift */,
 				A420E010261724D00039F2C8 /* SceneDelegate.swift */,
 				A420E014261724D00039F2C8 /* Main.storyboard */,
@@ -190,9 +192,9 @@
 				A4EF0488264F84BE00CBA656 /* 2.Cave */,
 				A4EF0489264F84D100CBA656 /* 3.History */,
 				A4EF048A264F84D500CBA656 /* 4.Board */,
-				A4EF048F264F874600CBA656 /* Services */,
 				A420E01C261724D10039F2C8 /* Info.plist */,
 				A40CECDC2635123800F0CAC8 /* Dangun Legend.entitlements */,
+				A4588E222650FEF000C432BD /* Dangun LegendRelease.entitlements */,
 				A49D4384264F812A009C3C26 /* SupportingFiles */,
 				A4588E3626538A3400C432BD /* DangunPlayground.playground */,
 			);
@@ -398,6 +400,7 @@
 			isa = PBXGroup;
 			children = (
 				A442B2C9261D7C5A00B4CD12 /* DateManager.swift */,
+				A4AD4DEC265BD1A80080504C /* CoreDataService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -662,6 +665,7 @@
 				A43F42ED26569EAF00904F7C /* DataManager.swift in Sources */,
 				A4D842AC2650D38B0026FF9B /* LoginAndRegisterModel.swift in Sources */,
 				A4CDF1F8261809FC00A08809 /* CaveViewController.swift in Sources */,
+				A4AD4DED265BD1A80080504C /* CoreDataService.swift in Sources */,
 				A4BBCC8E26297024007D2DE3 /* BoardShareCell.swift in Sources */,
 				A420E013261724D00039F2C8 /* HomeViewController.swift in Sources */,
 				A48221A8261DE49B005DFA43 /* HistoryTableViewCell.swift in Sources */,
