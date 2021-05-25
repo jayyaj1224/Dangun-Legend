@@ -38,17 +38,12 @@
 		A49F5A74265C6B9600739811 /* CaveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49F5A73265C6B9600739811 /* CaveViewModel.swift */; };
 		A49F5A7B265C6DC500739811 /* AddNewGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49F5A7A265C6DC500739811 /* AddNewGoalViewController.swift */; };
 		A49F5A7D265C6E8300739811 /* LoginRegisterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49F5A7C265C6E8300739811 /* LoginRegisterService.swift */; };
-		A49F5A80265C70F500739811 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A49F5A7E265C70F500739811 /* Model.xcdatamodeld */; };
 		A4AD4DED265BD1A80080504C /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AD4DEC265BD1A80080504C /* CoreDataService.swift */; };
 		A4BBCC6926295939007D2DE3 /* BordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BBCC6826295939007D2DE3 /* BordViewController.swift */; };
 		A4BBCC7926296F9C007D2DE3 /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48221A7261DE49B005DFA43 /* HistoryTableViewCell.xib */; };
 		A4BBCC7A26296F9C007D2DE3 /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48221A7261DE49B005DFA43 /* HistoryTableViewCell.xib */; };
 		A4BBCC8E26297024007D2DE3 /* BoardShareCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BBCC8C26297024007D2DE3 /* BoardShareCell.swift */; };
 		A4BBCC8F26297024007D2DE3 /* BoardShareCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4BBCC8D26297024007D2DE3 /* BoardShareCell.xib */; };
-		A4CCB808265C74680054E036 /* GoalData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCB804265C74680054E036 /* GoalData+CoreDataClass.swift */; };
-		A4CCB809265C74680054E036 /* GoalData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCB805265C74680054E036 /* GoalData+CoreDataProperties.swift */; };
-		A4CCB80A265C74680054E036 /* DayData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCB806265C74680054E036 /* DayData+CoreDataClass.swift */; };
-		A4CCB80B265C74680054E036 /* DayData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCB807265C74680054E036 /* DayData+CoreDataProperties.swift */; };
 		A4CDF1F8261809FC00A08809 /* CaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CDF1F7261809FC00A08809 /* CaveViewController.swift */; };
 		A4D842AC2650D38B0026FF9B /* LoginAndRegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D842AB2650D38B0026FF9B /* LoginAndRegisterModel.swift */; };
 		A4D842AF2650D3D20026FF9B /* LoginRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D842AE2650D3D20026FF9B /* LoginRegisterViewModel.swift */; };
@@ -117,15 +112,10 @@
 		A49F5A73265C6B9600739811 /* CaveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveViewModel.swift; sourceTree = "<group>"; };
 		A49F5A7A265C6DC500739811 /* AddNewGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewGoalViewController.swift; sourceTree = "<group>"; };
 		A49F5A7C265C6E8300739811 /* LoginRegisterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterService.swift; sourceTree = "<group>"; };
-		A49F5A7F265C70F500739811 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		A4AD4DEC265BD1A80080504C /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		A4BBCC6826295939007D2DE3 /* BordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BordViewController.swift; sourceTree = "<group>"; };
 		A4BBCC8C26297024007D2DE3 /* BoardShareCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardShareCell.swift; sourceTree = "<group>"; };
 		A4BBCC8D26297024007D2DE3 /* BoardShareCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BoardShareCell.xib; sourceTree = "<group>"; };
-		A4CCB804265C74680054E036 /* GoalData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GoalData+CoreDataClass.swift"; sourceTree = "<group>"; };
-		A4CCB805265C74680054E036 /* GoalData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GoalData+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		A4CCB806265C74680054E036 /* DayData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DayData+CoreDataClass.swift"; sourceTree = "<group>"; };
-		A4CCB807265C74680054E036 /* DayData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DayData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A4CDF1F7261809FC00A08809 /* CaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveViewController.swift; sourceTree = "<group>"; };
 		A4D842AB2650D38B0026FF9B /* LoginAndRegisterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAndRegisterModel.swift; sourceTree = "<group>"; };
 		A4D842AE2650D3D20026FF9B /* LoginRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterViewModel.swift; sourceTree = "<group>"; };
@@ -193,7 +183,6 @@
 		A420E00D261724D00039F2C8 /* Dangun Legend */ = {
 			isa = PBXGroup;
 			children = (
-				A49F5A72265C6A1100739811 /* CoreData */,
 				A4EF048F264F874600CBA656 /* Services */,
 				A49F5A78265C6C8700739811 /* Model */,
 				A420E00E261724D00039F2C8 /* AppDelegate.swift */,
@@ -316,18 +305,6 @@
 				A411E5012619CD970057FAD3 /* GoogleService-Info.plist */,
 			);
 			path = SupportingFiles;
-			sourceTree = "<group>";
-		};
-		A49F5A72265C6A1100739811 /* CoreData */ = {
-			isa = PBXGroup;
-			children = (
-				A4CCB804265C74680054E036 /* GoalData+CoreDataClass.swift */,
-				A4CCB805265C74680054E036 /* GoalData+CoreDataProperties.swift */,
-				A4CCB806265C74680054E036 /* DayData+CoreDataClass.swift */,
-				A4CCB807265C74680054E036 /* DayData+CoreDataProperties.swift */,
-				A49F5A7E265C70F500739811 /* Model.xcdatamodeld */,
-			);
-			path = CoreData;
 			sourceTree = "<group>";
 		};
 		A49F5A78265C6C8700739811 /* Model */ = {
@@ -680,13 +657,11 @@
 				A4D842AF2650D3D20026FF9B /* LoginRegisterViewModel.swift in Sources */,
 				A43F42ED26569EAF00904F7C /* DataManager.swift in Sources */,
 				A4D842AC2650D38B0026FF9B /* LoginAndRegisterModel.swift in Sources */,
-				A4CCB809265C74680054E036 /* GoalData+CoreDataProperties.swift in Sources */,
 				A4CDF1F8261809FC00A08809 /* CaveViewController.swift in Sources */,
 				A4AD4DED265BD1A80080504C /* CoreDataService.swift in Sources */,
 				A4BBCC8E26297024007D2DE3 /* BoardShareCell.swift in Sources */,
 				A420E013261724D00039F2C8 /* HomeViewController.swift in Sources */,
 				A48221A8261DE49B005DFA43 /* HistoryTableViewCell.swift in Sources */,
-				A4CCB80B265C74680054E036 /* DayData+CoreDataProperties.swift in Sources */,
 				A49F5A74265C6B9600739811 /* CaveViewModel.swift in Sources */,
 				A49F5A71265C6A0800739811 /* UserDefaultsService.swift in Sources */,
 				A4EF048E264F858200CBA656 /* BoardViewModel.swift in Sources */,
@@ -699,18 +674,15 @@
 				A49F5A7B265C6DC500739811 /* AddNewGoalViewController.swift in Sources */,
 				A4EF049B264F8A4F00CBA656 /* BoardService.swift in Sources */,
 				A47775FB261821D8002D866C /* RegisterViewController.swift in Sources */,
-				A4CCB808265C74680054E036 /* GoalData+CoreDataClass.swift in Sources */,
 				A4BBCC6926295939007D2DE3 /* BordViewController.swift in Sources */,
 				A4777630261884DA002D866C /* Contants.swift in Sources */,
 				A49F5A7D265C6E8300739811 /* LoginRegisterService.swift in Sources */,
 				A49D013D2626F3A10059971B /* ResultViewController.swift in Sources */,
-				A49F5A80265C70F500739811 /* Model.xcdatamodeld in Sources */,
 				A442B2CA261D7C5A00B4CD12 /* DateManager.swift in Sources */,
 				A420E011261724D00039F2C8 /* SceneDelegate.swift in Sources */,
 				A49E4314261AADAC00E98619 /* GoalManager.swift in Sources */,
 				A4588E302652551600C432BD /* HistoryManager.swift in Sources */,
 				A477762B26182E00002D866C /* GoogleSignInVC.swift in Sources */,
-				A4CCB80A265C74680054E036 /* DayData+CoreDataClass.swift in Sources */,
 				A445B5B5262D6B76003F4A1F /* AboutDangunVC.swift in Sources */,
 				A4588E3226536D8C00C432BD /* HistoryViewModel.swift in Sources */,
 			);
@@ -1053,19 +1025,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		A49F5A7E265C70F500739811 /* Model.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				A49F5A7F265C70F500739811 /* Model.xcdatamodel */,
-			);
-			currentVersion = A49F5A7F265C70F500739811 /* Model.xcdatamodel */;
-			path = Model.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = A420E003261724D00039F2C8 /* Project object */;
 }

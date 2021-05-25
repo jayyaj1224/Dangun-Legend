@@ -30,22 +30,20 @@ struct HistoryManager {
                     if let usersHistory = querySnapshot?.data() {
                         for history in usersHistory {
                             if let aGoal = history.value as? [String:Any] {
-                                if let compl = aGoal[G.completed] as? Bool,
-                                   let des = aGoal[G.description] as? String,
+                                if let des = aGoal[G.description] as? String,
                                    let end = aGoal[G.endDate] as? String,
                                    let fail = aGoal[G.failAllowance] as? Int,
-                                   let goalAch = aGoal[G.goalAchieved] as? Bool,
                                    let gID = aGoal[G.goalID] as? String,
-                                   let daysNum = aGoal[G.numOfDays] as? Int,
                                    let start = aGoal[G.startDate] as? String,
                                    let numOfFail = aGoal[G.numOfFail] as? Int,
                                    let numOfSuc = aGoal[G.numOfSuccess] as? Int,
                                    let uID = aGoal[G.userID] as? String,
-                                   let shared = aGoal[G.shared] as? Bool
+                                   let shared = aGoal[G.shared] as? Bool,
+                                   let status = aGoal[G.status] as? String
                                 {
                                     let startDate = self.dateManager.dateFromString(string: start)
                                     let endDate = self.dateManager.dateFromString(string: end)
-                                    let history = GoalModel(userID: uID, goalID: gID, startDate: startDate, endDate: endDate, failAllowance: fail, description: des, numOfDays: daysNum, completed: compl, goalAchieved: goalAch, numOfSuccess: numOfSuc, numOfFail: numOfFail, shared: shared)
+                                    let history = GoalModel(userID: uID, goalID: gID, startDate: startDate, endDate: endDate, failAllowance: fail, description: des, status: Status(rawValue: status)!, numOfSuccess: numOfSuc, numOfFail: numOfFail, shared: shared)
                                     completion(history)
                                 }
                             }
@@ -69,7 +67,7 @@ struct HistoryManager {
         let goalExists = defaults.bool(forKey: KeyForDf.crrGoalExists )
         var currentlyRunning : Int { return goalExists ?  1 : 0 }
         let decoder = JSONDecoder()
-        let dummyGoal = GoalModel(userID: userID, goalID: "", startDate: Date(), endDate: Date(), failAllowance: 0, description: "", numOfDays: 0, completed: false, goalAchieved: false, numOfSuccess: 0, numOfFail: 0, shared: false)
+        let dummyGoal = GoalModel(userID: userID, goalID: "", startDate: Date(), endDate: Date(), failAllowance: 0, description: "", status: Status.none, numOfSuccess: 0, numOfFail: 0, shared: false)
         var goal : GoalModel {
             if goalExists {
                 let data = defaults.data(forKey: KeyForDf.crrGoal)!

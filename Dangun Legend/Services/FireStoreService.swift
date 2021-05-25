@@ -9,11 +9,11 @@ import Foundation
 
 struct FireStoreService {
     
+    var userID : String {
+        return defaults.string(forKey: KeyForDf.userID)!
+    }
+    
     private let dateManager = DateManager()
-    private let userID = defaults.string(forKey: KeyForDf.userID)!
-    
-    
-    
     
     func loadCurrentGoal(completion: @escaping (GoalModel)->()){
         let doc = db.collection(K.FS_userCurrentGoal).document(userID)
@@ -86,7 +86,7 @@ struct FireStoreService {
                         let numOfAchieve = idGeneralData[FS.GI_totalAchievement] as! Int
                         let totalSuc = idGeneralData[FS.GI_totalSuccess] as! Int
                         let totalFail = idGeneralData[FS.GI_totalFail] as! Int
-                        let currentGeneralInfo = UserInfoModel(totalTrial: totalTrial, totalAchievement: numOfAchieve, totalSuccess: totalSuc, totalFail: totalFail)
+                        let currentGeneralInfo = UserInfoModel(totalTrial: totalTrial, totalAchievements: numOfAchieve, totalSuccess: totalSuc, totalFail: totalFail)
                         completion(currentGeneralInfo)
                     }
                 }
@@ -125,8 +125,9 @@ extension FireStoreService {
     func saveDaysInfo(_ daysInfo: [DayModel]){
         for i in 1...100 {
             let dayi = daysInfo[i-1]
+            let index = String(format: "%03d", i)
             db.collection(K.FS_userCurrentArr).document(userID).setData(
-                [ "Day\(i)" : [
+                [ "Day\(index)" : [
                     FS_daysInfo.status : dayi.status.rawValue,
                     FS_daysInfo.dayNum : dayi.dayIndex,
                     FS_daysInfo.date : dayi.date
@@ -135,22 +136,7 @@ extension FireStoreService {
         }
     }
     
-    
-//    func saveDefaultUserInfo(){
-//        let date = dateManager.dateFormat(type: "yyyy년M월d일", date: Date())
-//        db.collection(K.FS_userGeneral).document(userID).setData([
-//            FS.GI_generalInfo : [
-//                FS.GI_totalTrial : 0,
-//                FS.GI_totalSuccess : 0,
-//                FS.GI_totalAchievement : 0,
-//                FS.GI_totalFail: 0
-//            ]
-//        ], merge: true)
-//
-//        db.collection(K.FS_userIdList).document(userID).setData([
-//            "date" : date
-//        ], merge: true)
-//    }
+
     
     func saveGoalAtHistory(_ goal: GoalModel) {
         let startDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: goal.startDate)
@@ -176,11 +162,19 @@ extension FireStoreService {
             FS.GI_generalInfo : [
                 FS.GI_totalTrial : info.totalTrial,
                 FS.GI_totalSuccess : info.totalSuccess,
-                FS.GI_totalAchievement : info.totalAchievement,
+                FS.GI_totalAchievement : info.totalAchievements,
                 FS.GI_totalFail: info.totalFail
             ]
         ], merge: true)
     }
+    
+    func saveUserID(_ userID: String){
+        let date = dateManager.dateFormat(type: "yyyy년M월d일", date: Date())
+        db.collection(K.FS_userIdList).document(userID).setData([
+            "date" : date
+        ], merge: true)
+    }
+
 }
 
 
@@ -225,6 +219,8 @@ extension FireStoreService {
     }
     
     
+    
+    
     func updateTheDay(index: Int, successBool: Bool) {
         var bool : String {
             if successBool {
@@ -233,13 +229,31 @@ extension FireStoreService {
                 return Status.fail.rawValue
             }
         }
-        
+        let num = String(format: "%03d", index)
         db.collection(K.FS_userCurrentArr).document(userID).setData(
-            [ "Day\(index)" : [
+            [ "Day\(num)" : [
                 FS_daysInfo.status : bool,
             ]
             ], merge: true)
     }
+    
+    
+    func goalInfoOneMoreSuccess(num: Int, goalID: String){
+        db.collection(K.FS_userCurrentGoal).document(userID).setData([
+            goalID : [
+                G.numOfSuccess: num
+            ]
+        ], merge: true)
+    }
+    
+    func goalInfoOneMoreFail(num: Int, goalID: String){
+        db.collection(K.FS_userCurrentGoal).document(userID).setData([
+            goalID : [
+                G.numOfFail: num
+            ]
+        ], merge: true)
+    }
+    
     
     
 }

@@ -75,7 +75,6 @@ struct UserInfoKey {
 
 struct KeyForDf {
     static let firstLaunch = "Default.Key: usedBefore"
-//    static let userInfo = "Default.Key: userInfo"
     static let crrGoalExists = "Default.Key: crrGoalExists"
     static let loginStatus = "Default.Key: loginStatus"
     static let needToSetViewModel = "needToSetViewModel"

@@ -25,12 +25,16 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.loginService.logOutRemoveDefaults()
+        defaults.set(false, forKey: KeyForDf.crrGoalExists)
         defaults.set(true, forKey: KeyForDf.needToSetViewModel)
+        defaults.set("test",forKey: KeyForDf.userID)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        self.checkLoginStatus()
+        ///self.checkLoginStatus()
 //        print("------------------------------------------------")
 //        print("------------------------------------------------")
 //        print("loginStatus: \(defaults.bool(forKey: keyForDf.loginStatus))")

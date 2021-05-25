@@ -15,9 +15,22 @@ struct CoreDataService {
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     
+//    func printOutEverything(){
+//        let goal = GoalData(context: context)
+//        let days = DayData(context: context)
+//        print(goal)
+//        print(days)
+//    }
+//
+//    func resetEverything(){
+//        self.deletData(EntityName.dayData)
+//        self.deletData(EntityName.goalData)
+//    }
+    
+    
 //MARK: - Create
     
-    func saveGoalInfo(_ goal: GoalModel){
+    func saveNewGoalInfo(_ goal: GoalModel){
         let newGoalData = GoalData(context: context)
         newGoalData.endDate = goal.endDate
         newGoalData.startDate = goal.startDate
@@ -29,6 +42,9 @@ struct CoreDataService {
         newGoalData.userID = goal.userID
         newGoalData.status = goal.status.rawValue
         newGoalData.failAllowance = Int64(goal.failAllowance)
+        print("***************************")
+        print(newGoalData)
+        print("***************************")
         do {
             try context.save()
         } catch {
@@ -37,17 +53,20 @@ struct CoreDataService {
     }
     
     
-    func saveDayInfo(_ dayModelArray: [DayModel]){
+    func saveNewDayInfo(_ dayModelArray: [DayModel]){
         for dayModel in dayModelArray {
-            let newDayData = DayData(context: context)
-            newDayData.date = dayModel.date
-            newDayData.index = Int64(dayModel.dayIndex)
-            newDayData.status = dayModel.status.rawValue
+            let status = dayModel.status.rawValue
+            let dayData = DayData(context: context)
+            dayData.date = dayModel.date
+            dayData.index = Int64(dayModel.dayIndex)
+            dayData.status = status
             do {
                 try context.save()
-            } catch {
-                print("CoreDataService: couldn't save new day info")
             }
+            catch {
+                print("CoreDataService: couldn't save new days info")
+            }
+            
         }
     }
     
@@ -59,15 +78,14 @@ struct CoreDataService {
 
 //MARK: - Load
 
-
-
-
     func loadGoal(completion: @escaping (GoalModel)->()) {
         do {
             let request = GoalData.fetchRequest() as NSFetchRequest<GoalData>
-            let goalData = try context.fetch(request).first!
-            let goalModel = self.goalModelConversion(goalData)
-            completion(goalModel)
+            if let goalData = try? context.fetch(request) {
+                let goal = goalData[0]
+                let goalModel = self.goalModelConversion(goal)
+                completion(goalModel)
+            }
         }
         catch {
             print("CoreDataService: couldn't load goal info")
@@ -130,11 +148,35 @@ struct CoreDataService {
 
 //MARK: - Update
     
-    func updateDayData(index: Int, bool: Bool){
+    func oneMoreSuccess(){
+        let request = GoalData.fetchRequest() as NSFetchRequest<GoalData>
+        if let goalData = try? context.fetch(request) {
+            let goal = goalData.first!
+            let update = goal.successNum + 1
+            goal.successNum = update
+            try! context.save()
+        }
+    }
+    
+    func oneMoreFail(){
+        let request = GoalData.fetchRequest() as NSFetchRequest<GoalData>
+        if let goalData = try? context.fetch(request) {
+            let goal = goalData.first!
+            let update = goal.failNum + 1
+            goal.failNum = update
+            try! context.save()
+        }
+    }
+    
+    func updateDaySuccessOrFail(index: Int, bool: Bool){
         let index64 = Int64(index)
         
         let request = DayData.fetchRequest() as NSFetchRequest<DayData>
         let pred = NSPredicate(format: "index CONTAINS %@", "\(index64)")
+        
+        let sort = NSSortDescriptor(key: "index", ascending: true)
+        
+        request.sortDescriptors = [sort]
         
         request.predicate = pred
         

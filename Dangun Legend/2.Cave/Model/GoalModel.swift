@@ -42,7 +42,7 @@ enum Status: String, Codable  {
 
 struct UserInfoModel: Codable {
     var totalTrial: Int
-    var totalAchievement: Int
+    var totalAchievements: Int
     var totalSuccess: Int
     var totalFail: Int
 }

@@ -36,18 +36,18 @@ struct GoalViewModel {
         return Observable<String>.just(goal.description)
     }
 
-    mutating func countSuccess(completion: ()->()){
+    mutating func countSuccess(completion: (GoalModel)->()){
         var newGoal = self.goal
         newGoal?.numOfSuccess += 1
         self.goal = newGoal
-        completion()
+        completion(newGoal!)
     }
 
-    mutating func countFail(completion: ()->()){
+    mutating func countFail(completion: (GoalModel)->()){
         var newGoal = self.goal
         newGoal?.numOfFail += 1
         self.goal = newGoal
-        completion()
+        completion(newGoal!)
     }
 
 

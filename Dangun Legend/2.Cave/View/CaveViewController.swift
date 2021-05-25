@@ -16,14 +16,12 @@ let checkTheDateNoti : Notification.Name = Notification.Name("CheckTheDateNotifi
 
 class CaveViewController: UIViewController {
     
-    private let coreDataService = CoreDataService()
     private let fireStoreService = FireStoreService()
     private let userDefaultService = UserDefaultService()
     
     private let caveGoalAddVC = AddNewGoalViewController()
     
-    
-    
+
     private var goalVM : GoalViewModel!
     private var daysVM : DaysViewModel!
     
@@ -51,10 +49,11 @@ class CaveViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         let goalExixtence = defaults.bool(forKey: KeyForDf.crrGoalExists)
-        print("-------goalExixtence \(goalExixtence)")
         showGoalManageScrollView(goalExixtence)
         checkIfViewModelSettingIsNeeded()
     }
+
+    
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addNewGoalViewController" {
@@ -88,7 +87,7 @@ class CaveViewController: UIViewController {
         
     
     private func goalViewModelSetting(){
-        self.coreDataService.loadGoal { goalModel in
+        self.fireStoreService.loadCurrentGoal { goalModel in
             let goalVM = GoalViewModel.init(goalModel)
             self.goalVM = goalVM
             self.goalBinding()
@@ -96,7 +95,7 @@ class CaveViewController: UIViewController {
     }
     
     private func daysViewModelSetting(){
-        self.coreDataService.loadDays { dayModelArray in
+        self.fireStoreService.loadCurrentDaysInfo { dayModelArray in
             let daysVM = DaysViewModel.init(dayModelArray)
             self.daysVM = daysVM
             self.checkTodayButtonSetting()
@@ -173,41 +172,6 @@ class CaveViewController: UIViewController {
 
 }
 
-//MARK: - Quit Current Goal
-
-extension CaveViewController {
-    
-    @IBAction func quitPressed(_ sender: UIButton) {
-        let alertQuitPressed = UIAlertController.init(title: "그만두기", message: "진행중인 목표를 중단합니다.", preferredStyle: .alert)
-        alertQuitPressed.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
-        alertQuitPressed.addAction(UIAlertAction(title: "그만두기", style: .destructive, handler: { (UIAlertAction) in
-            self.quitCurrentGoal()
-        }))
-        present(alertQuitPressed, animated: true, completion: nil)
-    }
-
-    private func quitCurrentGoal(){
-        self.showGoalManageScrollView(false)
-        
-        // FireStore 삭제
-        self.fireStoreService.saveGoalAtHistory(self.goalVM.goal)
-        self.fireStoreService.removeCurrentGoal()
-        self.fireStoreService.removeCurrentDaysInfo()
-        
-        // CoreData 삭제
-        self.coreDataService.deletData(EntityName.dayData)
-        self.coreDataService.deletData(EntityName.goalData)
-        
-        // Defaults 삭제 및 업데이트
-        defaults.set(false, forKey: KeyForDf.crrGoalExists)
-        defaults.removeObject(forKey: KeyForDf.crrGoal)
-        defaults.removeObject(forKey: KeyForDf.crrDaysArray)
-    }
-    
-}
-
-
-
 
 
 
@@ -253,36 +217,18 @@ extension CaveViewController {
         checkTodayAlert.addAction(UIAlertAction(title: "실패", style: .default, handler: {
             (UIAlertAction) in
             
-            self.setTodaysResult(bool: false, index: singleDayInfo.dayIndex)
+            self.setTodaysResult(bool: false, index: singleDayInfo.dayIndex-1)
             
         }))
 
         checkTodayAlert.addAction(UIAlertAction(title: "성공", style: .destructive, handler: { (UIAlertAction) in
             
-            self.setTodaysResult(bool: true, index: singleDayInfo.dayIndex)
+            self.setTodaysResult(bool: true, index: singleDayInfo.dayIndex-1)
             
         }))
 
         present(checkTodayAlert, animated: true,completion: nil)
     }
-
-//    @objc func checkAlert(_ noti: Notification) {
-//        let checkTheDayPressed = UIAlertController.init(title: "미확인 날짜 체크", message: "이날 목표는 성공하셨나요?", preferredStyle: .alert)
-//
-//        checkTheDayPressed.addAction(UIAlertAction(title: "실패", style: .default, handler: { (UIAlertAction) in
-//            if let dayIndex = noti.object as? Int {
-//                self.setTodaysResult(bool: false, dayNum: dayIndex)
-//            }}))
-//
-//        checkTheDayPressed.addAction(UIAlertAction(title: "성공", style: .destructive, handler: { (UIAlertAction) in
-//            if let dayIndex = noti.object as? Int {
-//                self.setTodaysResult(bool: true, dayNum: dayIndex)
-//            }}))
-//
-//        present(checkTheDayPressed, animated: true, completion: nil)
-//    }
-    
-    
     
     
 
@@ -290,49 +236,51 @@ extension CaveViewController {
         
         self.updateGoalVM(success: bool)
         
-        self.updateDaysVM(bool: bool, index: index)
+        self.updateDaysVM(success: bool, index: index)
         
         self.checkTodayButtonSetting()
-
-        //CoreData Goal Udapte
     }
     
     private func updateGoalVM(success: Bool){
         if success == true {
-            self.goalVM.countSuccess {
+            
+            self.goalVM.countSuccess(completion: { goalModel in
+                let goalID = goalModel.goalID
+                let numOfSuc = goalModel.numOfSuccess
+                self.fireStoreService.goalInfoOneMoreSuccess(num: numOfSuc, goalID: goalID)
                 self.goalBinding()
-                updateFromResult()
-            }
-            DispatchQueue.global(qos: .utility).async {
-                self.fireStoreService.userInfoOneMoreSuccess()
-                self.userDefaultService.oneMoreSuccess()
-            }
+                updateFromResult(result: goalModel)
+            })
+            
+            self.fireStoreService.userInfoOneMoreSuccess()
+            self.userDefaultService.oneMoreSuccess()
+            
         } else {
-            self.goalVM.countFail {
+            self.goalVM.countFail(completion: { goalModel in
+                let goalID = goalModel.goalID
+                let numOfFail = goalModel.numOfFail
+                self.fireStoreService.goalInfoOneMoreFail(num: numOfFail, goalID: goalID)
                 self.goalBinding()
-                updateFromResult()
-            }
-            DispatchQueue.global(qos: .utility).async {
-                self.fireStoreService.userInfoOneMoreFail()
-                self.userDefaultService.oneMoreFail()
-            }
+                updateFromResult(result: goalModel)
+                
+            })
+            
+            self.fireStoreService.userInfoOneMoreFail()
+            self.userDefaultService.oneMoreFail()
+            self.coreDataService.oneMoreFail()
+            
         }
     }
-
-    
- 
-    
-    
 
     
     private func updateDaysVM(success: Bool, index: Int){
         if success == true {
             self.daysVM.updateSuccess(index: index) {
                 // FireStore update
-                self.fireStoreService.updateTheDay(index: index, successBool: true)
+                self.fireStoreService.updateTheDay(index: index+1, successBool: true)
                 
                 // Coredata update
-                self.coreDataService.updateDayData(index: index, bool: true)
+                self.coreDataService.updateDaySuccessOrFail(index: index, bool: true)
                 
                 DispatchQueue.main.async {
                     self.collectionVw.reloadData()
@@ -341,10 +289,10 @@ extension CaveViewController {
         } else {
             self.daysVM.updateFail(index: index) { 
                 // FireStore update
-                self.fireStoreService.updateTheDay(index: index, successBool: false)
+                self.fireStoreService.updateTheDay(index: index+1, successBool: false)
                 
                 // Coredata update
-                self.coreDataService.updateDayData(index: index, bool: false)
+                self.coreDataService.updateDaySuccessOrFail(index: index, bool: false)
                 
                 DispatchQueue.main.async {
                     self.collectionVw.reloadData()
@@ -370,11 +318,13 @@ extension CaveViewController {
         present(failedAlert, animated: true, completion: nil)
     }
     
-    private func updateFromResult(){
-        let result = self.goalVM.goal!
+    
+    
+    private func updateFromResult(result: GoalModel){
+
         let dateManager = DateManager()
         let today = dateManager.dateFormat(type: "yyyyMMdd", date: Date())
-        let lastDay = dateManager.dateFormat(type: "yyyyMMdd", date: self.goalVM.goal.endDate)
+        let lastDay = dateManager.dateFormat(type: "yyyyMMdd", date: result.endDate)
         
         if result.failAllowance + 1 == result.numOfFail {
             self.overFailAllowance(newGoal: result)
@@ -402,6 +352,41 @@ extension CaveViewController {
     }
     
 }
+
+
+//MARK: - Quit Current Goal
+
+extension CaveViewController {
+    
+    @IBAction func quitPressed(_ sender: UIButton) {
+        let alertQuitPressed = UIAlertController.init(title: "그만두기", message: "진행중인 목표를 중단합니다.", preferredStyle: .alert)
+        alertQuitPressed.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
+        alertQuitPressed.addAction(UIAlertAction(title: "그만두기", style: .destructive, handler: { (UIAlertAction) in
+            self.quitCurrentGoal()
+        }))
+        present(alertQuitPressed, animated: true, completion: nil)
+    }
+
+    private func quitCurrentGoal(){
+        self.showGoalManageScrollView(false)
+        
+        // FireStore 삭제
+        self.fireStoreService.saveGoalAtHistory(self.goalVM.goal)
+        self.fireStoreService.removeCurrentGoal()
+        self.fireStoreService.removeCurrentDaysInfo()
+        
+        // CoreData 삭제
+        self.coreDataService.deletData(EntityName.dayData)
+        self.coreDataService.deletData(EntityName.goalData)
+        
+        // Defaults 삭제 및 업데이트
+        defaults.set(false, forKey: KeyForDf.crrGoalExists)
+        defaults.removeObject(forKey: KeyForDf.crrGoal)
+        defaults.removeObject(forKey: KeyForDf.crrDaysArray)
+    }
+    
+}
+
 
 
 

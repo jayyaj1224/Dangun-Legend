@@ -66,11 +66,10 @@ class AddNewGoalViewController: UIViewController{
     private func createNewGoal() {
         let fireStore = FireStoreService()
         let coreData = CoreDataService()
-        let userID = defaults.string(forKey: KeyForDf.userID)
         let userInput = UsersInputForNewGoal(goalDescripteion: self.goalTextView.text, failAllowance: self.failAllowOutput.selectedSegmentIndex)
        
         var totalGoalInfo : TotalGoalInfoModel {
-            if userID == "test@test.com" {
+            if userInput.goalDescripteion == "Test97" {
                 return self.goalManager.createNewGoalFORTEST()
             } else {
                 return self.goalManager.createNewGoal(userInput)
@@ -85,8 +84,8 @@ class AddNewGoalViewController: UIViewController{
             fireStore.saveDaysInfo(totalGoalInfo.days)
             
             // CoreData에 저장
-            coreData.saveGoalInfo(totalGoalInfo.goal)
-            coreData.saveDayInfo(totalGoalInfo.days)
+            coreData.saveNewGoalInfo(totalGoalInfo.goal)
+            coreData.saveNewDayInfo(totalGoalInfo.days)
             
             // GeneralInfo 업데이트
             let new = defaults.integer(forKey: UserInfoKey.totalTrial)+1

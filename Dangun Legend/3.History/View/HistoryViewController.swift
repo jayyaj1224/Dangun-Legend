@@ -75,7 +75,7 @@ class HistoryViewController: UIViewController {
             self.serialQueue.async {
                 var i = 0
                 for goal in goalArray {
-                    if goal.goalAchieved {
+                    if goal.status == Status.success {
                         let g = goal
                         goalArray.remove(at:i)
                         goalArray.insert(g, at: 0)
@@ -272,15 +272,15 @@ extension HistoryViewController: UITableViewDataSource, UITableViewDelegate {
             .drive(cell.goalDescriptionLabel.rx.text)
             .disposed(by: disposeBag)
         
-        historyVM.progressLabel.asDriver(onErrorJustReturn: GoalProgressStatus.fail)
+        historyVM.progressLabel.asDriver(onErrorJustReturn: Status.none)
             .drive(onNext: { status in
                 let numOfSuc = historyVM.history.numOfSuccess
                 switch status {
-                case GoalProgressStatus.success:
+                case Status.success:
                     cell.goalResultLabel.text = "100일 중 \(numOfSuc)일의 실행으로 목표 달성 성공!"
                     cell.progressLabel.text = "성공"
                     cell.progressLabel.textColor = .systemBlue
-                case GoalProgressStatus.fail:
+                case Status.fail:
                     cell.goalResultLabel.text = "100일 중 \(numOfSuc)일의 실행으로 목표 달성 실패"
                     cell.progressLabel.text = "실패"
                     cell.progressLabel.textColor = .systemRed

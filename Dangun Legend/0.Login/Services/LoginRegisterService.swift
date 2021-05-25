@@ -43,6 +43,7 @@ struct LoginAndRegisterService {
             if let doc = document {
                 if doc.exists {
                     print("*** goal exists >>>  setting current goal and goal Arr")
+                    defaults.set(true, forKey: KeyForDf.crrGoalExists)
                     self.setCurrentGoal(userID: userID)
                 } else {
                     ///1. 기존 유저 - 진행하고 있는 골이 없을 때
@@ -59,32 +60,30 @@ struct LoginAndRegisterService {
     
     ///2. 기존 유저 - 진행하고 있는 골이 있을 때
     func setCurrentGoal(userID: String){
-        defaults.set(true, forKey: KeyForDf.crrGoalExists)
+        
         
         DispatchQueue.global(qos: .utility).async {
             self.fireStoreService.loadCurrentGoal { goalModel in
                 //save at Core data
-                self.coreDataService.saveGoalInfo(goalModel)
+
             }
-        
-            self.fireStoreService.loadCurrentDaysInfo { dayModelArray in
-                //save at Core data
-                self.coreDataService.saveDayInfo(dayModelArray)
-            }
-        
             self.fireStoreService.loadUserInfo { userInfo in
                 //save at User default
-                self.userDefaultService.encodingSaveAtUserDefault(data: userInfo, key: KeyForDf.userInfo)
+                defaults.set(userInfo.totalFail,forKey: UserInfoKey.totalFail)
+                defaults.set(userInfo.totalSuccess,forKey: UserInfoKey.totalSuccess)
+                defaults.set(userInfo.totalAchievements,forKey: UserInfoKey.totalAchievements)
+                defaults.set(userInfo.totalTrial,forKey: UserInfoKey.totalTrial)
             }
         }
     }
 
 
     ///3. 신규 유저일 때
-    private func setDefaultValues(userID: String){
+    func setDefaultValues(userID: String){
         
-        let defaultUserInfo = UserInfoModel(totalTrial: 0, totalAchievement: 0, totalSuccess: 0, totalFail: 0)
+        let defaultUserInfo = UserInfoModel(totalTrial: 0, totalAchievements: 0, totalSuccess: 0, totalFail: 0)
         self.fireStoreService.saveUserInfo(info: defaultUserInfo)
+        self.fireStoreService.saveUserID(userID)
         
         defaults.integer(forKey: UserInfoKey.totalFail)
         defaults.integer(forKey: UserInfoKey.totalSuccess)
@@ -101,12 +100,18 @@ struct LoginAndRegisterService {
         print("------logged out------")
         
         //CoreData goal, days 지우기
+        coreDataService.deletData(EntityName.dayData)
+        coreDataService.deletData(EntityName.goalData)
         
         defaults.set(false, forKey: KeyForDf.loginStatus)
-        defaults.removeObject(forKey: KeyForDf.userInfo)
+        
+        defaults.removeObject(forKey: UserInfoKey.totalAchievements)
+        defaults.removeObject(forKey: UserInfoKey.totalSuccess)
+        defaults.removeObject(forKey: UserInfoKey.totalFail)
+        defaults.removeObject(forKey: UserInfoKey.totalTrial)
+        
         defaults.removeObject(forKey: KeyForDf.userID)
-//        defaults.removeObject(forKey: KeyForDf.crrDaysArray)
-//        defaults.removeObject(forKey: KeyForDf.crrGoal)
+        
         defaults.removeObject(forKey: KeyForDf.crrGoalExists)
     }
 

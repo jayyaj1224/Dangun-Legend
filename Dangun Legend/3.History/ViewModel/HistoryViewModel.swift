@@ -30,7 +30,7 @@ struct HistoryListViewModel {
     }
     
     mutating func clearHistory() {
-        let newHistory = self.historyList.filter { $0.history.completed == false }
+        let newHistory = self.historyList.filter { $0.history.status == Status.none }
         self.historyList = newHistory
     }
     
@@ -71,15 +71,15 @@ struct HistoryViewModel {
         return Observable<Int>.just(history.numOfSuccess)
     }
     
-    var completed: Observable<Bool> {
-        return Observable<Bool>.just(history.completed)
+    var status: Observable<Status> {
+        return Observable<Status>.just(history.status)
     }
     
     var progressLabel: Observable<Status> {
-        if history.completed && history.goalAchieved == true {
+        if history.status == Status.success {
             return Observable<Status>.just(Status.success)
             
-        } else if history.completed && history.goalAchieved == false {
+        } else if history.status == Status.fail {
             return Observable<Status>.just(Status.fail)
             
         } else {
@@ -89,7 +89,7 @@ struct HistoryViewModel {
 
     var shareBoardButtonAppearance: Observable<ShareButtonAppearance> {
         let currentUserID = defaults.string(forKey: KeyForDf.userID)!
-        if history.userID == currentUserID && history.goalAchieved {
+        if history.userID == currentUserID && history.status == Status.success {
             if history.shared {
                 return Observable<ShareButtonAppearance>.just(ShareButtonAppearance.unabled)
             } else {
@@ -111,7 +111,7 @@ struct UpperBoxGeneralInfoViewModel {
     }
     
     var successPerTrial : Observable<String> {
-        let successPerTrialDescription = "총 \(generalInfo.totalTrial)번의 시도, \(generalInfo.totalAchievement)번의 목표달성에 성공"
+        let successPerTrialDescription = "총 \(generalInfo.totalTrial)번의 시도, \(generalInfo.totalAchievements)번의 목표달성에 성공"
         return Observable<String>.just(successPerTrialDescription)
     }
 
