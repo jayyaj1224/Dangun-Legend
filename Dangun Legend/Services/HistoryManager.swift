@@ -16,8 +16,8 @@ struct HistoryManager {
     private let disposeBag = DisposeBag()
     private var historyListVM: HistoryListViewModel!
     
-    func load(completion: @escaping (Goal)->(),completionerror: @escaping ()->()) {
-        let userID = defaults.string(forKey: keyForDf.crrUser)!
+    func load(completion: @escaping (GoalModel)->(),completionerror: @escaping ()->()) {
+        let userID = defaults.string(forKey: KeyForDf.userID)!
         let historyDb = db.collection(K.FS_userHistory).document(userID)
         let crrGoalDb =  db.collection(K.FS_userCurrentGoal).document(userID)
         let documnetRefArray = [historyDb, crrGoalDb]
@@ -45,7 +45,7 @@ struct HistoryManager {
                                 {
                                     let startDate = self.dateManager.dateFromString(string: start)
                                     let endDate = self.dateManager.dateFromString(string: end)
-                                    let history = Goal(userID: uID, goalID: gID, startDate: startDate, endDate: endDate, failAllowance: fail, description: des, numOfDays: daysNum, completed: compl, goalAchieved: goalAch, numOfSuccess: numOfSuc, numOfFail: numOfFail, shared: shared)
+                                    let history = GoalModel(userID: uID, goalID: gID, startDate: startDate, endDate: endDate, failAllowance: fail, description: des, numOfDays: daysNum, completed: compl, goalAchieved: goalAch, numOfSuccess: numOfSuc, numOfFail: numOfFail, shared: shared)
                                     completion(history)
                                 }
                             }
@@ -65,26 +65,26 @@ struct HistoryManager {
 
     
     func resetHitoryData(){
-        let userID = defaults.string(forKey: keyForDf.crrUser)!
-        let goalExists = defaults.bool(forKey: keyForDf.crrGoalExists )
+        let userID = defaults.string(forKey: KeyForDf.userID)!
+        let goalExists = defaults.bool(forKey: KeyForDf.crrGoalExists )
         var currentlyRunning : Int { return goalExists ?  1 : 0 }
         let decoder = JSONDecoder()
-        let dummyGoal = Goal(userID: userID, goalID: "", startDate: Date(), endDate: Date(), failAllowance: 0, description: "", numOfDays: 0, completed: false, goalAchieved: false, numOfSuccess: 0, numOfFail: 0, shared: false)
-        var goal : Goal {
+        let dummyGoal = GoalModel(userID: userID, goalID: "", startDate: Date(), endDate: Date(), failAllowance: 0, description: "", numOfDays: 0, completed: false, goalAchieved: false, numOfSuccess: 0, numOfFail: 0, shared: false)
+        var goal : GoalModel {
             if goalExists {
-                let data = defaults.data(forKey: keyForDf.crrGoal)!
-                guard let goal = try? decoder.decode(Goal.self, from: data) else { return dummyGoal }
+                let data = defaults.data(forKey: KeyForDf.crrGoal)!
+                guard let goal = try? decoder.decode(GoalModel.self, from: data) else { return dummyGoal }
                 return goal
             } else {
                 return dummyGoal
             }
         }
         db.collection(K.FS_userGeneral).document(goal.userID).setData([
-            fb.GI_generalInfo : [
-                fb.GI_totalTrial : currentlyRunning,
-                fb.GI_totalSuccess : goal.numOfSuccess,
-                fb.GI_totalAchievement : 0,
-                fb.GI_totalFail: goal.numOfFail
+            FS.GI_generalInfo : [
+                FS.GI_totalTrial : currentlyRunning,
+                FS.GI_totalSuccess : goal.numOfSuccess,
+                FS.GI_totalAchievement : 0,
+                FS.GI_totalFail: goal.numOfFail
             ]
         ], merge: true)
         
@@ -94,7 +94,7 @@ struct HistoryManager {
 
     
     func shareSuccess(_ goalID: String, nickName: String) {
-        let userID = defaults.string(forKey: keyForDf.crrUser)!
+        let userID = defaults.string(forKey: KeyForDf.userID)!
         let idDocument = db.collection(K.FS_userHistory).document(userID)
         //let load = defaults.string(forKey: keyForDf.nickName) ?? "닉네임 없음"
 //        var nickName : String {

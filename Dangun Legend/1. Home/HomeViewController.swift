@@ -25,7 +25,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        defaults.set(true, forKey: keyForDf.needToSetViewModel)
+        defaults.set(true, forKey: KeyForDf.needToSetViewModel)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -46,12 +46,12 @@ class HomeViewController: UIViewController {
     @IBAction func logoutPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "InitialVC", sender: self)
         self.loginService.logOutRemoveDefaults()
-        defaults.set(true, forKey: keyForDf.needToSetViewModel)
-        defaults.removeObject(forKey: keyForDf.nickName)
+        defaults.set(true, forKey: KeyForDf.needToSetViewModel)
+        defaults.removeObject(forKey: KeyForDf.nickName)
     }
     
     private func checkLoginStatus() {
-        let status = defaults.bool(forKey: keyForDf.loginStatus)
+        let status = defaults.bool(forKey: KeyForDf.loginStatus)
         print("loginStatus: \(status)")
         if status {
             self.welcomeAnimation()

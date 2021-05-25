@@ -1,9 +1,10 @@
 //
-//  CaveAddViewController.swift
+//  AddNewGoalViewController.swift
 //  Dangun Legend
 //
-//  Created by JAY LEE on 2021/04/03.
+//  Created by JAY LEE on 2021/05/25.
 //
+
 
 import UIKit
 import IQKeyboardManagerSwift
@@ -12,25 +13,16 @@ import RxSwift
 import RxCocoa
 
 
-//protocol GoalUIManagerDelegate {
-//    func newGoalAddedUpdateView(_ data: Goal)
-//    func newGoalAddedUpdateViewForTest(_ data: Goal)
-//    func didFailwithError(error: Error)
-//}
 
 class AddNewGoalViewController: UIViewController{
 
-    private let dateManager = DateManager()
     private let goalManager = GoalManager()
-    private let dataManager = DataManager()
-    
     private let disposeBag = DisposeBag()
     
-    //static var delegate : GoalUIManagerDelegate?
 
-    private var newGoalSubject = PublishSubject<TotalGoalInfo>()
+    private var newGoalSubject = PublishSubject<TotalGoalInfoModel>()
     
-    var newGoalSubjectObservable: Observable<TotalGoalInfo> {
+    var newGoalSubjectObservable: Observable<TotalGoalInfoModel> {
         return self.newGoalSubject.asObservable()
     }
     
@@ -61,32 +53,46 @@ class AddNewGoalViewController: UIViewController{
 
 
     @IBAction func startPressed(_ sender: UIButton) {
-        if goalTextView.text != "" && goalTextView.text != "도전하고 싶은 목표를 적어주세요." {
-            self.createNewGoal()
-        } else {
+        if goalTextView.text == "" && goalTextView.text == "도전하고 싶은 목표를 적어주세요." {
             let alert = UIAlertController.init(title: "목표 미입력", message: "목표를 입력해주세요 :-)", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
+        } else {
+            
+            self.createNewGoal()
         }
     }
     
     private func createNewGoal() {
-        let userID = defaults.string(forKey: keyForDf.crrUser)
+        let fireStore = FireStoreService()
+        let coreData = CoreDataService()
+        let userID = defaults.string(forKey: KeyForDf.userID)
         let userInput = UsersInputForNewGoal(goalDescripteion: self.goalTextView.text, failAllowance: self.failAllowOutput.selectedSegmentIndex)
        
-        var totalGoalInfo : TotalGoalInfo {
+        var totalGoalInfo : TotalGoalInfoModel {
             if userID == "test@test.com" {
                 return self.goalManager.createNewGoalFORTEST()
             } else {
                 return self.goalManager.createNewGoal(userInput)
             }
         }
-
         self.newGoalSubject.onNext(totalGoalInfo)
-        
-        self.dataManager.saveNewGoalOnFS(totalGoalInfo)
-        
         dismiss(animated: true, completion: nil)
+        
+        DispatchQueue.global(qos: .utility).async {
+            // Firestore에 저장
+            fireStore.saveGoal(totalGoalInfo.goal)
+            fireStore.saveDaysInfo(totalGoalInfo.days)
+            
+            // CoreData에 저장
+            coreData.saveGoalInfo(totalGoalInfo.goal)
+            coreData.saveDayInfo(totalGoalInfo.days)
+            
+            // GeneralInfo 업데이트
+            let new = defaults.integer(forKey: UserInfoKey.totalTrial)+1
+            defaults.set(new, forKey: UserInfoKey.totalTrial)
+            fireStore.userInfoOneMoreTrial()
+        }
     }
     
  
@@ -117,6 +123,7 @@ extension AddNewGoalViewController: UITextViewDelegate {
 extension AddNewGoalViewController {
     
     private func setupDateDescription() {
+        let dateManager = DateManager()
         let startDateString = dateManager.dateFormat(type: "yyyy-MM-dd", date: Date())
         let lastDate = Calendar.current.date(byAdding: .day, value: 99, to: Date())!
         let lastDateString = dateManager.dateFormat(type: "yyyy-MM-dd", date: lastDate)

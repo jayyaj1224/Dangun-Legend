@@ -66,7 +66,7 @@ class HistoryViewController: UIViewController {
     }
     
     private func loadHistory(){
-        var goalArray = [Goal]()
+        var goalArray = [GoalModel]()
         self.historyManager.load(completion: { goal in
             self.serialQueue.async {
                 goalArray.append(goal)
@@ -123,7 +123,7 @@ class HistoryViewController: UIViewController {
     
     @objc
     func shareSuccess(_ noti: Notification) {
-        let nickName = defaults.string(forKey: keyForDf.nickName) ?? "닉네임 없음"
+        let nickName = defaults.string(forKey: KeyForDf.nickName) ?? "닉네임 없음"
         
         let alert = UIAlertController.init(title: "Share to Board", message: "\(nickName) 이름으로 업적을 Board 페이지에 공유하시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "네", style: .default, handler: { (UIAlertAction) in
@@ -204,7 +204,7 @@ class HistoryViewController: UIViewController {
 extension HistoryViewController {
     
     private func setNickName(){
-        if let nickName = defaults.string(forKey: keyForDf.nickName) {
+        if let nickName = defaults.string(forKey: KeyForDf.nickName) {
             self.nickNameLabel.text = nickName
             self.nickNameIsOnTheScreen()
         } else {
@@ -227,13 +227,13 @@ extension HistoryViewController {
     private func nickNameButtonPressed() {
         if nickNameSaveAndClearButton.titleLabel?.text == "Clear" {
             noNickNameSaveModeUIChange()
-            defaults.removeObject(forKey: keyForDf.nickName)
+            defaults.removeObject(forKey: KeyForDf.nickName)
         } else if nickNameSaveAndClearButton.titleLabel?.text == "Save" {
             if let nickName = self.nickNameInputTextField.text {
                 self.nickNameInputTextField.text = ""
                 self.nickNameLabel.text = nickName
                 nickNameIsOnTheScreen()
-                defaults.set(nickName, forKey: keyForDf.nickName)
+                defaults.set(nickName, forKey: KeyForDf.nickName)
             }
         }
         

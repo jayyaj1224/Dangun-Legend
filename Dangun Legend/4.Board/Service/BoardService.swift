@@ -15,7 +15,7 @@ struct BoardService {
     
     func sortedBoardList(_ completion: @escaping ([BoardData])->()){
         let serialQueue = DispatchQueue.init(label: "serialQueue")
-        let userID = defaults.string(forKey: keyForDf.crrUser)!
+        let userID = defaults.string(forKey: KeyForDf.userID)!
         loadBoardData { BoardList in
             var sortedBoardList = BoardList
             serialQueue.async {
@@ -72,7 +72,7 @@ struct BoardService {
     
     
     func deleteFromBoard(goalID:String){
-        let userID = defaults.string(forKey: keyForDf.crrUser)!
+        let userID = defaults.string(forKey: KeyForDf.userID)!
         if goalID != "" {
             db.collection(K.FS_board).document(goalID).delete()
             db.collection(K.FS_userHistory).document(userID).setData([

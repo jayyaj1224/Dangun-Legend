@@ -1,4 +1,4 @@
-//
+
 //  CreateNewGoalViewModel.swift
 //  Dangun Legend
 //
@@ -9,13 +9,15 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+
+
 struct CaveViewModel {
-    let totalGoalInfo: TotalGoalInfo!
+    let totalGoalInfo: TotalGoalInfoModel!
 
     let goalVM: GoalViewModel
     let collectionViewVM: DaysViewModel
 
-    init(_ totalGoalInfo: TotalGoalInfo) {
+    init(_ totalGoalInfo: TotalGoalInfoModel) {
         self.totalGoalInfo = totalGoalInfo
         self.goalVM = GoalViewModel.init(totalGoalInfo.goal)
         self.collectionViewVM = DaysViewModel.init(totalGoalInfo.days)
@@ -24,31 +26,31 @@ struct CaveViewModel {
 
 
 struct GoalViewModel {
-    var goal : Goal!
+    var goal : GoalModel!
 
-    init(_ goal: Goal) {
+    init(_ goal: GoalModel) {
         self.goal = goal
     }
-    
+
     var description: Observable<String> {
         return Observable<String>.just(goal.description)
     }
-    
-    mutating func countSuccess(completion:(Goal)->()){
+
+    mutating func countSuccess(completion: ()->()){
         var newGoal = self.goal
         newGoal?.numOfSuccess += 1
         self.goal = newGoal
-        completion(newGoal!)
+        completion()
     }
-    
-    mutating func countFail(completion:(Goal)->()){
+
+    mutating func countFail(completion: ()->()){
         var newGoal = self.goal
         newGoal?.numOfFail += 1
         self.goal = newGoal
-        completion(newGoal!)
+        completion()
     }
-    
-    
+
+
     var datePeriod : Observable<String> {
         let dateManager = DateManager()
         let start = dateManager.dateFormat(type: "yyyy년M월d일", date: goal.startDate)
@@ -56,17 +58,17 @@ struct GoalViewModel {
         let period = "기간: \(start) - \(end)"
         return Observable<String>.just(period)
     }
-    
+
     var numbersOfSuccessAndFail : Observable<String> {
         let description = "\(goal.numOfSuccess)일 실행 성공 / \(goal.numOfFail)일 불이행"
         return Observable<String>.just(description)
     }
-    
+
     var leftFailAllowancd : Observable<Int> {
         let leftChance = goal.failAllowance-goal.numOfFail+1
         return Observable<Int>.just(leftChance)
     }
-    
+
     var leftDays : Observable<String> {
         let daysPast = Calendar.current.dateComponents([.day], from: goal.startDate, to: Date()).day! as Int
         let description = "\(100-daysPast-1)일"
@@ -77,107 +79,103 @@ struct GoalViewModel {
 
 
 struct DaysViewModel {
-    
+
     var daysInfoVM: [SingleDayViewModel]
-    
-    init(_ daysInfo: [SingleDayInfo]) {
+
+    init(_ daysInfo: [DayModel]) {
         self.daysInfoVM = daysInfo.compactMap(SingleDayViewModel.init)
     }
-    
+
     func singleDayAt(index: Int) -> SingleDayViewModel {
         return self.daysInfoVM[index]
     }
-    
+
     func todayAt()->Int {
         let date = DateManager().dateFormat(type: "yyyyMMdd", date: Date())
         let todayInArr = daysInfoVM.filter{ $0.singleDayInfo.date == date }
-        let todayDayNum = todayInArr.first?.singleDayInfo.dayNum ?? 0
+        let todayDayNum = todayInArr.first?.singleDayInfo.dayIndex ?? 0
         return todayDayNum
     }
-    
+
     var todayIsCheckedBool: Observable<Bool> {
         let todayDaynum = todayAt()
-        if self.daysInfoVM[todayDaynum-1].singleDayInfo.status == DayStatus.unchecked {
+        if self.daysInfoVM[todayDaynum-1].singleDayInfo.status == Status.none {
             return Observable<Bool>.just(false)
         } else {
             return Observable<Bool>.just(true)
         }
     }
-    
-    mutating func updateSuccess(index: Int, completion:([SingleDayInfo])->()) {
+
+    mutating func updateSuccess(index: Int, completion: ()->()) {
         var newDaysInfo = self.daysInfoVM
-        newDaysInfo[index].singleDayInfo.status = DayStatus.success
+        newDaysInfo[index].singleDayInfo.status = Status.success
         self.daysInfoVM = newDaysInfo
-        let daysArr = newDaysInfo.map { $0.singleDayInfo }
-        print("daysArr: ***** \(daysArr[index])")
-        completion(daysArr)
+        completion()
     }
-    
-    mutating func updateFail(index: Int, completion:([SingleDayInfo])->()) {
+
+    mutating func updateFail(index: Int, completion: ()->()) {
         var newDaysInfo = self.daysInfoVM
-        newDaysInfo[index].singleDayInfo.status = DayStatus.fail
+        newDaysInfo[index].singleDayInfo.status = Status.fail
         self.daysInfoVM = newDaysInfo
-        let daysArr = newDaysInfo.map { $0.singleDayInfo }
-        print("daysArr: ***** \(daysArr[index])")
-        completion(daysArr)
+        completion()
     }
-    
+
 }
 
 
 
 struct SingleDayViewModel {
-    
-    var singleDayInfo : SingleDayInfo
-    
+
+    var singleDayInfo : DayModel
+
     private let dateManager = DateManager()
-        
-    init(_ singleDay: SingleDayInfo) {
+
+    init(_ singleDay: DayModel) {
         self.singleDayInfo = singleDay
     }
-    
+
     var todayStatus : Observable<DaySquareStatus.Today> {
         switch self.singleDayInfo.status {
         case .fail:
             return Observable<DaySquareStatus.Today>.just(DaySquareStatus.Today.failed)
         case .success:
             return Observable<DaySquareStatus.Today>.just(DaySquareStatus.Today.success)
-        case .unchecked:
+        case .none:
             return Observable<DaySquareStatus.Today>.just(DaySquareStatus.Today.unchecked)
         }
     }
-    
+
     var pastStatus : Observable<DaySquareStatus.Past> {
         switch self.singleDayInfo.status {
         case .fail:
             return Observable<DaySquareStatus.Past>.just(DaySquareStatus.Past.failed)
         case .success:
             return Observable<DaySquareStatus.Past>.just(DaySquareStatus.Past.success)
-        case .unchecked:
+        case .none:
             return Observable<DaySquareStatus.Past>.just(DaySquareStatus.Past.unchecked)
         }
     }
-    
+
     var futureStatus : Observable<DaySquareStatus> {
         return Observable<DaySquareStatus>.just(DaySquareStatus.future)
     }
-    
+
 }
 
 enum DaySquareStatus {
-    
+
     enum Today {
         case failed
         case success
         case unchecked
     }
-    
+
     enum Past {
         case failed
         case success
         case unchecked
     }
-    
+
     case future
 }
 

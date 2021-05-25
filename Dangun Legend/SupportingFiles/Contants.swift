@@ -58,27 +58,36 @@ struct G {
     
     static let nickName = "nickName"
     static let shared = "shared"
+    static let status = "status"
 }
 
+struct EntityName {
+    static let goalData = "GoalData"
+    static let dayData = "DayData"
+}
 
-struct keyForDf {
+struct UserInfoKey {
+    static let totalSuccess = "Default.Key: totalSuccess"
+    static let totalFail = "Default.Key: totalFail"
+    static let totalTrial = "Default.Key: totalTrial"
+    static let totalAchievements = "Default.Key: totalAchievements"
+}
+
+struct KeyForDf {
     static let firstLaunch = "Default.Key: usedBefore"
-    //static let goalExistence = "Default.Key: goalExistence"
+//    static let userInfo = "Default.Key: userInfo"
     static let crrGoalExists = "Default.Key: crrGoalExists"
     static let loginStatus = "Default.Key: loginStatus"
     static let needToSetViewModel = "needToSetViewModel"
 
     static let crrGoal = "Default.Key: currentGoal"
     static let crrDaysArray = "Default.Key: currentDaysArray"
-    static let crrUser = "Default.Key: currentUser"
+    static let userID = "Default.Key: currentUser"
 
     static let nickName = "Default.Key: nickName"
-    
-    
-
 }
 
-struct fb {
+struct FS {
     static let GI_generalInfo = "GI_generalInfo"
     static let GI_totalTrial = "totalTrial"
     static let GI_totalAchievement = "totalAchievement"

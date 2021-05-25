@@ -12,10 +12,10 @@ import RxCocoa
 
 struct HistoryListViewModel {
     var historyList: [HistoryViewModel]
-    var goals = [Goal]()
+    var goals = [GoalModel]()
     
     
-    init(_ historyList: [Goal]) {
+    init(_ historyList: [GoalModel]) {
         self.historyList = historyList.compactMap(HistoryViewModel.init)
         self.goals = historyList
     }
@@ -38,10 +38,10 @@ struct HistoryListViewModel {
 
 struct HistoryViewModel {
     
-    let history: Goal
+    let history: GoalModel
     private let dateManager = DateManager()
     
-    init(_ history: Goal) {
+    init(_ history: GoalModel) {
         self.history = history
     }
     
@@ -75,20 +75,20 @@ struct HistoryViewModel {
         return Observable<Bool>.just(history.completed)
     }
     
-    var progressLabel: Observable<GoalProgressStatus> {
+    var progressLabel: Observable<Status> {
         if history.completed && history.goalAchieved == true {
-            return Observable<GoalProgressStatus>.just(GoalProgressStatus.success)
+            return Observable<Status>.just(Status.success)
             
         } else if history.completed && history.goalAchieved == false {
-            return Observable<GoalProgressStatus>.just(GoalProgressStatus.fail)
+            return Observable<Status>.just(Status.fail)
             
         } else {
-            return Observable<GoalProgressStatus>.just(GoalProgressStatus.onProgress)
+            return Observable<Status>.just(Status.none)
         }
     }
 
     var shareBoardButtonAppearance: Observable<ShareButtonAppearance> {
-        let currentUserID = defaults.string(forKey: keyForDf.crrUser)!
+        let currentUserID = defaults.string(forKey: KeyForDf.userID)!
         if history.userID == currentUserID && history.goalAchieved {
             if history.shared {
                 return Observable<ShareButtonAppearance>.just(ShareButtonAppearance.unabled)
@@ -100,12 +100,13 @@ struct HistoryViewModel {
         }
     }
     
+ 
 }
 
 struct UpperBoxGeneralInfoViewModel {
-    let generalInfo : UsersGeneralInfo
+    let generalInfo : UserInfoModel
     
-    init(_ info: UsersGeneralInfo) {
+    init(_ info: UserInfoModel) {
         self.generalInfo = info
     }
     
@@ -141,4 +142,11 @@ struct UpperBoxGeneralInfoViewModel {
         
     }
     
+}
+
+
+enum ShareButtonAppearance {
+    case invisible
+    case enabled
+    case unabled
 }

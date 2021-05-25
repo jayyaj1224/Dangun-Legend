@@ -115,8 +115,8 @@ class ResultViewController: UIViewController {
     
     func setDescription(){
         let decoder = JSONDecoder()
-        if let savedData = defaults.data(forKey: keyForDf.crrGoal) as Data? {
-            if let crrGoal = try? decoder.decode(Goal.self, from: savedData) {
+        if let savedData = defaults.data(forKey: KeyForDf.crrGoal) as Data? {
+            if let crrGoal = try? decoder.decode(GoalModel.self, from: savedData) {
                 let goalDescription = crrGoal.description
                 DispatchQueue.main.async {
                     self.goalDescriptionLabel.text! = goalDescription

@@ -9,44 +9,38 @@ import Foundation
 
 ///Firebase & UserDefault
 
-struct TotalGoalInfo {
-    var goal: Goal
-    var days: [SingleDayInfo]
+struct TotalGoalInfoModel {
+    var goal: GoalModel
+    var days: [DayModel]
 }
 
-struct Goal: Codable {
+struct GoalModel: Codable {
     let userID: String
     let goalID: String
     let startDate : Date
     let endDate: Date
-    
     let failAllowance: Int
     let description: String
-
-    let numOfDays: Int
-    var completed: Bool
-    var goalAchieved: Bool
-    
+    var status: Status
     var numOfSuccess : Int
     var numOfFail : Int
     var shared: Bool
 }
 
 
-struct SingleDayInfo: Codable {
-    let dayNum: Int
-    var status: DayStatus
+struct DayModel: Codable {
+    let dayIndex: Int
+    var status: Status
     let date: String
 }
 
-enum DayStatus: String, Codable  {
-    case unchecked = "unchecked"
+enum Status: String, Codable  {
     case success = "success"
     case fail = "fail"
-
+    case none = "none"
 }
 
-struct UsersGeneralInfo {
+struct UserInfoModel: Codable {
     var totalTrial: Int
     var totalAchievement: Int
     var totalSuccess: Int

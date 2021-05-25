@@ -10,7 +10,7 @@ import UIKit
 
 class SquareCell : UICollectionViewCell {
 
-    var singleDayInfo : SingleDayInfo?
+    var singleDayInfo : DayModel?
     let dateManager = DateManager()
     
     @IBOutlet weak var todayLabel: UILabel!
@@ -20,7 +20,7 @@ class SquareCell : UICollectionViewCell {
     @IBAction func buttonPressed(_ sender: UIButton) {
         if let singleInfo = singleDayInfo {
             print("********buttonPResseddsafs fdsaf")
-            NotificationCenter.default.post(name: checkTheDateNoti, object: singleInfo.dayNum, userInfo: nil)
+            NotificationCenter.default.post(name: checkTheDateNoti, object: singleInfo, userInfo: nil)
         }
     }
     

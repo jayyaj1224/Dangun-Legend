@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20D91" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="DayData" representedClassName=".DayData" syncable="YES">
+        <attribute name="date" attributeType="String"/>
+        <attribute name="index" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="status" attributeType="String"/>
+    </entity>
+    <entity name="GoalData" representedClassName=".GoalData" syncable="YES">
+        <attribute name="endDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="failAllowance" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="failNum" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="goalDescription" attributeType="String"/>
+        <attribute name="goalID" attributeType="String"/>
+        <attribute name="shared" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="startDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="status" attributeType="String"/>
+        <attribute name="successNum" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="userID" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="DayData" positionX="-18" positionY="27" width="128" height="74"/>
+        <element name="GoalData" positionX="-45" positionY="0" width="128" height="179"/>
+    </elements>
+</model>
