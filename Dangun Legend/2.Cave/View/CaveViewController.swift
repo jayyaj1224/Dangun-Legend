@@ -357,7 +357,7 @@ extension CaveViewController {
         self.showGoalManageScrollView(false)
         
         // FireStore 삭제
-        self.fireStoreService.saveGoalAtHistory(self.goalVM.goal)
+        self.fireStoreService.saveGoalAtHistory(self.goalVM.goal, status: Status.fail)
         self.fireStoreService.removeCurrentGoal()
         self.fireStoreService.removeCurrentDaysInfo()
         

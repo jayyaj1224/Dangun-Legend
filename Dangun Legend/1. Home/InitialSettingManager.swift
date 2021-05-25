@@ -70,13 +70,11 @@ struct InitialSettingManager {
         self.fireStoreService.saveUserInfo(info: defaultUserInfo)
         self.fireStoreService.saveUserID(userID)
         
-        defaults.integer(forKey: KeyForDf.totalFail)
-        defaults.integer(forKey: KeyForDf.totalSuccess)
-        defaults.integer(forKey: KeyForDf.totalAchievements)
-        defaults.integer(forKey: KeyForDf.totalTrial)
+        defaults.set(defaultUserInfo.totalTrial, forKey: KeyForDf.totalFail)
+        defaults.set(defaultUserInfo.totalSuccess, forKey: KeyForDf.totalSuccess)
+        defaults.set(defaultUserInfo.totalAchievements, forKey: KeyForDf.totalAchievements)
+        defaults.set(defaultUserInfo.totalFail, forKey: KeyForDf.totalTrial)
         
-        defaults.set(userID, forKey: KeyForDf.userID)
-        defaults.set(true, forKey: KeyForDf.loginStatus)
         defaults.set(false, forKey: KeyForDf.crrGoalExists)
     }
     

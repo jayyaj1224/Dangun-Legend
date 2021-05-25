@@ -142,7 +142,7 @@ extension FireStoreService {
     
 
     
-    func saveGoalAtHistory(_ goal: GoalModel) {
+    func saveGoalAtHistory(_ goal: GoalModel, status: Status) {
         let startDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: goal.startDate)
         let lastDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: goal.endDate)
         db.collection(K.FS_userHistory).document(userID).setData([
@@ -153,7 +153,7 @@ extension FireStoreService {
                 G.endDate: lastDateForDB,
                 G.failAllowance : goal.failAllowance,
                 G.description : goal.description,
-                G.status : goal.status.rawValue,
+                G.status : status.rawValue,
                 G.numOfSuccess: goal.numOfSuccess,
                 G.numOfFail: goal.numOfFail,
                 G.shared: false
