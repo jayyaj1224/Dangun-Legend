@@ -13,7 +13,6 @@ import RxCocoa
 
 class RegisterViewController: UIViewController {
     
-    private let loginAndRegisterService = LoginAndRegisterService()
     private let registerVM = RegisterViewModel()
     private let disposeBag = DisposeBag()
     
@@ -91,7 +90,7 @@ class RegisterViewController: UIViewController {
                     self.loginErrorOcurred()
                 } else {
                     ///Defaults Clear하기
-                    self.loginAndRegisterService.setDefaultValues(userID: email)
+                    InitialSettingManager().setDefaultValues(userID: email)
                     self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
                     self.dismiss(animated: true, completion: nil)
                 }

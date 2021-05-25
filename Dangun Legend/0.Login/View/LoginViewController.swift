@@ -15,7 +15,7 @@ import RxCocoa
 
 class LoginViewController: UIViewController, GIDSignInDelegate {
     
-    private let loginAndRegisterService = LoginAndRegisterService()
+//    private let loginAndRegisterService = LoginAndRegisterService()
     private let loginVM = LoginViewModel()
     private let disposeBag = DisposeBag()
     
@@ -83,7 +83,6 @@ extension LoginViewController {
             } else {
                 defaults.set(true, forKey: KeyForDf.loginStatus)
                 defaults.set(info.email, forKey: KeyForDf.userID)
-                self.loginAndRegisterService.checkWhichSetIsNeeded(userID: info.email)
                 DispatchQueue.main.async {
                     self.dismiss(animated: true, completion: nil)
                 }
@@ -108,7 +107,6 @@ extension LoginViewController {
             let userID = String(user.userID)
             defaults.set(true, forKey: KeyForDf.loginStatus)
             defaults.set(userID, forKey: KeyForDf.userID)
-            self.loginAndRegisterService.checkWhichSetIsNeeded(userID: userID)
             presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
             dismiss(animated: true, completion: nil)
         } else {
@@ -129,7 +127,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             let userID = appleIDCredential.user
             defaults.set(true, forKey: KeyForDf.loginStatus)
             defaults.set(userID, forKey: KeyForDf.userID)
-            self.loginAndRegisterService.checkWhichSetIsNeeded(userID: userID)
             presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
             dismiss(animated: true, completion: nil)
         default:

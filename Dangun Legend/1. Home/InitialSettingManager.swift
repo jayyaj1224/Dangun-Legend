@@ -1,19 +1,17 @@
-
-//  LoginService.swift
+//
+//  HomeViewInitialSetting.swift
 //  Dangun Legend
 //
-//  Created by JAY LEE on 2021/05/15.
-
+//  Created by JAY LEE on 2021/05/25.
+//
 
 import Foundation
 
 
-struct LoginAndRegisterService {
+struct InitialSettingManager {
     
     private let userDefaultService = UserDefaultService()
-    
     private let fireStoreService = FireStoreService()
-    
     
     func checkWhichSetIsNeeded(userID: String) {
         let idList = db.collection(K.FS_userIdList).document(userID)
@@ -25,7 +23,6 @@ struct LoginAndRegisterService {
                     print("........... Checking if goal exists ........... ")
                     self.checkIfGoalExists(userID: userID)
                     self.setUserInfo(userID: userID)
-                    
                     
                 } else {
                     

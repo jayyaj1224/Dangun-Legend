@@ -41,8 +41,8 @@ struct HistoryManager {
                                    let shared = aGoal[G.shared] as? Bool,
                                    let status = aGoal[G.status] as? String
                                 {
-                                    let startDate = self.dateManager.dateFromString(string: start)
-                                    let endDate = self.dateManager.dateFromString(string: end)
+                                    let startDate = self.dateManager.yyMMddHHmmss_toDate(string: start)
+                                    let endDate = self.dateManager.yyMMddHHmmss_toDate(string: end)
                                     let history = GoalModel(userID: uID, goalID: gID, startDate: startDate, endDate: endDate, failAllowance: fail, description: des, status: Status(rawValue: status)!, numOfSuccess: numOfSuc, numOfFail: numOfFail, shared: shared)
                                     completion(history)
                                 }

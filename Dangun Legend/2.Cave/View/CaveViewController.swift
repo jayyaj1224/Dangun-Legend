@@ -18,7 +18,9 @@ class CaveViewController: UIViewController {
     private let userDefaultService = UserDefaultService()
     
     private let caveGoalAddVC = AddNewGoalViewController()
-
+    
+    let homeVC = HomeViewController()
+    
     private var goalVM : GoalViewModel!
     private var daysVM : DaysViewModel!
     
@@ -40,6 +42,7 @@ class CaveViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(self.checkAlert(_:)), name: checkTheDateNoti, object: nil)
+        defaults.set(true, forKey: KeyForDf.needToSetViewModel)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,7 +53,6 @@ class CaveViewController: UIViewController {
     }
 
     
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addNewGoalViewController" {
             let vc = segue.destination as! AddNewGoalViewController
@@ -59,9 +61,12 @@ class CaveViewController: UIViewController {
                 let newGoalVM = CaveViewModel.init(totalGoalInfo)
                 self.goalVM = newGoalVM.goalVM
                 self.daysVM = newGoalVM.collectionViewVM
-                self.goalBinding()
-                self.checkTodayButtonSetting()
-                self.collectionVw.reloadData()
+                
+                DispatchQueue.main.async {
+                    self.goalBinding()
+                    self.checkTodayButtonSetting()
+                    self.collectionVw.reloadData()
+                }
                 self.showGoalManageScrollView(true)
             }).disposed(by: disposeBag)
         }
@@ -70,13 +75,13 @@ class CaveViewController: UIViewController {
     private func checkIfViewModelSettingIsNeeded(){
         let needToSetViewModel = defaults.bool(forKey:KeyForDf.needToSetViewModel)
         let currentGoalExists = defaults.bool(forKey: KeyForDf.crrGoalExists)
+        print("\(needToSetViewModel)-----\(currentGoalExists)")
+        print("aaaa")
         
         if  needToSetViewModel && currentGoalExists {
-            
+            print("bbbb")
             defaults.set(false, forKey: KeyForDf.needToSetViewModel)
-            
             self.goalViewModelSetting()
-            
             self.daysViewModelSetting()
         }
     }
@@ -86,11 +91,12 @@ class CaveViewController: UIViewController {
         self.fireStoreService.loadCurrentGoal { goalModel in
             let goalVM = GoalViewModel.init(goalModel)
             self.goalVM = goalVM
-            self.goalBinding()
-            
             defaults.set(goalModel.goalID, forKey: KeyForDf.goalID)
             defaults.set(goalModel.numOfSuccess, forKey: KeyForDf.successNumber)
             defaults.set(goalModel.numOfFail, forKey: KeyForDf.failNumber)
+            DispatchQueue.main.async {
+                self.goalBinding()
+            }
         }
     }
     
@@ -98,9 +104,9 @@ class CaveViewController: UIViewController {
         self.fireStoreService.loadCurrentDaysInfo { dayModelArray in
             let daysVM = DaysViewModel.init(dayModelArray)
             self.daysVM = daysVM
-            self.checkTodayButtonSetting()
             DispatchQueue.main.async {
                 self.collectionVw.reloadData()
+                self.checkTodayButtonSetting()
             }
         }
     }
@@ -109,7 +115,7 @@ class CaveViewController: UIViewController {
         goalVM.description.asDriver(onErrorJustReturn: "")
             .drive(self.goalDescriptionLabel.rx.text)
             .disposed(by: disposeBag)
-    
+
         goalVM.datePeriod.asDriver(onErrorJustReturn: "")
             .drive(self.datePeriodLabel.rx.text)
             .disposed(by: disposeBag)
@@ -175,13 +181,6 @@ class CaveViewController: UIViewController {
 
 
 
-
-///%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-///↓     ↓     ↓     ↓     ↓     ↓     ↓     ↓     ↓     ↓     ↓     ↓     ↓     ↓     ↓     ↓     ↓     ↓     ↓     ↓
-
-
-
-
 //MARK: - Success And Fail Day Controll
 
 extension CaveViewController {
@@ -205,10 +204,10 @@ extension CaveViewController {
     
     @objc func checkAlert(_ noti: Notification) {
         guard let singleDayInfo = noti.object as? DayModel else { fatalError() }
-        
+         
         let dateManager = DateManager()
         let dateString = singleDayInfo.date
-        let date = dateManager.dateFromString(string: dateString)
+        let date = dateManager.yyMMddHHmmss_toDate(string: dateString)
         let asking = self.checkTodayAlertSentence(date: date)
         let checkTodayAlert = UIAlertController.init(title: "하루 잘 보내셨나요 :)", message: asking, preferredStyle: .actionSheet)
         
@@ -231,28 +230,38 @@ extension CaveViewController {
         
         self.updateDaysVM(success: bool, index: index)
         
-        self.checkTodayButtonSetting()
+        //
     }
     
     private func updateGoalVM(success: Bool){
         
         if success == true {
             self.goalVM.countSuccess(completion: { goalModel in
-                self.goalBinding()
+                let newGoalVM = GoalViewModel.init(goalModel)
+                self.goalVM = newGoalVM
                 updateFromResult(result: goalModel)
+                DispatchQueue.main.async {
+                    self.goalBinding()
+                }
             })
             self.fireStoreService.goalInfoOneMoreSuccess()
             self.fireStoreService.userInfoOneMoreSuccess()
-            self.userDefaultService.oneMoreSuccess()
+            self.userDefaultService.userInfo_oneMoreSuccess()
+            self.userDefaultService.goal_oneMoreSuccess()
             
         } else {
             self.goalVM.countFail(completion: { goalModel in
-                self.goalBinding()
+                let newGoalVM = GoalViewModel.init(goalModel)
+                self.goalVM = newGoalVM
                 updateFromResult(result: goalModel)
+                DispatchQueue.main.async {
+                    self.goalBinding()
+                }
             })
             self.fireStoreService.goalInfoOneMoreFail()
             self.fireStoreService.userInfoOneMoreFail()
-            self.userDefaultService.oneMoreFail()
+            self.userDefaultService.userInfo_oneMoreFail()
+            self.userDefaultService.goal_oneMoreFail()
         }
     }
 
@@ -265,6 +274,7 @@ extension CaveViewController {
                 
                 DispatchQueue.main.async {
                     self.collectionVw.reloadData()
+                    self.checkTodayButtonSetting()
                 }
             }
         } else {
@@ -274,6 +284,7 @@ extension CaveViewController {
                 
                 DispatchQueue.main.async {
                     self.collectionVw.reloadData()
+                    self.checkTodayButtonSetting()
                 }
             }
         }

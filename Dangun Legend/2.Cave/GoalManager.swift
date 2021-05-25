@@ -21,6 +21,7 @@ struct GoalManager {
         let id = defaults.string(forKey: KeyForDf.userID)!
         
         let goal = GoalModel(userID: id, goalID: startDateForDB, startDate: Date(), endDate: lastDate, failAllowance: usersInput.failAllowance,description: usersInput.goalDescripteion, status: Status.none, numOfSuccess: 0, numOfFail: 0, shared: false)
+        defaults.set(goal.goalID, forKey: KeyForDf.goalID)
         let days = self.createNewDaysArray()
         let newTotalGoalInfo = TotalGoalInfoModel(goal: goal, days: days)
         return newTotalGoalInfo
@@ -75,6 +76,7 @@ extension GoalManager {
         
         let goal = GoalModel(userID: id, goalID: startDateForDB, startDate: startDate, endDate: lastDate, failAllowance: 2,description: "(test)", status: Status.none, numOfSuccess: 90, numOfFail: 0, shared: false)
         
+        defaults.set(goal.goalID, forKey: KeyForDf.goalID)
         let days = self.createNewDaysArrayFORTEST(goal)
         
         let newTotalGoalInfo = TotalGoalInfoModel(goal: goal, days: days)

@@ -22,8 +22,10 @@ struct FireStoreService {
                 print("load doc failed: \(e.localizedDescription)")
             } else {
                 if let usersHistory = querySnapshot?.data() {
+                    print("2222")
                     for history in usersHistory {
                         if let aGoal = history.value as? [String:Any] {
+                            print("3333")
                             if let status = aGoal[G.status] as? String,
                                let des = aGoal[G.description] as? String,
                                let end = aGoal[G.endDate] as? String,
@@ -35,10 +37,12 @@ struct FireStoreService {
                                let uID = aGoal[G.userID] as? String,
                                let shared = aGoal[G.shared] as? Bool
                             {
-                                let startDate = self.dateManager.dateFromString(string: start)
-                                let endDate = self.dateManager.dateFromString(string: end)
-                                let crrHistory = GoalModel(userID: uID, goalID: gID, startDate: startDate, endDate: endDate, failAllowance: failAllw, description: des, status: Status(rawValue: status)!, numOfSuccess: numOfSuc, numOfFail: numOfFail, shared: shared)
-                                completion(crrHistory)
+                                print("4444")
+                                let startDate = self.dateManager.yyMMddHHmmss_toDate(string: start)
+                                let endDate = self.dateManager.yyMMddHHmmss_toDate(string: end)
+                                
+                                let crrGoal = GoalModel(userID: uID, goalID: gID, startDate: startDate, endDate: endDate, failAllowance: failAllw, description: des, status: Status(rawValue: status)!, numOfSuccess: numOfSuc, numOfFail: numOfFail, shared: shared)
+                                completion(crrGoal)
                             }}}}}}
     }
     
@@ -101,7 +105,7 @@ struct FireStoreService {
 extension FireStoreService {
     
     func saveGoal(_ goal: GoalModel){
-        let startDateForDB = DateManager().dateFormat(type: "yearToSeconds", date: Date())
+        let startDateForDB = DateManager().dateFormat(type: "yearToSeconds", date: goal.startDate)
         let lastDateForDB = DateManager().dateFormat(type: "yearToSeconds", date: goal.endDate)
         db.collection(K.FS_userCurrentGoal).document(goal.userID).setData([
             goal.goalID : [

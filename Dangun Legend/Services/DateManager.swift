@@ -21,9 +21,20 @@ class DateManager {
         return distanceDay
     }
 
-    func dateFromString(string: String) -> Date {
+    func yyMMddHHmmss_toDate(string: String) -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyMMddHHmmss"
+        if let aDate = dateFormatter.date(from: string) {
+            return aDate
+        } else {
+            print("-->>> dateManager.dateFromString failed")
+            return Date()
+        }
+    }
+    
+    func yyMMdd_toDate(string: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyMMdd"
         if let aDate = dateFormatter.date(from: string) {
             return aDate
         } else {

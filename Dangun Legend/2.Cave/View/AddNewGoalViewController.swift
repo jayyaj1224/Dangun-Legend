@@ -74,6 +74,8 @@ class AddNewGoalViewController: UIViewController{
                 return self.goalManager.createNewGoal(userInput)
             }
         }
+        
+        
         self.newGoalSubject.onNext(totalGoalInfo)
         dismiss(animated: true, completion: nil)
         
