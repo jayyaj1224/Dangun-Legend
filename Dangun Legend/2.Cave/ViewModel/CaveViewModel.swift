@@ -50,7 +50,7 @@ struct GoalViewModel {
 
 
     var datePeriod : Observable<String> {
-        let dateManager = DateManager()
+        let dateManager = DateCalculate()
         let start = dateManager.dateFormat(type: "yyyy년M월d일", date: goal.startDate)
         let end = dateManager.dateFormat(type: "yyyy년M월d일", date: goal.endDate)
         let period = "기간: \(start) - \(end)"
@@ -89,7 +89,7 @@ struct DaysViewModel {
     }
 
     func todayAt()->Int {
-        let date = DateManager().dateFormat(type: "yyyyMMdd", date: Date())
+        let date = DateCalculate().dateFormat(type: "yyyyMMdd", date: Date())
         let todayInArr = daysInfoVM.filter{ $0.singleDayInfo.date == date }
         let todayDayNum = todayInArr.first?.singleDayInfo.dayIndex ?? 0
         return todayDayNum
@@ -126,7 +126,7 @@ struct SingleDayViewModel {
 
     var singleDayInfo : DayModel
 
-    private let dateManager = DateManager()
+    private let dateManager = DateCalculate()
 
     init(_ singleDay: DayModel) {
         self.singleDayInfo = singleDay

@@ -16,7 +16,6 @@ import RxCocoa
 
 class AddNewGoalViewController: UIViewController{
 
-    private let goalManager = GoalManager()
     private let disposeBag = DisposeBag()
     
     private let userDefaultService = UserDefaultService()
@@ -59,7 +58,6 @@ class AddNewGoalViewController: UIViewController{
             alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
         } else {
-            
             self.createNewGoal()
         }
     }
@@ -69,7 +67,7 @@ class AddNewGoalViewController: UIViewController{
         let userInput = UsersInputForNewGoal(goalDescripteion: self.goalTextView.text, failAllowance: self.failAllowOutput.selectedSegmentIndex)
        
         var totalGoalInfo : TotalGoalInfoModel {
-            return self.goalManager.createNewGoal(userInput)
+            return self.createNewGoal(userInput)
         }
         
         self.newGoalSubject.onNext(totalGoalInfo)
@@ -114,7 +112,7 @@ extension AddNewGoalViewController: UITextViewDelegate {
 extension AddNewGoalViewController {
     
     private func setupDateDescription() {
-        let dateManager = DateManager()
+        let dateManager = DateCalculate()
         let startDateString = dateManager.dateFormat(type: "yyyy-MM-dd", date: Date())
         let lastDate = Calendar.current.date(byAdding: .day, value: 99, to: Date())!
         let lastDateString = dateManager.dateFormat(type: "yyyy-MM-dd", date: lastDate)
@@ -123,5 +121,70 @@ extension AddNewGoalViewController {
             self.endDate.text = lastDateString
         }
     }
+
+    func createNewGoal(_ usersInput: UsersInputForNewGoal) -> TotalGoalInfoModel {
+        if usersInput.goalDescripteion == "Test97" {
+            return self.createNewGoalFORTEST()
+        } else {
+            let lastDate = Calendar.current.date(byAdding: .day, value: 99, to: Date())!
+            let startDateForDB = DateCalculate().dateFormat(type: "yearToSeconds", date: Date())
+            let id = defaults.string(forKey: KeyForDf.userID)!
+            
+            let goal = GoalModel(userID: id, goalID: startDateForDB, startDate: Date(), endDate: lastDate, failAllowance: usersInput.failAllowance,description: usersInput.goalDescripteion, status: Status.none, numOfSuccess: 0, numOfFail: 0, shared: false)
+            defaults.set(goal.goalID, forKey: KeyForDf.goalID)
+            let days = self.createNewDaysArray()
+            let newTotalGoalInfo = TotalGoalInfoModel(goal: goal, days: days)
+            return newTotalGoalInfo
+        }
+        
+    }
+    
+    private func createNewDaysArray()->[DayModel] {
+        let dateManager = DateCalculate()
+        var daysArray = [DayModel]()
+        for i in 1...100 {
+            let date = Calendar.current.date(byAdding: .day, value: (i-1), to: Date())!
+            let DateForDB = dateManager.dateFormat(type: "yyyyMMdd", date: date)
+            let day = DayModel(dayIndex: i, status: Status.none, date: DateForDB)
+            daysArray.append(day)
+        }
+        return daysArray
+    }
+    
+    
+    func createNewGoalFORTEST() -> TotalGoalInfoModel {
+        let startDate = Calendar.current.date(byAdding: .day, value: -99, to: Date())!
+        let lastDate = Calendar.current.date(byAdding: .day, value: 99, to: startDate)!
+        let startDateForDB = DateCalculate().dateFormat(type: "yearToSeconds", date: startDate)
+        let id = defaults.string(forKey: KeyForDf.userID)!
+        
+        let goal = GoalModel(userID: id, goalID: startDateForDB, startDate: startDate, endDate: lastDate, failAllowance: 2,description: "(test)", status: Status.none, numOfSuccess: 90, numOfFail: 0, shared: false)
+        
+        defaults.set(goal.goalID, forKey: KeyForDf.goalID)
+        let days = self.createNewDaysArrayFORTEST(goal)
+        
+        let newTotalGoalInfo = TotalGoalInfoModel(goal: goal, days: days)
+        return newTotalGoalInfo
+    }
+    
+    
+    private func createNewDaysArrayFORTEST(_ goal:GoalModel)->[DayModel] {
+        let dateManager = DateCalculate()
+        var daysArray = [DayModel]()
+        for i in 1...90 {
+            let date = Calendar.current.date(byAdding: .day, value: (i-1), to: goal.startDate)!
+            let DateForDB = dateManager.dateFormat(type: "yyyyMMdd", date: date)
+            let day = DayModel(dayIndex: i, status: Status.success, date: DateForDB)
+            daysArray.append(day)
+        }
+        for i in 91...100 {
+            let date = Calendar.current.date(byAdding: .day, value: (i-1), to: goal.startDate)!
+            let DateForDB = dateManager.dateFormat(type: "yyyyMMdd", date: date)
+            let day = DayModel(dayIndex: i, status: Status.none, date: DateForDB)
+            daysArray.append(day)
+        }
+        return daysArray
+    }
+    
     
 }

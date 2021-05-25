@@ -51,6 +51,11 @@ class CaveViewController: UIViewController {
         showGoalManageScrollView(goalExixtence)
         checkIfViewModelSettingIsNeeded()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        scrollToTop()
+    }
 
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -154,7 +159,7 @@ class CaveViewController: UIViewController {
 
     
     private func checkTodayButtonUIChange(checked: Bool){
-        let dateManager = DateManager()
+        let dateManager = DateCalculate()
         let today = dateManager.dateFormat(type: "M월d일", date: Date())
         let date = dateManager.dateFormat(type: "e", date: Date())
         if checked == false {
@@ -186,7 +191,7 @@ class CaveViewController: UIViewController {
 extension CaveViewController {
     
     private func checkTodayAlertSentence(date: Date) -> String {
-        let dateManager = DateManager()
+        let dateManager = DateCalculate()
         let now = Calendar.current.dateComponents(in:.current, from: date)
         let monthDate = dateManager.dateFormat(type: "M월d일", dateComponets: now)
         let whichDay = dateManager.dateFormat(type: "e", dateComponets: now)
@@ -205,7 +210,7 @@ extension CaveViewController {
     @objc func checkAlert(_ noti: Notification) {
         guard let singleDayInfo = noti.object as? DayModel else { fatalError() }
          
-        let dateManager = DateManager()
+        let dateManager = DateCalculate()
         let dateString = singleDayInfo.date
         let date = dateManager.yyMMddHHmmss_toDate(string: dateString)
         let asking = self.checkTodayAlertSentence(date: date)
@@ -311,24 +316,27 @@ extension CaveViewController {
     
     private func updateFromResult(result: GoalModel){
 
-        let dateManager = DateManager()
+        let dateManager = DateCalculate()
         let today = dateManager.dateFormat(type: "yyyyMMdd", date: Date())
         let lastDay = dateManager.dateFormat(type: "yyyyMMdd", date: result.endDate)
         
         if result.failAllowance + 1 == result.numOfFail {
             self.overFailAllowance(newGoal: result)
+            
         } else if result.numOfFail + result.numOfSuccess >= 100 {
+            
             performSegue(withIdentifier: "ResultViewController", sender: self)
             self.showGoalManageScrollView(false)
             
-            DispatchQueue.global(qos: .background).async {
-                self.fireStoreService.removeCurrentGoal()
-                self.fireStoreService.removeCurrentDaysInfo()
-                
-                self.fireStoreService.userInfoOneMoreAchieve()
-                let oneMoreAch = defaults.integer(forKey: KeyForDf.totalAchievements)
-                defaults.set(oneMoreAch, forKey: KeyForDf.totalAchievements)
-            }
+            
+            self.fireStoreService.saveGoalAtHistory(result, status: Status.success)
+            
+            self.fireStoreService.removeCurrentGoal()
+            self.fireStoreService.removeCurrentDaysInfo()
+            
+            self.fireStoreService.userInfoOneMoreAchieve()
+            self.userDefaultService.userInfo_oneMoreAchievement()
+            
             
         } else {
             if today == lastDay {
@@ -374,6 +382,10 @@ extension CaveViewController {
         defaults.removeObject(forKey: KeyForDf.goalID)
     }
     
+    func scrollToTop(){
+        self.goalManageScrollView.setContentOffset(.zero, animated: true)
+    }
+    
 }
 
 
@@ -395,7 +407,7 @@ extension CaveViewController: UICollectionViewDelegate, UICollectionViewDataSour
         if let singleDayVM = daysVM?.singleDayAt(index: indexPath.row)  {
             
             cell.singleDayInfo = self.daysVM.singleDayAt(index: indexPath.row).singleDayInfo
-            let dateManager = DateManager()
+            let dateManager = DateCalculate()
             let today = dateManager.dateFormat(type: "yyyyMMdd", date: Date())
             
             if singleDayVM.singleDayInfo.date == today {

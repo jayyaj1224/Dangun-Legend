@@ -15,7 +15,6 @@ import RxCocoa
 
 class LoginViewController: UIViewController, GIDSignInDelegate {
     
-//    private let loginAndRegisterService = LoginAndRegisterService()
     private let loginVM = LoginViewModel()
     private let disposeBag = DisposeBag()
     

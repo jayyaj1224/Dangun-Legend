@@ -31,8 +31,8 @@ struct BoardViewModel {
     private let achievement: Achievement
     
     init(_ goal: BoardData) {
-        let startDate = DateManager().dateFormat(type: "yyyy년M월d일", date: goal.startDate)
-        let endDate = DateManager().dateFormat(type: "yyyy년M월d일", date: goal.endDate)
+        let startDate = DateCalculate().dateFormat(type: "yyyy년M월d일", date: goal.startDate)
+        let endDate = DateCalculate().dateFormat(type: "yyyy년M월d일", date: goal.endDate)
         let title = "\(goal.nickName) 님의 업적"
         let goalDescription = goal.description
         let numOfSuccess = goal.numOfSuccess

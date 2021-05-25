@@ -14,8 +14,6 @@ struct K {
     static let userID = "userID"
     static let cellDayNum = "cellDayNum"
     static let none = "none"
-    static let Loaded = "Loaded"
-    static let auto = "auto"
     static let success = "success"
     static let fail = "fail"
     static let daysPassed = "daysPassed"
@@ -30,40 +28,27 @@ struct K {
     static let FS_userNickName = "userNickName"
     
     static let unchecked = "unchecked"
-
-
-    
+  
 }
 
 
 struct G {
     static let userID = "userID"
     static let goalID = "goalID"
+    static let currentGoal = "currentGoal"
+    
     static let startDate = "startDate"
     static let endDate = "endDate"
     
     static let trialNumber = "trialNumber"
     static let failAllowance = "failAllowance"
     static let description = "description"
-    
-    static let numOfDays = "numOfDays"
-    static let completed = "completed"
-    static let goalAchieved = "goalAchieved"
-
     static let numOfSuccess = "numOfSuccess"
     static let numOfFail = "numOfFail"
-    static let progress = "progress"
-    
-    static let currentGoal = "currentGoal"
     
     static let nickName = "nickName"
     static let shared = "shared"
     static let status = "status"
-}
-
-struct EntityName {
-    static let goalData = "GoalData"
-    static let dayData = "DayData"
 }
 
 struct KeyForDf {

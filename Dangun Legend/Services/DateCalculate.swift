@@ -7,15 +7,8 @@
 
 import Foundation
 
+struct DateCalculate {
 
-class DateManager {
-
-//    func subtractionDays(start: Date, end: Date) -> Int {
-//        let a = Int(dateFormat(type: "yyyyMMdd", date: start))!
-//        let b = Int(dateFormat(type: "yyyyMMdd", date: end))!
-//        return b-a
-//    }
-    
     func howManyDaysBetween(start: Date, end: Date) -> Int {
         let distanceDay = Calendar.current.dateComponents([.day], from: start, to: end).day ?? 0
         return distanceDay

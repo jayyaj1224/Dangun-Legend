@@ -89,7 +89,6 @@ class RegisterViewController: UIViewController {
                     print(e.localizedDescription)
                     self.loginErrorOcurred()
                 } else {
-                    ///Defaults Clear하기
                     defaults.set(true, forKey: KeyForDf.loginStatus)
                     defaults.set(email, forKey: KeyForDf.userID)
                     InitialSettingManager().setDefaultValues(userID: email)

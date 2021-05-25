@@ -27,10 +27,6 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var text: UIImageView!
     @IBOutlet weak var caveImage: UIImageView!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-//        loadCurrentGoal()
-    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -81,12 +77,12 @@ class HomeViewController: UIViewController {
 //
 //
 //    func printStatus(){
-////        print("-------- userID : \(defaults.string(forKey: KeyForDf.userID))")
-////        print("-------- crrGoalExists : \(defaults.string(forKey: KeyForDf.crrGoalExists))")
-////        print("-------- goalID : \(defaults.string(forKey: KeyForDf.goalID))")
-////        print("-------- failNumber : \(defaults.string(forKey: KeyForDf.failNumber))")
-////        print("-------- successNumber : \(defaults.string(forKey: KeyForDf.successNumber))")
-////        print("-------- userID : \(defaults.string(forKey: KeyForDf.userID))")
+//        print("-------- userID : \(defaults.string(forKey: KeyForDf.userID))")
+//        print("-------- crrGoalExists : \(defaults.string(forKey: KeyForDf.crrGoalExists))")
+//        print("-------- goalID : \(defaults.string(forKey: KeyForDf.goalID))")
+//        print("-------- failNumber : \(defaults.string(forKey: KeyForDf.failNumber))")
+//        print("-------- successNumber : \(defaults.string(forKey: KeyForDf.successNumber))")
+//        print("-------- userID : \(defaults.string(forKey: KeyForDf.userID))")
 //        print("")
 //
 //    }

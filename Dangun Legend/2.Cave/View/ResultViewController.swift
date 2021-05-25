@@ -6,13 +6,8 @@
 //
 
 import UIKit
-import IQKeyboardManagerSwift
-import Firebase
-
 
 class ResultViewController: UIViewController {
-    
-    let goalManager = GoalManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()

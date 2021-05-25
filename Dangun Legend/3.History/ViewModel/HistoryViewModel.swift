@@ -36,10 +36,16 @@ struct HistoryListViewModel {
     
 }
 
+enum ShareButtonAppearance {
+    case invisible
+    case enabled
+    case unabled
+}
+
 struct HistoryViewModel {
     
     let history: GoalModel
-    private let dateManager = DateManager()
+    private let dateManager = DateCalculate()
     
     init(_ history: GoalModel) {
         self.history = history
@@ -115,7 +121,6 @@ struct UpperBoxGeneralInfoViewModel {
         return Observable<String>.just(successPerTrialDescription)
     }
 
-    
     var averageSuccessPerGoal : Observable<String> {
         var ability : Double {
             if generalInfo.totalSuccess == 0 || generalInfo.totalTrial == 0 {
@@ -144,9 +149,3 @@ struct UpperBoxGeneralInfoViewModel {
     
 }
 
-
-enum ShareButtonAppearance {
-    case invisible
-    case enabled
-    case unabled
-}

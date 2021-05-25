@@ -6,30 +6,25 @@
 //
 
 
- ///1. viewDidLoad:
- ///2. Cave Added:
- ///3. Cave Quit:
-
-
 import UIKit
 import Firebase
 import IQKeyboardManagerSwift
-import RxSwift
 import RxCocoa
+import RxSwift
 
 let shareSuccessNoti : Notification.Name = Notification.Name("shareSuccessNoti")
 let reloadTableViewNoti: Notification.Name = Notification.Name("reloadTableViewNoti")
 
 class HistoryViewController: UIViewController {
     
-    private let dateManager = DateManager()
-    private let goalManager = GoalManager()
-    private var historyManager = HistoryManager()
+    private let firestoreService = FireStoreService()
+    
     private let serialQueue = DispatchQueue.init(label: "serialQueue")
-    private let disposeBag = DisposeBag()
     
     private var historyListVM: HistoryListViewModel!
     private var upperBoxGeneralInfoVM: UpperBoxGeneralInfoViewModel!
+    
+    private let disposeBag = DisposeBag()
     
     @IBOutlet weak var successPerAttemptLabel: UILabel!
     @IBOutlet weak var averageSuccessDayLabel: UILabel!
@@ -67,7 +62,7 @@ class HistoryViewController: UIViewController {
     
     private func loadHistory(){
         var goalArray = [GoalModel]()
-        self.historyManager.load(completion: { goal in
+        self.firestoreService.loadHistory(completion: { goal in
             self.serialQueue.async {
                 goalArray.append(goal)
                 goalArray.sort { $0.goalID > $1.goalID }
@@ -128,7 +123,7 @@ class HistoryViewController: UIViewController {
         let alert = UIAlertController.init(title: "Share to Board", message: "\(nickName) 이름으로 업적을 Board 페이지에 공유하시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "네", style: .default, handler: { (UIAlertAction) in
             let goalID = noti.object as! String
-            self.historyManager.shareSuccess(goalID, nickName: nickName)
+            self.firestoreService.shareSuccess(goalID, nickName: nickName)
         }))
         alert.addAction(UIAlertAction(title: "아니오", style: .destructive, handler:nil))
         present(alert, animated: true, completion: nil)
@@ -141,7 +136,7 @@ class HistoryViewController: UIViewController {
     
     
     @IBAction func cleanHistoryPressed(_ sender: UIButton) {
-        let alert = UIAlertController.init(title: "Clean History", message: "사용자의 정보를 초기화합니다.", preferredStyle: .alert)
+        let alert = UIAlertController.init(title: "Clear History", message: "사용자의 정보를 초기화합니다.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "초기화", style: .destructive, handler: { (UIAlertAction) in
             self.clearHistory()
@@ -154,7 +149,7 @@ class HistoryViewController: UIViewController {
         self.historyListVM.clearHistory()
         
         serialQueue.async {
-            self.historyManager.resetHitoryData()
+            self.firestoreService.resetHitoryData()
         }
         serialQueue.async {
             self.loadUsersGeneralInfo()
@@ -168,7 +163,7 @@ class HistoryViewController: UIViewController {
     //MARK: - Upper Description Box Controll
     
     private func loadUsersGeneralInfo(){
-        self.goalManager.loadGeneralInfo { info in
+        self.firestoreService.loadGeneralInfo { info in
             let generalInfo = UpperBoxGeneralInfoViewModel.init(info)
             self.upperBoxGeneralInfoVM = generalInfo
             self.usersGeneralInfoBinding()
@@ -188,11 +183,8 @@ class HistoryViewController: UIViewController {
         self.upperBoxGeneralInfoVM.successPerctage.asDriver(onErrorJustReturn: "")
             .drive(self.commitAbilityPercentageLabel.rx.text)
             .disposed(by: self.disposeBag)
-
     }
-    
 
-    
 }
 
 
@@ -318,6 +310,26 @@ extension HistoryViewController: UITableViewDataSource, UITableViewDelegate {
             }).disposed(by: disposeBag)
         
         return cell
+    }
+    
+    
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let historyToRemove = self.historyListVM.historyList[indexPath.row].history
+        let info = self.upperBoxGeneralInfoVM.generalInfo
+        if historyToRemove.status != Status.none {
+            let action = UIContextualAction(style: .destructive, title: "삭제") { (action, view, completion) in
+                self.firestoreService.removeSingleHistory(goalID: historyToRemove.goalID)
+                self.firestoreService.singleHistoryRemovedUpdateUserInfo(theHistory: historyToRemove,userInfo: info)
+                self.loadHistory()
+                self.loadUsersGeneralInfo()
+            }
+            return UISwipeActionsConfiguration(actions: [action])
+        } else {
+            let action2 = UIContextualAction(style: .normal, title: "진행중") { (action, view, completion) in
+            }
+            return UISwipeActionsConfiguration(actions: [action2])
+        }
     }
 }
 

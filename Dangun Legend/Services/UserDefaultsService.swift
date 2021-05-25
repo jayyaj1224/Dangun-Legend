@@ -44,6 +44,8 @@ struct UserDefaultService {
     
     func userDefaultSettingForNewGoal(goal: GoalModel){
         self.userInfo_oneMoreTrial()
+        defaults.set(false, forKey: KeyForDf.needToSetViewModel)
+        defaults.set(true, forKey: KeyForDf.crrGoalExists)
         defaults.set(goal.goalID, forKey: KeyForDf.goalID)
         defaults.set(goal.numOfSuccess, forKey: KeyForDf.successNumber)
         defaults.set(goal.numOfFail, forKey: KeyForDf.failNumber)

@@ -11,7 +11,7 @@ import UIKit
 class SquareCell : UICollectionViewCell {
 
     var singleDayInfo : DayModel?
-    let dateManager = DateManager()
+    let dateManager = DateCalculate()
     
     @IBOutlet weak var todayLabel: UILabel!
     @IBOutlet weak var squareImage: UIImageView!

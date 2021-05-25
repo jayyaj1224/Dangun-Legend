@@ -7,13 +7,9 @@
 
 import Foundation
 
-///Firebase & UserDefault
+//MARK: - Main Two Model
 
-struct TotalGoalInfoModel {
-    var goal: GoalModel
-    var days: [DayModel]
-}
-
+// FireStore -> (VM)
 struct GoalModel: Codable {
     let userID: String
     let goalID: String
@@ -27,24 +23,35 @@ struct GoalModel: Codable {
     var shared: Bool
 }
 
-
+// FireStore -> (VM)
 struct DayModel: Codable {
     let dayIndex: Int
     var status: Status
     let date: String
 }
 
-enum Status: String, Codable  {
-    case success = "success"
-    case fail = "fail"
-    case none = "none"
-}
 
+// FireStore -> UserDefault
 struct UserInfoModel: Codable {
     var totalTrial: Int
     var totalAchievements: Int
     var totalSuccess: Int
     var totalFail: Int
+}
+
+
+//MARK: - ETC
+
+struct TotalGoalInfoModel {
+    var goal: GoalModel
+    var days: [DayModel]
+}
+
+
+enum Status: String, Codable  {
+    case success = "success"
+    case fail = "fail"
+    case none = "none"
 }
 
 struct UsersInputForNewGoal{

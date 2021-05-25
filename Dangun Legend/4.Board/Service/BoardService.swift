@@ -58,8 +58,8 @@ struct BoardService {
                            let uID = board[G.userID] as? String,
                            let nickName = board[G.nickName] as? String
                         {
-                            let startDate = DateManager().yyMMddHHmmss_toDate(string: start)
-                            let endDate = DateManager().yyMMddHHmmss_toDate(string: end)
+                            let startDate = DateCalculate().yyMMddHHmmss_toDate(string: start)
+                            let endDate = DateCalculate().yyMMddHHmmss_toDate(string: end)
                             let bordInfo = BoardData(userID: uID, goalID: gID, nickName: nickName, startDate: startDate, endDate: endDate, description: des, numOfSuccess: numOfSuc)
                             newboardGoals.append(bordInfo)
                             completion(newboardGoals)
