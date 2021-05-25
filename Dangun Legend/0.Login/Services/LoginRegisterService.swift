@@ -14,7 +14,6 @@ struct LoginAndRegisterService {
     
     private let fireStoreService = FireStoreService()
     
-    private let coreDataService = CoreDataService()
     
     func checkWhichSetIsNeeded(userID: String) {
         let idList = db.collection(K.FS_userIdList).document(userID)
@@ -25,6 +24,8 @@ struct LoginAndRegisterService {
                     print("........... Found ID ........... ")
                     print("........... Checking if goal exists ........... ")
                     self.checkIfGoalExists(userID: userID)
+                    self.setUserInfo(userID: userID)
+                    
                     
                 } else {
                     
@@ -42,12 +43,9 @@ struct LoginAndRegisterService {
         idList.getDocument { (document, error) in
             if let doc = document {
                 if doc.exists {
-                    print("*** goal exists >>>  setting current goal and goal Arr")
                     defaults.set(true, forKey: KeyForDf.crrGoalExists)
-                    self.setCurrentGoal(userID: userID)
                 } else {
                     ///1. 기존 유저 - 진행하고 있는 골이 없을 때
-                    print("*** goal doesn't exists >>>  setting goal existence: false")
                     defaults.set(false, forKey: KeyForDf.crrGoalExists)
                 }
             }
@@ -56,24 +54,14 @@ struct LoginAndRegisterService {
     
 
     
-    
-    
     ///2. 기존 유저 - 진행하고 있는 골이 있을 때
-    func setCurrentGoal(userID: String){
-        
-        
-        DispatchQueue.global(qos: .utility).async {
-            self.fireStoreService.loadCurrentGoal { goalModel in
-                //save at Core data
-
-            }
-            self.fireStoreService.loadUserInfo { userInfo in
-                //save at User default
-                defaults.set(userInfo.totalFail,forKey: UserInfoKey.totalFail)
-                defaults.set(userInfo.totalSuccess,forKey: UserInfoKey.totalSuccess)
-                defaults.set(userInfo.totalAchievements,forKey: UserInfoKey.totalAchievements)
-                defaults.set(userInfo.totalTrial,forKey: UserInfoKey.totalTrial)
-            }
+    func setUserInfo(userID: String){
+        self.fireStoreService.loadUserInfo { userInfo in
+            //save at User default
+            defaults.set(userInfo.totalFail,forKey: KeyForDf.totalFail)
+            defaults.set(userInfo.totalSuccess,forKey: KeyForDf.totalSuccess)
+            defaults.set(userInfo.totalAchievements,forKey: KeyForDf.totalAchievements)
+            defaults.set(userInfo.totalTrial,forKey: KeyForDf.totalTrial)
         }
     }
 
@@ -85,10 +73,10 @@ struct LoginAndRegisterService {
         self.fireStoreService.saveUserInfo(info: defaultUserInfo)
         self.fireStoreService.saveUserID(userID)
         
-        defaults.integer(forKey: UserInfoKey.totalFail)
-        defaults.integer(forKey: UserInfoKey.totalSuccess)
-        defaults.integer(forKey: UserInfoKey.totalAchievements)
-        defaults.integer(forKey: UserInfoKey.totalTrial)
+        defaults.integer(forKey: KeyForDf.totalFail)
+        defaults.integer(forKey: KeyForDf.totalSuccess)
+        defaults.integer(forKey: KeyForDf.totalAchievements)
+        defaults.integer(forKey: KeyForDf.totalTrial)
         
         defaults.set(userID, forKey: KeyForDf.userID)
         defaults.set(true, forKey: KeyForDf.loginStatus)
@@ -99,19 +87,19 @@ struct LoginAndRegisterService {
     func logOutRemoveDefaults(){
         print("------logged out------")
         
-        //CoreData goal, days 지우기
-        coreDataService.deletData(EntityName.dayData)
-        coreDataService.deletData(EntityName.goalData)
-        
         defaults.set(false, forKey: KeyForDf.loginStatus)
         
-        defaults.removeObject(forKey: UserInfoKey.totalAchievements)
-        defaults.removeObject(forKey: UserInfoKey.totalSuccess)
-        defaults.removeObject(forKey: UserInfoKey.totalFail)
-        defaults.removeObject(forKey: UserInfoKey.totalTrial)
+        defaults.removeObject(forKey: KeyForDf.totalAchievements)
+        defaults.removeObject(forKey: KeyForDf.totalSuccess)
+        defaults.removeObject(forKey: KeyForDf.totalFail)
+        defaults.removeObject(forKey: KeyForDf.totalTrial)
+        
+        defaults.removeObject(forKey: KeyForDf.successNumber)
+        defaults.removeObject(forKey: KeyForDf.failNumber)
+        defaults.removeObject(forKey: KeyForDf.goalID)
+        
         
         defaults.removeObject(forKey: KeyForDf.userID)
-        
         defaults.removeObject(forKey: KeyForDf.crrGoalExists)
     }
 

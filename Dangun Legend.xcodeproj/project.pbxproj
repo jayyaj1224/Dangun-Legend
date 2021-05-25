@@ -38,7 +38,6 @@
 		A49F5A74265C6B9600739811 /* CaveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49F5A73265C6B9600739811 /* CaveViewModel.swift */; };
 		A49F5A7B265C6DC500739811 /* AddNewGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49F5A7A265C6DC500739811 /* AddNewGoalViewController.swift */; };
 		A49F5A7D265C6E8300739811 /* LoginRegisterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49F5A7C265C6E8300739811 /* LoginRegisterService.swift */; };
-		A4AD4DED265BD1A80080504C /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AD4DEC265BD1A80080504C /* CoreDataService.swift */; };
 		A4BBCC6926295939007D2DE3 /* BordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BBCC6826295939007D2DE3 /* BordViewController.swift */; };
 		A4BBCC7926296F9C007D2DE3 /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48221A7261DE49B005DFA43 /* HistoryTableViewCell.xib */; };
 		A4BBCC7A26296F9C007D2DE3 /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48221A7261DE49B005DFA43 /* HistoryTableViewCell.xib */; };
@@ -112,7 +111,6 @@
 		A49F5A73265C6B9600739811 /* CaveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveViewModel.swift; sourceTree = "<group>"; };
 		A49F5A7A265C6DC500739811 /* AddNewGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewGoalViewController.swift; sourceTree = "<group>"; };
 		A49F5A7C265C6E8300739811 /* LoginRegisterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterService.swift; sourceTree = "<group>"; };
-		A4AD4DEC265BD1A80080504C /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		A4BBCC6826295939007D2DE3 /* BordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BordViewController.swift; sourceTree = "<group>"; };
 		A4BBCC8C26297024007D2DE3 /* BoardShareCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardShareCell.swift; sourceTree = "<group>"; };
 		A4BBCC8D26297024007D2DE3 /* BoardShareCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BoardShareCell.xib; sourceTree = "<group>"; };
@@ -389,7 +387,6 @@
 			children = (
 				A49F5A6E265C69FD00739811 /* FireStoreService.swift */,
 				A49F5A70265C6A0800739811 /* UserDefaultsService.swift */,
-				A4AD4DEC265BD1A80080504C /* CoreDataService.swift */,
 				A4588E2F2652551600C432BD /* HistoryManager.swift */,
 				A43F42EC26569EAF00904F7C /* DataManager.swift */,
 				A442B2C9261D7C5A00B4CD12 /* DateManager.swift */,
@@ -658,7 +655,6 @@
 				A43F42ED26569EAF00904F7C /* DataManager.swift in Sources */,
 				A4D842AC2650D38B0026FF9B /* LoginAndRegisterModel.swift in Sources */,
 				A4CDF1F8261809FC00A08809 /* CaveViewController.swift in Sources */,
-				A4AD4DED265BD1A80080504C /* CoreDataService.swift in Sources */,
 				A4BBCC8E26297024007D2DE3 /* BoardShareCell.swift in Sources */,
 				A420E013261724D00039F2C8 /* HomeViewController.swift in Sources */,
 				A48221A8261DE49B005DFA43 /* HistoryTableViewCell.swift in Sources */,

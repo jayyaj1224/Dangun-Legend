@@ -5,8 +5,6 @@
 //  Created by JAY LEE on 2021/04/03.
 //
 
-
-
 import UIKit
 import Firebase
 import RxSwift
@@ -20,13 +18,11 @@ class CaveViewController: UIViewController {
     private let userDefaultService = UserDefaultService()
     
     private let caveGoalAddVC = AddNewGoalViewController()
-    
 
     private var goalVM : GoalViewModel!
     private var daysVM : DaysViewModel!
     
     private let disposeBag = DisposeBag()
-    
     
     
     @IBOutlet var caveView: UIView!
@@ -91,6 +87,10 @@ class CaveViewController: UIViewController {
             let goalVM = GoalViewModel.init(goalModel)
             self.goalVM = goalVM
             self.goalBinding()
+            
+            defaults.set(goalModel.goalID, forKey: KeyForDf.goalID)
+            defaults.set(goalModel.numOfSuccess, forKey: KeyForDf.successNumber)
+            defaults.set(goalModel.numOfFail, forKey: KeyForDf.failNumber)
         }
     }
     
@@ -209,24 +209,17 @@ extension CaveViewController {
         let dateManager = DateManager()
         let dateString = singleDayInfo.date
         let date = dateManager.dateFromString(string: dateString)
-        
         let asking = self.checkTodayAlertSentence(date: date)
-        
-        let checkTodayAlert = UIAlertController.init(title: "오늘하루 어떠셨나요 :)", message: asking, preferredStyle: .actionSheet)
+        let checkTodayAlert = UIAlertController.init(title: "하루 잘 보내셨나요 :)", message: asking, preferredStyle: .actionSheet)
         
         checkTodayAlert.addAction(UIAlertAction(title: "실패", style: .default, handler: {
             (UIAlertAction) in
-            
             self.setTodaysResult(bool: false, index: singleDayInfo.dayIndex-1)
-            
         }))
 
         checkTodayAlert.addAction(UIAlertAction(title: "성공", style: .destructive, handler: { (UIAlertAction) in
-            
             self.setTodaysResult(bool: true, index: singleDayInfo.dayIndex-1)
-            
         }))
-
         present(checkTodayAlert, animated: true,completion: nil)
     }
     
@@ -242,33 +235,24 @@ extension CaveViewController {
     }
     
     private func updateGoalVM(success: Bool){
+        
         if success == true {
-            
             self.goalVM.countSuccess(completion: { goalModel in
-                let goalID = goalModel.goalID
-                let numOfSuc = goalModel.numOfSuccess
-                self.fireStoreService.goalInfoOneMoreSuccess(num: numOfSuc, goalID: goalID)
                 self.goalBinding()
                 updateFromResult(result: goalModel)
             })
-            
+            self.fireStoreService.goalInfoOneMoreSuccess()
             self.fireStoreService.userInfoOneMoreSuccess()
             self.userDefaultService.oneMoreSuccess()
             
         } else {
             self.goalVM.countFail(completion: { goalModel in
-                let goalID = goalModel.goalID
-                let numOfFail = goalModel.numOfFail
-                self.fireStoreService.goalInfoOneMoreFail(num: numOfFail, goalID: goalID)
                 self.goalBinding()
                 updateFromResult(result: goalModel)
-                
             })
-            
+            self.fireStoreService.goalInfoOneMoreFail()
             self.fireStoreService.userInfoOneMoreFail()
             self.userDefaultService.oneMoreFail()
-            self.coreDataService.oneMoreFail()
-            
         }
     }
 
@@ -279,9 +263,6 @@ extension CaveViewController {
                 // FireStore update
                 self.fireStoreService.updateTheDay(index: index+1, successBool: true)
                 
-                // Coredata update
-                self.coreDataService.updateDaySuccessOrFail(index: index, bool: true)
-                
                 DispatchQueue.main.async {
                     self.collectionVw.reloadData()
                 }
@@ -290,9 +271,6 @@ extension CaveViewController {
             self.daysVM.updateFail(index: index) { 
                 // FireStore update
                 self.fireStoreService.updateTheDay(index: index+1, successBool: false)
-                
-                // Coredata update
-                self.coreDataService.updateDaySuccessOrFail(index: index, bool: false)
                 
                 DispatchQueue.main.async {
                     self.collectionVw.reloadData()
@@ -336,12 +314,9 @@ extension CaveViewController {
                 self.fireStoreService.removeCurrentGoal()
                 self.fireStoreService.removeCurrentDaysInfo()
                 
-                self.coreDataService.deletData(EntityName.goalData)
-                self.coreDataService.deletData(EntityName.dayData)
-                
                 self.fireStoreService.userInfoOneMoreAchieve()
-                let oneMoreAch = defaults.integer(forKey: UserInfoKey.totalAchievements)
-                defaults.set(oneMoreAch, forKey: UserInfoKey.totalAchievements)
+                let oneMoreAch = defaults.integer(forKey: KeyForDf.totalAchievements)
+                defaults.set(oneMoreAch, forKey: KeyForDf.totalAchievements)
             }
             
         } else {
@@ -375,14 +350,17 @@ extension CaveViewController {
         self.fireStoreService.removeCurrentGoal()
         self.fireStoreService.removeCurrentDaysInfo()
         
-        // CoreData 삭제
-        self.coreDataService.deletData(EntityName.dayData)
-        self.coreDataService.deletData(EntityName.goalData)
-        
         // Defaults 삭제 및 업데이트
         defaults.set(false, forKey: KeyForDf.crrGoalExists)
-        defaults.removeObject(forKey: KeyForDf.crrGoal)
-        defaults.removeObject(forKey: KeyForDf.crrDaysArray)
+        
+        defaults.removeObject(forKey: KeyForDf.totalAchievements)
+        defaults.removeObject(forKey: KeyForDf.totalSuccess)
+        defaults.removeObject(forKey: KeyForDf.totalFail)
+        defaults.removeObject(forKey: KeyForDf.totalTrial)
+        
+        defaults.removeObject(forKey: KeyForDf.successNumber)
+        defaults.removeObject(forKey: KeyForDf.failNumber)
+        defaults.removeObject(forKey: KeyForDf.goalID)
     }
     
 }

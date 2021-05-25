@@ -183,7 +183,7 @@ extension FireStoreService {
 extension FireStoreService {
     
     func userInfoOneMoreTrial(){
-        let oneMore = defaults.integer(forKey: UserInfoKey.totalTrial)+1
+        let oneMore = defaults.integer(forKey: KeyForDf.totalTrial)+1
         db.collection(K.FS_userGeneral).document(userID).setData([
             FS.GI_generalInfo : [
                 FS.GI_totalTrial : oneMore
@@ -192,7 +192,7 @@ extension FireStoreService {
     }
     
     func userInfoOneMoreSuccess(){
-        let oneMore = defaults.integer(forKey: UserInfoKey.totalSuccess)+1
+        let oneMore = defaults.integer(forKey: KeyForDf.totalSuccess)+1
         db.collection(K.FS_userGeneral).document(userID).setData([
             FS.GI_generalInfo : [
                 FS.GI_totalSuccess : oneMore
@@ -201,7 +201,7 @@ extension FireStoreService {
     }
     
     func userInfoOneMoreFail(){
-        let oneMore = defaults.integer(forKey: UserInfoKey.totalFail)+1
+        let oneMore = defaults.integer(forKey: KeyForDf.totalFail)+1
         db.collection(K.FS_userGeneral).document(userID).setData([
             FS.GI_generalInfo : [
                 FS.GI_totalFail : oneMore
@@ -210,7 +210,7 @@ extension FireStoreService {
     }
     
     func userInfoOneMoreAchieve(){
-        let oneMore = defaults.integer(forKey: UserInfoKey.totalAchievements)+1
+        let oneMore = defaults.integer(forKey: KeyForDf.totalAchievements)+1
         db.collection(K.FS_userGeneral).document(userID).setData([
             FS.GI_generalInfo : [
                 FS.GI_totalAchievement : oneMore
@@ -238,18 +238,22 @@ extension FireStoreService {
     }
     
     
-    func goalInfoOneMoreSuccess(num: Int, goalID: String){
+    func goalInfoOneMoreSuccess() {
+        let update = defaults.integer(forKey: KeyForDf.successNumber)+1
+        let goalID = defaults.string(forKey: KeyForDf.goalID)!
         db.collection(K.FS_userCurrentGoal).document(userID).setData([
             goalID : [
-                G.numOfSuccess: num
+                G.numOfSuccess: update
             ]
         ], merge: true)
     }
     
-    func goalInfoOneMoreFail(num: Int, goalID: String){
+    func goalInfoOneMoreFail() {
+        let update = defaults.integer(forKey: KeyForDf.failNumber)+1
+        let goalID = defaults.string(forKey: KeyForDf.goalID)!
         db.collection(K.FS_userCurrentGoal).document(userID).setData([
             goalID : [
-                G.numOfFail: num
+                G.numOfFail: update
             ]
         ], merge: true)
     }

@@ -66,14 +66,16 @@ struct EntityName {
     static let dayData = "DayData"
 }
 
-struct UserInfoKey {
+struct KeyForDf {
+    static let goalID = "Default.Key: goalID"
     static let totalSuccess = "Default.Key: totalSuccess"
     static let totalFail = "Default.Key: totalFail"
     static let totalTrial = "Default.Key: totalTrial"
     static let totalAchievements = "Default.Key: totalAchievements"
-}
 
-struct KeyForDf {
+    static let successNumber = "Default.Key: successNumber"
+    static let failNumber = "Default.Key: failNumber"
+    
     static let firstLaunch = "Default.Key: usedBefore"
     static let crrGoalExists = "Default.Key: crrGoalExists"
     static let loginStatus = "Default.Key: loginStatus"

@@ -26,25 +26,11 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.loginService.logOutRemoveDefaults()
-        defaults.set(false, forKey: KeyForDf.crrGoalExists)
-        defaults.set(true, forKey: KeyForDf.needToSetViewModel)
-        defaults.set("test",forKey: KeyForDf.userID)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        ///self.checkLoginStatus()
-//        print("------------------------------------------------")
-//        print("------------------------------------------------")
-//        print("loginStatus: \(defaults.bool(forKey: keyForDf.loginStatus))")
-//        print("userID: \(String(describing: defaults.string(forKey: keyForDf.crrUser)))")
-//        print("crrGoal: \(defaults.bool(forKey: keyForDf.crrGoal))")
-//        print("goalExistence: \(defaults.bool(forKey: keyForDf.crrGoalExists))")
-//        print("needToSetViewModel: \(defaults.bool(forKey: keyForDf.needToSetViewModel))")
-//        print("userNickName: \(String(describing: defaults.string(forKey: keyForDf.nickName)))")
-//        print("------------------------------------------------")
-//        print("------------------------------------------------")
+        self.checkLoginStatus()
     }
     
     @IBAction func logoutPressed(_ sender: UIButton) {
@@ -55,9 +41,9 @@ class HomeViewController: UIViewController {
     }
     
     private func checkLoginStatus() {
-        let status = defaults.bool(forKey: KeyForDf.loginStatus)
-        print("loginStatus: \(status)")
-        if status {
+        let loggedIn = defaults.bool(forKey: KeyForDf.loginStatus)
+        
+        if loggedIn == true {
             self.welcomeAnimation()
         } else {
             performSegue(withIdentifier: "InitialVC", sender: self)

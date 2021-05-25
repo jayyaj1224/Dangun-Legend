@@ -28,23 +28,23 @@ struct UserDefaultService {
 //    }
     
     func oneMoreSuccess(){
-        let update = defaults.integer(forKey: UserInfoKey.totalSuccess)+1
-        defaults.set(update,forKey: UserInfoKey.totalSuccess)
+        let update = defaults.integer(forKey: KeyForDf.totalSuccess)+1
+        defaults.set(update,forKey: KeyForDf.totalSuccess)
     }
     
     func oneMoreFail(){
-        let update = defaults.integer(forKey: UserInfoKey.totalFail)+1
-        defaults.set(update,forKey: UserInfoKey.totalFail)
+        let update = defaults.integer(forKey: KeyForDf.totalFail)+1
+        defaults.set(update,forKey: KeyForDf.totalFail)
     }
     
     func oneMoreAchievement(){
-        let update = defaults.integer(forKey: UserInfoKey.totalAchievements)+1
-        defaults.set(update,forKey: UserInfoKey.totalAchievements)
+        let update = defaults.integer(forKey: KeyForDf.totalAchievements)+1
+        defaults.set(update,forKey: KeyForDf.totalAchievements)
     }
     
     func oneMoreTrial(){
-        let update = defaults.integer(forKey: UserInfoKey.totalTrial)+1
-        defaults.set(update,forKey: UserInfoKey.totalTrial)
+        let update = defaults.integer(forKey: KeyForDf.totalTrial)+1
+        defaults.set(update,forKey: KeyForDf.totalTrial)
     }
     
     

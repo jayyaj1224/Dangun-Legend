@@ -19,6 +19,9 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     private let loginVM = LoginViewModel()
     private let disposeBag = DisposeBag()
     
+    private var appleSIButton: ASAuthorizationAppleIDButton!
+    
+    
     @IBOutlet weak var emailTextfield: UITextField!
     @IBOutlet weak var pwTextfield: UITextField!
     @IBOutlet weak var loginButton: UIButton!
@@ -27,7 +30,7 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
         self.loginWithEmail()
     }
     
-    var appleSIButton: ASAuthorizationAppleIDButton!
+    
     @IBOutlet weak var appleSignInButton: UIStackView!
     @IBAction func appleSignInPressed(_ sender: UIButton) {
         self.appleSIButton.sendActions(for: .touchUpInside)
