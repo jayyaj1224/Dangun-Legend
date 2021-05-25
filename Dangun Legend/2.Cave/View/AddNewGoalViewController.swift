@@ -19,6 +19,7 @@ class AddNewGoalViewController: UIViewController{
     private let goalManager = GoalManager()
     private let disposeBag = DisposeBag()
     
+    private let userDefaultService = UserDefaultService()
 
     private var newGoalSubject = PublishSubject<TotalGoalInfoModel>()
     
@@ -68,27 +69,21 @@ class AddNewGoalViewController: UIViewController{
         let userInput = UsersInputForNewGoal(goalDescripteion: self.goalTextView.text, failAllowance: self.failAllowOutput.selectedSegmentIndex)
        
         var totalGoalInfo : TotalGoalInfoModel {
-            if userInput.goalDescripteion == "Test97" {
-                return self.goalManager.createNewGoalFORTEST()
-            } else {
-                return self.goalManager.createNewGoal(userInput)
-            }
+            return self.goalManager.createNewGoal(userInput)
         }
-        
         
         self.newGoalSubject.onNext(totalGoalInfo)
         dismiss(animated: true, completion: nil)
         
-        DispatchQueue.global(qos: .utility).async {
-            // Firestore에 저장
-            fireStore.saveGoal(totalGoalInfo.goal)
-            fireStore.saveDaysInfo(totalGoalInfo.days)
-            
-            // GeneralInfo 업데이트
-            let new = defaults.integer(forKey: KeyForDf.totalTrial)+1
-            defaults.set(new, forKey: KeyForDf.totalTrial)
-            fireStore.userInfoOneMoreTrial()
-        }
+
+        // Firestore에 저장
+        fireStore.saveGoal(totalGoalInfo.goal)
+        fireStore.saveDaysInfo(totalGoalInfo.days)
+        fireStore.userInfoOneMoreTrial()
+        
+        // UserDefault 에 저장
+        userDefaultService.userDefaultSettingForNewGoal(goal: totalGoalInfo.goal)
+        
     }
     
  

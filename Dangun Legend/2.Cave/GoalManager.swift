@@ -16,15 +16,20 @@ struct GoalManager {
     private let historyManager = HistoryManager()
     
     func createNewGoal(_ usersInput: UsersInputForNewGoal) -> TotalGoalInfoModel {
-        let lastDate = Calendar.current.date(byAdding: .day, value: 99, to: Date())!
-        let startDateForDB = DateManager().dateFormat(type: "yearToSeconds", date: Date())
-        let id = defaults.string(forKey: KeyForDf.userID)!
+        if usersInput.goalDescripteion == "Test97" {
+            return self.createNewGoalFORTEST()
+        } else {
+            let lastDate = Calendar.current.date(byAdding: .day, value: 99, to: Date())!
+            let startDateForDB = DateManager().dateFormat(type: "yearToSeconds", date: Date())
+            let id = defaults.string(forKey: KeyForDf.userID)!
+            
+            let goal = GoalModel(userID: id, goalID: startDateForDB, startDate: Date(), endDate: lastDate, failAllowance: usersInput.failAllowance,description: usersInput.goalDescripteion, status: Status.none, numOfSuccess: 0, numOfFail: 0, shared: false)
+            defaults.set(goal.goalID, forKey: KeyForDf.goalID)
+            let days = self.createNewDaysArray()
+            let newTotalGoalInfo = TotalGoalInfoModel(goal: goal, days: days)
+            return newTotalGoalInfo
+        }
         
-        let goal = GoalModel(userID: id, goalID: startDateForDB, startDate: Date(), endDate: lastDate, failAllowance: usersInput.failAllowance,description: usersInput.goalDescripteion, status: Status.none, numOfSuccess: 0, numOfFail: 0, shared: false)
-        defaults.set(goal.goalID, forKey: KeyForDf.goalID)
-        let days = self.createNewDaysArray()
-        let newTotalGoalInfo = TotalGoalInfoModel(goal: goal, days: days)
-        return newTotalGoalInfo
     }
     
     private func createNewDaysArray()->[DayModel] {
