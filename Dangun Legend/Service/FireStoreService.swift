@@ -23,10 +23,8 @@ struct FireStoreService {
                 print("load doc failed: \(e.localizedDescription)")
             } else {
                 if let usersHistory = querySnapshot?.data() {
-                    print("2222")
                     for history in usersHistory {
                         if let aGoal = history.value as? [String:Any] {
-                            print("3333")
                             if let status = aGoal[G.status] as? String,
                                let des = aGoal[G.description] as? String,
                                let end = aGoal[G.endDate] as? String,
@@ -203,8 +201,6 @@ extension FireStoreService {
         }
     }
     
-
-    
     func saveGoalAtHistory(_ goal: GoalModel, status: Status) {
         let startDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: goal.startDate)
         let lastDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: goal.endDate)
@@ -263,7 +259,7 @@ extension FireStoreService {
                                 G.startDate: start,
                                 G.endDate: end,
                                 G.description : des,
-                                G.status : Status.success,
+                                G.status : Status.success.rawValue,
                                 G.numOfSuccess: numOfSuc,
                                 G.nickName:  nickName
                             ], merge: true)
@@ -385,6 +381,11 @@ extension FireStoreService {
                 FS.GI_totalFail: info.totalFail
             ]
         ], merge: true)
+        
+        defaults.set(info.totalSuccess,forKey: KeyForDf.totalSuccess)
+        defaults.set(info.totalFail,forKey: KeyForDf.totalFail)
+        defaults.set(info.totalTrial,forKey: KeyForDf.totalTrial)
+        defaults.set(info.totalAchievements,forKey: KeyForDf.totalAchievements)
     }
     
 }
@@ -415,7 +416,7 @@ extension FireStoreService {
         
     }
     
-    func resetHitoryData(){
+    func resetHistoryData(){
         let userID = defaults.string(forKey: KeyForDf.userID)!
         let goalExists = defaults.bool(forKey: KeyForDf.crrGoalExists )
         var totalTrial : Int { return goalExists ?  1 : 0 }
@@ -432,6 +433,11 @@ extension FireStoreService {
         ], merge: true)
         
         db.collection(K.FS_userHistory).document(userID).delete()
+        
+        defaults.set(numSuc,forKey: KeyForDf.totalSuccess)
+        defaults.set(numFail,forKey: KeyForDf.totalFail)
+        defaults.set(totalTrial,forKey: KeyForDf.totalTrial)
+        defaults.set(0,forKey: KeyForDf.totalAchievements)
     }
 
     

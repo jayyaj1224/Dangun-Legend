@@ -7,17 +7,19 @@
 
 import Foundation
 
-struct K {
-    static let History = "History"
 
+struct Key {
+    static let History = "History"
     static let goals = "goals"
+    
     static let userID = "userID"
+    static let goalID = "goalID"
+    
     static let cellDayNum = "cellDayNum"
     static let none = "none"
     static let success = "success"
     static let fail = "fail"
     static let daysPassed = "daysPassed"
-    
     static let FS_userIdList = "userIdList"
     static let FS_userCurrentArr = "userCurrentArr"
     static let FS_userCurrentGID = "userCurrentGID"
@@ -26,9 +28,28 @@ struct K {
     static let FS_userHistory = "userHistory"
     static let FS_board = "board"
     static let FS_userNickName = "userNickName"
-    
     static let unchecked = "unchecked"
-  
+    
+}
+
+struct K {
+    static let History = "History"
+    static let goals = "goals"
+    static let userID = "userID"
+    static let cellDayNum = "cellDayNum"
+    static let none = "none"
+    static let success = "success"
+    static let fail = "fail"
+    static let daysPassed = "daysPassed"
+    static let FS_userIdList = "userIdList"
+    static let FS_userCurrentArr = "userCurrentArr"
+    static let FS_userCurrentGID = "userCurrentGID"
+    static let FS_userGeneral = "userGeneral"
+    static let FS_userCurrentGoal = "userCurrentGoal"
+    static let FS_userHistory = "userHistory"
+    static let FS_board = "board"
+    static let FS_userNickName = "userNickName"
+    static let unchecked = "unchecked"
 }
 
 
@@ -36,20 +57,19 @@ struct G {
     static let userID = "userID"
     static let goalID = "goalID"
     static let currentGoal = "currentGoal"
-    
     static let startDate = "startDate"
     static let endDate = "endDate"
-    
     static let trialNumber = "trialNumber"
     static let failAllowance = "failAllowance"
     static let description = "description"
     static let numOfSuccess = "numOfSuccess"
     static let numOfFail = "numOfFail"
-    
     static let nickName = "nickName"
     static let shared = "shared"
     static let status = "status"
 }
+
+
 
 struct KeyForDf {
     static let goalID = "Default.Key: goalID"

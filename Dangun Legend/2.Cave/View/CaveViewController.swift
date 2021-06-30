@@ -39,16 +39,25 @@ class CaveViewController: UIViewController {
     @IBOutlet weak var checkToday: UIButton!
     @IBOutlet weak var collectionVw: UICollectionView!
     
+    private var needToSetViewModel : Bool {
+        return defaults.bool(forKey: KeyForDf.crrGoalExists)
+    }
+    
+    private var goalExixtence : Bool {
+        return defaults.bool(forKey: KeyForDf.crrGoalExists)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(self.checkAlert(_:)), name: checkTheDateNoti, object: nil)
-        defaults.set(true, forKey: KeyForDf.needToSetViewModel)
+
+        self.goalViewModelSetting()
+        self.daysViewModelSetting()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        let goalExixtence = defaults.bool(forKey: KeyForDf.crrGoalExists)
-        showGoalManageScrollView(goalExixtence)
+        showGoalManageScrollView(self.goalExixtence)
         checkIfViewModelSettingIsNeeded()
     }
     
@@ -71,6 +80,7 @@ class CaveViewController: UIViewController {
                     self.goalBinding()
                     self.checkTodayButtonSetting()
                     self.collectionVw.reloadData()
+                    self.scrollToTop()
                 }
                 self.showGoalManageScrollView(true)
             }).disposed(by: disposeBag)
@@ -78,21 +88,21 @@ class CaveViewController: UIViewController {
     }
     
     private func checkIfViewModelSettingIsNeeded(){
-        let needToSetViewModel = defaults.bool(forKey:KeyForDf.needToSetViewModel)
-        let currentGoalExists = defaults.bool(forKey: KeyForDf.crrGoalExists)
-        print("\(needToSetViewModel)-----\(currentGoalExists)")
-        print("aaaa")
+        print("checking if ViewModel needs to be set")
         
-        if  needToSetViewModel && currentGoalExists {
+        if self.needToSetViewModel {
             print("bbbb")
             defaults.set(false, forKey: KeyForDf.needToSetViewModel)
             self.goalViewModelSetting()
             self.daysViewModelSetting()
         }
     }
-        
+    
     
     private func goalViewModelSetting(){
+        print("goalViewModelSetting")
+        defaults.set(false, forKey: KeyForDf.needToSetViewModel)
+        
         self.fireStoreService.loadCurrentGoal { goalModel in
             let goalVM = GoalViewModel.init(goalModel)
             self.goalVM = goalVM
@@ -371,11 +381,6 @@ extension CaveViewController {
         
         // Defaults 삭제 및 업데이트
         defaults.set(false, forKey: KeyForDf.crrGoalExists)
-        
-        defaults.removeObject(forKey: KeyForDf.totalAchievements)
-        defaults.removeObject(forKey: KeyForDf.totalSuccess)
-        defaults.removeObject(forKey: KeyForDf.totalFail)
-        defaults.removeObject(forKey: KeyForDf.totalTrial)
         
         defaults.removeObject(forKey: KeyForDf.successNumber)
         defaults.removeObject(forKey: KeyForDf.failNumber)

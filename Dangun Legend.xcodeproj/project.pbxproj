@@ -178,7 +178,7 @@
 				A420E010261724D00039F2C8 /* SceneDelegate.swift */,
 				A420E014261724D00039F2C8 /* Main.storyboard */,
 				A49D4384264F812A009C3C26 /* SupportingFiles */,
-				A4EF048F264F874600CBA656 /* Services */,
+				A4EF048F264F874600CBA656 /* Service */,
 				A4EF048B264F84E800CBA656 /* 0.Login */,
 				A4EF0486264F84B400CBA656 /* 1. Home */,
 				A4EF0488264F84BE00CBA656 /* 2.Cave */,
@@ -349,14 +349,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		A4EF048F264F874600CBA656 /* Services */ = {
+		A4EF048F264F874600CBA656 /* Service */ = {
 			isa = PBXGroup;
 			children = (
 				A49F5A6E265C69FD00739811 /* FireStoreService.swift */,
 				A49F5A70265C6A0800739811 /* UserDefaultsService.swift */,
 				A442B2C9261D7C5A00B4CD12 /* DateCalculate.swift */,
 			);
-			path = Services;
+			path = Service;
 			sourceTree = "<group>";
 		};
 		A4EF0492264F88B900CBA656 /* View */ = {
@@ -828,7 +828,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.02;
+				MARKETING_VERSION = 1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JL.Dangun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -851,7 +851,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.02;
+				MARKETING_VERSION = 1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JL.Dangun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

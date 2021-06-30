@@ -11,7 +11,7 @@ import RxCocoa
 
 
 
-struct BoardListViewModel {
+class BoardListViewModel {
     private let boardList: [BoardViewModel]
     let count : Int
     
@@ -26,7 +26,7 @@ struct BoardListViewModel {
 }
 
 
-struct BoardViewModel {
+class BoardViewModel {
     
     private let achievement: Achievement
     

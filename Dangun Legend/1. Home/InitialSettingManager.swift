@@ -19,15 +19,15 @@ struct InitialSettingManager {
             if let doc = document {
                 if doc.exists {
                     
-                    print("........... Found ID ........... ")
-                    print("........... Checking if goal exists ........... ")
+                   // print("........... Found ID ........... ")
+                   // print("........... Checking if goal exists ........... ")
                     self.checkIfGoalExists(userID: userID)
                     self.setUserInfo(userID: userID)
                     
                 } else {
                     
-                    print("........... New ID ........... ")
-                    print("........... Will set default value ........... ")
+                    //print("........... New ID ........... ")
+                    //print("........... Will set default value ........... ")
                     
                     self.setDefaultValues(userID: userID)
                 }
@@ -40,6 +40,7 @@ struct InitialSettingManager {
         idList.getDocument { (document, error) in
             if let doc = document {
                 if doc.exists {
+                    ///1. 기존 유저 - 진행하고 있는 골이 있을 때
                     defaults.set(true, forKey: KeyForDf.crrGoalExists)
                 } else {
                     ///1. 기존 유저 - 진행하고 있는 골이 없을 때
@@ -51,14 +52,22 @@ struct InitialSettingManager {
     
 
     
-    ///2. 기존 유저 - 진행하고 있는 골이 있을 때
+    ///2. 기존 유저 -UserINfo Setting
     func setUserInfo(userID: String){
         self.fireStoreService.loadUserInfo { userInfo in
+           // let sq = DispatchQueue.init(label: "sq")
             //save at User default
-            defaults.set(userInfo.totalFail,forKey: KeyForDf.totalFail)
-            defaults.set(userInfo.totalSuccess,forKey: KeyForDf.totalSuccess)
-            defaults.set(userInfo.totalAchievements,forKey: KeyForDf.totalAchievements)
-            defaults.set(userInfo.totalTrial,forKey: KeyForDf.totalTrial)
+            //sq.async {
+                defaults.set(userInfo.totalFail,forKey: KeyForDf.totalFail)
+                defaults.set(userInfo.totalSuccess,forKey: KeyForDf.totalSuccess)
+                defaults.set(userInfo.totalAchievements,forKey: KeyForDf.totalAchievements)
+                defaults.set(userInfo.totalTrial,forKey: KeyForDf.totalTrial)
+           // }
+
+//            sq.async {
+//                printStatus()
+//            }
+//
         }
     }
 
@@ -80,8 +89,7 @@ struct InitialSettingManager {
     
     
     func logOutRemoveDefaults(){
-        print("------logged out------")
-        
+        //print("------logged out------")
         defaults.set(false, forKey: KeyForDf.loginStatus)
         
         defaults.removeObject(forKey: KeyForDf.totalAchievements)
@@ -97,5 +105,4 @@ struct InitialSettingManager {
         defaults.removeObject(forKey: KeyForDf.userID)
         defaults.removeObject(forKey: KeyForDf.crrGoalExists)
     }
-
 }

@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct HistoryListViewModel {
+class HistoryListViewModel {
     var historyList: [HistoryViewModel]
     var goals = [GoalModel]()
     
@@ -29,7 +29,7 @@ struct HistoryListViewModel {
             .map { $0 == 0 ? true : false}
     }
     
-    mutating func clearHistory() {
+    func clearHistory() {
         let newHistory = self.historyList.filter { $0.history.status == Status.none }
         self.historyList = newHistory
     }
@@ -42,7 +42,7 @@ enum ShareButtonAppearance {
     case unabled
 }
 
-struct HistoryViewModel {
+class HistoryViewModel {
     
     let history: GoalModel
     private let dateManager = DateCalculate()
@@ -109,7 +109,7 @@ struct HistoryViewModel {
  
 }
 
-struct UpperBoxGeneralInfoViewModel {
+class UpperBoxGeneralInfoViewModel {
     let generalInfo : UserInfoModel
     
     init(_ info: UserInfoModel) {
@@ -117,13 +117,21 @@ struct UpperBoxGeneralInfoViewModel {
     }
     
     var successPerTrial : Observable<String> {
-        let successPerTrialDescription = "총 \(generalInfo.totalTrial)번의 시도, \(generalInfo.totalAchievements)번의 목표달성에 성공"
+        var totalTrial : Int {
+            return generalInfo.totalTrial <= 0 ? 0 : generalInfo.totalTrial
+        }
+        
+        var totalAchievement : Int {
+            return generalInfo.totalAchievements <= 0 ? 0 : generalInfo.totalAchievements
+        }
+        
+        let successPerTrialDescription = "총 \(totalTrial)번의 시도, \(totalAchievement)번의 목표달성에 성공"
         return Observable<String>.just(successPerTrialDescription)
     }
 
     var averageSuccessPerGoal : Observable<String> {
         var ability : Double {
-            if generalInfo.totalSuccess == 0 || generalInfo.totalTrial == 0 {
+            if generalInfo.totalSuccess <= 0 || generalInfo.totalTrial <= 0 {
                 return 0
             } else {
                 return Double(generalInfo.totalSuccess)/Double(generalInfo.totalTrial)
@@ -136,7 +144,7 @@ struct UpperBoxGeneralInfoViewModel {
     
     var successPerctage : Observable<String> {
         var ability : Double {
-            if generalInfo.totalTrial == 0 || generalInfo.totalSuccess == 0 {
+            if generalInfo.totalTrial <= 0 || generalInfo.totalSuccess <= 0 {
                 return 0
             } else {
                 return Double(generalInfo.totalSuccess)/Double(generalInfo.totalTrial)
@@ -144,7 +152,6 @@ struct UpperBoxGeneralInfoViewModel {
         }
         let abilityString = String(format: "%.1f", ability)
         return Observable<String>.just("나의 성공확률 \(abilityString)%")
-        
     }
     
 }

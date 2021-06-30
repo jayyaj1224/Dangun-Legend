@@ -11,7 +11,7 @@ import RxCocoa
 
 
 
-struct CaveViewModel {
+class CaveViewModel {
     let totalGoalInfo: TotalGoalInfoModel!
 
     let goalVM: GoalViewModel
@@ -25,7 +25,7 @@ struct CaveViewModel {
 }
 
 
-struct GoalViewModel {
+class GoalViewModel {
     var goal : GoalModel!
 
     init(_ goal: GoalModel) {
@@ -76,7 +76,7 @@ struct GoalViewModel {
 }
 
 
-struct DaysViewModel {
+class DaysViewModel {
 
     var daysInfoVM: [SingleDayViewModel]
 
@@ -104,14 +104,14 @@ struct DaysViewModel {
         }
     }
 
-    mutating func updateSuccess(index: Int, completion: ()->()) {
+    func updateSuccess(index: Int, completion: ()->()) {
         var newDaysInfo = self.daysInfoVM
         newDaysInfo[index].singleDayInfo.status = Status.success
         self.daysInfoVM = newDaysInfo
         completion()
     }
 
-    mutating func updateFail(index: Int, completion: ()->()) {
+    func updateFail(index: Int, completion: ()->()) {
         var newDaysInfo = self.daysInfoVM
         newDaysInfo[index].singleDayInfo.status = Status.fail
         self.daysInfoVM = newDaysInfo

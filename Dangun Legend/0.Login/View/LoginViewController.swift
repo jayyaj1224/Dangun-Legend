@@ -20,7 +20,6 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     
     private var appleSIButton: ASAuthorizationAppleIDButton!
     
-    
     @IBOutlet weak var emailTextfield: UITextField!
     @IBOutlet weak var pwTextfield: UITextField!
     @IBOutlet weak var loginButton: UIButton!
@@ -31,11 +30,9 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     
     
     @IBOutlet weak var appleSignInButton: UIStackView!
-    @IBAction func appleSignInPressed(_ sender: UIButton) {
-        self.appleSIButton.sendActions(for: .touchUpInside)
-    }
     
     @IBOutlet var signInButton: GIDSignInButton!
+    
     @IBAction func googleSignInPressed(_ sender: UIButton) {
         signInButton.sendActions(for: .touchUpInside)
     }
@@ -178,4 +175,6 @@ extension UIViewController {
             self.present(loginViewController, animated: true, completion: nil)
         }
     }
+
+    
 }

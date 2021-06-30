@@ -53,12 +53,9 @@ class HistoryViewController: UIViewController {
         self.loadUsersGeneralInfo()
         self.loadHistory()
         self.setNickName()
+        //self.printStatus()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-       
-    }
+
     
     private func loadHistory(){
         var goalArray = [GoalModel]()
@@ -71,6 +68,17 @@ class HistoryViewController: UIViewController {
                 var i = 0
                 for goal in goalArray {
                     if goal.status == Status.success {
+                        let g = goal
+                        goalArray.remove(at:i)
+                        goalArray.insert(g, at: 0)
+                    }
+                    i+=1
+                }
+            }
+            self.serialQueue.async {
+                var i = 0
+                for goal in goalArray {
+                    if goal.status == Status.none {
                         let g = goal
                         goalArray.remove(at:i)
                         goalArray.insert(g, at: 0)
@@ -149,7 +157,7 @@ class HistoryViewController: UIViewController {
         self.historyListVM.clearHistory()
         
         serialQueue.async {
-            self.firestoreService.resetHitoryData()
+            self.firestoreService.resetHistoryData()
         }
         serialQueue.async {
             self.loadUsersGeneralInfo()
@@ -230,7 +238,6 @@ extension HistoryViewController {
         }
         
     }
-    
     
 }
 
@@ -317,7 +324,7 @@ extension HistoryViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let historyToRemove = self.historyListVM.historyList[indexPath.row].history
         let info = self.upperBoxGeneralInfoVM.generalInfo
-        if historyToRemove.status != Status.none {
+        if historyToRemove.status != Status.none && historyToRemove.shared == false {
             let action = UIContextualAction(style: .destructive, title: "삭제") { (action, view, completion) in
                 self.firestoreService.removeSingleHistory(goalID: historyToRemove.goalID)
                 self.firestoreService.singleHistoryRemovedUpdateUserInfo(theHistory: historyToRemove,userInfo: info)
@@ -325,11 +332,32 @@ extension HistoryViewController: UITableViewDataSource, UITableViewDelegate {
                 self.loadUsersGeneralInfo()
             }
             return UISwipeActionsConfiguration(actions: [action])
+        } else if historyToRemove.shared == true  {
+            let action3 = UIContextualAction(style: .normal, title: "Board에 공유중") { (action, view, completion) in
+            }
+            return UISwipeActionsConfiguration(actions: [action3])
+            
         } else {
             let action2 = UIContextualAction(style: .normal, title: "진행중") { (action, view, completion) in
             }
             return UISwipeActionsConfiguration(actions: [action2])
         }
     }
+//
+//    func printStatus(){
+//        print("-------- userID : \(defaults.string(forKey: KeyForDf.userID)!)")
+//        print("-------- crrGoalExists : \(defaults.bool(forKey: KeyForDf.crrGoalExists))")
+//        print("")
+//        print("<<<User Info>>>")
+//        print("-------- totalAchievements : \(defaults.integer(forKey: KeyForDf.totalAchievements))")
+//        print("-------- totalFail : \(defaults.integer(forKey: KeyForDf.totalFail))")
+//        print("-------- totalSuccess : \(defaults.integer(forKey: KeyForDf.totalSuccess))")
+//        print("-------- totalTrial : \(defaults.integer(forKey: KeyForDf.totalTrial))")
+//        print("")
+//        print("<<<Crr Goal>>>")
+//        print("-------- failNumber : \(defaults.integer(forKey: KeyForDf.failNumber))")
+//        print("-------- successNumber : \(defaults.integer(forKey: KeyForDf.successNumber))")
+//    }
+//
 }
 

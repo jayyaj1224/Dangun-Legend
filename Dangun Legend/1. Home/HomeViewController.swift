@@ -8,7 +8,7 @@
 
 
 import UIKit
-import Firebase
+import FirebaseFirestore
 import Foundation
 import RxCocoa
 import RxSwift
@@ -22,41 +22,52 @@ class HomeViewController: UIViewController {
     private let initialSettingManager = InitialSettingManager()
     private let fireStoreService = FireStoreService()
     
+    private var needToSetInitialValue = true
     
     @IBOutlet weak var typoLogoImage: UIImageView!
     @IBOutlet weak var text: UIImageView!
     @IBOutlet weak var caveImage: UIImageView!
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.welcomeAnimationZeroAlpha()
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         self.checkLoginStatus()
     }
-    
 
+
+    private func checkLoginStatus() {
+        let userLoggedIn = defaults.bool(forKey: KeyForDf.loginStatus)
+        let userID = defaults.string(forKey: KeyForDf.userID) ?? "none"
+        if userLoggedIn == false {
+            performSegue(withIdentifier: "InitialVC", sender: self)
+            
+        } else {
+            
+            self.welcomeAnimation()
+            if needToSetInitialValue {
+                self.initialSettingManager.checkWhichSetIsNeeded(userID: userID)
+                self.needToSetInitialValue = false
+            }
+        }
+            
+    }
+    
     
     @IBAction func logoutPressed(_ sender: UIButton) {
+        self.needToSetInitialValue = true
         performSegue(withIdentifier: "InitialVC", sender: self)
         self.initialSettingManager.logOutRemoveDefaults()
         defaults.set(true, forKey: KeyForDf.needToSetViewModel)
         defaults.removeObject(forKey: KeyForDf.nickName)
     }
     
-    private func checkLoginStatus() {
-        let loggedIn = defaults.bool(forKey: KeyForDf.loginStatus)
-        let userID = defaults.string(forKey: KeyForDf.userID)
-        
-        if loggedIn == true && userID != nil{
-            self.welcomeAnimation()
-            self.initialSettingManager.checkWhichSetIsNeeded(userID: userID!)
-            
-        } else {
-            performSegue(withIdentifier: "InitialVC", sender: self)
-        }
-    }
     
     func welcomeAnimation() {
-        DispatchQueue.main.async {
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (timer) in
             for n in 1...100 {
                 Timer.scheduledTimer(withTimeInterval: 0.015*Double(n), repeats: false) { (timer) in
                     self.typoLogoImage.alpha = CGFloat(n)*0.01
@@ -65,6 +76,12 @@ class HomeViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    func welcomeAnimationZeroAlpha(){
+        self.typoLogoImage.alpha = 0
+        self.caveImage.alpha = 0
+        self.text.alpha = 0
     }
     
 //    func printUserDefaultKeys(){
@@ -76,15 +93,6 @@ class HomeViewController: UIViewController {
 //            }}}
 //
 //
-//    func printStatus(){
-//        print("-------- userID : \(defaults.string(forKey: KeyForDf.userID))")
-//        print("-------- crrGoalExists : \(defaults.string(forKey: KeyForDf.crrGoalExists))")
-//        print("-------- goalID : \(defaults.string(forKey: KeyForDf.goalID))")
-//        print("-------- failNumber : \(defaults.string(forKey: KeyForDf.failNumber))")
-//        print("-------- successNumber : \(defaults.string(forKey: KeyForDf.successNumber))")
-//        print("-------- userID : \(defaults.string(forKey: KeyForDf.userID))")
-//        print("")
-//
-//    }
+
 
 }
