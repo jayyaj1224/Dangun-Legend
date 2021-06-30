@@ -11,7 +11,7 @@ import FirebaseFirestore
 struct FireStoreService {
     
     var userID : String {
-        return defaults.string(forKey: KeyForDf.userID)!
+        return defaults.string(forKey: UDF.userID)!
     }
     
     private let dateManager = DateCalculate()
@@ -25,16 +25,16 @@ struct FireStoreService {
                 if let usersHistory = querySnapshot?.data() {
                     for history in usersHistory {
                         if let aGoal = history.value as? [String:Any] {
-                            if let status = aGoal[G.status] as? String,
-                               let des = aGoal[G.description] as? String,
-                               let end = aGoal[G.endDate] as? String,
-                               let failAllw = aGoal[G.failAllowance] as? Int,
-                               let gID = aGoal[G.goalID] as? String,
-                               let start = aGoal[G.startDate] as? String,
-                               let numOfFail = aGoal[G.numOfFail] as? Int,
-                               let numOfSuc = aGoal[G.numOfSuccess] as? Int,
-                               let uID = aGoal[G.userID] as? String,
-                               let shared = aGoal[G.shared] as? Bool
+                            if let status = aGoal[K.status] as? String,
+                               let des = aGoal[K.description] as? String,
+                               let end = aGoal[K.endDate] as? String,
+                               let failAllw = aGoal[K.failAllowance] as? Int,
+                               let gID = aGoal[K.goalID] as? String,
+                               let start = aGoal[K.startDate] as? String,
+                               let numOfFail = aGoal[K.numOfFail] as? Int,
+                               let numOfSuc = aGoal[K.numOfSuccess] as? Int,
+                               let uID = aGoal[K.userID] as? String,
+                               let shared = aGoal[K.shared] as? Bool
                             {
                                 print("4444")
                                 let startDate = self.dateManager.yyMMddHHmmss_toDate(string: start)
@@ -60,9 +60,9 @@ struct FireStoreService {
                         var i = 1
                         for day in daysArray {
                             if let singleday = day.value as? [String:Any] {
-                                let raw = singleday[FS_daysInfo.status] as! String
-                                let dayNum = singleday[FS_daysInfo.dayNum] as! Int
-                                let date = singleday[FS_daysInfo.date] as! String
+                                let raw = singleday[K.status] as! String
+                                let dayNum = singleday[K.dayNum] as! Int
+                                let date = singleday[K.date] as! String
                                 let dayStatus = Status.init(rawValue: raw)!
                                 let aday = DayModel(dayIndex: dayNum, status:dayStatus, date: date)
                                 arr.append(aday)
@@ -84,11 +84,11 @@ struct FireStoreService {
                 print("load doc failed: \(e.localizedDescription)")
             } else {
                 if let idDoc = querySnapshot?.data() {
-                    if let idGeneralData = idDoc[FS.GI_generalInfo] as? [String:Any] {
-                        let totalTrial = idGeneralData[FS.GI_totalTrial] as! Int
-                        let numOfAchieve = idGeneralData[FS.GI_totalAchievement] as! Int
-                        let totalSuc = idGeneralData[FS.GI_totalSuccess] as! Int
-                        let totalFail = idGeneralData[FS.GI_totalFail] as! Int
+                    if let idGeneralData = idDoc[K.GI_generalInfo] as? [String:Any] {
+                        let totalTrial = idGeneralData[K.GI_totalTrial] as! Int
+                        let numOfAchieve = idGeneralData[K.GI_totalAchievement] as! Int
+                        let totalSuc = idGeneralData[K.GI_totalSuccess] as! Int
+                        let totalFail = idGeneralData[K.GI_totalFail] as! Int
                         let currentGeneralInfo = UserInfoModel(totalTrial: totalTrial, totalAchievements: numOfAchieve, totalSuccess: totalSuc, totalFail: totalFail)
                         completion(currentGeneralInfo)
                     }
@@ -98,18 +98,18 @@ struct FireStoreService {
     }
     
     func loadGeneralInfo(_ completion: @escaping (UserInfoModel)->Void) {
-        let userID = defaults.string(forKey: KeyForDf.userID)!
+        let userID = defaults.string(forKey: UDF.userID)!
         let idDocument = db.collection(K.FS_userGeneral).document(userID)
         idDocument.getDocument { (querySnapshot, error) in
             if let e = error {
                 print("load doc failed: \(e.localizedDescription)")
             } else {
                 if let idDoc = querySnapshot?.data() {
-                    if let idGeneralData = idDoc[FS.GI_generalInfo] as? [String:Any] {
-                        let totalTrial = idGeneralData[FS.GI_totalTrial] as! Int
-                        let numOfAchieve = idGeneralData[FS.GI_totalAchievement] as! Int
-                        let totalSuc = idGeneralData[FS.GI_totalSuccess] as! Int
-                        let totalFail = idGeneralData[FS.GI_totalFail] as! Int
+                    if let idGeneralData = idDoc[K.GI_generalInfo] as? [String:Any] {
+                        let totalTrial = idGeneralData[K.GI_totalTrial] as! Int
+                        let numOfAchieve = idGeneralData[K.GI_totalAchievement] as! Int
+                        let totalSuc = idGeneralData[K.GI_totalSuccess] as! Int
+                        let totalFail = idGeneralData[K.GI_totalFail] as! Int
                         let currentGeneralInfo = UserInfoModel(totalTrial: totalTrial, totalAchievements: numOfAchieve, totalSuccess: totalSuc, totalFail: totalFail)
                         completion(currentGeneralInfo)
                     }
@@ -119,7 +119,7 @@ struct FireStoreService {
     }
     
     func loadHistory(completion: @escaping (GoalModel)->(),completionerror: @escaping ()->()) {
-        let userID = defaults.string(forKey: KeyForDf.userID)!
+        let userID = defaults.string(forKey: UDF.userID)!
         let historyDb = db.collection(K.FS_userHistory).document(userID)
         let crrGoalDb =  db.collection(K.FS_userCurrentGoal).document(userID)
         let documnetRefArray = [historyDb, crrGoalDb]
@@ -132,16 +132,16 @@ struct FireStoreService {
                     if let usersHistory = querySnapshot?.data() {
                         for history in usersHistory {
                             if let aGoal = history.value as? [String:Any] {
-                                if let des = aGoal[G.description] as? String,
-                                   let end = aGoal[G.endDate] as? String,
-                                   let fail = aGoal[G.failAllowance] as? Int,
-                                   let gID = aGoal[G.goalID] as? String,
-                                   let start = aGoal[G.startDate] as? String,
-                                   let numOfFail = aGoal[G.numOfFail] as? Int,
-                                   let numOfSuc = aGoal[G.numOfSuccess] as? Int,
-                                   let uID = aGoal[G.userID] as? String,
-                                   let shared = aGoal[G.shared] as? Bool,
-                                   let status = aGoal[G.status] as? String
+                                if let des = aGoal[K.description] as? String,
+                                   let end = aGoal[K.endDate] as? String,
+                                   let fail = aGoal[K.failAllowance] as? Int,
+                                   let gID = aGoal[K.goalID] as? String,
+                                   let start = aGoal[K.startDate] as? String,
+                                   let numOfFail = aGoal[K.numOfFail] as? Int,
+                                   let numOfSuc = aGoal[K.numOfSuccess] as? Int,
+                                   let uID = aGoal[K.userID] as? String,
+                                   let shared = aGoal[K.shared] as? Bool,
+                                   let status = aGoal[K.status] as? String
                                 {
                                     let startDate = self.dateManager.yyMMddHHmmss_toDate(string: start)
                                     let endDate = self.dateManager.yyMMddHHmmss_toDate(string: end)
@@ -170,20 +170,20 @@ extension FireStoreService {
         let lastDateForDB = DateCalculate().dateFormat(type: "yearToSeconds", date: goal.endDate)
         db.collection(K.FS_userCurrentGoal).document(goal.userID).setData([
             goal.goalID : [
-                G.userID: goal.userID,
-                G.goalID : goal.goalID,
-                G.startDate: startDateForDB,
-                G.endDate: lastDateForDB,
-                G.failAllowance : goal.failAllowance,
-                G.description : goal.description,
-                G.status: goal.status.rawValue,
-                G.numOfSuccess: goal.numOfSuccess,
-                G.numOfFail: goal.numOfFail,
-                G.shared: goal.shared
+                K.userID: goal.userID,
+                K.goalID : goal.goalID,
+                K.startDate: startDateForDB,
+                K.endDate: lastDateForDB,
+                K.failAllowance : goal.failAllowance,
+                K.description : goal.description,
+                K.status: goal.status.rawValue,
+                K.numOfSuccess: goal.numOfSuccess,
+                K.numOfFail: goal.numOfFail,
+                K.shared: goal.shared
             ]
         ], merge: true)
         
-        db.collection(K.FS_userCurrentGID).document(userID).setData([G.currentGoal: goal.goalID], merge: true)
+        db.collection(K.FS_userCurrentGID).document(userID).setData([K.currentGoal: goal.goalID], merge: true)
     }
  
     
@@ -193,9 +193,9 @@ extension FireStoreService {
             let index = String(format: "%03d", i)
             db.collection(K.FS_userCurrentArr).document(userID).setData(
                 [ "Day\(index)" : [
-                    FS_daysInfo.status : dayi.status.rawValue,
-                    FS_daysInfo.dayNum : dayi.dayIndex,
-                    FS_daysInfo.date : dayi.date
+                    K.status : dayi.status.rawValue,
+                    K.dayNum : dayi.dayIndex,
+                    K.date : dayi.date
                 ]
                 ], merge: true)
         }
@@ -206,27 +206,27 @@ extension FireStoreService {
         let lastDateForDB = dateManager.dateFormat(type: "yearToSeconds", date: goal.endDate)
         db.collection(K.FS_userHistory).document(userID).setData([
             goal.goalID : [
-                G.userID: goal.userID,
-                G.goalID : goal.goalID,
-                G.startDate: startDateForDB,
-                G.endDate: lastDateForDB,
-                G.failAllowance : goal.failAllowance,
-                G.description : goal.description,
-                G.status : status.rawValue,
-                G.numOfSuccess: goal.numOfSuccess,
-                G.numOfFail: goal.numOfFail,
-                G.shared: false
+                K.userID: goal.userID,
+                K.goalID : goal.goalID,
+                K.startDate: startDateForDB,
+                K.endDate: lastDateForDB,
+                K.failAllowance : goal.failAllowance,
+                K.description : goal.description,
+                K.status : status.rawValue,
+                K.numOfSuccess: goal.numOfSuccess,
+                K.numOfFail: goal.numOfFail,
+                K.shared: false
             ]
         ], merge: true)
     }
     
     func saveUserInfo(info: UserInfoModel){
         db.collection(K.FS_userGeneral).document(userID).setData([
-            FS.GI_generalInfo : [
-                FS.GI_totalTrial : info.totalTrial,
-                FS.GI_totalSuccess : info.totalSuccess,
-                FS.GI_totalAchievement : info.totalAchievements,
-                FS.GI_totalFail: info.totalFail
+            K.GI_generalInfo : [
+                K.GI_totalTrial : info.totalTrial,
+                K.GI_totalSuccess : info.totalSuccess,
+                K.GI_totalAchievement : info.totalAchievements,
+                K.GI_totalFail: info.totalFail
             ]
         ], merge: true)
     }
@@ -240,7 +240,7 @@ extension FireStoreService {
 
     
     func shareSuccess(_ goalID: String, nickName: String) {
-        let userID = defaults.string(forKey: KeyForDf.userID)!
+        let userID = defaults.string(forKey: UDF.userID)!
         let idDocument = db.collection(K.FS_userHistory).document(userID)
 
         idDocument.getDocument { (querySnapshot, error) in
@@ -249,24 +249,24 @@ extension FireStoreService {
             } else {
                 if let idDoc = querySnapshot?.data() {
                     if let aGoal = idDoc[goalID] as? [String:Any] {
-                        if let des = aGoal[G.description] as? String,
-                           let end = aGoal[G.endDate] as? String,
-                           let start = aGoal[G.startDate] as? String,
-                           let numOfSuc = aGoal[G.numOfSuccess] as? Int {
+                        if let des = aGoal[K.description] as? String,
+                           let end = aGoal[K.endDate] as? String,
+                           let start = aGoal[K.startDate] as? String,
+                           let numOfSuc = aGoal[K.numOfSuccess] as? Int {
                             db.collection(K.FS_board).document(goalID).setData([
-                                G.userID: userID,
-                                G.goalID : goalID,
-                                G.startDate: start,
-                                G.endDate: end,
-                                G.description : des,
-                                G.status : Status.success.rawValue,
-                                G.numOfSuccess: numOfSuc,
-                                G.nickName:  nickName
+                                K.userID: userID,
+                                K.goalID : goalID,
+                                K.startDate: start,
+                                K.endDate: end,
+                                K.description : des,
+                                K.status : Status.success.rawValue,
+                                K.numOfSuccess: numOfSuc,
+                                K.nickName:  nickName
                             ], merge: true)
                             
                             db.collection(K.FS_userHistory).document(userID).setData([
                                 goalID : [
-                                    G.shared: true
+                                    K.shared: true
                                 ]
                             ], merge: true)
                             NotificationCenter.default.post(name: reloadTableViewNoti, object: nil)
@@ -282,37 +282,37 @@ extension FireStoreService {
 extension FireStoreService {
     
     func userInfoOneMoreTrial(){
-        let oneMore = defaults.integer(forKey: KeyForDf.totalTrial)+1
+        let oneMore = defaults.integer(forKey: UDF.totalTrial)+1
         db.collection(K.FS_userGeneral).document(userID).setData([
-            FS.GI_generalInfo : [
-                FS.GI_totalTrial : oneMore
+            K.GI_generalInfo : [
+                K.GI_totalTrial : oneMore
             ]
         ], merge: true)
     }
     
     func userInfoOneMoreSuccess(){
-        let oneMore = defaults.integer(forKey: KeyForDf.totalSuccess)+1
+        let oneMore = defaults.integer(forKey: UDF.totalSuccess)+1
         db.collection(K.FS_userGeneral).document(userID).setData([
-            FS.GI_generalInfo : [
-                FS.GI_totalSuccess : oneMore
+            K.GI_generalInfo : [
+                K.GI_totalSuccess : oneMore
             ]
         ], merge: true)
     }
     
     func userInfoOneMoreFail(){
-        let oneMore = defaults.integer(forKey: KeyForDf.totalFail)+1
+        let oneMore = defaults.integer(forKey: UDF.totalFail)+1
         db.collection(K.FS_userGeneral).document(userID).setData([
-            FS.GI_generalInfo : [
-                FS.GI_totalFail : oneMore
+            K.GI_generalInfo : [
+                K.GI_totalFail : oneMore
             ]
         ], merge: true)
     }
     
     func userInfoOneMoreAchieve(){
-        let oneMore = defaults.integer(forKey: KeyForDf.totalAchievements)+1
+        let oneMore = defaults.integer(forKey: UDF.totalAchievements)+1
         db.collection(K.FS_userGeneral).document(userID).setData([
-            FS.GI_generalInfo : [
-                FS.GI_totalAchievement : oneMore
+            K.GI_generalInfo : [
+                K.GI_totalAchievement : oneMore
             ]
         ], merge: true)
     }
@@ -331,28 +331,28 @@ extension FireStoreService {
         let num = String(format: "%03d", index)
         db.collection(K.FS_userCurrentArr).document(userID).setData(
             [ "Day\(num)" : [
-                FS_daysInfo.status : bool,
+                K.status : bool,
             ]
             ], merge: true)
     }
     
     
     func goalInfoOneMoreSuccess() {
-        let update = defaults.integer(forKey: KeyForDf.successNumber)+1
-        let goalID = defaults.string(forKey: KeyForDf.goalID)!
+        let update = defaults.integer(forKey: UDF.successNumber)+1
+        let goalID = defaults.string(forKey: UDF.goalID)!
         db.collection(K.FS_userCurrentGoal).document(userID).setData([
             goalID : [
-                G.numOfSuccess: update
+                K.numOfSuccess: update
             ]
         ], merge: true)
     }
     
     func goalInfoOneMoreFail() {
-        let update = defaults.integer(forKey: KeyForDf.failNumber)+1
-        let goalID = defaults.string(forKey: KeyForDf.goalID)!
+        let update = defaults.integer(forKey: UDF.failNumber)+1
+        let goalID = defaults.string(forKey: UDF.goalID)!
         db.collection(K.FS_userCurrentGoal).document(userID).setData([
             goalID : [
-                G.numOfFail: update
+                K.numOfFail: update
             ]
         ], merge: true)
     }
@@ -374,18 +374,18 @@ extension FireStoreService {
         let info = UserInfoModel(totalTrial: userInfo.totalTrial-1, totalAchievements: achievements, totalSuccess: sucNum, totalFail: failNum)
         
         db.collection(K.FS_userGeneral).document(userID).setData([
-            FS.GI_generalInfo : [
-                FS.GI_totalTrial : info.totalTrial,
-                FS.GI_totalSuccess : info.totalSuccess,
-                FS.GI_totalAchievement : info.totalAchievements,
-                FS.GI_totalFail: info.totalFail
+            K.GI_generalInfo : [
+                K.GI_totalTrial : info.totalTrial,
+                K.GI_totalSuccess : info.totalSuccess,
+                K.GI_totalAchievement : info.totalAchievements,
+                K.GI_totalFail: info.totalFail
             ]
         ], merge: true)
         
-        defaults.set(info.totalSuccess,forKey: KeyForDf.totalSuccess)
-        defaults.set(info.totalFail,forKey: KeyForDf.totalFail)
-        defaults.set(info.totalTrial,forKey: KeyForDf.totalTrial)
-        defaults.set(info.totalAchievements,forKey: KeyForDf.totalAchievements)
+        defaults.set(info.totalSuccess,forKey: UDF.totalSuccess)
+        defaults.set(info.totalFail,forKey: UDF.totalFail)
+        defaults.set(info.totalTrial,forKey: UDF.totalTrial)
+        defaults.set(info.totalAchievements,forKey: UDF.totalAchievements)
     }
     
 }
@@ -417,27 +417,27 @@ extension FireStoreService {
     }
     
     func resetHistoryData(){
-        let userID = defaults.string(forKey: KeyForDf.userID)!
-        let goalExists = defaults.bool(forKey: KeyForDf.crrGoalExists )
+        let userID = defaults.string(forKey: UDF.userID)!
+        let goalExists = defaults.bool(forKey: UDF.crrGoalExists )
         var totalTrial : Int { return goalExists ?  1 : 0 }
-        let numSuc = defaults.integer(forKey: KeyForDf.successNumber)
-        let numFail = defaults.integer(forKey: KeyForDf.failNumber)
+        let numSuc = defaults.integer(forKey: UDF.successNumber)
+        let numFail = defaults.integer(forKey: UDF.failNumber)
         
         db.collection(K.FS_userGeneral).document(userID).setData([
-            FS.GI_generalInfo : [
-                FS.GI_totalTrial : totalTrial,
-                FS.GI_totalSuccess : numSuc,
-                FS.GI_totalAchievement : 0,
-                FS.GI_totalFail: numFail
+            K.GI_generalInfo : [
+                K.GI_totalTrial : totalTrial,
+                K.GI_totalSuccess : numSuc,
+                K.GI_totalAchievement : 0,
+                K.GI_totalFail: numFail
             ]
         ], merge: true)
         
         db.collection(K.FS_userHistory).document(userID).delete()
         
-        defaults.set(numSuc,forKey: KeyForDf.totalSuccess)
-        defaults.set(numFail,forKey: KeyForDf.totalFail)
-        defaults.set(totalTrial,forKey: KeyForDf.totalTrial)
-        defaults.set(0,forKey: KeyForDf.totalAchievements)
+        defaults.set(numSuc,forKey: UDF.totalSuccess)
+        defaults.set(numFail,forKey: UDF.totalFail)
+        defaults.set(totalTrial,forKey: UDF.totalTrial)
+        defaults.set(0,forKey: UDF.totalAchievements)
     }
 
     

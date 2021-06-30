@@ -30,7 +30,7 @@ class BoardShareCell: UITableViewCell {
     }
    
     func deleteButtonControl(id: String){
-        let userID = defaults.string(forKey: KeyForDf.userID)
+        let userID = defaults.string(forKey: UDF.userID)
         if id == userID {
             deleteOutlet.isHidden = false
         } else {

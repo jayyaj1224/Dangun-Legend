@@ -94,7 +94,7 @@ class HistoryViewModel {
     }
 
     var shareBoardButtonAppearance: Observable<ShareButtonAppearance> {
-        let currentUserID = defaults.string(forKey: KeyForDf.userID)!
+        let currentUserID = defaults.string(forKey: UDF.userID)!
         if history.userID == currentUserID && history.status == Status.success {
             if history.shared {
                 return Observable<ShareButtonAppearance>.just(ShareButtonAppearance.unabled)

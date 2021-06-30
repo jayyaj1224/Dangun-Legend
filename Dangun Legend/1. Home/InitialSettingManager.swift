@@ -40,11 +40,11 @@ struct InitialSettingManager {
         idList.getDocument { (document, error) in
             if let doc = document {
                 if doc.exists {
-                    ///1. 기존 유저 - 진행하고 있는 골이 있을 때
-                    defaults.set(true, forKey: KeyForDf.crrGoalExists)
+                    ///1. 기존 유저 - 진행하고 있는 Goal 이 있을 때
+                    defaults.set(true, forKey: UDF.crrGoalExists)
                 } else {
-                    ///1. 기존 유저 - 진행하고 있는 골이 없을 때
-                    defaults.set(false, forKey: KeyForDf.crrGoalExists)
+                    ///1. 기존 유저 - 진행하고 있는 Goal 이 없을 때
+                    defaults.set(false, forKey: UDF.crrGoalExists)
                 }
             }
         }
@@ -55,19 +55,10 @@ struct InitialSettingManager {
     ///2. 기존 유저 -UserINfo Setting
     func setUserInfo(userID: String){
         self.fireStoreService.loadUserInfo { userInfo in
-           // let sq = DispatchQueue.init(label: "sq")
-            //save at User default
-            //sq.async {
-                defaults.set(userInfo.totalFail,forKey: KeyForDf.totalFail)
-                defaults.set(userInfo.totalSuccess,forKey: KeyForDf.totalSuccess)
-                defaults.set(userInfo.totalAchievements,forKey: KeyForDf.totalAchievements)
-                defaults.set(userInfo.totalTrial,forKey: KeyForDf.totalTrial)
-           // }
-
-//            sq.async {
-//                printStatus()
-//            }
-//
+                defaults.set(userInfo.totalFail,forKey: UDF.totalFail)
+                defaults.set(userInfo.totalSuccess,forKey: UDF.totalSuccess)
+                defaults.set(userInfo.totalAchievements,forKey: UDF.totalAchievements)
+                defaults.set(userInfo.totalTrial,forKey: UDF.totalTrial)
         }
     }
 
@@ -79,30 +70,29 @@ struct InitialSettingManager {
         self.fireStoreService.saveUserInfo(info: defaultUserInfo)
         self.fireStoreService.saveUserID(userID)
         
-        defaults.set(defaultUserInfo.totalTrial, forKey: KeyForDf.totalFail)
-        defaults.set(defaultUserInfo.totalSuccess, forKey: KeyForDf.totalSuccess)
-        defaults.set(defaultUserInfo.totalAchievements, forKey: KeyForDf.totalAchievements)
-        defaults.set(defaultUserInfo.totalFail, forKey: KeyForDf.totalTrial)
+        defaults.set(defaultUserInfo.totalTrial, forKey: UDF.totalFail)
+        defaults.set(defaultUserInfo.totalSuccess, forKey: UDF.totalSuccess)
+        defaults.set(defaultUserInfo.totalAchievements, forKey: UDF.totalAchievements)
+        defaults.set(defaultUserInfo.totalFail, forKey: UDF.totalTrial)
         
-        defaults.set(false, forKey: KeyForDf.crrGoalExists)
+        defaults.set(false, forKey: UDF.crrGoalExists)
     }
     
     
     func logOutRemoveDefaults(){
-        //print("------logged out------")
-        defaults.set(false, forKey: KeyForDf.loginStatus)
+        defaults.set(false, forKey: UDF.loginStatus)
         
-        defaults.removeObject(forKey: KeyForDf.totalAchievements)
-        defaults.removeObject(forKey: KeyForDf.totalSuccess)
-        defaults.removeObject(forKey: KeyForDf.totalFail)
-        defaults.removeObject(forKey: KeyForDf.totalTrial)
+        defaults.removeObject(forKey: UDF.totalAchievements)
+        defaults.removeObject(forKey: UDF.totalSuccess)
+        defaults.removeObject(forKey: UDF.totalFail)
+        defaults.removeObject(forKey: UDF.totalTrial)
         
-        defaults.removeObject(forKey: KeyForDf.successNumber)
-        defaults.removeObject(forKey: KeyForDf.failNumber)
-        defaults.removeObject(forKey: KeyForDf.goalID)
+        defaults.removeObject(forKey: UDF.successNumber)
+        defaults.removeObject(forKey: UDF.failNumber)
+        defaults.removeObject(forKey: UDF.goalID)
         
         
-        defaults.removeObject(forKey: KeyForDf.userID)
-        defaults.removeObject(forKey: KeyForDf.crrGoalExists)
+        defaults.removeObject(forKey: UDF.userID)
+        defaults.removeObject(forKey: UDF.crrGoalExists)
     }
 }

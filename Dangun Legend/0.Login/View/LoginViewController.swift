@@ -77,8 +77,8 @@ extension LoginViewController {
                 self.loginErrorOcurred()
                 print("error-->>>\(e.localizedDescription)")
             } else {
-                defaults.set(true, forKey: KeyForDf.loginStatus)
-                defaults.set(info.email, forKey: KeyForDf.userID)
+                defaults.set(true, forKey: UDF.loginStatus)
+                defaults.set(info.email, forKey: UDF.userID)
                 DispatchQueue.main.async {
                     self.dismiss(animated: true, completion: nil)
                 }
@@ -101,8 +101,8 @@ extension LoginViewController {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if (error == nil) {
             let userID = String(user.userID)
-            defaults.set(true, forKey: KeyForDf.loginStatus)
-            defaults.set(userID, forKey: KeyForDf.userID)
+            defaults.set(true, forKey: UDF.loginStatus)
+            defaults.set(userID, forKey: UDF.userID)
             presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
             dismiss(animated: true, completion: nil)
         } else {
@@ -121,8 +121,8 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
             let userID = appleIDCredential.user
-            defaults.set(true, forKey: KeyForDf.loginStatus)
-            defaults.set(userID, forKey: KeyForDf.userID)
+            defaults.set(true, forKey: UDF.loginStatus)
+            defaults.set(userID, forKey: UDF.userID)
             presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
             dismiss(animated: true, completion: nil)
         default:

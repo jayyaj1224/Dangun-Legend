@@ -89,8 +89,8 @@ class RegisterViewController: UIViewController {
                     print(e.localizedDescription)
                     self.loginErrorOcurred()
                 } else {
-                    defaults.set(true, forKey: KeyForDf.loginStatus)
-                    defaults.set(email, forKey: KeyForDf.userID)
+                    defaults.set(true, forKey: UDF.loginStatus)
+                    defaults.set(email, forKey: UDF.userID)
                     InitialSettingManager().setDefaultValues(userID: email)
                     self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
                     self.dismiss(animated: true, completion: nil)

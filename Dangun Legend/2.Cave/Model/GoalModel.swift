@@ -7,8 +7,6 @@
 
 import Foundation
 
-//MARK: - Main Two Model
-
 // FireStore -> (VM)
 struct GoalModel: Codable {
     let userID: String
@@ -39,14 +37,10 @@ struct UserInfoModel: Codable {
     var totalFail: Int
 }
 
-
-//MARK: - ETC
-
 struct TotalGoalInfoModel {
     var goal: GoalModel
     var days: [DayModel]
 }
-
 
 enum Status: String, Codable  {
     case success = "success"

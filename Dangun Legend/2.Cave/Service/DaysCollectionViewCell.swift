@@ -19,10 +19,8 @@ class SquareCell : UICollectionViewCell {
     
     @IBAction func buttonPressed(_ sender: UIButton) {
         if let singleInfo = singleDayInfo {
-            print("********buttonPResseddsafs fdsaf")
             NotificationCenter.default.post(name: checkTheDateNoti, object: singleInfo, userInfo: nil)
         }
     }
-    
 }
     

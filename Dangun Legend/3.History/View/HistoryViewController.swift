@@ -18,12 +18,9 @@ let reloadTableViewNoti: Notification.Name = Notification.Name("reloadTableViewN
 class HistoryViewController: UIViewController {
     
     private let firestoreService = FireStoreService()
-    
     private let serialQueue = DispatchQueue.init(label: "serialQueue")
-    
     private var historyListVM: HistoryListViewModel!
     private var upperBoxGeneralInfoVM: UpperBoxGeneralInfoViewModel!
-    
     private let disposeBag = DisposeBag()
     
     @IBOutlet weak var successPerAttemptLabel: UILabel!
@@ -126,7 +123,7 @@ class HistoryViewController: UIViewController {
     
     @objc
     func shareSuccess(_ noti: Notification) {
-        let nickName = defaults.string(forKey: KeyForDf.nickName) ?? "닉네임 없음"
+        let nickName = defaults.string(forKey: UDF.nickName) ?? "닉네임 없음"
         
         let alert = UIAlertController.init(title: "Share to Board", message: "\(nickName) 이름으로 업적을 Board 페이지에 공유하시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "네", style: .default, handler: { (UIAlertAction) in
@@ -204,7 +201,7 @@ class HistoryViewController: UIViewController {
 extension HistoryViewController {
     
     private func setNickName(){
-        if let nickName = defaults.string(forKey: KeyForDf.nickName) {
+        if let nickName = defaults.string(forKey: UDF.nickName) {
             self.nickNameLabel.text = nickName
             self.nickNameIsOnTheScreen()
         } else {
@@ -227,13 +224,13 @@ extension HistoryViewController {
     private func nickNameButtonPressed() {
         if nickNameSaveAndClearButton.titleLabel?.text == "Clear" {
             noNickNameSaveModeUIChange()
-            defaults.removeObject(forKey: KeyForDf.nickName)
+            defaults.removeObject(forKey: UDF.nickName)
         } else if nickNameSaveAndClearButton.titleLabel?.text == "Save" {
             if let nickName = self.nickNameInputTextField.text {
                 self.nickNameInputTextField.text = ""
                 self.nickNameLabel.text = nickName
                 nickNameIsOnTheScreen()
-                defaults.set(nickName, forKey: KeyForDf.nickName)
+                defaults.set(nickName, forKey: UDF.nickName)
             }
         }
         

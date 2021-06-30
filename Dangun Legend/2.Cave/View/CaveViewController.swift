@@ -40,11 +40,11 @@ class CaveViewController: UIViewController {
     @IBOutlet weak var collectionVw: UICollectionView!
     
     private var needToSetViewModel : Bool {
-        return defaults.bool(forKey: KeyForDf.crrGoalExists)
+        return defaults.bool(forKey: UDF.crrGoalExists)
     }
     
     private var goalExixtence : Bool {
-        return defaults.bool(forKey: KeyForDf.crrGoalExists)
+        return defaults.bool(forKey: UDF.crrGoalExists)
     }
     
     override func viewDidLoad() {
@@ -92,7 +92,7 @@ class CaveViewController: UIViewController {
         
         if self.needToSetViewModel {
             print("bbbb")
-            defaults.set(false, forKey: KeyForDf.needToSetViewModel)
+            defaults.set(false, forKey: UDF.needToSetViewModel)
             self.goalViewModelSetting()
             self.daysViewModelSetting()
         }
@@ -101,14 +101,14 @@ class CaveViewController: UIViewController {
     
     private func goalViewModelSetting(){
         print("goalViewModelSetting")
-        defaults.set(false, forKey: KeyForDf.needToSetViewModel)
+        defaults.set(false, forKey: UDF.needToSetViewModel)
         
         self.fireStoreService.loadCurrentGoal { goalModel in
             let goalVM = GoalViewModel.init(goalModel)
             self.goalVM = goalVM
-            defaults.set(goalModel.goalID, forKey: KeyForDf.goalID)
-            defaults.set(goalModel.numOfSuccess, forKey: KeyForDf.successNumber)
-            defaults.set(goalModel.numOfFail, forKey: KeyForDf.failNumber)
+            defaults.set(goalModel.goalID, forKey: UDF.goalID)
+            defaults.set(goalModel.numOfSuccess, forKey: UDF.successNumber)
+            defaults.set(goalModel.numOfFail, forKey: UDF.failNumber)
             DispatchQueue.main.async {
                 self.goalBinding()
             }
@@ -245,7 +245,6 @@ extension CaveViewController {
         
         self.updateDaysVM(success: bool, index: index)
         
-        //
     }
     
     private func updateGoalVM(success: Bool){
@@ -315,7 +314,7 @@ extension CaveViewController {
     private func overFailAllowance(newGoal: GoalModel) {
         let failedAlert = UIAlertController.init(title: "목표달성 실패", message: "허용가능한 불이행 횟수를 초과하여 목표달성에 실패하였습니다.", preferredStyle: .alert)
         failedAlert.addAction(UIAlertAction(title: "확인", style: . destructive, handler: { (UIAlertAction) in
-            defaults.set(false, forKey: KeyForDf.crrGoalExists)
+            defaults.set(false, forKey: UDF.crrGoalExists)
             self.quitCurrentGoal()
             self.showGoalManageScrollView(false)
         }))
@@ -380,11 +379,11 @@ extension CaveViewController {
         self.fireStoreService.removeCurrentDaysInfo()
         
         // Defaults 삭제 및 업데이트
-        defaults.set(false, forKey: KeyForDf.crrGoalExists)
+        defaults.set(false, forKey: UDF.crrGoalExists)
         
-        defaults.removeObject(forKey: KeyForDf.successNumber)
-        defaults.removeObject(forKey: KeyForDf.failNumber)
-        defaults.removeObject(forKey: KeyForDf.goalID)
+        defaults.removeObject(forKey: UDF.successNumber)
+        defaults.removeObject(forKey: UDF.failNumber)
+        defaults.removeObject(forKey: UDF.goalID)
     }
     
     func scrollToTop(){

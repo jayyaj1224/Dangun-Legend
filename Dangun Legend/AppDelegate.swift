@@ -25,11 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enableAutoToolbar = true
         IQKeyboardManager.shared.keyboardDistanceFromTextField = 120.0
 
-        if defaults.bool(forKey: KeyForDf.firstLaunch) {
-            defaults.set(false, forKey: KeyForDf.firstLaunch)
-            defaults.set(false, forKey: KeyForDf.crrGoalExists)
-            defaults.set(false, forKey: KeyForDf.loginStatus)
-            defaults.set(K.none, forKey: KeyForDf.userID)
+        if defaults.bool(forKey: UDF.firstLaunch) {
+            defaults.set(false, forKey: UDF.firstLaunch)
+            defaults.set(false, forKey: UDF.crrGoalExists)
+            defaults.set(false, forKey: UDF.loginStatus)
+            defaults.set(K.none, forKey: UDF.userID)
         }
         
         Thread.sleep(forTimeInterval: 0.8)

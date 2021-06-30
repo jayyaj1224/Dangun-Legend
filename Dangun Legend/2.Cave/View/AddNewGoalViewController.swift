@@ -128,10 +128,10 @@ extension AddNewGoalViewController {
         } else {
             let lastDate = Calendar.current.date(byAdding: .day, value: 99, to: Date())!
             let startDateForDB = DateCalculate().dateFormat(type: "yearToSeconds", date: Date())
-            let id = defaults.string(forKey: KeyForDf.userID)!
+            let id = defaults.string(forKey: UDF.userID)!
             
             let goal = GoalModel(userID: id, goalID: startDateForDB, startDate: Date(), endDate: lastDate, failAllowance: usersInput.failAllowance,description: usersInput.goalDescripteion, status: Status.none, numOfSuccess: 0, numOfFail: 0, shared: false)
-            defaults.set(goal.goalID, forKey: KeyForDf.goalID)
+            defaults.set(goal.goalID, forKey: UDF.goalID)
             let days = self.createNewDaysArray()
             let newTotalGoalInfo = TotalGoalInfoModel(goal: goal, days: days)
             return newTotalGoalInfo
@@ -156,11 +156,11 @@ extension AddNewGoalViewController {
         let startDate = Calendar.current.date(byAdding: .day, value: -99, to: Date())!
         let lastDate = Calendar.current.date(byAdding: .day, value: 99, to: startDate)!
         let startDateForDB = DateCalculate().dateFormat(type: "yearToSeconds", date: startDate)
-        let id = defaults.string(forKey: KeyForDf.userID)!
+        let id = defaults.string(forKey: UDF.userID)!
         
         let goal = GoalModel(userID: id, goalID: startDateForDB, startDate: startDate, endDate: lastDate, failAllowance: 2,description: "(test)", status: Status.none, numOfSuccess: 90, numOfFail: 0, shared: false)
         
-        defaults.set(goal.goalID, forKey: KeyForDf.goalID)
+        defaults.set(goal.goalID, forKey: UDF.goalID)
         let days = self.createNewDaysArrayFORTEST(goal)
         
         let newTotalGoalInfo = TotalGoalInfoModel(goal: goal, days: days)

@@ -40,8 +40,8 @@ class HomeViewController: UIViewController {
 
 
     private func checkLoginStatus() {
-        let userLoggedIn = defaults.bool(forKey: KeyForDf.loginStatus)
-        let userID = defaults.string(forKey: KeyForDf.userID) ?? "none"
+        let userLoggedIn = defaults.bool(forKey: UDF.loginStatus)
+        let userID = defaults.string(forKey: UDF.userID) ?? "none"
         if userLoggedIn == false {
             performSegue(withIdentifier: "InitialVC", sender: self)
             
@@ -61,8 +61,8 @@ class HomeViewController: UIViewController {
         self.needToSetInitialValue = true
         performSegue(withIdentifier: "InitialVC", sender: self)
         self.initialSettingManager.logOutRemoveDefaults()
-        defaults.set(true, forKey: KeyForDf.needToSetViewModel)
-        defaults.removeObject(forKey: KeyForDf.nickName)
+        defaults.set(true, forKey: UDF.needToSetViewModel)
+        defaults.removeObject(forKey: UDF.nickName)
     }
     
     

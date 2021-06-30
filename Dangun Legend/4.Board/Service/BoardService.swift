@@ -15,7 +15,7 @@ struct BoardService {
     
     func sortedBoardList(_ completion: @escaping ([BoardData])->()){
         let serialQueue = DispatchQueue.init(label: "serialQueue")
-        let userID = defaults.string(forKey: KeyForDf.userID)!
+        let userID = defaults.string(forKey: UDF.userID)!
         loadBoardData { BoardList in
             var sortedBoardList = BoardList
             serialQueue.async {
@@ -50,13 +50,13 @@ struct BoardService {
                     print("----1----")
                     for document in querySnapshot!.documents {
                         let board = document.data()
-                        if let des = board[G.description] as? String,
-                           let end = board[G.endDate] as? String,
-                           let gID = board[G.goalID] as? String,
-                           let start = board[G.startDate] as? String,
-                           let numOfSuc = board[G.numOfSuccess] as? Int,
-                           let uID = board[G.userID] as? String,
-                           let nickName = board[G.nickName] as? String
+                        if let des = board[K.description] as? String,
+                           let end = board[K.endDate] as? String,
+                           let gID = board[K.goalID] as? String,
+                           let start = board[K.startDate] as? String,
+                           let numOfSuc = board[K.numOfSuccess] as? Int,
+                           let uID = board[K.userID] as? String,
+                           let nickName = board[K.nickName] as? String
                         {
                             let startDate = DateCalculate().yyMMddHHmmss_toDate(string: start)
                             let endDate = DateCalculate().yyMMddHHmmss_toDate(string: end)
@@ -72,12 +72,12 @@ struct BoardService {
     
     
     func deleteFromBoard(goalID:String){
-        let userID = defaults.string(forKey: KeyForDf.userID)!
+        let userID = defaults.string(forKey: UDF.userID)!
         if goalID != "" {
             db.collection(K.FS_board).document(goalID).delete()
             db.collection(K.FS_userHistory).document(userID).setData([
                 goalID : [
-                    G.shared: false
+                    K.shared: false
                 ]
             ], merge: true)
         }

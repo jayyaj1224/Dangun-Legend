@@ -9,7 +9,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-
 class LoginViewModel {
     
     let emailTextRelay = BehaviorRelay<String>(value: "")
@@ -26,7 +25,6 @@ class LoginViewModel {
 
 
 class RegisterViewModel {
-    
     let emailTextRelay = BehaviorRelay<String>(value: "")
     let pwOneTextRelay = BehaviorRelay<String>(value: "")
     let pwTwoTextRelay = BehaviorRelay<String>(value: "")
