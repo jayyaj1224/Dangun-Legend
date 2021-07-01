@@ -50,9 +50,10 @@ class CaveViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(self.checkAlert(_:)), name: checkTheDateNoti, object: nil)
-
-        self.goalViewModelSetting()
-        self.daysViewModelSetting()
+        if goalExixtence {
+            self.goalViewModelSetting()
+            self.daysViewModelSetting()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -337,7 +338,6 @@ extension CaveViewController {
             performSegue(withIdentifier: "ResultViewController", sender: self)
             self.showGoalManageScrollView(false)
             
-            
             self.fireStoreService.saveGoalAtHistory(result, status: Status.success)
             
             self.fireStoreService.removeCurrentGoal()
@@ -346,6 +346,8 @@ extension CaveViewController {
             self.fireStoreService.userInfoOneMoreAchieve()
             self.userDefaultService.userInfo_oneMoreAchievement()
             
+            // Defaults 삭제 및 업데이트
+            self.userDefaultService.goalEnded()
             
         } else {
             if today == lastDay {
@@ -379,11 +381,7 @@ extension CaveViewController {
         self.fireStoreService.removeCurrentDaysInfo()
         
         // Defaults 삭제 및 업데이트
-        defaults.set(false, forKey: UDF.crrGoalExists)
-        
-        defaults.removeObject(forKey: UDF.successNumber)
-        defaults.removeObject(forKey: UDF.failNumber)
-        defaults.removeObject(forKey: UDF.goalID)
+        self.userDefaultService.goalEnded()
     }
     
     func scrollToTop(){

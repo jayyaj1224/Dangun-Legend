@@ -50,5 +50,12 @@ struct UserDefaultService {
         defaults.set(goal.numOfSuccess, forKey: UDF.successNumber)
         defaults.set(goal.numOfFail, forKey: UDF.failNumber)
     }
+    
+    func goalEnded(){
+        defaults.set(false, forKey: UDF.crrGoalExists)
+        defaults.removeObject(forKey: UDF.successNumber)
+        defaults.removeObject(forKey: UDF.failNumber)
+        defaults.removeObject(forKey: UDF.goalID)
+    }
 
 }

@@ -158,7 +158,7 @@ extension AddNewGoalViewController {
         let startDateForDB = DateCalculate().dateFormat(type: "yearToSeconds", date: startDate)
         let id = defaults.string(forKey: UDF.userID)!
         
-        let goal = GoalModel(userID: id, goalID: startDateForDB, startDate: startDate, endDate: lastDate, failAllowance: 2,description: "(test)", status: Status.none, numOfSuccess: 90, numOfFail: 0, shared: false)
+        let goal = GoalModel(userID: id, goalID: startDateForDB, startDate: startDate, endDate: lastDate, failAllowance: 2,description: "(test)", status: Status.none, numOfSuccess: 97, numOfFail: 0, shared: false)
         
         defaults.set(goal.goalID, forKey: UDF.goalID)
         let days = self.createNewDaysArrayFORTEST(goal)
@@ -171,13 +171,13 @@ extension AddNewGoalViewController {
     private func createNewDaysArrayFORTEST(_ goal:GoalModel)->[DayModel] {
         let dateManager = DateCalculate()
         var daysArray = [DayModel]()
-        for i in 1...90 {
+        for i in 1...97 {
             let date = Calendar.current.date(byAdding: .day, value: (i-1), to: goal.startDate)!
             let DateForDB = dateManager.dateFormat(type: "yyyyMMdd", date: date)
             let day = DayModel(dayIndex: i, status: Status.success, date: DateForDB)
             daysArray.append(day)
         }
-        for i in 91...100 {
+        for i in 98...100 {
             let date = Calendar.current.date(byAdding: .day, value: (i-1), to: goal.startDate)!
             let DateForDB = dateManager.dateFormat(type: "yyyyMMdd", date: date)
             let day = DayModel(dayIndex: i, status: Status.none, date: DateForDB)
