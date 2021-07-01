@@ -243,7 +243,6 @@ extension CaveViewController {
     func setTodaysResult(bool: Bool, index: Int){
         
         self.updateGoalVM(success: bool)
-        
         self.updateDaysVM(success: bool, index: index)
         
     }
@@ -259,6 +258,7 @@ extension CaveViewController {
                     self.goalBinding()
                 }
             })
+            
             self.fireStoreService.goalInfoOneMoreSuccess()
             self.fireStoreService.userInfoOneMoreSuccess()
             self.userDefaultService.userInfo_oneMoreSuccess()
@@ -345,9 +345,6 @@ extension CaveViewController {
             
             self.fireStoreService.userInfoOneMoreAchieve()
             self.userDefaultService.userInfo_oneMoreAchievement()
-            
-            // Defaults 삭제 및 업데이트
-            self.userDefaultService.goalEnded()
             
         } else {
             if today == lastDay {

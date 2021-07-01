@@ -58,22 +58,19 @@ class AddNewGoalViewController: UIViewController{
             alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
         } else {
-            self.createNewGoal()
+            
+            self.newGoalProcess()
         }
     }
     
-    private func createNewGoal() {
+    private func newGoalProcess() {
         let fireStore = FireStoreService()
         let userInput = UsersInputForNewGoal(goalDescripteion: self.goalTextView.text, failAllowance: self.failAllowOutput.selectedSegmentIndex)
        
         var totalGoalInfo : TotalGoalInfoModel {
             return self.createNewGoal(userInput)
         }
-        
         self.newGoalSubject.onNext(totalGoalInfo)
-        dismiss(animated: true, completion: nil)
-        
-
         // Firestore에 저장
         fireStore.saveGoal(totalGoalInfo.goal)
         fireStore.saveDaysInfo(totalGoalInfo.days)
@@ -82,6 +79,7 @@ class AddNewGoalViewController: UIViewController{
         // UserDefault 에 저장
         userDefaultService.userDefaultSettingForNewGoal(goal: totalGoalInfo.goal)
         
+        dismiss(animated: true, completion: nil)
     }
     
  

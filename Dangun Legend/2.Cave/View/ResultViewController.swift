@@ -71,6 +71,7 @@ class ResultViewController: UIViewController {
                     self.ifWeEndureLabel.alpha = CGFloat(n)*0.01
                 }
             }
+            
         }
 
         
@@ -140,6 +141,7 @@ class ResultViewController: UIViewController {
     }
     
     @IBAction func backPressed(_ sender: UIButton) {
+        UserDefaultService().goalEnded()
         dismiss(animated: true, completion: nil)
     }
     
