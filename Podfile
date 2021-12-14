@@ -25,7 +25,7 @@ pod 'GoogleSignIn'
 pod 'SnapKit'
 pod 'Each'
 pod 'FSPagerView'
-pod 'Kingfisher', '~> 6.0'
+pod 'Kingfisher'
 
 pod 'RxSwift' 
 pod 'RxCocoa'

@@ -166,7 +166,6 @@
 			children = (
 				A420E00E261724D00039F2C8 /* AppDelegate.swift */,
 				A420E010261724D00039F2C8 /* SceneDelegate.swift */,
-				AA69ADC32768057000906436 /* Supports */,
 				AA69ADC22768056A00906436 /* Extensions */,
 				AA69ADC72768072D00906436 /* TabBarViewController.swift */,
 				AA69ADC12768056400906436 /* [Cave] */,
@@ -216,13 +215,6 @@
 				AAC5E89827687FCE0031AF80 /* Numeric+Extension.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		AA69ADC32768057000906436 /* Supports */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Supports;
 			sourceTree = "<group>";
 		};
 		AA69ADC42768061B00906436 /* [Bears] */ = {
