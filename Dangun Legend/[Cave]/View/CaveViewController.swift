@@ -39,8 +39,6 @@ class CaveViewController: UIViewController {
         scrollView.isPagingEnabled = true
         scrollView.showsVerticalScrollIndicator = false
         
-        scrollView.backgroundColor = .lightGray
-        
         self.view.addSubview(scrollView)
         
         scrollView.snp.makeConstraints { make in
