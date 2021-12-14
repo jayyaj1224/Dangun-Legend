@@ -14,7 +14,7 @@ class CaveScrollViewCell: UIView {
     var characterView: UIView!
     var caveExitView: UIView!
     
-    var asdfjkl = Array(0...100)
+    var asdfjkl = Array(0...100)///toDelete
     
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: 1300, height: 200))
@@ -33,6 +33,7 @@ class CaveScrollViewCell: UIView {
         let collectionView = UICollectionView.init(frame: CGRect(x: 0, y: 0, width: 1300, height: 200), collectionViewLayout: layout)
         collectionView.register(StepCell.self, forCellWithReuseIdentifier: "StepCell")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -60,6 +61,7 @@ class CaveScrollViewCell: UIView {
     private func setupCaveExitView() {
         let view = UIView()
         view.backgroundColor = .lightGray
+        view.alpha = 0.3
         view.layer.cornerRadius = 50
         self.addSubview(view)
         view.snp.makeConstraints { make in

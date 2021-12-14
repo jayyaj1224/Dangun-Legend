@@ -39,6 +39,7 @@
 		AA69AE162768195400906436 /* SF-Pro-Display-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69AE042768195400906436 /* SF-Pro-Display-BoldItalic.otf */; };
 		AA69AE182768205400906436 /* CaveScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69AE172768205400906436 /* CaveScrollView.swift */; };
 		AA69AE1C276825AD00906436 /* CaveScrollViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69AE1B276825AD00906436 /* CaveScrollViewCell.swift */; };
+		AAC5E89927687FCE0031AF80 /* Numeric+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC5E89827687FCE0031AF80 /* Numeric+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +102,7 @@
 		AA69AE042768195400906436 /* SF-Pro-Display-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-BoldItalic.otf"; sourceTree = "<group>"; };
 		AA69AE172768205400906436 /* CaveScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveScrollView.swift; sourceTree = "<group>"; };
 		AA69AE1B276825AD00906436 /* CaveScrollViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveScrollViewCell.swift; sourceTree = "<group>"; };
+		AAC5E89827687FCE0031AF80 /* Numeric+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Numeric+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				AA69ADCB276818DC00906436 /* UIFont+Extension.swift */,
+				AAC5E89827687FCE0031AF80 /* Numeric+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				AA69ADCA2768076A00906436 /* BearsViewController.swift in Sources */,
 				AA69ADC6276806A000906436 /* CaveViewController.swift in Sources */,
 				AA69AE182768205400906436 /* CaveScrollView.swift in Sources */,
+				AAC5E89927687FCE0031AF80 /* Numeric+Extension.swift in Sources */,
 				A420E00F261724D00039F2C8 /* AppDelegate.swift in Sources */,
 				AA69AE1C276825AD00906436 /* CaveScrollViewCell.swift in Sources */,
 				AA69ADC82768072D00906436 /* TabBarViewController.swift in Sources */,

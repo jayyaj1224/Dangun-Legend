@@ -24,6 +24,7 @@ class CaveViewController: UIViewController {
         
         self.setupMainStackView()
         
+        self.setupDimView()
         self.setupAddGoalButton()
     }
     
@@ -44,7 +45,7 @@ class CaveViewController: UIViewController {
         scrollView.snp.makeConstraints { make in
             make.width.equalToSuperview().offset(-40)
             make.centerX.equalToSuperview()
-            make.height.equalTo(230)
+            make.height.equalTo(260)
             make.centerY.equalToSuperview()
         }
         self.mainScrollView = scrollView
@@ -54,10 +55,8 @@ class CaveViewController: UIViewController {
         let stackView = UIStackView()
         
         [1,2,3,4,5]
-            .map { _ in
-                return CaveScrollViewCell()
-            }
-            .forEach { view in
+            .forEach { _ in
+                let view = CaveScrollViewCell()
                 stackView.addArrangedSubview(view)
                 view.layer.cornerRadius = 100
                 view.snp.makeConstraints { make in
@@ -65,10 +64,11 @@ class CaveViewController: UIViewController {
                     make.width.equalTo(self.view.frame.width)
                 }
             }
+        
         stackView.axis = .vertical
         stackView.alignment = .leading
         stackView.distribution = .equalSpacing
-        stackView.spacing = 30
+        stackView.spacing = 60
         
         self.mainScrollView.addSubview(stackView)
         stackView.snp.makeConstraints { make in
@@ -83,79 +83,76 @@ class CaveViewController: UIViewController {
     private func setupAddGoalButton() {
         let button = UIButton()
         button.addTarget(self, action: #selector(self.addGoalTapped), for: .touchUpInside)
-        button.setImage(UIImage(systemName: "plus.app.fill"), for: .normal)
-        button.tintColor = .black
+        
+        let imageView = UIImageView.init(image: UIImage(systemName: "plus.app.fill"))
+        imageView.tintColor = .black
+        button.addSubview(imageView)
+        
+        imageView.snp.makeConstraints { make in
+            make.size.equalTo(50)
+            make.center.equalToSuperview()
+        }
         
         self.view.addSubview(button)
         button.snp.makeConstraints { make in
             make.width.height.equalTo(80)
-            make.bottom.equalToSuperview().offset(10)
-            make.trailing.equalToSuperview().offset(20)
+            make.bottom.equalToSuperview().offset(-100)
+            make.trailing.equalToSuperview().offset(-10)
         }
         self.addGoalButton = button
     }
     
-//    private func colourViews() -> [UIView] {
-//        var colours: [UIColor] = [.green, .red, .blue, .yellow, .orange, .brown]
-//
-//        for _ in 0...3 {
-//            colours.append(contentsOf: colours)
-//        }
-//
-//        let coulourViews = colours
-//            .map { colour -> UIView in
-//                let view = UIView()
-//                view.backgroundColor = colour
-//
-//                let label = UILabel()
-//                if #available(iOS 14.0, *) {
-//                    label.text = colour.accessibilityName
-//                } else {
-//                    label.text = colour.description
-//                }
-//                label.font = .fontSFProDisplay(size: 20, family: .Medium)
-//                view.addSubview(label)
-//                label.snp.makeConstraints { make in
-//                    make.center.equalToSuperview()
-//                }
-//                return view
-//            }
-//        return coulourViews
-//    }
-    
-//    private func setupContentStackViewType1() {
-//        let stackView = UIStackView()
-//
-//        self.colourViews()
-//            .forEach { view in
-//                stackView.addArrangedSubview(view)
-//                view.layer.cornerRadius = 100
-//                view.alpha = 0.2
-//                view.snp.makeConstraints { make in
-//                    make.height.equalTo(200)
-//                    make.width.equalTo(200)
-//                }
-//            }
-//        stackView.axis = .vertical
-//        stackView.alignment = .leading
-//        stackView.distribution = .equalSpacing
-//        stackView.spacing = 30
-//
-//        self.mainScrollView.addSubview(stackView)
-//        stackView.snp.makeConstraints { make in
-//            make.top.bottom.equalToSuperview()
-//            make.trailing.equalToSuperview()
-//            make.leading.equalToSuperview()
-//            make.width.equalToSuperview()
-//        }
-//        self.mainStackView = stackView
-//    }
-    
-    
+    private func setupDimView() {
+        let topDimView = DimView()
+        let bottomDimView = DimView()
+
+        [topDimView, bottomDimView].forEach { view in
+            view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            view.alpha = 0.3
+            self.view.addSubview(view)
+        }
+
+        topDimView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(self.mainScrollView.snp_top).offset(-30)
+        }
+
+        bottomDimView.snp.makeConstraints { make in
+            make.bottom.leading.trailing.equalToSuperview()
+            make.top.equalTo(self.mainScrollView.snp_bottom).offset(-30)
+        }
+    }
     
     // MARK: - Actions
     @objc private func addGoalTapped() {
-        
+        print("  taptap --!  \n")
+        self.rotate()
+    }
+    
+    private func rotate() {
+        DispatchQueue.main.async {
+            for n in 1...90 {
+                Timer.scheduledTimer(withTimeInterval: 0.005*Double(n), repeats: false) { (timer) in
+                    self.addGoalButton.transform = CGAffineTransform(rotationAngle: (1*n).pi.cgFloat)
+                }
+            }
+        }
     }
 }
 
+extension CaveViewController: UIScrollViewDelegate {
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        <#code#>
+//    }
+}
+
+
+class DimView: UIView {
+
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let hitView: UIView? = super.hitTest(point, with: event)
+        if (self == hitView) { return nil }
+        return hitView
+    }
+}
