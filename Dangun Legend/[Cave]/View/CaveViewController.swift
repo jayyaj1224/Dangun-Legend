@@ -22,8 +22,7 @@ class CaveViewController: UIViewController {
         
         self.setupMainScrollView()
         
-//        self.setupMainStackView()
-        self.setupContentStackViewType1()
+        self.setupMainStackView()
         
         self.setupAddGoalButton()
     }
@@ -54,7 +53,33 @@ class CaveViewController: UIViewController {
     }
     
     private func setupMainStackView() {
+        let stackView = UIStackView()
         
+        [1,2,3,4,5]
+            .map { _ in
+                return CaveScrollViewCell()
+            }
+            .forEach { view in
+                stackView.addArrangedSubview(view)
+                view.layer.cornerRadius = 100
+                view.snp.makeConstraints { make in
+                    make.height.equalTo(200)
+                    make.width.equalTo(self.view.frame.width)
+                }
+            }
+        stackView.axis = .vertical
+        stackView.alignment = .leading
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 30
+        
+        self.mainScrollView.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.width.equalToSuperview()
+        }
+        self.mainStackView = stackView
     }
     
     private func setupAddGoalButton() {
@@ -72,61 +97,61 @@ class CaveViewController: UIViewController {
         self.addGoalButton = button
     }
     
-    private func colourViews() -> [UIView] {
-        var colours: [UIColor] = [.green, .red, .blue, .yellow, .orange, .brown]
-        
-        for _ in 0...3 {
-            colours.append(contentsOf: colours)
-        }
-            
-        let coulourViews = colours
-            .map { colour -> UIView in
-                let view = UIView()
-                view.backgroundColor = colour
-                
-                let label = UILabel()
-                if #available(iOS 14.0, *) {
-                    label.text = colour.accessibilityName
-                } else {
-                    label.text = colour.description
-                }
-                label.font = .fontSFProDisplay(size: 20, family: .Medium)
-                view.addSubview(label)
-                label.snp.makeConstraints { make in
-                    make.center.equalToSuperview()
-                }
-                return view
-            }
-        return coulourViews
-    }
+//    private func colourViews() -> [UIView] {
+//        var colours: [UIColor] = [.green, .red, .blue, .yellow, .orange, .brown]
+//
+//        for _ in 0...3 {
+//            colours.append(contentsOf: colours)
+//        }
+//
+//        let coulourViews = colours
+//            .map { colour -> UIView in
+//                let view = UIView()
+//                view.backgroundColor = colour
+//
+//                let label = UILabel()
+//                if #available(iOS 14.0, *) {
+//                    label.text = colour.accessibilityName
+//                } else {
+//                    label.text = colour.description
+//                }
+//                label.font = .fontSFProDisplay(size: 20, family: .Medium)
+//                view.addSubview(label)
+//                label.snp.makeConstraints { make in
+//                    make.center.equalToSuperview()
+//                }
+//                return view
+//            }
+//        return coulourViews
+//    }
     
-    private func setupContentStackViewType1() {
-        let stackView = UIStackView()
-        
-        self.colourViews()
-            .forEach { view in
-                stackView.addArrangedSubview(view)
-                view.layer.cornerRadius = 100
-                view.alpha = 0.2
-                view.snp.makeConstraints { make in
-                    make.height.equalTo(200)
-                    make.width.equalTo(200)
-                }
-            }
-        stackView.axis = .vertical
-        stackView.alignment = .leading
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 30
-        
-        self.mainScrollView.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.width.equalToSuperview()
-        }
-        self.mainStackView = stackView
-    }
+//    private func setupContentStackViewType1() {
+//        let stackView = UIStackView()
+//
+//        self.colourViews()
+//            .forEach { view in
+//                stackView.addArrangedSubview(view)
+//                view.layer.cornerRadius = 100
+//                view.alpha = 0.2
+//                view.snp.makeConstraints { make in
+//                    make.height.equalTo(200)
+//                    make.width.equalTo(200)
+//                }
+//            }
+//        stackView.axis = .vertical
+//        stackView.alignment = .leading
+//        stackView.distribution = .equalSpacing
+//        stackView.spacing = 30
+//
+//        self.mainScrollView.addSubview(stackView)
+//        stackView.snp.makeConstraints { make in
+//            make.top.bottom.equalToSuperview()
+//            make.trailing.equalToSuperview()
+//            make.leading.equalToSuperview()
+//            make.width.equalToSuperview()
+//        }
+//        self.mainStackView = stackView
+//    }
     
     
     
