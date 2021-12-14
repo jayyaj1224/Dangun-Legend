@@ -10,27 +10,31 @@ import UIKit
 
 class CaveViewController: UIViewController {
     
+    //UI
     private var mainScrollView: CaveScrollView!
     private var mainStackView: UIStackView!
-    
     private var addGoalButton: UIButton!
+    
+    //Data
+    private var userInfo: UserInfo!
+    
+    private var currentIndex: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setCaveViewUserInterface()
         
-        self.configureCaveView()
-        
-        self.setupMainScrollView()
-        
-        self.setupMainStackView()
-        
-        self.setupDimView()
-        self.setupAddGoalButton()
+        self.userInfo = DangunManager.userInfo
     }
     
+    
     // MARK: - UI Setting
-    private func configureCaveView() {
+    private func setCaveViewUserInterface() {
         self.view.backgroundColor = .white
+        self.setupMainScrollView()
+        self.setupMainStackView()
+        self.setupDimView()
+        self.setupAddGoalButton()
     }
     
     private func setupMainScrollView() {
@@ -39,6 +43,8 @@ class CaveViewController: UIViewController {
         scrollView.clipsToBounds = false
         scrollView.isPagingEnabled = true
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.delegate = self
+        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
         
         self.view.addSubview(scrollView)
         
@@ -53,29 +59,28 @@ class CaveViewController: UIViewController {
     
     private func setupMainStackView() {
         let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .leading
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 60
         
-        [1,2,3,4,5]
-            .forEach { _ in
-                let view = CaveScrollViewCell()
+        self.userInfo.usersGoalData
+            .enumerated()
+            .forEach { (i, goalData) in
+                let view = CaveScrollDetailView()
+                view.index = i
+                view.setCaveScrollViewDetail(with: goalData)
+                
                 stackView.addArrangedSubview(view)
-                view.layer.cornerRadius = 100
                 view.snp.makeConstraints { make in
                     make.height.equalTo(200)
                     make.width.equalTo(self.view.frame.width)
                 }
             }
         
-        stackView.axis = .vertical
-        stackView.alignment = .leading
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 60
-        
         self.mainScrollView.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.width.equalToSuperview()
+            make.top.bottom.leading.trailing.width.equalToSuperview()
         }
         self.mainStackView = stackView
     }
@@ -106,17 +111,13 @@ class CaveViewController: UIViewController {
         let topDimView = DimView()
         let bottomDimView = DimView()
 
-        [topDimView, bottomDimView].forEach { view in
-            view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-            view.alpha = 0.3
-            self.view.addSubview(view)
-        }
-
+        self.view.addSubview(topDimView)
         topDimView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
             make.bottom.equalTo(self.mainScrollView.snp_top).offset(-30)
         }
-
+        
+        self.view.addSubview(bottomDimView)
         bottomDimView.snp.makeConstraints { make in
             make.bottom.leading.trailing.equalToSuperview()
             make.top.equalTo(self.mainScrollView.snp_bottom).offset(-30)
@@ -125,14 +126,15 @@ class CaveViewController: UIViewController {
     
     // MARK: - Actions
     @objc private func addGoalTapped() {
-        print("  taptap --!  \n")
         self.rotate()
+        let vc = AddGoalViewController()
+        self.present(vc, animated: true, completion: nil)
     }
     
     private func rotate() {
         DispatchQueue.main.async {
             for n in 1...90 {
-                Timer.scheduledTimer(withTimeInterval: 0.005*Double(n), repeats: false) { (timer) in
+                Timer.scheduledTimer(withTimeInterval: 0.001*Double(n), repeats: false) { (timer) in
                     self.addGoalButton.transform = CGAffineTransform(rotationAngle: (1*n).pi.cgFloat)
                 }
             }
@@ -141,18 +143,35 @@ class CaveViewController: UIViewController {
 }
 
 extension CaveViewController: UIScrollViewDelegate {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+        //Calculate ScrollView Page
+        let pageHeight = scrollView.frame.height
+        let targetYContentOffset = Float(targetContentOffset.pointee.y)
+        let contentHeight = CGFloat(scrollView.contentSize.height)
+        
+        var newPage = self.currentIndex
+        if velocity.x == 0 {
+            newPage = floor((CGFloat(targetYContentOffset) - pageHeight / 2) / pageHeight) + 1.0
+        } else {
+            newPage = velocity.x > 0 ? newPage + 1 : newPage - 1
+            if newPage < 0 {
+                newPage = 0
+            }
+            if (newPage > contentHeight / pageHeight) {
+                newPage = ceil(contentHeight / pageHeight) - 1.0
+            }
+        }
+        
+        self.resetOldPageIfSameAs(newPage)
+    }
     
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        <#code#>
-//    }
-}
-
-
-class DimView: UIView {
-
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        let hitView: UIView? = super.hitTest(point, with: event)
-        if (self == hitView) { return nil }
-        return hitView
+    private func resetOldPageIfSameAs(_ newPage: CGFloat) {
+        if self.currentIndex != newPage {
+            guard let scrollViewCell = self.mainStackView.subviews[Int(self.currentIndex)] as? CaveScrollDetailView else { return
+            }
+            scrollViewCell.refreshScroll()
+            self.currentIndex = newPage
+        }
     }
 }

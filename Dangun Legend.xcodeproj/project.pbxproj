@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		0CED58BDF824657E973F7047 /* Pods_Dangun_Legend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 482E835E189B783CE527223F /* Pods_Dangun_Legend.framework */; };
+		A406D2832768A59A0062EF9B /* DimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A406D2822768A59A0062EF9B /* DimView.swift */; };
+		A406D2862768B6F30062EF9B /* CaveGoalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A406D2852768B6F30062EF9B /* CaveGoalModel.swift */; };
+		A406D28A2768CA180062EF9B /* DangunManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A406D2892768CA180062EF9B /* DangunManager.swift */; };
+		A406D28C2768D0200062EF9B /* CaveStepCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A406D28B2768D0200062EF9B /* CaveStepCell.swift */; };
+		A406D28E2768D2530062EF9B /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = A406D28D2768D2520062EF9B /* File.swift */; };
 		A411E5022619CD970057FAD3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A411E5012619CD970057FAD3 /* GoogleService-Info.plist */; };
 		A420E00F261724D00039F2C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E00E261724D00039F2C8 /* AppDelegate.swift */; };
 		A420E011261724D00039F2C8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E010261724D00039F2C8 /* SceneDelegate.swift */; };
@@ -38,7 +43,7 @@
 		AA69AE152768195400906436 /* SF-Pro-Display-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69AE032768195400906436 /* SF-Pro-Display-ThinItalic.otf */; };
 		AA69AE162768195400906436 /* SF-Pro-Display-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69AE042768195400906436 /* SF-Pro-Display-BoldItalic.otf */; };
 		AA69AE182768205400906436 /* CaveScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69AE172768205400906436 /* CaveScrollView.swift */; };
-		AA69AE1C276825AD00906436 /* CaveScrollViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69AE1B276825AD00906436 /* CaveScrollViewCell.swift */; };
+		AA69AE1C276825AD00906436 /* CaveScrollDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69AE1B276825AD00906436 /* CaveScrollDetailView.swift */; };
 		AAC5E89927687FCE0031AF80 /* Numeric+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC5E89827687FCE0031AF80 /* Numeric+Extension.swift */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +68,11 @@
 		482E835E189B783CE527223F /* Pods_Dangun_Legend.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dangun_Legend.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8552188C1427050E47DD9103 /* Pods-Dangun Legend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun Legend.debug.xcconfig"; path = "Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend.debug.xcconfig"; sourceTree = "<group>"; };
 		9DD87C6A75BA537906D5E6F7 /* Pods-Dangun Legend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun Legend.release.xcconfig"; path = "Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend.release.xcconfig"; sourceTree = "<group>"; };
+		A406D2822768A59A0062EF9B /* DimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimView.swift; sourceTree = "<group>"; };
+		A406D2852768B6F30062EF9B /* CaveGoalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveGoalModel.swift; sourceTree = "<group>"; };
+		A406D2892768CA180062EF9B /* DangunManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DangunManager.swift; sourceTree = "<group>"; };
+		A406D28B2768D0200062EF9B /* CaveStepCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveStepCell.swift; sourceTree = "<group>"; };
+		A406D28D2768D2520062EF9B /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		A40CECDC2635123800F0CAC8 /* Dangun Legend.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Dangun Legend.entitlements"; sourceTree = "<group>"; };
 		A411E5012619CD970057FAD3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Dangun Legend/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		A420E00B261724D00039F2C8 /* Dangun Legend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dangun Legend.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,7 +111,7 @@
 		AA69AE032768195400906436 /* SF-Pro-Display-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-ThinItalic.otf"; sourceTree = "<group>"; };
 		AA69AE042768195400906436 /* SF-Pro-Display-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-BoldItalic.otf"; sourceTree = "<group>"; };
 		AA69AE172768205400906436 /* CaveScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveScrollView.swift; sourceTree = "<group>"; };
-		AA69AE1B276825AD00906436 /* CaveScrollViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveScrollViewCell.swift; sourceTree = "<group>"; };
+		AA69AE1B276825AD00906436 /* CaveScrollDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveScrollDetailView.swift; sourceTree = "<group>"; };
 		AAC5E89827687FCE0031AF80 /* Numeric+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Numeric+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -139,6 +149,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A406D2842768B6E60062EF9B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A406D2852768B6F30062EF9B /* CaveGoalModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A406D2882768CA0C0062EF9B /* Supports */ = {
+			isa = PBXGroup;
+			children = (
+				A406D2892768CA180062EF9B /* DangunManager.swift */,
+			);
+			path = Supports;
+			sourceTree = "<group>";
+		};
 		A420E002261724D00039F2C8 = {
 			isa = PBXGroup;
 			children = (
@@ -166,10 +192,11 @@
 			children = (
 				A420E00E261724D00039F2C8 /* AppDelegate.swift */,
 				A420E010261724D00039F2C8 /* SceneDelegate.swift */,
-				AA69ADC22768056A00906436 /* Extensions */,
 				AA69ADC72768072D00906436 /* TabBarViewController.swift */,
+				A406D2882768CA0C0062EF9B /* Supports */,
 				AA69ADC12768056400906436 /* [Cave] */,
 				AA69ADC42768061B00906436 /* [Bears] */,
+				AA69ADC22768056A00906436 /* Extensions */,
 				A420E01C261724D10039F2C8 /* Info.plist */,
 				A411E5012619CD970057FAD3 /* GoogleService-Info.plist */,
 				AA69ADF22768195400906436 /* [Fonts] SF-Pro-Display */,
@@ -202,6 +229,7 @@
 		AA69ADC12768056400906436 /* [Cave] */ = {
 			isa = PBXGroup;
 			children = (
+				A406D2842768B6E60062EF9B /* Model */,
 				AA69AE192768218A00906436 /* View */,
 				AA69AE1A2768219100906436 /* Cell */,
 			);
@@ -254,7 +282,9 @@
 			isa = PBXGroup;
 			children = (
 				AA69ADC5276806A000906436 /* CaveViewController.swift */,
+				A406D28D2768D2520062EF9B /* File.swift */,
 				AA69AE172768205400906436 /* CaveScrollView.swift */,
+				A406D2822768A59A0062EF9B /* DimView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -262,7 +292,8 @@
 		AA69AE1A2768219100906436 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				AA69AE1B276825AD00906436 /* CaveScrollViewCell.swift */,
+				AA69AE1B276825AD00906436 /* CaveScrollDetailView.swift */,
+				A406D28B2768D0200062EF9B /* CaveStepCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -471,12 +502,17 @@
 				AA69ADCA2768076A00906436 /* BearsViewController.swift in Sources */,
 				AA69ADC6276806A000906436 /* CaveViewController.swift in Sources */,
 				AA69AE182768205400906436 /* CaveScrollView.swift in Sources */,
+				A406D2862768B6F30062EF9B /* CaveGoalModel.swift in Sources */,
 				AAC5E89927687FCE0031AF80 /* Numeric+Extension.swift in Sources */,
 				A420E00F261724D00039F2C8 /* AppDelegate.swift in Sources */,
-				AA69AE1C276825AD00906436 /* CaveScrollViewCell.swift in Sources */,
+				AA69AE1C276825AD00906436 /* CaveScrollDetailView.swift in Sources */,
 				AA69ADC82768072D00906436 /* TabBarViewController.swift in Sources */,
 				AA69ADCC276818DC00906436 /* UIFont+Extension.swift in Sources */,
+				A406D28E2768D2530062EF9B /* File.swift in Sources */,
 				A420E011261724D00039F2C8 /* SceneDelegate.swift in Sources */,
+				A406D2832768A59A0062EF9B /* DimView.swift in Sources */,
+				A406D28C2768D0200062EF9B /* CaveStepCell.swift in Sources */,
+				A406D28A2768CA180062EF9B /* DangunManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

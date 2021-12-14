@@ -1,5 +1,5 @@
 //
-//  CaveScrollViewCell.swift
+//  CaveScrollDetailView.swift
 //  Dangun Legend
 //
 //  Created by Lee Jong Yun on 2021/12/14.
@@ -8,11 +8,12 @@
 import Foundation
 import UIKit
 
-class CaveScrollViewCell: UIView {
-    
+class CaveScrollDetailView: UIView {
     var collectionView: UICollectionView!
     var characterView: UIView!
     var caveExitView: UIView!
+    
+    var index: Int?
     
     var asdfjkl = Array(0...100)///toDelete
     
@@ -23,8 +24,13 @@ class CaveScrollViewCell: UIView {
         self.setupCharacterView()
         self.setupCaveExitView()
     }
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    
+    func setCaveScrollViewDetail(with goalData: GoalModel) {
+        
+    }
+    
+    func refreshScroll() {
+        self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
     }
     
     private func setupCollectionView() {
@@ -42,6 +48,7 @@ class CaveScrollViewCell: UIView {
             make.size.equalToSuperview()
             make.center.equalToSuperview()
         }
+        self.collectionView = collectionView
     }
     
     private func setupCharacterView() {
@@ -70,9 +77,13 @@ class CaveScrollViewCell: UIView {
         }
         self.caveExitView = view
     }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
 }
 
-extension CaveScrollViewCell: UICollectionViewDataSource, UICollectionViewDelegate {
+extension CaveScrollDetailView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         self.asdfjkl.count
     }
@@ -86,33 +97,8 @@ extension CaveScrollViewCell: UICollectionViewDataSource, UICollectionViewDelega
     }
 }
 
-extension CaveScrollViewCell: UICollectionViewDelegateFlowLayout {
+extension CaveScrollDetailView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 40, height: 200)
-    }
-}
-
-class StepCell: UICollectionViewCell {
-    
-    var label: UILabel!
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.setLabel()
-    }
-    
-    private func setLabel() {
-        let label = UILabel()
-        label.font = UIFont.fontSFProDisplay(size: 20, family: .Heavy)
-        label.textColor = .black
-        self.addSubview(label)
-        label.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-        }
-        self.label = label
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
