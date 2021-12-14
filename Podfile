@@ -16,10 +16,17 @@ target 'Dangun Legend' do
 #    # Pods for testing
 #  ends
 
-pod 'IQKeyboardManagerSwift'
+pod 'Firebase/Analytics'
+pod 'Firebase/Messaging'
 pod 'Firebase/Auth'
+pod 'Firebase/Firestore'
 pod 'GoogleSignIn'
-pod 'Firebase/Firestore' 
+
+pod 'SnapKit'
+pod 'Each'
+pod 'FSPagerView'
+pod 'Kingfisher', '~> 6.0'
+
 pod 'RxSwift' 
 pod 'RxCocoa'
 

@@ -11,41 +11,34 @@
 		A411E5022619CD970057FAD3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A411E5012619CD970057FAD3 /* GoogleService-Info.plist */; };
 		A420E00F261724D00039F2C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E00E261724D00039F2C8 /* AppDelegate.swift */; };
 		A420E011261724D00039F2C8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E010261724D00039F2C8 /* SceneDelegate.swift */; };
-		A420E013261724D00039F2C8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E012261724D00039F2C8 /* HomeViewController.swift */; };
-		A420E016261724D00039F2C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A420E014261724D00039F2C8 /* Main.storyboard */; };
 		A420E018261724D10039F2C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A420E017261724D10039F2C8 /* Assets.xcassets */; };
 		A420E01B261724D10039F2C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A420E019261724D10039F2C8 /* LaunchScreen.storyboard */; };
 		A420E026261724D10039F2C8 /* Dangun_LegendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E025261724D10039F2C8 /* Dangun_LegendTests.swift */; };
 		A420E031261724D10039F2C8 /* Dangun_LegendUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E030261724D10039F2C8 /* Dangun_LegendUITests.swift */; };
-		A43F42F02656AE5800904F7C /* DaysCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43F42EF2656AE5800904F7C /* DaysCollectionViewCell.swift */; };
-		A442B2CA261D7C5A00B4CD12 /* DateCalculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A442B2C9261D7C5A00B4CD12 /* DateCalculate.swift */; };
-		A445B5B5262D6B76003F4A1F /* AboutDangunVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A445B5B4262D6B76003F4A1F /* AboutDangunVC.swift */; };
-		A4588E2D265242D000C432BD /* GoalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4588E2C265242D000C432BD /* GoalModel.swift */; };
-		A4588E3226536D8C00C432BD /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4588E3126536D8C00C432BD /* HistoryViewModel.swift */; };
-		A47775FB261821D8002D866C /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47775FA261821D8002D866C /* RegisterViewController.swift */; };
-		A477762326182966002D866C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A477762226182966002D866C /* LoginViewController.swift */; };
-		A477762B26182E00002D866C /* GoogleSignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A477762A26182E00002D866C /* GoogleSignInVC.swift */; };
-		A4777630261884DA002D866C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A477762F261884DA002D866C /* Constants.swift */; };
-		A482219F261DB95A005DFA43 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A482219E261DB95A005DFA43 /* HistoryViewController.swift */; };
-		A48221A8261DE49B005DFA43 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48221A6261DE49B005DFA43 /* HistoryTableViewCell.swift */; };
-		A48221A9261DE49B005DFA43 /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48221A7261DE49B005DFA43 /* HistoryTableViewCell.xib */; };
-		A49D013D2626F3A10059971B /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49D013C2626F3A10059971B /* ResultViewController.swift */; };
-		A49F5A6F265C69FD00739811 /* FireStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49F5A6E265C69FD00739811 /* FireStoreService.swift */; };
-		A49F5A71265C6A0800739811 /* UserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49F5A70265C6A0800739811 /* UserDefaultsService.swift */; };
-		A49F5A74265C6B9600739811 /* CaveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49F5A73265C6B9600739811 /* CaveViewModel.swift */; };
-		A49F5A7B265C6DC500739811 /* AddNewGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49F5A7A265C6DC500739811 /* AddNewGoalViewController.swift */; };
-		A4BBCC6926295939007D2DE3 /* BordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BBCC6826295939007D2DE3 /* BordViewController.swift */; };
-		A4BBCC7926296F9C007D2DE3 /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48221A7261DE49B005DFA43 /* HistoryTableViewCell.xib */; };
-		A4BBCC7A26296F9C007D2DE3 /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48221A7261DE49B005DFA43 /* HistoryTableViewCell.xib */; };
-		A4BBCC8E26297024007D2DE3 /* BoardShareCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BBCC8C26297024007D2DE3 /* BoardShareCell.swift */; };
-		A4BBCC8F26297024007D2DE3 /* BoardShareCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4BBCC8D26297024007D2DE3 /* BoardShareCell.xib */; };
-		A4CDF1F8261809FC00A08809 /* CaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CDF1F7261809FC00A08809 /* CaveViewController.swift */; };
-		A4D842AC2650D38B0026FF9B /* LoginAndRegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D842AB2650D38B0026FF9B /* LoginAndRegisterModel.swift */; };
-		A4D842AF2650D3D20026FF9B /* LoginRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D842AE2650D3D20026FF9B /* LoginRegisterViewModel.swift */; };
-		A4EF048E264F858200CBA656 /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EF048D264F858200CBA656 /* BoardViewModel.swift */; };
-		A4EF0498264F897800CBA656 /* BoardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EF0497264F897800CBA656 /* BoardModel.swift */; };
-		A4EF049B264F8A4F00CBA656 /* BoardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EF049A264F8A4F00CBA656 /* BoardService.swift */; };
-		A4F8FD77265CEA9500B0388F /* InitialSettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F8FD76265CEA9500B0388F /* InitialSettingManager.swift */; };
+		AA69ADC6276806A000906436 /* CaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69ADC5276806A000906436 /* CaveViewController.swift */; };
+		AA69ADC82768072D00906436 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69ADC72768072D00906436 /* TabBarViewController.swift */; };
+		AA69ADCA2768076A00906436 /* BearsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69ADC92768076A00906436 /* BearsViewController.swift */; };
+		AA69ADCC276818DC00906436 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69ADCB276818DC00906436 /* UIFont+Extension.swift */; };
+		AA69AE052768195400906436 /* SF-Pro-Display-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69ADF32768195400906436 /* SF-Pro-Display-Thin.otf */; };
+		AA69AE062768195400906436 /* SF-Pro-Display-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69ADF42768195400906436 /* SF-Pro-Display-SemiboldItalic.otf */; };
+		AA69AE072768195400906436 /* SF-Pro-Display-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69ADF52768195400906436 /* SF-Pro-Display-RegularItalic.otf */; };
+		AA69AE082768195400906436 /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69ADF62768195400906436 /* SF-Pro-Display-Light.otf */; };
+		AA69AE092768195400906436 /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69ADF72768195400906436 /* SF-Pro-Display-Regular.otf */; };
+		AA69AE0A2768195400906436 /* SF-Pro-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69ADF82768195400906436 /* SF-Pro-Display-Bold.otf */; };
+		AA69AE0B2768195400906436 /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69ADF92768195400906436 /* SF-Pro-Display-Medium.otf */; };
+		AA69AE0C2768195400906436 /* SF-Pro-Display-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69ADFA2768195400906436 /* SF-Pro-Display-Heavy.otf */; };
+		AA69AE0D2768195400906436 /* SF-Pro-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69ADFB2768195400906436 /* SF-Pro-Display-Semibold.otf */; };
+		AA69AE0E2768195400906436 /* SF-Pro-Display-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69ADFC2768195400906436 /* SF-Pro-Display-MediumItalic.otf */; };
+		AA69AE0F2768195400906436 /* SF-Pro-Display-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69ADFD2768195400906436 /* SF-Pro-Display-HeavyItalic.otf */; };
+		AA69AE102768195400906436 /* SF-Pro-Display-Ultralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69ADFE2768195400906436 /* SF-Pro-Display-Ultralight.otf */; };
+		AA69AE112768195400906436 /* SF-Pro-Display-UltralightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69ADFF2768195400906436 /* SF-Pro-Display-UltralightItalic.otf */; };
+		AA69AE122768195400906436 /* SF-Pro-Display-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69AE002768195400906436 /* SF-Pro-Display-LightItalic.otf */; };
+		AA69AE132768195400906436 /* SF-Pro-Display-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69AE012768195400906436 /* SF-Pro-Display-BlackItalic.otf */; };
+		AA69AE142768195400906436 /* SF-Pro-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69AE022768195400906436 /* SF-Pro-Display-Black.otf */; };
+		AA69AE152768195400906436 /* SF-Pro-Display-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69AE032768195400906436 /* SF-Pro-Display-ThinItalic.otf */; };
+		AA69AE162768195400906436 /* SF-Pro-Display-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69AE042768195400906436 /* SF-Pro-Display-BoldItalic.otf */; };
+		AA69AE182768205400906436 /* CaveScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69AE172768205400906436 /* CaveScrollView.swift */; };
+		AA69AE1C276825AD00906436 /* CaveScrollViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69AE1B276825AD00906436 /* CaveScrollViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,13 +63,11 @@
 		8552188C1427050E47DD9103 /* Pods-Dangun Legend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun Legend.debug.xcconfig"; path = "Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend.debug.xcconfig"; sourceTree = "<group>"; };
 		9DD87C6A75BA537906D5E6F7 /* Pods-Dangun Legend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun Legend.release.xcconfig"; path = "Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend.release.xcconfig"; sourceTree = "<group>"; };
 		A40CECDC2635123800F0CAC8 /* Dangun Legend.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Dangun Legend.entitlements"; sourceTree = "<group>"; };
-		A411E5012619CD970057FAD3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Dangun Legend/SupportingFiles/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		A411E5012619CD970057FAD3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Dangun Legend/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		A420E00B261724D00039F2C8 /* Dangun Legend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dangun Legend.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A420E00E261724D00039F2C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A420E010261724D00039F2C8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		A420E012261724D00039F2C8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		A420E015261724D00039F2C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		A420E017261724D10039F2C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A420E017261724D10039F2C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = SupportingFiles/Assets.xcassets; sourceTree = "<group>"; };
 		A420E01A261724D10039F2C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A420E01C261724D10039F2C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A420E021261724D10039F2C8 /* Dangun LegendTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dangun LegendTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,34 +76,31 @@
 		A420E02C261724D10039F2C8 /* Dangun LegendUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dangun LegendUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A420E030261724D10039F2C8 /* Dangun_LegendUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dangun_LegendUITests.swift; sourceTree = "<group>"; };
 		A420E032261724D10039F2C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A43F42EF2656AE5800904F7C /* DaysCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DaysCollectionViewCell.swift; path = "Dangun Legend/2.Cave/Service/DaysCollectionViewCell.swift"; sourceTree = SOURCE_ROOT; };
-		A442B2C9261D7C5A00B4CD12 /* DateCalculate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculate.swift; sourceTree = "<group>"; };
-		A445B5B4262D6B76003F4A1F /* AboutDangunVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutDangunVC.swift; sourceTree = "<group>"; };
 		A4588E222650FEF000C432BD /* Dangun LegendRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Dangun LegendRelease.entitlements"; sourceTree = "<group>"; };
-		A4588E2C265242D000C432BD /* GoalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalModel.swift; sourceTree = "<group>"; };
-		A4588E3126536D8C00C432BD /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
-		A47775FA261821D8002D866C /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
-		A477762226182966002D866C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		A477762A26182E00002D866C /* GoogleSignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInVC.swift; sourceTree = "<group>"; };
-		A477762F261884DA002D866C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		A482219E261DB95A005DFA43 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
-		A48221A6261DE49B005DFA43 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
-		A48221A7261DE49B005DFA43 /* HistoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryTableViewCell.xib; sourceTree = "<group>"; };
-		A49D013C2626F3A10059971B /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
-		A49F5A6E265C69FD00739811 /* FireStoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreService.swift; sourceTree = "<group>"; };
-		A49F5A70265C6A0800739811 /* UserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsService.swift; sourceTree = "<group>"; };
-		A49F5A73265C6B9600739811 /* CaveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveViewModel.swift; sourceTree = "<group>"; };
-		A49F5A7A265C6DC500739811 /* AddNewGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewGoalViewController.swift; sourceTree = "<group>"; };
-		A4BBCC6826295939007D2DE3 /* BordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BordViewController.swift; sourceTree = "<group>"; };
-		A4BBCC8C26297024007D2DE3 /* BoardShareCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardShareCell.swift; sourceTree = "<group>"; };
-		A4BBCC8D26297024007D2DE3 /* BoardShareCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BoardShareCell.xib; sourceTree = "<group>"; };
-		A4CDF1F7261809FC00A08809 /* CaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveViewController.swift; sourceTree = "<group>"; };
-		A4D842AB2650D38B0026FF9B /* LoginAndRegisterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAndRegisterModel.swift; sourceTree = "<group>"; };
-		A4D842AE2650D3D20026FF9B /* LoginRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterViewModel.swift; sourceTree = "<group>"; };
-		A4EF048D264F858200CBA656 /* BoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewModel.swift; sourceTree = "<group>"; };
-		A4EF0497264F897800CBA656 /* BoardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardModel.swift; sourceTree = "<group>"; };
-		A4EF049A264F8A4F00CBA656 /* BoardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardService.swift; sourceTree = "<group>"; };
-		A4F8FD76265CEA9500B0388F /* InitialSettingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSettingManager.swift; sourceTree = "<group>"; };
+		AA69ADC5276806A000906436 /* CaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveViewController.swift; sourceTree = "<group>"; };
+		AA69ADC72768072D00906436 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		AA69ADC92768076A00906436 /* BearsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearsViewController.swift; sourceTree = "<group>"; };
+		AA69ADCB276818DC00906436 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		AA69ADF32768195400906436 /* SF-Pro-Display-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Thin.otf"; sourceTree = "<group>"; };
+		AA69ADF42768195400906436 /* SF-Pro-Display-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-SemiboldItalic.otf"; sourceTree = "<group>"; };
+		AA69ADF52768195400906436 /* SF-Pro-Display-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-RegularItalic.otf"; sourceTree = "<group>"; };
+		AA69ADF62768195400906436 /* SF-Pro-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.otf"; sourceTree = "<group>"; };
+		AA69ADF72768195400906436 /* SF-Pro-Display-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Regular.otf"; sourceTree = "<group>"; };
+		AA69ADF82768195400906436 /* SF-Pro-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Bold.otf"; sourceTree = "<group>"; };
+		AA69ADF92768195400906436 /* SF-Pro-Display-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Medium.otf"; sourceTree = "<group>"; };
+		AA69ADFA2768195400906436 /* SF-Pro-Display-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Heavy.otf"; sourceTree = "<group>"; };
+		AA69ADFB2768195400906436 /* SF-Pro-Display-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Semibold.otf"; sourceTree = "<group>"; };
+		AA69ADFC2768195400906436 /* SF-Pro-Display-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-MediumItalic.otf"; sourceTree = "<group>"; };
+		AA69ADFD2768195400906436 /* SF-Pro-Display-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-HeavyItalic.otf"; sourceTree = "<group>"; };
+		AA69ADFE2768195400906436 /* SF-Pro-Display-Ultralight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Ultralight.otf"; sourceTree = "<group>"; };
+		AA69ADFF2768195400906436 /* SF-Pro-Display-UltralightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-UltralightItalic.otf"; sourceTree = "<group>"; };
+		AA69AE002768195400906436 /* SF-Pro-Display-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-LightItalic.otf"; sourceTree = "<group>"; };
+		AA69AE012768195400906436 /* SF-Pro-Display-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-BlackItalic.otf"; sourceTree = "<group>"; };
+		AA69AE022768195400906436 /* SF-Pro-Display-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Black.otf"; sourceTree = "<group>"; };
+		AA69AE032768195400906436 /* SF-Pro-Display-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-ThinItalic.otf"; sourceTree = "<group>"; };
+		AA69AE042768195400906436 /* SF-Pro-Display-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-BoldItalic.otf"; sourceTree = "<group>"; };
+		AA69AE172768205400906436 /* CaveScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveScrollView.swift; sourceTree = "<group>"; };
+		AA69AE1B276825AD00906436 /* CaveScrollViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveScrollViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,15 +164,16 @@
 			children = (
 				A420E00E261724D00039F2C8 /* AppDelegate.swift */,
 				A420E010261724D00039F2C8 /* SceneDelegate.swift */,
-				A420E014261724D00039F2C8 /* Main.storyboard */,
-				A49D4384264F812A009C3C26 /* SupportingFiles */,
-				A4EF048F264F874600CBA656 /* Services */,
-				A4EF048B264F84E800CBA656 /* 0.Login */,
-				A4EF0486264F84B400CBA656 /* 1. Home */,
-				A4EF0488264F84BE00CBA656 /* 2.Cave */,
-				A4EF0489264F84D100CBA656 /* 3.History */,
-				A4EF048A264F84D500CBA656 /* 4.Board */,
+				AA69ADC32768057000906436 /* Supports */,
+				AA69ADC22768056A00906436 /* Extensions */,
+				AA69ADC72768072D00906436 /* TabBarViewController.swift */,
+				AA69ADC12768056400906436 /* [Cave] */,
+				AA69ADC42768061B00906436 /* [Bears] */,
 				A420E01C261724D10039F2C8 /* Info.plist */,
+				A411E5012619CD970057FAD3 /* GoogleService-Info.plist */,
+				AA69ADF22768195400906436 /* [Fonts] SF-Pro-Display */,
+				A420E017261724D10039F2C8 /* Assets.xcassets */,
+				A420E019261724D10039F2C8 /* LaunchScreen.storyboard */,
 				A40CECDC2635123800F0CAC8 /* Dangun Legend.entitlements */,
 				A4588E222650FEF000C432BD /* Dangun LegendRelease.entitlements */,
 			);
@@ -209,204 +198,78 @@
 			path = "Dangun LegendUITests";
 			sourceTree = "<group>";
 		};
-		A43F42EE2656AE4C00904F7C /* Cell */ = {
+		AA69ADC12768056400906436 /* [Cave] */ = {
 			isa = PBXGroup;
 			children = (
-				A43F42EF2656AE5800904F7C /* DaysCollectionViewCell.swift */,
+				AA69AE192768218A00906436 /* View */,
+				AA69AE1A2768219100906436 /* Cell */,
+			);
+			path = "[Cave]";
+			sourceTree = "<group>";
+		};
+		AA69ADC22768056A00906436 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AA69ADCB276818DC00906436 /* UIFont+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		AA69ADC32768057000906436 /* Supports */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Supports;
+			sourceTree = "<group>";
+		};
+		AA69ADC42768061B00906436 /* [Bears] */ = {
+			isa = PBXGroup;
+			children = (
+				AA69ADC92768076A00906436 /* BearsViewController.swift */,
+			);
+			path = "[Bears]";
+			sourceTree = "<group>";
+		};
+		AA69ADF22768195400906436 /* [Fonts] SF-Pro-Display */ = {
+			isa = PBXGroup;
+			children = (
+				AA69ADF32768195400906436 /* SF-Pro-Display-Thin.otf */,
+				AA69ADF42768195400906436 /* SF-Pro-Display-SemiboldItalic.otf */,
+				AA69ADF52768195400906436 /* SF-Pro-Display-RegularItalic.otf */,
+				AA69ADF62768195400906436 /* SF-Pro-Display-Light.otf */,
+				AA69ADF72768195400906436 /* SF-Pro-Display-Regular.otf */,
+				AA69ADF82768195400906436 /* SF-Pro-Display-Bold.otf */,
+				AA69ADF92768195400906436 /* SF-Pro-Display-Medium.otf */,
+				AA69ADFA2768195400906436 /* SF-Pro-Display-Heavy.otf */,
+				AA69ADFB2768195400906436 /* SF-Pro-Display-Semibold.otf */,
+				AA69ADFC2768195400906436 /* SF-Pro-Display-MediumItalic.otf */,
+				AA69ADFD2768195400906436 /* SF-Pro-Display-HeavyItalic.otf */,
+				AA69ADFE2768195400906436 /* SF-Pro-Display-Ultralight.otf */,
+				AA69ADFF2768195400906436 /* SF-Pro-Display-UltralightItalic.otf */,
+				AA69AE002768195400906436 /* SF-Pro-Display-LightItalic.otf */,
+				AA69AE012768195400906436 /* SF-Pro-Display-BlackItalic.otf */,
+				AA69AE022768195400906436 /* SF-Pro-Display-Black.otf */,
+				AA69AE032768195400906436 /* SF-Pro-Display-ThinItalic.otf */,
+				AA69AE042768195400906436 /* SF-Pro-Display-BoldItalic.otf */,
+			);
+			path = "[Fonts] SF-Pro-Display";
+			sourceTree = "<group>";
+		};
+		AA69AE192768218A00906436 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AA69ADC5276806A000906436 /* CaveViewController.swift */,
+				AA69AE172768205400906436 /* CaveScrollView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AA69AE1A2768219100906436 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				AA69AE1B276825AD00906436 /* CaveScrollViewCell.swift */,
 			);
 			path = Cell;
-			sourceTree = "<group>";
-		};
-		A4588E2326510F3B00C432BD /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				A4588E2C265242D000C432BD /* GoalModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		A4588E2426510F3F00C432BD /* View */ = {
-			isa = PBXGroup;
-			children = (
-				A4CDF1F7261809FC00A08809 /* CaveViewController.swift */,
-				A49D013C2626F3A10059971B /* ResultViewController.swift */,
-				A445B5B4262D6B76003F4A1F /* AboutDangunVC.swift */,
-				A49F5A7A265C6DC500739811 /* AddNewGoalViewController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		A4588E2526510F4100C432BD /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				A49F5A73265C6B9600739811 /* CaveViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		A4588E282652419000C432BD /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				A4588E3126536D8C00C432BD /* HistoryViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		A4858CBC265013A000FC7671 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				A477762226182966002D866C /* LoginViewController.swift */,
-				A477762A26182E00002D866C /* GoogleSignInVC.swift */,
-				A47775FA261821D8002D866C /* RegisterViewController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		A4858CBF265013B900FC7671 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				A4D842AB2650D38B0026FF9B /* LoginAndRegisterModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		A49D4384264F812A009C3C26 /* SupportingFiles */ = {
-			isa = PBXGroup;
-			children = (
-				A477762F261884DA002D866C /* Constants.swift */,
-				A420E019261724D10039F2C8 /* LaunchScreen.storyboard */,
-				A420E017261724D10039F2C8 /* Assets.xcassets */,
-				A411E5012619CD970057FAD3 /* GoogleService-Info.plist */,
-			);
-			path = SupportingFiles;
-			sourceTree = "<group>";
-		};
-		A4D842AD2650D3B90026FF9B /* LoginRegisterViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				A4D842AE2650D3D20026FF9B /* LoginRegisterViewModel.swift */,
-			);
-			path = LoginRegisterViewModel;
-			sourceTree = "<group>";
-		};
-		A4EF0486264F84B400CBA656 /* 1. Home */ = {
-			isa = PBXGroup;
-			children = (
-				A420E012261724D00039F2C8 /* HomeViewController.swift */,
-				A4F8FD76265CEA9500B0388F /* InitialSettingManager.swift */,
-			);
-			path = "1. Home";
-			sourceTree = "<group>";
-		};
-		A4EF0488264F84BE00CBA656 /* 2.Cave */ = {
-			isa = PBXGroup;
-			children = (
-				A43F42EE2656AE4C00904F7C /* Cell */,
-				A4588E2326510F3B00C432BD /* Model */,
-				A4588E2426510F3F00C432BD /* View */,
-				A4588E2526510F4100C432BD /* ViewModel */,
-			);
-			path = 2.Cave;
-			sourceTree = "<group>";
-		};
-		A4EF0489264F84D100CBA656 /* 3.History */ = {
-			isa = PBXGroup;
-			children = (
-				A4EF0495264F88F700CBA656 /* View */,
-				A4588E282652419000C432BD /* ViewModel */,
-				A4EF0496264F88FB00CBA656 /* Cell */,
-			);
-			path = 3.History;
-			sourceTree = "<group>";
-		};
-		A4EF048A264F84D500CBA656 /* 4.Board */ = {
-			isa = PBXGroup;
-			children = (
-				A4EF0493264F88BC00CBA656 /* Model */,
-				A4EF0492264F88B900CBA656 /* View */,
-				A4EF048C264F856000CBA656 /* ViewModel */,
-				A4EF0499264F8A3900CBA656 /* Service */,
-				A4EF0494264F88C900CBA656 /* Cell */,
-			);
-			path = 4.Board;
-			sourceTree = "<group>";
-		};
-		A4EF048B264F84E800CBA656 /* 0.Login */ = {
-			isa = PBXGroup;
-			children = (
-				A4858CBF265013B900FC7671 /* Model */,
-				A4858CBC265013A000FC7671 /* View */,
-				A4D842AD2650D3B90026FF9B /* LoginRegisterViewModel */,
-			);
-			path = 0.Login;
-			sourceTree = "<group>";
-		};
-		A4EF048C264F856000CBA656 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				A4EF048D264F858200CBA656 /* BoardViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		A4EF048F264F874600CBA656 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				A49F5A6E265C69FD00739811 /* FireStoreService.swift */,
-				A49F5A70265C6A0800739811 /* UserDefaultsService.swift */,
-				A442B2C9261D7C5A00B4CD12 /* DateCalculate.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
-		A4EF0492264F88B900CBA656 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				A4BBCC6826295939007D2DE3 /* BordViewController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		A4EF0493264F88BC00CBA656 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				A4EF0497264F897800CBA656 /* BoardModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		A4EF0494264F88C900CBA656 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				A4BBCC8C26297024007D2DE3 /* BoardShareCell.swift */,
-				A4BBCC8D26297024007D2DE3 /* BoardShareCell.xib */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
-		A4EF0495264F88F700CBA656 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				A482219E261DB95A005DFA43 /* HistoryViewController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		A4EF0496264F88FB00CBA656 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				A48221A6261DE49B005DFA43 /* HistoryTableViewCell.swift */,
-				A48221A7261DE49B005DFA43 /* HistoryTableViewCell.xib */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
-		A4EF0499264F8A3900CBA656 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				A4EF049A264F8A4F00CBA656 /* BoardService.swift */,
-			);
-			path = Service;
 			sourceTree = "<group>";
 		};
 		F8104C9A3DD1E56C3F0249D6 /* Pods */ = {
@@ -430,7 +293,6 @@
 				A420E008261724D00039F2C8 /* Frameworks */,
 				A420E009261724D00039F2C8 /* Resources */,
 				C84D3D49CCC5BD94685794BC /* [CP] Embed Pods Frameworks */,
-				D7BBD2237BC5FBE41DF0DFBA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -524,12 +386,27 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA69AE0D2768195400906436 /* SF-Pro-Display-Semibold.otf in Resources */,
+				AA69AE082768195400906436 /* SF-Pro-Display-Light.otf in Resources */,
+				AA69AE0C2768195400906436 /* SF-Pro-Display-Heavy.otf in Resources */,
+				AA69AE052768195400906436 /* SF-Pro-Display-Thin.otf in Resources */,
+				AA69AE0A2768195400906436 /* SF-Pro-Display-Bold.otf in Resources */,
+				AA69AE092768195400906436 /* SF-Pro-Display-Regular.otf in Resources */,
+				AA69AE0E2768195400906436 /* SF-Pro-Display-MediumItalic.otf in Resources */,
+				AA69AE0B2768195400906436 /* SF-Pro-Display-Medium.otf in Resources */,
+				AA69AE152768195400906436 /* SF-Pro-Display-ThinItalic.otf in Resources */,
+				AA69AE162768195400906436 /* SF-Pro-Display-BoldItalic.otf in Resources */,
 				A420E01B261724D10039F2C8 /* LaunchScreen.storyboard in Resources */,
-				A4BBCC8F26297024007D2DE3 /* BoardShareCell.xib in Resources */,
-				A48221A9261DE49B005DFA43 /* HistoryTableViewCell.xib in Resources */,
+				AA69AE0F2768195400906436 /* SF-Pro-Display-HeavyItalic.otf in Resources */,
+				AA69AE072768195400906436 /* SF-Pro-Display-RegularItalic.otf in Resources */,
+				AA69AE142768195400906436 /* SF-Pro-Display-Black.otf in Resources */,
 				A411E5022619CD970057FAD3 /* GoogleService-Info.plist in Resources */,
+				AA69AE102768195400906436 /* SF-Pro-Display-Ultralight.otf in Resources */,
+				AA69AE132768195400906436 /* SF-Pro-Display-BlackItalic.otf in Resources */,
 				A420E018261724D10039F2C8 /* Assets.xcassets in Resources */,
-				A420E016261724D00039F2C8 /* Main.storyboard in Resources */,
+				AA69AE062768195400906436 /* SF-Pro-Display-SemiboldItalic.otf in Resources */,
+				AA69AE122768195400906436 /* SF-Pro-Display-LightItalic.otf in Resources */,
+				AA69AE112768195400906436 /* SF-Pro-Display-UltralightItalic.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,7 +414,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4BBCC7926296F9C007D2DE3 /* HistoryTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,7 +421,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4BBCC7A26296F9C007D2DE3 /* HistoryTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,23 +466,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D7BBD2237BC5FBE41DF0DFBA /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -615,34 +473,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A49F5A6F265C69FD00739811 /* FireStoreService.swift in Sources */,
-				A4D842AF2650D3D20026FF9B /* LoginRegisterViewModel.swift in Sources */,
-				A4F8FD77265CEA9500B0388F /* InitialSettingManager.swift in Sources */,
-				A4D842AC2650D38B0026FF9B /* LoginAndRegisterModel.swift in Sources */,
-				A4CDF1F8261809FC00A08809 /* CaveViewController.swift in Sources */,
-				A4BBCC8E26297024007D2DE3 /* BoardShareCell.swift in Sources */,
-				A420E013261724D00039F2C8 /* HomeViewController.swift in Sources */,
-				A48221A8261DE49B005DFA43 /* HistoryTableViewCell.swift in Sources */,
-				A49F5A74265C6B9600739811 /* CaveViewModel.swift in Sources */,
-				A49F5A71265C6A0800739811 /* UserDefaultsService.swift in Sources */,
-				A4EF048E264F858200CBA656 /* BoardViewModel.swift in Sources */,
-				A4588E2D265242D000C432BD /* GoalModel.swift in Sources */,
-				A482219F261DB95A005DFA43 /* HistoryViewController.swift in Sources */,
-				A4EF0498264F897800CBA656 /* BoardModel.swift in Sources */,
+				AA69ADCA2768076A00906436 /* BearsViewController.swift in Sources */,
+				AA69ADC6276806A000906436 /* CaveViewController.swift in Sources */,
+				AA69AE182768205400906436 /* CaveScrollView.swift in Sources */,
 				A420E00F261724D00039F2C8 /* AppDelegate.swift in Sources */,
-				A477762326182966002D866C /* LoginViewController.swift in Sources */,
-				A43F42F02656AE5800904F7C /* DaysCollectionViewCell.swift in Sources */,
-				A49F5A7B265C6DC500739811 /* AddNewGoalViewController.swift in Sources */,
-				A4EF049B264F8A4F00CBA656 /* BoardService.swift in Sources */,
-				A47775FB261821D8002D866C /* RegisterViewController.swift in Sources */,
-				A4BBCC6926295939007D2DE3 /* BordViewController.swift in Sources */,
-				A4777630261884DA002D866C /* Constants.swift in Sources */,
-				A49D013D2626F3A10059971B /* ResultViewController.swift in Sources */,
-				A442B2CA261D7C5A00B4CD12 /* DateCalculate.swift in Sources */,
+				AA69AE1C276825AD00906436 /* CaveScrollViewCell.swift in Sources */,
+				AA69ADC82768072D00906436 /* TabBarViewController.swift in Sources */,
+				AA69ADCC276818DC00906436 /* UIFont+Extension.swift in Sources */,
 				A420E011261724D00039F2C8 /* SceneDelegate.swift in Sources */,
-				A477762B26182E00002D866C /* GoogleSignInVC.swift in Sources */,
-				A445B5B5262D6B76003F4A1F /* AboutDangunVC.swift in Sources */,
-				A4588E3226536D8C00C432BD /* HistoryViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -678,14 +516,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		A420E014261724D00039F2C8 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A420E015261724D00039F2C8 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		A420E019261724D10039F2C8 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -823,12 +653,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6TUZG6LW7U;
 				INFOPLIST_FILE = "Dangun Legend/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.02;
+				MARKETING_VERSION = 2.01;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JL.Dangun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -846,12 +676,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6TUZG6LW7U;
 				INFOPLIST_FILE = "Dangun Legend/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.02;
+				MARKETING_VERSION = 2.01;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JL.Dangun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
