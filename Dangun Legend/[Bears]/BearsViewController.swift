@@ -12,13 +12,19 @@ class BearsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+ 
+        self.setBearsViewControllerUI()
+    }
+
+    
+    private func setBearsViewControllerUI() {
+        self.setBackground()
         
-        self.configureBearsView()
     }
     
-    private func configureBearsView() {
+    private func setBackground() {
         self.view.backgroundColor = .white
     }
-    
+
 }
 

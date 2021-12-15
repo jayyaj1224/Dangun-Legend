@@ -12,7 +12,7 @@
 		A406D2862768B6F30062EF9B /* CaveGoalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A406D2852768B6F30062EF9B /* CaveGoalModel.swift */; };
 		A406D28A2768CA180062EF9B /* DangunManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A406D2892768CA180062EF9B /* DangunManager.swift */; };
 		A406D28C2768D0200062EF9B /* CaveStepCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A406D28B2768D0200062EF9B /* CaveStepCell.swift */; };
-		A406D28E2768D2530062EF9B /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = A406D28D2768D2520062EF9B /* File.swift */; };
+		A406D28E2768D2530062EF9B /* AddGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A406D28D2768D2520062EF9B /* AddGoalViewController.swift */; };
 		A411E5022619CD970057FAD3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A411E5012619CD970057FAD3 /* GoogleService-Info.plist */; };
 		A420E00F261724D00039F2C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E00E261724D00039F2C8 /* AppDelegate.swift */; };
 		A420E011261724D00039F2C8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E010261724D00039F2C8 /* SceneDelegate.swift */; };
@@ -20,6 +20,7 @@
 		A420E01B261724D10039F2C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A420E019261724D10039F2C8 /* LaunchScreen.storyboard */; };
 		A420E026261724D10039F2C8 /* Dangun_LegendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E025261724D10039F2C8 /* Dangun_LegendTests.swift */; };
 		A420E031261724D10039F2C8 /* Dangun_LegendUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E030261724D10039F2C8 /* Dangun_LegendUITests.swift */; };
+		A4D061EE27696A0900A2A4B7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D061ED27696A0900A2A4B7 /* UIView+Extension.swift */; };
 		AA69ADC6276806A000906436 /* CaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69ADC5276806A000906436 /* CaveViewController.swift */; };
 		AA69ADC82768072D00906436 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69ADC72768072D00906436 /* TabBarViewController.swift */; };
 		AA69ADCA2768076A00906436 /* BearsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69ADC92768076A00906436 /* BearsViewController.swift */; };
@@ -72,7 +73,7 @@
 		A406D2852768B6F30062EF9B /* CaveGoalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveGoalModel.swift; sourceTree = "<group>"; };
 		A406D2892768CA180062EF9B /* DangunManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DangunManager.swift; sourceTree = "<group>"; };
 		A406D28B2768D0200062EF9B /* CaveStepCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveStepCell.swift; sourceTree = "<group>"; };
-		A406D28D2768D2520062EF9B /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		A406D28D2768D2520062EF9B /* AddGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGoalViewController.swift; sourceTree = "<group>"; };
 		A40CECDC2635123800F0CAC8 /* Dangun Legend.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Dangun Legend.entitlements"; sourceTree = "<group>"; };
 		A411E5012619CD970057FAD3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Dangun Legend/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		A420E00B261724D00039F2C8 /* Dangun Legend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dangun Legend.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +89,7 @@
 		A420E030261724D10039F2C8 /* Dangun_LegendUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dangun_LegendUITests.swift; sourceTree = "<group>"; };
 		A420E032261724D10039F2C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4588E222650FEF000C432BD /* Dangun LegendRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Dangun LegendRelease.entitlements"; sourceTree = "<group>"; };
+		A4D061ED27696A0900A2A4B7 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		AA69ADC5276806A000906436 /* CaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveViewController.swift; sourceTree = "<group>"; };
 		AA69ADC72768072D00906436 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		AA69ADC92768076A00906436 /* BearsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearsViewController.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 			children = (
 				AA69ADCB276818DC00906436 /* UIFont+Extension.swift */,
 				AAC5E89827687FCE0031AF80 /* Numeric+Extension.swift */,
+				A4D061ED27696A0900A2A4B7 /* UIView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -282,7 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				AA69ADC5276806A000906436 /* CaveViewController.swift */,
-				A406D28D2768D2520062EF9B /* File.swift */,
+				A406D28D2768D2520062EF9B /* AddGoalViewController.swift */,
 				AA69AE172768205400906436 /* CaveScrollView.swift */,
 				A406D2822768A59A0062EF9B /* DimView.swift */,
 			);
@@ -502,13 +505,14 @@
 				AA69ADCA2768076A00906436 /* BearsViewController.swift in Sources */,
 				AA69ADC6276806A000906436 /* CaveViewController.swift in Sources */,
 				AA69AE182768205400906436 /* CaveScrollView.swift in Sources */,
+				A4D061EE27696A0900A2A4B7 /* UIView+Extension.swift in Sources */,
 				A406D2862768B6F30062EF9B /* CaveGoalModel.swift in Sources */,
 				AAC5E89927687FCE0031AF80 /* Numeric+Extension.swift in Sources */,
 				A420E00F261724D00039F2C8 /* AppDelegate.swift in Sources */,
 				AA69AE1C276825AD00906436 /* CaveScrollDetailView.swift in Sources */,
 				AA69ADC82768072D00906436 /* TabBarViewController.swift in Sources */,
 				AA69ADCC276818DC00906436 /* UIFont+Extension.swift in Sources */,
-				A406D28E2768D2530062EF9B /* File.swift in Sources */,
+				A406D28E2768D2530062EF9B /* AddGoalViewController.swift in Sources */,
 				A420E011261724D00039F2C8 /* SceneDelegate.swift in Sources */,
 				A406D2832768A59A0062EF9B /* DimView.swift in Sources */,
 				A406D28C2768D0200062EF9B /* CaveStepCell.swift in Sources */,

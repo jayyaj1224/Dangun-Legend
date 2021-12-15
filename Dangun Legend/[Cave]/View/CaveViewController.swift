@@ -16,7 +16,7 @@ class CaveViewController: UIViewController {
     private var addGoalButton: UIButton!
     
     //Data
-    private var userInfo: UserInfo!
+    private var userInfo: UserInfo?
     
     private var currentIndex: CGFloat = 0
     
@@ -64,7 +64,7 @@ class CaveViewController: UIViewController {
         stackView.distribution = .equalSpacing
         stackView.spacing = 60
         
-        self.userInfo.usersGoalData
+        self.userInfo?.usersGoalData
             .enumerated()
             .forEach { (i, goalData) in
                 let view = CaveScrollDetailView()
@@ -101,7 +101,7 @@ class CaveViewController: UIViewController {
         self.view.addSubview(button)
         button.snp.makeConstraints { make in
             make.width.height.equalTo(80)
-            make.bottom.equalToSuperview().offset(-100)
+            make.bottom.equalToSuperview().offset(-90)
             make.trailing.equalToSuperview().offset(-10)
         }
         self.addGoalButton = button
@@ -133,8 +133,8 @@ class CaveViewController: UIViewController {
     
     private func rotate() {
         DispatchQueue.main.async {
-            for n in 1...90 {
-                Timer.scheduledTimer(withTimeInterval: 0.001*Double(n), repeats: false) { (timer) in
+            for n in 1...180 {
+                Timer.scheduledTimer(withTimeInterval: 0.003*Double(n), repeats: false) { (timer) in
                     self.addGoalButton.transform = CGAffineTransform(rotationAngle: (1*n).pi.cgFloat)
                 }
             }
