@@ -28,17 +28,6 @@ class AddGoalViewController: UIViewController {
     }
     
     // MARK: - UI Setting
-    private func setTextField() {
-        let textField = UITextField()
-        
-        self.view.addSubview(textField)
-        textField.snp.makeConstraints { make in
-            
-        }
-        
-        self.goalTextField = textField
-    }
-    
     private func setAddGoalView() {
         let addGoalView = UIView()
         addGoalView.backgroundColor = .white
@@ -46,36 +35,49 @@ class AddGoalViewController: UIViewController {
         
         self.view.addSubview(addGoalView)
         addGoalView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(100)
+            make.top.equalToSuperview().offset(200)
             make.width.equalToSuperview()
             make.centerX.equalToSuperview()
             make.height.equalTo(300)
         }
         self.addGoalView = addGoalView
+        
+        self.setTextFieldInsideTheAddGoalView()
     }
     
-    private func setTextFieldView() {
-        let textView = UIView()
-        textView.backgroundColor = .white
-        textView.layer.cornerRadius = 30
+    private func setTextFieldInsideTheAddGoalView() {
+        let textField = UITextField()
+        textField.placeholder = "도전하고 싶은 목표를 입력해주세요."
+        textField.backgroundColor = .clear
+        textField.tintColor = .clear
         
-        self.view.addSubview(textView)
-        textView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(100)
-            make.width.equalToSuperview()
-            make.centerX.equalToSuperview()
-            make.height.equalTo(200)
-        }
-        
-        let textField = UITextView()
-        textView.addSubview(textField)
+        textField.font = UIFont.fontSFProDisplay(size: 20, family: .Medium)
+        self.addGoalView.addSubview(textField)
         textField.snp.makeConstraints { make in
-            make.width.equalToSuperview().offset(-80)
-            make.height.equalTo(200)
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(-50)
+            make.leading.top.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().offset(-20)
+            make.height.equalTo(80)
         }
+        self.goalTextField = textField
+        self.goalTextField.delegate = self
+        
+        self.setDivisionView()
     }
     
+    private func setDivisionView() {
+        let divisionView = UIView()
+        divisionView.backgroundColor = .black
+        
+        self.goalTextField.addSubview(divisionView)
+        divisionView.snp.makeConstraints { make in
+            make.height.equalTo(0.2)
+            make.width.centerX.equalToSuperview()
+            make.top.equalTo(self.goalTextField.snp_bottom)
+        }
+    }
+}
+
+extension AddGoalViewController: UITextFieldDelegate {
+
 }
 
