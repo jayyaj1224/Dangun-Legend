@@ -10,19 +10,71 @@ import UIKit
 
 class AddGoalViewController: UIViewController {
     
+    private var addGoalView: UIView!
+    
+    private var goalTextField: UITextField!
+    
     private var gradientLayer: CAGradientLayer!
+    
+    var addButtonSpinAction: (()->Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.setBackGroundGradient()
+        self.setAddGoalView()
     }
     
-    private func setBackGroundGradient() {
-        self.gradientLayer = CAGradientLayer()
-        self.gradientLayer.frame = self.view.bounds
-        self.gradientLayer.colors = [UIColor.white.cgColor, UIColor.clear.cgColor]
-        self.view.layer.addSublayer(self.gradientLayer)
+    override func viewWillDisappear(_ animated: Bool) {
+        self.addButtonSpinAction?()
+    }
+    
+    // MARK: - UI Setting
+    private func setTextField() {
+        let textField = UITextField()
+        
+        self.view.addSubview(textField)
+        textField.snp.makeConstraints { make in
+            
+        }
+        
+        self.goalTextField = textField
+    }
+    
+    private func setAddGoalView() {
+        let addGoalView = UIView()
+        addGoalView.backgroundColor = .white
+        addGoalView.layer.cornerRadius = 30
+        
+        self.view.addSubview(addGoalView)
+        addGoalView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(100)
+            make.width.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.height.equalTo(300)
+        }
+        self.addGoalView = addGoalView
+    }
+    
+    private func setTextFieldView() {
+        let textView = UIView()
+        textView.backgroundColor = .white
+        textView.layer.cornerRadius = 30
+        
+        self.view.addSubview(textView)
+        textView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(100)
+            make.width.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.height.equalTo(200)
+        }
+        
+        let textField = UITextView()
+        textView.addSubview(textField)
+        textField.snp.makeConstraints { make in
+            make.width.equalToSuperview().offset(-80)
+            make.height.equalTo(200)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-50)
+        }
     }
     
 }

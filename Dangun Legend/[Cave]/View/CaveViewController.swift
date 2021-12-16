@@ -64,20 +64,34 @@ class CaveViewController: UIViewController {
         stackView.distribution = .equalSpacing
         stackView.spacing = 60
         
-        self.userInfo?.usersGoalData
-            .enumerated()
-            .forEach { (i, goalData) in
-                let view = CaveScrollDetailView()
-                view.index = i
-                view.setCaveScrollViewDetail(with: goalData)
-                
+        [1,1,1,1,1,1,1]
+            .forEach { _ in
+                let view = UIView()
+                view.backgroundColor = .brown
+                view.alpha = 0.3
+                view.layer.cornerRadius = 20
+
                 stackView.addArrangedSubview(view)
                 view.snp.makeConstraints { make in
                     make.height.equalTo(200)
                     make.width.equalTo(self.view.frame.width)
                 }
             }
-        
+//
+//        self.userInfo?.usersGoalData
+//            .enumerated()
+//            .forEach { (i, goalData) in
+//                let view = CaveScrollDetailView()
+//                view.index = i
+//                view.setCaveScrollViewDetail(with: goalData)
+//
+//                stackView.addArrangedSubview(view)
+//                view.snp.makeConstraints { make in
+//                    make.height.equalTo(200)
+//                    make.width.equalTo(self.view.frame.width)
+//                }
+//            }
+
         self.mainScrollView.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.width.equalToSuperview()
@@ -108,15 +122,27 @@ class CaveViewController: UIViewController {
     }
     
     private func setupDimView() {
-        let topDimView = DimView()
-        let bottomDimView = DimView()
-
+        let mainBounds = UIScreen.main.bounds
+        let frame = CGRect(x: 0, y: 0, width: mainBounds.width, height: (mainBounds.height - 260)/2 + 30)
+        
+        let topDimView = DimView(
+            topToBotom: true,
+            at: self,
+            gradientLocation: [0.0,0.8,0.82],
+            frame: frame
+        )
+        let bottomDimView = DimView(
+            topToBotom: false,
+            at: self,
+            gradientLocation: [0.0,0.96,0.98],
+            frame: frame
+        )
         self.view.addSubview(topDimView)
         topDimView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(self.mainScrollView.snp_top).offset(-30)
+            make.bottom.equalTo(self.mainScrollView.snp_top).offset(30)
         }
-        
+
         self.view.addSubview(bottomDimView)
         bottomDimView.snp.makeConstraints { make in
             make.bottom.leading.trailing.equalToSuperview()
@@ -126,16 +152,19 @@ class CaveViewController: UIViewController {
     
     // MARK: - Actions
     @objc private func addGoalTapped() {
-        self.rotate()
+        self.rotate(angle: 1)
         let vc = AddGoalViewController()
+        vc.addButtonSpinAction = {
+            self.rotate(angle: -1)
+        }
         self.present(vc, animated: true, completion: nil)
     }
     
-    private func rotate() {
+    private func rotate(angle: Int) {
         DispatchQueue.main.async {
             for n in 1...180 {
-                Timer.scheduledTimer(withTimeInterval: 0.003*Double(n), repeats: false) { (timer) in
-                    self.addGoalButton.transform = CGAffineTransform(rotationAngle: (1*n).pi.cgFloat)
+                Timer.scheduledTimer(withTimeInterval: 0.002*Double(n), repeats: false) { (timer) in
+                    self.addGoalButton.transform = CGAffineTransform(rotationAngle: (angle*n).pi.cgFloat)
                 }
             }
         }

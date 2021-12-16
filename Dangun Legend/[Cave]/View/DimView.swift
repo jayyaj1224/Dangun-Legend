@@ -9,10 +9,26 @@ import Foundation
 import UIKit
 
 class DimView: UIView {
-    init() {
+    
+    var gradientLayer: CAGradientLayer!
+    
+    init(topToBotom: Bool, at vc: UIViewController, gradientLocation: [NSNumber], frame: CGRect) {
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        self.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        self.alpha = 0.3
+        
+        self.gradientLayer = CAGradientLayer()
+        self.gradientLayer.frame = frame
+        self.gradientLayer.locations = gradientLocation
+        self.gradientLayer.colors = [
+//            UIColor.white.cgColor,
+            UIColor.lightGray.withAlphaComponent(0.8).cgColor,
+            UIColor.lightGray.withAlphaComponent(0.15).cgColor,
+            UIColor.white.withAlphaComponent(0.0).cgColor
+        ]
+        if !topToBotom {
+            self.gradientLayer.startPoint = CGPoint(x: 0.5, y: 1)
+            self.gradientLayer.endPoint = CGPoint(x: 0.5, y: 0)
+        }
+        self.layer.addSublayer(self.gradientLayer)
     }
     
     required init?(coder: NSCoder) {

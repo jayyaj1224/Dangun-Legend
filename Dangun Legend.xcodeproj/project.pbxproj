@@ -20,7 +20,6 @@
 		A420E01B261724D10039F2C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A420E019261724D10039F2C8 /* LaunchScreen.storyboard */; };
 		A420E026261724D10039F2C8 /* Dangun_LegendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E025261724D10039F2C8 /* Dangun_LegendTests.swift */; };
 		A420E031261724D10039F2C8 /* Dangun_LegendUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E030261724D10039F2C8 /* Dangun_LegendUITests.swift */; };
-		A4D061EE27696A0900A2A4B7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D061ED27696A0900A2A4B7 /* UIView+Extension.swift */; };
 		AA69ADC6276806A000906436 /* CaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69ADC5276806A000906436 /* CaveViewController.swift */; };
 		AA69ADC82768072D00906436 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69ADC72768072D00906436 /* TabBarViewController.swift */; };
 		AA69ADCA2768076A00906436 /* BearsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69ADC92768076A00906436 /* BearsViewController.swift */; };
@@ -89,7 +88,6 @@
 		A420E030261724D10039F2C8 /* Dangun_LegendUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dangun_LegendUITests.swift; sourceTree = "<group>"; };
 		A420E032261724D10039F2C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4588E222650FEF000C432BD /* Dangun LegendRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Dangun LegendRelease.entitlements"; sourceTree = "<group>"; };
-		A4D061ED27696A0900A2A4B7 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		AA69ADC5276806A000906436 /* CaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveViewController.swift; sourceTree = "<group>"; };
 		AA69ADC72768072D00906436 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		AA69ADC92768076A00906436 /* BearsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearsViewController.swift; sourceTree = "<group>"; };
@@ -243,7 +241,6 @@
 			children = (
 				AA69ADCB276818DC00906436 /* UIFont+Extension.swift */,
 				AAC5E89827687FCE0031AF80 /* Numeric+Extension.swift */,
-				A4D061ED27696A0900A2A4B7 /* UIView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -505,7 +502,6 @@
 				AA69ADCA2768076A00906436 /* BearsViewController.swift in Sources */,
 				AA69ADC6276806A000906436 /* CaveViewController.swift in Sources */,
 				AA69AE182768205400906436 /* CaveScrollView.swift in Sources */,
-				A4D061EE27696A0900A2A4B7 /* UIView+Extension.swift in Sources */,
 				A406D2862768B6F30062EF9B /* CaveGoalModel.swift in Sources */,
 				AAC5E89927687FCE0031AF80 /* Numeric+Extension.swift in Sources */,
 				A420E00F261724D00039F2C8 /* AppDelegate.swift in Sources */,
