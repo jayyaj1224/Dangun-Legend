@@ -13,11 +13,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let tabBarController = TabBarViewController()
+        let dangunMainViewController = DangunMainViewController()
         self.window = UIWindow(windowScene: windowScene)
         self.window?.windowScene = windowScene
-        self.window?.rootViewController = tabBarController
-        tabBarController.selectedIndex = 0
+        self.window?.rootViewController = dangunMainViewController
+//        dangunMainViewController.selectedIndex = 0
         window?.makeKeyAndVisible()
     }
 

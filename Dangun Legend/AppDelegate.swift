@@ -12,6 +12,7 @@ import NotificationCenter
 import UserNotifications
 import GoogleSignIn
 import SnapKit
+import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,7 +24,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.setupMessageing()
         
-//        self.setupLaunchScreenTime(for: 0.8)
+        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.keyboardDistanceFromTextField = 250.0
+        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "취소"
+        IQKeyboardManager.shared.toolbarTintColor = .black
+        IQKeyboardManager.shared.shouldResignOnTouchOutside = true
         
         application.registerForRemoteNotifications()
         

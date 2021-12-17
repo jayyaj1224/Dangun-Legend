@@ -22,6 +22,7 @@ pod 'Firebase/Auth'
 pod 'Firebase/Firestore'
 pod 'GoogleSignIn'
 
+pod 'IQKeyboardManagerSwift'
 pod 'SnapKit'
 pod 'Each'
 pod 'FSPagerView'

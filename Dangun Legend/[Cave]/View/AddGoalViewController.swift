@@ -12,15 +12,18 @@ class AddGoalViewController: UIViewController {
     
     private var addGoalView: UIView!
     
-    private var goalTextField: UITextField!
+    private var goalTextField: UITextView!
     
     private var gradientLayer: CAGradientLayer!
+    
+    private var dummyDismissButton: UIButton!
     
     var addButtonSpinAction: (()->Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setAddGoalView()
+        self.setDummyDismissButton()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -35,7 +38,7 @@ class AddGoalViewController: UIViewController {
         
         self.view.addSubview(addGoalView)
         addGoalView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(200)
+            make.bottom.equalToSuperview().offset(-250)
             make.width.equalToSuperview()
             make.centerX.equalToSuperview()
             make.height.equalTo(300)
@@ -44,21 +47,24 @@ class AddGoalViewController: UIViewController {
         
         self.setTextFieldInsideTheAddGoalView()
     }
+
     
     private func setTextFieldInsideTheAddGoalView() {
-        let textField = UITextField()
-        textField.placeholder = "도전하고 싶은 목표를 입력해주세요."
-        textField.backgroundColor = .clear
-        textField.tintColor = .clear
+        let textView = UITextView()
+        textView.backgroundColor = .clear
+        textView.tintColor = .clear
+        textView.autocorrectionType = .no
+        textView.text = "Trump's fist merging into Biden's face"
+        textView.textColor = .systemGray
         
-        textField.font = UIFont.fontSFProDisplay(size: 20, family: .Medium)
-        self.addGoalView.addSubview(textField)
-        textField.snp.makeConstraints { make in
+        textView.font = UIFont.fontSFProDisplay(size: 20, family: .Medium)
+        self.addGoalView.addSubview(textView)
+        textView.snp.makeConstraints { make in
             make.leading.top.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20)
-            make.height.equalTo(80)
+            make.height.equalTo(70)
         }
-        self.goalTextField = textField
+        self.goalTextField = textView
         self.goalTextField.delegate = self
         
         self.setDivisionView()
@@ -75,9 +81,36 @@ class AddGoalViewController: UIViewController {
             make.top.equalTo(self.goalTextField.snp_bottom)
         }
     }
+    
+    private func setDummyDismissButton() {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(self.buttonTap(_:)), for: .touchUpInside)
+        self.view.addSubview(button)
+        button.snp.makeConstraints { make in
+            make.size.equalTo(80)
+            make.bottom.equalToSuperview().offset(-120)
+            make.trailing.equalToSuperview().offset(-20)
+        }
+        self.dummyDismissButton = button
+    }
+    
+    @objc private func buttonTap(_ sender: UIButton) {
+        self.dismiss(animated: false, completion: nil)
+    }
 }
 
-extension AddGoalViewController: UITextFieldDelegate {
-
+extension AddGoalViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == .systemGray {
+            textView.text = ""
+            textView.textColor = .black
+        }
+        
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Trump's fist merging into Biden's face"
+            textView.textColor = .systemGray
+        }
+    }
 }
-
