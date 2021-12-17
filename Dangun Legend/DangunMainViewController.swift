@@ -170,7 +170,7 @@ class DangunMainViewController: UIViewController {
             make.width.equalTo(120)
             
             if selectedIndex < 0 {
-                make.centerX.equalTo(self.view).offset(-Cnst.screenWidth/4)
+                make.centerX.equalTo(self.view).offset(-CS.screenWidth/4)
             } else {
                 make.centerX.equalTo(self.pageSegmentController.segmentAt(selectedIndex))
             }

@@ -25,7 +25,7 @@ class CaveViewController: UIViewController {
         super.viewDidLoad()
         self.setCaveViewUserInterface()
         
-        self.userInfo = DangunManager.userInfo
+        self.userInfo = CS.userInfo
     }
     
     
@@ -34,7 +34,7 @@ class CaveViewController: UIViewController {
         self.view.backgroundColor = .crayon
 //        self.setupBottomDimView()
         self.setupMainScrollView()
-        self.setupMainStackView()
+        self.setGoalsScrollView()
         self.setupTopDimview()
         self.setupAddGoalButton()
     }
@@ -53,13 +53,41 @@ class CaveViewController: UIViewController {
             make.width.equalToSuperview().offset(-40)
             make.leading.equalToSuperview().offset(-60)
             make.trailing.equalToSuperview()
-            make.height.equalTo(Cnst.screenWidth)
+            make.height.equalTo(CS.screenWidth)
             make.centerY.equalToSuperview()
         }
         self.mainScrollView = scrollView
     }
     
-    private func setupMainStackView() {
+    private func setGoalsScrollView() {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .leading
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 40
+
+        self.userInfo?.usersGoalData
+            .enumerated()
+            .forEach { (i, goalData) in
+                let view = CaveScrollDetailView()
+                view.index = i
+                view.setCaveScrollViewDetail(with: goalData)
+                
+                stackView.addArrangedSubview(view)
+                view.snp.makeConstraints { make in
+                    make.height.equalTo(200)
+                    make.width.equalTo(self.view.frame.width)
+                }
+            }
+
+        self.mainScrollView.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.top.bottom.leading.trailing.width.equalToSuperview()
+        }
+        self.mainStackView = stackView
+    }
+    
+    private func DUMMY___setupMainStackView() {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .leading
@@ -71,28 +99,14 @@ class CaveViewController: UIViewController {
         colours.forEach { colour in
             let view = UIView()
             view.backgroundColor = colour
-            view.layer.cornerRadius = (Cnst.screenWidth-40)/2
+            view.layer.cornerRadius = (CS.screenWidth-40)/2
             view.alpha = 0.5
             
             stackView.addArrangedSubview(view)
             view.snp.makeConstraints { make in
-                make.height.width.equalTo(Cnst.screenWidth-40)
+                make.height.width.equalTo(CS.screenWidth-40)
             }
         }
-        //
-        //        self.userInfo?.usersGoalData
-//            .enumerated()
-//            .forEach { (i, goalData) in
-//                let view = CaveScrollDetailView()
-//                view.index = i
-//                view.setCaveScrollViewDetail(with: goalData)
-//
-//                stackView.addArrangedSubview(view)
-//                view.snp.makeConstraints { make in
-//                    make.height.equalTo(200)
-//                    make.width.equalTo(self.view.frame.width)
-//                }
-//            }
 
         self.mainScrollView.addSubview(stackView)
         stackView.snp.makeConstraints { make in
@@ -125,7 +139,7 @@ class CaveViewController: UIViewController {
     
     private func setupTopDimview() {
         let dimViewHeight: CGFloat = 300
-        let frame = CGRect(x: 0, y: 0, width: Cnst.screenWidth, height: dimViewHeight)
+        let frame = CGRect(x: 0, y: 0, width: CS.screenWidth, height: dimViewHeight)
         
         let topDimView = DimView(
             topToBotom: false,
@@ -160,10 +174,23 @@ class CaveViewController: UIViewController {
     @objc private func addGoalTapped() {
         self.rotate(angle: 1)
         let vc = AddGoalViewController()
-        vc.addButtonSpinAction = {
+        vc.caveViewAddNewGoalClosure = { [weak self] newGoal in
+            guard let self = self, var info = self.userInfo else { return }
+            info.usersGoalData.append(newGoal)
+            info.totalTrialCount+=1
+            self.userInfo = info
+            self.updateUserInfo()
+        }
+        
+        vc.caveViewAddButtonSpinActionClosure = { [weak self] in
+            guard let self = self else { return }
             self.rotate(angle: -1)
         }
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    private func updateUserInfo() {
+        UserDefaults.standard.set(try? PropertyListEncoder().encode(self.userInfo), forKey: CS.UDKEY_USERINFO)
     }
     
     private func rotate(angle: Int) {

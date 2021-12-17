@@ -16,21 +16,45 @@ struct UserInfo: Codable {
 }
 
 struct GoalModel: Codable {
-    let title: String
     let goalDescription: String
-    let goalIdentifier: String
+    let identifier: String
     var goalStatus: GoalStatus
-    
-    let userId: String
+
+    let userId: String?
     let startDate: String
     let endDate: String
     var isForShare: Bool
-    
+
     var successCount: Int
     var failCount: Int
-    let failLimit: Int
+    let failCap: Int
 
     var daysArray: [DaysModel]
+
+    init(goal: String, failCap: Int) {
+        let startDate = Date()
+        self.goalDescription = goal
+        self.identifier = Date().asString.identifier
+        self.goalStatus = .na
+        
+        self.userId = CS.userId() ?? "NON_LOG_IN_USER"
+        self.startDate = startDate.asString.yyyy_MM_dd
+        self.endDate = startDate.add(99).asString.yyyy_MM_dd
+        self.isForShare = false
+        
+        self.successCount = 0
+        self.failCount = 0
+        self.failCap = failCap
+        
+        self.daysArray = Array(1...100)
+            .map { num in
+                DaysModel.init(
+                    date: startDate.add(num-1).asString.yyyy_MM_dd,
+                    dayIndex: num,
+                    status: .unchecked
+                )
+            }
+    }
 }
 
 struct DaysModel: Codable {
@@ -48,5 +72,5 @@ enum DailyStatus: Codable {
 enum GoalStatus: Codable {
     case success
     case fail
-    case onGoing
+    case na
 }
