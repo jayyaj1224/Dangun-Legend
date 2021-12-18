@@ -1,5 +1,5 @@
 //
-//  CaveScrollView.swift
+//  CaveMainTableView.swift
 //  Dangun Legend
 //
 //  Created by Lee Jong Yun on 2021/12/14.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class CaveScrollView: UIScrollView {
+class CaveMainTableView: UITableView {
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         guard !clipsToBounds && !isHidden && alpha > 0 else { return nil }

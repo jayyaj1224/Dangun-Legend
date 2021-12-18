@@ -8,10 +8,10 @@
 import Foundation
 import UIKit
 
-class CaveViewController: UIViewController {
+class CaveMainTableView: UIViewController {
     
     //UI
-    private var mainScrollView: CaveScrollView!
+    private var mainTableView: UITableView!
     private var mainStackView: UIStackView!
     private var addGoalButton: UIButton!
     
@@ -40,86 +40,87 @@ class CaveViewController: UIViewController {
     }
     
     private func setupMainScrollView() {
-        let scrollView = CaveScrollView()
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.clipsToBounds = false
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.delegate = self
-        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
+        let tableview = CaveTableView()
+        tableview.showsHorizontalScrollIndicator = false
+        tableview.clipsToBounds = false
+        tableview.showsVerticalScrollIndicator = false
+        tableview.delegate = self
+        tableview.dataSource = self
+//        tableview.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
         
-        self.view.addSubview(scrollView)
+        self.view.addSubview(tableview)
         
-        scrollView.snp.makeConstraints { make in
+        tableview.snp.makeConstraints { make in
             make.width.equalToSuperview().offset(-40)
             make.leading.equalToSuperview().offset(-60)
             make.trailing.equalToSuperview()
             make.height.equalTo(CS.screenWidth)
             make.centerY.equalToSuperview()
         }
-        self.mainScrollView = scrollView
+        self.mainTableView = tableview
     }
     
-    private func setGoalsScrollView() {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.alignment = .leading
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 40
+//    private func setGoalsScrollView() {
+//        let stackView = UIStackView()
+//        stackView.axis = .vertical
+//        stackView.alignment = .leading
+//        stackView.distribution = .equalSpacing
+//        stackView.spacing = 40
+//
+//        self.userInfo?.usersGoalData
+//            .enumerated()
+//            .forEach { (i, goalData) in
+//                let view = CaveScrollDetailView()
+//                view.index = i
+//                view.setCaveScrollViewDetail(with: goalData)
+//
+//                stackView.addArrangedSubview(view)
+//                view.snp.makeConstraints { make in
+//                    make.height.equalTo(200)
+//                    make.width.equalTo(self.view.frame.width)
+//                }
+//            }
 
-        self.userInfo?.usersGoalData
-            .enumerated()
-            .forEach { (i, goalData) in
-                let view = CaveScrollDetailView()
-                view.index = i
-                view.setCaveScrollViewDetail(with: goalData)
-                
-                stackView.addArrangedSubview(view)
-                view.snp.makeConstraints { make in
-                    make.height.equalTo(200)
-                    make.width.equalTo(self.view.frame.width)
-                }
-            }
-
-        self.mainScrollView.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.width.equalToSuperview()
-        }
-        self.mainStackView = stackView
-    }
+//        self.mainScrollView.addSubview(stackView)
+//        stackView.snp.makeConstraints { make in
+//            make.top.bottom.leading.trailing.width.equalToSuperview()
+//        }
+//        self.mainStackView = stackView
+//    }
     
-    private func DUMMY___setupMainStackView() {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.alignment = .leading
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 40
-        
-        let colours : [UIColor] = [.ganziGreen, .red, .ganziGreen, .yellow, .ganziGreen, .brown]
-        
-        colours.forEach { colour in
-            let view = UIView()
-            view.backgroundColor = colour
-            view.layer.cornerRadius = (CS.screenWidth-40)/2
-            view.alpha = 0.5
-            
-            stackView.addArrangedSubview(view)
-            view.snp.makeConstraints { make in
-                make.height.width.equalTo(CS.screenWidth-40)
-            }
-        }
+//    private func DUMMY___setupMainStackView() {
+//        let stackView = UIStackView()
+//        stackView.axis = .vertical
+//        stackView.alignment = .leading
+//        stackView.distribution = .equalSpacing
+//        stackView.spacing = 40
+//
+//        let colours : [UIColor] = [.ganziGreen, .red, .ganziGreen, .yellow, .ganziGreen, .brown]
+//
+//        colours.forEach { colour in
+//            let view = UIView()
+//            view.backgroundColor = colour
+//            view.layer.cornerRadius = (CS.screenWidth-40)/2
+//            view.alpha = 0.5
+//
+//            stackView.addArrangedSubview(view)
+//            view.snp.makeConstraints { make in
+//                make.height.width.equalTo(CS.screenWidth-40)
+//            }
+//        }
 
-        self.mainScrollView.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.width.equalToSuperview()
-        }
-        self.mainStackView = stackView
-    }
+//        self.mainScrollView.addSubview(stackView)
+//        stackView.snp.makeConstraints { make in
+//            make.top.bottom.leading.trailing.width.equalToSuperview()
+//        }
+//        self.mainStackView = stackView
+//    }
     
     private func setupAddGoalButton() {
         let button = UIButton()
         button.addTarget(self, action: #selector(self.addGoalTapped), for: .touchUpInside)
         
-        let imageView = UIImageView.init(image: UIImage(systemName: "plus.app.fill"))
+        let imageView = UIImageView.init(image: UIImage(systemName: "plus.circle.fill"))
         imageView.tintColor = .black
         button.addSubview(imageView)
         
@@ -172,7 +173,7 @@ class CaveViewController: UIViewController {
     
     // MARK: - Actions
     @objc private func addGoalTapped() {
-        self.rotate(angle: 1)
+        self.rotate()
         let vc = AddGoalViewController()
         vc.caveViewAddNewGoalClosure = { [weak self] newGoal in
             guard let self = self, var info = self.userInfo else { return }
@@ -184,7 +185,7 @@ class CaveViewController: UIViewController {
         
         vc.caveViewAddButtonSpinActionClosure = { [weak self] in
             guard let self = self else { return }
-            self.rotate(angle: -1)
+            self.rotateBack()
         }
         self.present(vc, animated: true, completion: nil)
     }
@@ -193,15 +194,35 @@ class CaveViewController: UIViewController {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(self.userInfo), forKey: CS.UDKEY_USERINFO)
     }
     
-    private func rotate(angle: Int) {
+    private func rotate() {
         DispatchQueue.main.async {
-            for n in 1...180 {
+            for n in 1...225 {
                 Timer.scheduledTimer(withTimeInterval: 0.002*Double(n), repeats: false) { (timer) in
-                    self.addGoalButton.transform = CGAffineTransform(rotationAngle: (angle*n).pi.cgFloat)
+                    self.addGoalButton.transform = CGAffineTransform(rotationAngle: (1*n).pi.cgFloat)
                 }
             }
         }
     }
+    private func rotateBack() {
+        DispatchQueue.main.async {
+            for n in 1...180 {
+                Timer.scheduledTimer(withTimeInterval: 0.002*Double(n), repeats: false) { (timer) in
+                    self.addGoalButton.transform = CGAffineTransform(rotationAngle: (1*n).pi.cgFloat)
+                }
+            }
+        }
+    }
+}
+
+extension CaveViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.userInfo?.usersGoalData.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        <#code#>
+    }
+    
 }
 
 extension CaveViewController: UIScrollViewDelegate {

@@ -10,7 +10,6 @@
 		0CED58BDF824657E973F7047 /* Pods_Dangun_Legend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 482E835E189B783CE527223F /* Pods_Dangun_Legend.framework */; };
 		A406D2832768A59A0062EF9B /* DimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A406D2822768A59A0062EF9B /* DimView.swift */; };
 		A406D2862768B6F30062EF9B /* CaveGoalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A406D2852768B6F30062EF9B /* CaveGoalModel.swift */; };
-		A406D28C2768D0200062EF9B /* CaveStepCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A406D28B2768D0200062EF9B /* CaveStepCell.swift */; };
 		A406D28E2768D2530062EF9B /* AddGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A406D28D2768D2520062EF9B /* AddGoalViewController.swift */; };
 		A411E5022619CD970057FAD3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A411E5012619CD970057FAD3 /* GoogleService-Info.plist */; };
 		A420E00F261724D00039F2C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E00E261724D00039F2C8 /* AppDelegate.swift */; };
@@ -47,7 +46,7 @@
 		AA69AE142768195400906436 /* SF-Pro-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69AE022768195400906436 /* SF-Pro-Display-Black.otf */; };
 		AA69AE152768195400906436 /* SF-Pro-Display-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69AE032768195400906436 /* SF-Pro-Display-ThinItalic.otf */; };
 		AA69AE162768195400906436 /* SF-Pro-Display-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69AE042768195400906436 /* SF-Pro-Display-BoldItalic.otf */; };
-		AA69AE182768205400906436 /* CaveScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69AE172768205400906436 /* CaveScrollView.swift */; };
+		AA69AE182768205400906436 /* CaveMainTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69AE172768205400906436 /* CaveMainTableView.swift */; };
 		AA69AE1C276825AD00906436 /* CaveScrollDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69AE1B276825AD00906436 /* CaveScrollDetailView.swift */; };
 		AAC5E89927687FCE0031AF80 /* Numeric+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC5E89827687FCE0031AF80 /* Numeric+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -75,7 +74,6 @@
 		9DD87C6A75BA537906D5E6F7 /* Pods-Dangun Legend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dangun Legend.release.xcconfig"; path = "Target Support Files/Pods-Dangun Legend/Pods-Dangun Legend.release.xcconfig"; sourceTree = "<group>"; };
 		A406D2822768A59A0062EF9B /* DimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimView.swift; sourceTree = "<group>"; };
 		A406D2852768B6F30062EF9B /* CaveGoalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveGoalModel.swift; sourceTree = "<group>"; };
-		A406D28B2768D0200062EF9B /* CaveStepCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveStepCell.swift; sourceTree = "<group>"; };
 		A406D28D2768D2520062EF9B /* AddGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGoalViewController.swift; sourceTree = "<group>"; };
 		A40CECDC2635123800F0CAC8 /* Dangun Legend.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Dangun Legend.entitlements"; sourceTree = "<group>"; };
 		A411E5012619CD970057FAD3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Dangun Legend/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -120,7 +118,7 @@
 		AA69AE022768195400906436 /* SF-Pro-Display-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Black.otf"; sourceTree = "<group>"; };
 		AA69AE032768195400906436 /* SF-Pro-Display-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-ThinItalic.otf"; sourceTree = "<group>"; };
 		AA69AE042768195400906436 /* SF-Pro-Display-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-BoldItalic.otf"; sourceTree = "<group>"; };
-		AA69AE172768205400906436 /* CaveScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveScrollView.swift; sourceTree = "<group>"; };
+		AA69AE172768205400906436 /* CaveMainTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveMainTableView.swift; sourceTree = "<group>"; };
 		AA69AE1B276825AD00906436 /* CaveScrollDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveScrollDetailView.swift; sourceTree = "<group>"; };
 		AAC5E89827687FCE0031AF80 /* Numeric+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Numeric+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -298,7 +296,7 @@
 			children = (
 				AA69ADC5276806A000906436 /* CaveViewController.swift */,
 				A406D28D2768D2520062EF9B /* AddGoalViewController.swift */,
-				AA69AE172768205400906436 /* CaveScrollView.swift */,
+				AA69AE172768205400906436 /* CaveMainTableView.swift */,
 				A406D2822768A59A0062EF9B /* DimView.swift */,
 			);
 			path = View;
@@ -308,7 +306,6 @@
 			isa = PBXGroup;
 			children = (
 				AA69AE1B276825AD00906436 /* CaveScrollDetailView.swift */,
-				A406D28B2768D0200062EF9B /* CaveStepCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -517,7 +514,7 @@
 				AA69ADCA2768076A00906436 /* PeopleViewController.swift in Sources */,
 				AA2A672F276C23E600DAB530 /* UITabbar+Extenstions.swift in Sources */,
 				AA69ADC6276806A000906436 /* CaveViewController.swift in Sources */,
-				AA69AE182768205400906436 /* CaveScrollView.swift in Sources */,
+				AA69AE182768205400906436 /* CaveMainTableView.swift in Sources */,
 				A406D2862768B6F30062EF9B /* CaveGoalModel.swift in Sources */,
 				AAC5E89927687FCE0031AF80 /* Numeric+Extension.swift in Sources */,
 				A420E00F261724D00039F2C8 /* AppDelegate.swift in Sources */,
@@ -532,7 +529,6 @@
 				A406D2832768A59A0062EF9B /* DimView.swift in Sources */,
 				AA2A6733276C2C1C00DAB530 /* UIImage+Extension.swift in Sources */,
 				AA2A6739276C665600DAB530 /* Date+Extension.swift in Sources */,
-				A406D28C2768D0200062EF9B /* CaveStepCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

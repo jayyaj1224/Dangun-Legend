@@ -15,13 +15,17 @@ class AddGoalViewController: UIViewController {
     
     private var goalTextView: UITextView!
     
-    private var failCapPickerView: UIPickerView!
+    private var totalDaysPicker: UIPickerView!
+    private var targetDaysPicker: UIPickerView!
     
     private var gradientLayer: CAGradientLayer!
     
+    private var challengeButton: UIButton!
+    private var challengeButtonLabel: UILabel!
+    
     private var dummyDismissButton: UIButton!
     
-    private var failCapArray: [String] = Array(0...10).map { "\($0)회" }
+    private var totalDaysArray: [String] = Array(1...100).map { "\($0*10)일 중" }
     
     var caveViewAddNewGoalClosure: ((_ goal: GoalModel)->Void)?
     
@@ -31,24 +35,49 @@ class AddGoalViewController: UIViewController {
         super.viewDidLoad()
         self.setAddGoalView()
         self.setDummyDismissButton()
-        self.setupFailCapPicker()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         self.caveViewAddButtonSpinActionClosure?()
     }
     
     // MARK: - Action
     @objc private func goalSaveButtonTap(_ sender: UIButton) {
-        let newGoal = GoalModel.init(
-            goal: self.goalTextView.text,
-            failCap: self.failCapPickerView.selectedRow(inComponent: 0)
-        )
-        self.caveViewAddNewGoalClosure?(newGoal)
+        let totalDays: Int = {
+            let selectedRow = self.totalDaysPicker.selectedRow(inComponent: 0)
+            return (selectedRow+1)*10
+        }()
+        let message = "\(totalDays)일 목표: \(self.goalTextView.text!)"
+        let alerView = UIAlertController(title: "새로운 목표를 추가합니다.", message: message, preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "확인", style: .default) { action in
+            self.saveNewGoal()
+        }
+        let cancel = UIAlertAction(title: "취소", style: .default) { _ in }
+        alerView.addAction(confirm)
+        alerView.addAction(cancel)
+        self.present(alerView, animated: true, completion: nil)
     }
     
     @objc private func buttonTap(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true)
+    }
+
+    private func saveNewGoal() {
+        let totalDays: Int = {
+            let selectedRow = self.totalDaysPicker.selectedRow(inComponent: 0)
+            return (selectedRow+1)*10
+        }()
+        let targetDays: Int = {
+            return totalDays - self.targetDaysPicker.selectedRow(inComponent: 0)
+        }()
+        
+        let newGoal = GoalModel.init(
+            goal: self.goalTextView.text,
+            failCap: totalDays - targetDays
+        )
+        self.caveViewAddNewGoalClosure?(newGoal)
+        self.dismiss(animated: true)
     }
     
     // MARK: - UI Setting
@@ -69,38 +98,113 @@ class AddGoalViewController: UIViewController {
         self.setTextFieldInsideTheAddGoalView()
     }
 
-    
     private func setTextFieldInsideTheAddGoalView() {
-        let textView = UITextView()
-        textView.backgroundColor = .clear
-        textView.tintColor = .clear
-        textView.autocorrectionType = .no
-        textView.text = "Trump's fist merging into Biden's face"
-        textView.textColor = .systemGray
+        let textView: UITextView = {
+            let textView = UITextView()
+            textView.backgroundColor = .clear
+            textView.tintColor = .lightGray.withAlphaComponent(0.5)
+            textView.textAlignment = .center
+            textView.autocorrectionType = .no
+            textView.text = "탭하여 목표를 입력해주세요"
+            textView.textColor = .systemGray
+            textView.font = UIFont.fontSFProDisplay(size: 22, family: .Semibold)
+            self.addGoalView.addSubview(textView)
+            textView.snp.makeConstraints { make in
+                make.width.equalToSuperview().offset(-30)
+                make.centerX.equalToSuperview()
+                make.height.equalTo(70)
+                make.bottom.equalToSuperview().offset(-170)
+            }
+            self.goalTextView = textView
+            self.goalTextView.delegate = self
+            return textView
+        }()
         
-        textView.font = UIFont.fontSFProDisplay(size: 20, family: .Medium)
-        self.addGoalView.addSubview(textView)
-        textView.snp.makeConstraints { make in
-            make.leading.top.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
-            make.height.equalTo(100)
-        }
-        self.goalTextView = textView
-        self.goalTextView.delegate = self
-        
-        self.setDivisionView()
+        let _ = {
+            let view = UIView()
+            view.backgroundColor = .black
+            self.addGoalView.addSubview(view)
+            view.snp.makeConstraints { make in
+                make.height.equalTo(0.5)
+                make.width.centerX.bottom.equalTo(textView)
+            }
+        }()
+        self.setupFailCapPickerStackView()
     }
     
-    private func setDivisionView() {
-        let divisionView = UIView()
-        divisionView.backgroundColor = .black
+    private func setupFailCapPickerStackView() {
+        let stackView: UIStackView = {
+            let view = UIStackView()
+            view.axis = .horizontal
+            view.distribution = .fillEqually
+            view.spacing = 5
+            self.addGoalView.addSubview(view)
+            view.snp.makeConstraints { make in
+                make.width.equalTo(300)
+                make.centerX.equalToSuperview()
+                make.top.equalToSuperview().offset(124)
+                make.height.equalTo(90)
+            }
+            return view
+        }()
         
-        self.goalTextView.addSubview(divisionView)
-        divisionView.snp.makeConstraints { make in
-            make.height.equalTo(0.2)
-            make.width.centerX.equalToSuperview()
-            make.top.equalTo(self.goalTextView.snp.bottom)
-        }
+        let _ = {
+            let totalDaysPick = UIPickerView()
+            totalDaysPick.tag = 0
+            totalDaysPick.backgroundColor = .clear
+            totalDaysPick.delegate = self
+            totalDaysPick.dataSource = self
+            totalDaysPick.backgroundColor = .clear
+            stackView.addArrangedSubview(totalDaysPick)
+            self.totalDaysPicker = totalDaysPick
+        }()
+        let _ = {
+            let targetDaysPick = UIPickerView()
+            targetDaysPick.tag = 1
+            targetDaysPick.backgroundColor = .clear
+            targetDaysPick.delegate = self
+            targetDaysPick.dataSource = self
+            targetDaysPick.backgroundColor = .clear
+            stackView.addArrangedSubview(targetDaysPick)
+            self.targetDaysPicker = targetDaysPick
+        }()
+        self.set도전Button()
+    }
+    
+    private func set도전Button() {
+        let _ = {
+            let label = UILabel()
+            label.text = "도전!"
+            label.textAlignment = .center
+            label.textColor = .lightGray
+            label.font = .fontSFProDisplay(size: 22, family: .Heavy)
+            self.addGoalView.addSubview(label)
+            label.snp.makeConstraints { make in
+                make.width.equalTo(324)
+                make.height.equalTo(54)
+                make.bottom.equalToSuperview().offset(-14)
+                make.centerX.equalToSuperview()
+            }
+            self.challengeButtonLabel = label
+        }()
+       
+        let _ = {
+            let button = UIButton()
+            button.layer.cornerRadius = 14
+            button.backgroundColor = .clear
+            button.layer.borderColor = UIColor.lightGray.cgColor
+            button.layer.borderWidth = 1
+            button.isEnabled = false
+            button.addTarget(self, action: #selector(self.goalSaveButtonTap(_:)), for: .touchUpInside)
+            self.addGoalView.addSubview(button)
+            button.snp.makeConstraints { make in
+                make.width.equalTo(324)
+                make.height.equalTo(50)
+                make.bottom.equalToSuperview().offset(-14)
+                make.centerX.equalToSuperview()
+            }
+            self.challengeButton = button
+        }()
     }
     
     private func setDummyDismissButton() {
@@ -113,41 +217,6 @@ class AddGoalViewController: UIViewController {
             make.trailing.equalToSuperview().offset(-20)
         }
         self.dummyDismissButton = button
-    }
-    
-    private func setupFailCapPicker() {
-        let stackView: UIStackView = {
-            let view = UIStackView()
-            view.axis = .horizontal
-            view.distribution = .fill
-            view.alignment = .center
-            view.spacing = 20
-            self.addGoalView.addSubview(view)
-            view.snp.makeConstraints { make in
-                make.width.equalToSuperview().offset(-100)
-                make.centerX.equalToSuperview()
-                make.bottom.equalToSuperview()
-                make.height.equalTo(100)
-            }
-            return view
-        }()
-        
-        let _ = {
-            let label = UILabel()
-            label.text = "목표 불이행 허용 횟수:"
-            label.textAlignment = .center
-            label.font = .fontSFProDisplay(size: 20, family: .Medium)
-            stackView.addArrangedSubview(label)
-        }()
-        
-        let _ = {
-            let picker = UIPickerView()
-            picker.delegate = self
-            picker.dataSource = self
-            stackView.addArrangedSubview(picker)
-            picker.snp.makeConstraints { $0.width.equalTo(120) }
-            self.failCapPickerView = picker
-        }()
     }
 }
 
@@ -165,6 +234,21 @@ extension AddGoalViewController: UITextViewDelegate {
             textView.textColor = .systemGray
         }
     }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        let text = textView.text.filter { $0 != " " }
+        let placeHolder = "탭하여 목표를 입력해주세요"
+        if text.count < 3 || textView.text == placeHolder {
+            self.challengeButton.isEnabled = false
+            self.challengeButton.layer.borderColor = UIColor.lightGray.cgColor
+            self.challengeButtonLabel.textColor = .lightGray
+        } else {
+            self.challengeButton.isEnabled = true
+            self.challengeButton.layer.borderColor = UIColor.black.cgColor
+            self.challengeButtonLabel.textColor = .black
+        }
+        
+    }
 }
 
 extension AddGoalViewController: UIPickerViewDataSource, UIPickerViewDelegate {
@@ -173,12 +257,40 @@ extension AddGoalViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return self.failCapArray.count
+        if pickerView.tag == 0 {
+            return self.totalDaysArray.count
+        } else {
+            return 10
+        }
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.failCapArray[row]
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        if pickerView.tag == 0 {
+            var label = view as? UILabel
+            if label == nil {
+                label = UILabel()
+                label?.textAlignment = .center
+                label?.font = .fontSFProDisplay(size: 23, family: .Medium)
+            }
+            label?.text = self.totalDaysArray[row]
+            return label!
+            
+        } else {
+            var label = view as? UILabel
+            if label == nil {
+                label = UILabel()
+                label?.font = .fontSFProDisplay(size: 23, family: .Bold)
+            }
+            label?.text = "   " + "\((self.totalDaysPicker.selectedRow(inComponent: 0)+1)*10-row)일"
+            return label!
+        }
     }
     
-    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView.tag == 0 {
+            self.targetDaysPicker.reloadComponent(0)
+        }
+    }
 }
+
+
