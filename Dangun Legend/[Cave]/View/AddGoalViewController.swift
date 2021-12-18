@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 class AddGoalViewController: UIViewController {
     
@@ -30,6 +31,7 @@ class AddGoalViewController: UIViewController {
         super.viewDidLoad()
         self.setAddGoalView()
         self.setDummyDismissButton()
+        self.setupFailCapPicker()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -76,8 +78,6 @@ class AddGoalViewController: UIViewController {
         textView.text = "Trump's fist merging into Biden's face"
         textView.textColor = .systemGray
         
-        textView.backgroundColor = .lightGray
-        
         textView.font = UIFont.fontSFProDisplay(size: 20, family: .Medium)
         self.addGoalView.addSubview(textView)
         textView.snp.makeConstraints { make in
@@ -116,17 +116,38 @@ class AddGoalViewController: UIViewController {
     }
     
     private func setupFailCapPicker() {
-        let pickerView = UIPickerView()
-        self.addGoalView.addSubview(pickerView)
-        pickerView.snp.makeConstraints { make in
-            make.width.equalToSuperview().offset(-80)
-            make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-10)
-            make.height.equalTo(50)
-        }
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        self.failCapPickerView = pickerView
+        let stackView: UIStackView = {
+            let view = UIStackView()
+            view.axis = .horizontal
+            view.distribution = .fill
+            view.alignment = .center
+            view.spacing = 20
+            self.addGoalView.addSubview(view)
+            view.snp.makeConstraints { make in
+                make.width.equalToSuperview().offset(-100)
+                make.centerX.equalToSuperview()
+                make.bottom.equalToSuperview()
+                make.height.equalTo(100)
+            }
+            return view
+        }()
+        
+        let _ = {
+            let label = UILabel()
+            label.text = "목표 불이행 허용 횟수:"
+            label.textAlignment = .center
+            label.font = .fontSFProDisplay(size: 20, family: .Medium)
+            stackView.addArrangedSubview(label)
+        }()
+        
+        let _ = {
+            let picker = UIPickerView()
+            picker.delegate = self
+            picker.dataSource = self
+            stackView.addArrangedSubview(picker)
+            picker.snp.makeConstraints { $0.width.equalTo(120) }
+            self.failCapPickerView = picker
+        }()
     }
 }
 
