@@ -13,6 +13,14 @@ struct UserInfo: Codable {
     var totalSuccessCount: Int
     var totalFailCount: Int
     var usersGoalData: [GoalModel]
+    
+    init() {
+        self.totalTrialCount = 0
+        self.totalGoalAchievementsCount = 0
+        self.totalSuccessCount = 0
+        self.totalFailCount = 0
+        self.usersGoalData = []
+    }
 }
 
 struct GoalModel: Codable {
@@ -20,7 +28,6 @@ struct GoalModel: Codable {
     let identifier: String
     var goalStatus: GoalStatus
 
-    let userId: String?
     let startDate: String
     let endDate: String
     var isForShare: Bool
@@ -37,7 +44,6 @@ struct GoalModel: Codable {
         self.identifier = Date().asString.identifier
         self.goalStatus = .na
         
-        self.userId = CS.userId() ?? "NON_LOG_IN_USER"
         self.startDate = startDate.asString.yyyy_MM_dd
         self.endDate = startDate.add(99).asString.yyyy_MM_dd
         self.isForShare = false

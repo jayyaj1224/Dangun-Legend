@@ -294,6 +294,7 @@ PODS:
     - GoogleUtilities/UserDefaults (~> 6.7)
     - Protobuf (>= 3.9.2, ~> 3.9)
   - FSPagerView (0.8.3)
+  - Gifu (3.3.1)
   - GoogleAppMeasurement (6.9.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.7)
     - GoogleUtilities/MethodSwizzler (~> 6.7)
@@ -378,6 +379,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Messaging
   - FSPagerView
+  - Gifu
   - GoogleSignIn
   - IQKeyboardManagerSwift
   - Kingfisher
@@ -401,6 +403,7 @@ SPEC REPOS:
     - FirebaseInstanceID
     - FirebaseMessaging
     - FSPagerView
+    - Gifu
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleSignIn
@@ -435,6 +438,7 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: bd3ffc24367f901a43c063b36c640b345a4a5dd1
   FirebaseMessaging: 5eca4ef173de76253352511aafef774caa1cba2a
   FSPagerView: 670405b2f18e2a87fa37f20b00de783e562c25a8
+  Gifu: 416d4e38c4c2fed012f019e0a1d3ffcb58e5b842
   GoogleAppMeasurement: a6a3a066369828db64eda428cb2856dc1cdc7c4e
   GoogleDataTransport: f56af7caa4ed338dc8e138a5d7c5973e66440833
   GoogleSignIn: fd381840dbe7c1137aa6dc30849a5c3e070c034a
@@ -454,6 +458,6 @@ SPEC CHECKSUMS:
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
 
-PODFILE CHECKSUM: e80bdbd9716a08a7b9be4028337bef9b7a4865fd
+PODFILE CHECKSUM: f6373ef91f10976cc52c80956429c36a70bc761b
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.11.2

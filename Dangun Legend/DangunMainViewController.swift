@@ -70,6 +70,7 @@ class DangunMainViewController: UIViewController {
     
     // MARK: - UI Setting
     private func setDangunMainViewInterface() {
+        self.view.backgroundColor = .crayon
         self.view.setNeedsLayout()
         self.view.layoutIfNeeded()
         
@@ -107,11 +108,12 @@ class DangunMainViewController: UIViewController {
     private func setPageSegmentController() {
         self.pageSegmentView = {
             let view = UIView()
+            view.backgroundColor = .white
             self.view.addSubview(view)
             view.snp.makeConstraints { make in
-                make.leading.trailing.equalToSuperview()
-                make.bottom.equalToSuperview().offset(-30)
-                make.height.equalTo(50)
+                make.top.leading.trailing.equalToSuperview()
+//                make.bottom.equalToSuperview().offset(-30)
+                make.height.equalTo(100)
             }
             return view
         }()
@@ -136,7 +138,8 @@ class DangunMainViewController: UIViewController {
 
             self.pageSegmentView.addSubview(segmentController)
             segmentController.snp.makeConstraints { make in
-                make.leading.trailing.top.bottom.equalToSuperview()
+                make.leading.trailing.bottom.equalToSuperview()
+                make.height.equalTo(50)
             }
 
             return segmentController
@@ -165,9 +168,10 @@ class DangunMainViewController: UIViewController {
         let selectedIndex = self.pageSegmentController.selectedSegmentIndex
 
         self.segmentIndicator.snp.remakeConstraints { (make) in
-            make.top.equalTo(self.pageSegmentController.snp.bottom).offset(-10)
+//            make.top.equalTo(self.pageSegmentController.snp.bottom).offset(-10)
             make.height.equalTo(3)
-            make.width.equalTo(120)
+            make.width.equalTo(CS.screenWidth/2)
+            make.bottom.equalToSuperview()
             
             if selectedIndex < 0 {
                 make.centerX.equalTo(self.view).offset(-CS.screenWidth/4)

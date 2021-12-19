@@ -31,6 +31,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
         
         application.registerForRemoteNotifications()
+     
+        if CS.isFirstLaunch {
+            UserDefaults.standard.set(true, forKey: CS.UDKEY_FIRST_LAUNCH)
+            CS.saveUserInfo(info: UserInfo.init())
+        }
         
         return true
     }

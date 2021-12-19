@@ -18,6 +18,8 @@
 		A420E01B261724D10039F2C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A420E019261724D10039F2C8 /* LaunchScreen.storyboard */; };
 		A420E026261724D10039F2C8 /* Dangun_LegendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E025261724D10039F2C8 /* Dangun_LegendTests.swift */; };
 		A420E031261724D10039F2C8 /* Dangun_LegendUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A420E030261724D10039F2C8 /* Dangun_LegendUITests.swift */; };
+		A4FA2617276F2297003FAD8E /* SingleCaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FA2616276F2297003FAD8E /* SingleCaveView.swift */; };
+		A4FA2619276F248D003FAD8E /* Cave_Lights.gif in Resources */ = {isa = PBXBuildFile; fileRef = A4FA2618276F248D003FAD8E /* Cave_Lights.gif */; };
 		AA2A672B276C0D7A00DAB530 /* UIColour+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2A672A276C0D7A00DAB530 /* UIColour+Extension.swift */; };
 		AA2A672D276C1DF300DAB530 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2A672C276C1DF300DAB530 /* Constants.swift */; };
 		AA2A672F276C23E600DAB530 /* UITabbar+Extenstions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2A672E276C23E600DAB530 /* UITabbar+Extenstions.swift */; };
@@ -46,8 +48,7 @@
 		AA69AE142768195400906436 /* SF-Pro-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69AE022768195400906436 /* SF-Pro-Display-Black.otf */; };
 		AA69AE152768195400906436 /* SF-Pro-Display-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69AE032768195400906436 /* SF-Pro-Display-ThinItalic.otf */; };
 		AA69AE162768195400906436 /* SF-Pro-Display-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = AA69AE042768195400906436 /* SF-Pro-Display-BoldItalic.otf */; };
-		AA69AE182768205400906436 /* CaveMainTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69AE172768205400906436 /* CaveMainTableView.swift */; };
-		AA69AE1C276825AD00906436 /* CaveScrollDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69AE1B276825AD00906436 /* CaveScrollDetailView.swift */; };
+		AA69AE182768205400906436 /* CaveMainScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69AE172768205400906436 /* CaveMainScrollView.swift */; };
 		AAC5E89927687FCE0031AF80 /* Numeric+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC5E89827687FCE0031AF80 /* Numeric+Extension.swift */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +91,8 @@
 		A420E030261724D10039F2C8 /* Dangun_LegendUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dangun_LegendUITests.swift; sourceTree = "<group>"; };
 		A420E032261724D10039F2C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4588E222650FEF000C432BD /* Dangun LegendRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Dangun LegendRelease.entitlements"; sourceTree = "<group>"; };
+		A4FA2616276F2297003FAD8E /* SingleCaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCaveView.swift; sourceTree = "<group>"; };
+		A4FA2618276F248D003FAD8E /* Cave_Lights.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Cave_Lights.gif; sourceTree = "<group>"; };
 		AA2A672A276C0D7A00DAB530 /* UIColour+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColour+Extension.swift"; sourceTree = "<group>"; };
 		AA2A672C276C1DF300DAB530 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AA2A672E276C23E600DAB530 /* UITabbar+Extenstions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabbar+Extenstions.swift"; sourceTree = "<group>"; };
@@ -118,8 +121,7 @@
 		AA69AE022768195400906436 /* SF-Pro-Display-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Black.otf"; sourceTree = "<group>"; };
 		AA69AE032768195400906436 /* SF-Pro-Display-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-ThinItalic.otf"; sourceTree = "<group>"; };
 		AA69AE042768195400906436 /* SF-Pro-Display-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-BoldItalic.otf"; sourceTree = "<group>"; };
-		AA69AE172768205400906436 /* CaveMainTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveMainTableView.swift; sourceTree = "<group>"; };
-		AA69AE1B276825AD00906436 /* CaveScrollDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveScrollDetailView.swift; sourceTree = "<group>"; };
+		AA69AE172768205400906436 /* CaveMainScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveMainScrollView.swift; sourceTree = "<group>"; };
 		AAC5E89827687FCE0031AF80 /* Numeric+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Numeric+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -201,6 +203,7 @@
 				A420E00E261724D00039F2C8 /* AppDelegate.swift */,
 				A420E010261724D00039F2C8 /* SceneDelegate.swift */,
 				AA2A6730276C262600DAB530 /* DangunMainViewController.swift */,
+				A4FA2618276F248D003FAD8E /* Cave_Lights.gif */,
 				A406D2882768CA0C0062EF9B /* Supports */,
 				AA69ADC12768056400906436 /* [Cave] */,
 				AA69ADC42768061B00906436 /* [People] */,
@@ -232,6 +235,15 @@
 				A420E032261724D10039F2C8 /* Info.plist */,
 			);
 			path = "Dangun LegendUITests";
+			sourceTree = "<group>";
+		};
+		A4AC23B0276E147E00E631B7 /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				AA69AE172768205400906436 /* CaveMainScrollView.swift */,
+				A406D2822768A59A0062EF9B /* DimView.swift */,
+			);
+			path = SubViews;
 			sourceTree = "<group>";
 		};
 		AA69ADC12768056400906436 /* [Cave] */ = {
@@ -296,8 +308,7 @@
 			children = (
 				AA69ADC5276806A000906436 /* CaveViewController.swift */,
 				A406D28D2768D2520062EF9B /* AddGoalViewController.swift */,
-				AA69AE172768205400906436 /* CaveMainTableView.swift */,
-				A406D2822768A59A0062EF9B /* DimView.swift */,
+				A4AC23B0276E147E00E631B7 /* SubViews */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -305,7 +316,7 @@
 		AA69AE1A2768219100906436 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				AA69AE1B276825AD00906436 /* CaveScrollDetailView.swift */,
+				A4FA2616276F2297003FAD8E /* SingleCaveView.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -428,6 +439,7 @@
 				AA69AE082768195400906436 /* SF-Pro-Display-Light.otf in Resources */,
 				AA69AE0C2768195400906436 /* SF-Pro-Display-Heavy.otf in Resources */,
 				AA69AE052768195400906436 /* SF-Pro-Display-Thin.otf in Resources */,
+				A4FA2619276F248D003FAD8E /* Cave_Lights.gif in Resources */,
 				AA69AE0A2768195400906436 /* SF-Pro-Display-Bold.otf in Resources */,
 				AA69AE092768195400906436 /* SF-Pro-Display-Regular.otf in Resources */,
 				AA69AE0E2768195400906436 /* SF-Pro-Display-MediumItalic.otf in Resources */,
@@ -514,13 +526,13 @@
 				AA69ADCA2768076A00906436 /* PeopleViewController.swift in Sources */,
 				AA2A672F276C23E600DAB530 /* UITabbar+Extenstions.swift in Sources */,
 				AA69ADC6276806A000906436 /* CaveViewController.swift in Sources */,
-				AA69AE182768205400906436 /* CaveMainTableView.swift in Sources */,
+				AA69AE182768205400906436 /* CaveMainScrollView.swift in Sources */,
 				A406D2862768B6F30062EF9B /* CaveGoalModel.swift in Sources */,
 				AAC5E89927687FCE0031AF80 /* Numeric+Extension.swift in Sources */,
 				A420E00F261724D00039F2C8 /* AppDelegate.swift in Sources */,
-				AA69AE1C276825AD00906436 /* CaveScrollDetailView.swift in Sources */,
 				AA2A6735276C2FB200DAB530 /* UISegment- +extension.swift in Sources */,
 				AA2A672D276C1DF300DAB530 /* Constants.swift in Sources */,
+				A4FA2617276F2297003FAD8E /* SingleCaveView.swift in Sources */,
 				AA2A672B276C0D7A00DAB530 /* UIColour+Extension.swift in Sources */,
 				AA69ADCC276818DC00906436 /* UIFont+Extension.swift in Sources */,
 				AA2A6731276C262600DAB530 /* DangunMainViewController.swift in Sources */,

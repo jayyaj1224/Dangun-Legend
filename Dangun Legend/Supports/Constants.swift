@@ -16,33 +16,30 @@ enum CS {
     
     
     // MARK: - UserInfo
+    static func saveUserInfo(info: UserInfo) {
+        UserDefaults.standard.set(try? PropertyListEncoder().encode(info), forKey: UDKEY_USERINFO)
+    }
+    
     static var userInfo: UserInfo? {
-        guard let userId = self.userId(),
-              let data = UserDefaults.standard.data(forKey: "USERINFO_\(userId)"),
+        guard let data = UserDefaults.standard.data(forKey: UDKEY_USERINFO),
               let userInfo = try? PropertyListDecoder().decode(UserInfo.self, from: data) else {
                   return nil
               }
         return userInfo
     }
     
-    static func userHasLoggedIn() -> Bool {
-        return true
-    }
-    
-    static func userId() -> String? {
-        if userHasLoggedIn() {
-            return ""
+    static var isFirstLaunch: Bool {
+        if UserDefaults.standard.value(forKey: UDKEY_FIRST_LAUNCH) == nil {
+            return true
+        } else {
+            return false
         }
-        return ""
     }
     
     // MARK: - Keys  static var UDKEY_00000 = "UDKEY_00000"
     
-    static var UDKEY_USERINFO: String {
-        if self.userHasLoggedIn(), let id = self.userId() {
-            return "UDKEY_USERINFO_" + id
-        } else {
-            return "UDKEY_USERINFO_GUEST"
-        }
-    }
+    static var UDKEY_USERINFO: String = "UDKEY_USERINFO"
+    
+    static let UDKEY_FIRST_LAUNCH: String = "UDKEY_FIRST_LAUNCH"
+
 }

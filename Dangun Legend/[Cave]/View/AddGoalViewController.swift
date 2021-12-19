@@ -37,6 +37,11 @@ class AddGoalViewController: UIViewController {
         self.setDummyDismissButton()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.setupCloseLabel()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.caveViewAddButtonSpinActionClosure?()
@@ -48,12 +53,13 @@ class AddGoalViewController: UIViewController {
             let selectedRow = self.totalDaysPicker.selectedRow(inComponent: 0)
             return (selectedRow+1)*10
         }()
-        let message = "\(totalDays)일 목표: \(self.goalTextView.text!)"
-        let alerView = UIAlertController(title: "새로운 목표를 추가합니다.", message: message, preferredStyle: .alert)
+        let title = "< 새로운 \(totalDays)일 목표 >\n  \n\(self.goalTextView.text!)\n   "
+        let message = "목표한 일 수 만큼 미실행 시\n도전은 실패로 종료됩니다"
+        let alerView = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let confirm = UIAlertAction(title: "확인", style: .default) { action in
             self.saveNewGoal()
         }
-        let cancel = UIAlertAction(title: "취소", style: .default) { _ in }
+        let cancel = UIAlertAction(title: "취소", style: .destructive) { _ in }
         alerView.addAction(confirm)
         alerView.addAction(cancel)
         self.present(alerView, animated: true, completion: nil)
@@ -168,21 +174,21 @@ class AddGoalViewController: UIViewController {
             stackView.addArrangedSubview(targetDaysPick)
             self.targetDaysPicker = targetDaysPick
         }()
-        self.set도전Button()
+        self.setChallengButton()
     }
     
-    private func set도전Button() {
+    private func setChallengButton() {
         let _ = {
             let label = UILabel()
             label.text = "도전!"
             label.textAlignment = .center
-            label.textColor = .lightGray
-            label.font = .fontSFProDisplay(size: 22, family: .Heavy)
+            label.textColor = .lightGray.withAlphaComponent(0.5)
+            label.font = .fontSFProDisplay(size: 20, family: .Heavy)
             self.addGoalView.addSubview(label)
             label.snp.makeConstraints { make in
-                make.width.equalTo(324)
-                make.height.equalTo(54)
-                make.bottom.equalToSuperview().offset(-14)
+                make.width.equalTo(200)
+                make.height.equalTo(40)
+                make.bottom.equalToSuperview().offset(-24)
                 make.centerX.equalToSuperview()
             }
             self.challengeButtonLabel = label
@@ -192,15 +198,16 @@ class AddGoalViewController: UIViewController {
             let button = UIButton()
             button.layer.cornerRadius = 14
             button.backgroundColor = .clear
-            button.layer.borderColor = UIColor.lightGray.cgColor
+            button.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
             button.layer.borderWidth = 1
             button.isEnabled = false
             button.addTarget(self, action: #selector(self.goalSaveButtonTap(_:)), for: .touchUpInside)
+            
             self.addGoalView.addSubview(button)
             button.snp.makeConstraints { make in
-                make.width.equalTo(324)
-                make.height.equalTo(50)
-                make.bottom.equalToSuperview().offset(-14)
+                make.width.equalTo(200)
+                make.height.equalTo(40)
+                make.bottom.equalToSuperview().offset(-24)
                 make.centerX.equalToSuperview()
             }
             self.challengeButton = button
@@ -213,10 +220,29 @@ class AddGoalViewController: UIViewController {
         self.view.addSubview(button)
         button.snp.makeConstraints { make in
             make.size.equalTo(80)
-            make.bottom.equalToSuperview().offset(-120)
-            make.trailing.equalToSuperview().offset(-20)
+            make.bottom.equalToSuperview().offset(-177)
+            make.trailing.equalToSuperview().offset(-43)
         }
         self.dummyDismissButton = button
+    }
+    
+    private func setupCloseLabel() {
+        let label = UILabel()
+        label.text = "취소"
+        label.font = .fontSFProDisplay(size: 15, family: .Bold)
+        label.alpha = 0
+        self.view.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().offset(-177)
+            make.trailing.equalToSuperview().offset(-43)
+        }
+        DispatchQueue.main.async {
+            for n in 1...100 {
+                Timer.scheduledTimer(withTimeInterval: 0.005*Double(n), repeats: false) { (timer) in
+                    label.alpha = 0.01*CGFloat(n)
+                }
+            }
+        }
     }
 }
 
@@ -265,25 +291,20 @@ extension AddGoalViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        if pickerView.tag == 0 {
-            var label = view as? UILabel
-            if label == nil {
-                label = UILabel()
-                label?.textAlignment = .center
-                label?.font = .fontSFProDisplay(size: 23, family: .Medium)
-            }
-            label?.text = self.totalDaysArray[row]
-            return label!
-            
-        } else {
-            var label = view as? UILabel
-            if label == nil {
-                label = UILabel()
-                label?.font = .fontSFProDisplay(size: 23, family: .Bold)
-            }
-            label?.text = "   " + "\((self.totalDaysPicker.selectedRow(inComponent: 0)+1)*10-row)일"
-            return label!
+        var label = view as? UILabel
+        
+        if label == nil {
+            label = UILabel()
+            label?.textAlignment = .center
         }
+        if pickerView.tag == 0 {
+            label?.font = .fontSFProDisplay(size: 23, family: .Medium)
+            label?.text = self.totalDaysArray[row]
+        } else {
+            label?.font = .fontSFProDisplay(size: 23, family: .Bold)
+            label?.text = "\((self.totalDaysPicker.selectedRow(inComponent: 0)+1)*10-row)일 실행"
+        }
+        return label!
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

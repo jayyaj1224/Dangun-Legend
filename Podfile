@@ -27,8 +27,10 @@ pod 'SnapKit'
 pod 'Each'
 pod 'FSPagerView'
 pod 'Kingfisher'
+pod 'Gifu'
 
 pod 'RxSwift' 
 pod 'RxCocoa'
+
 
 end
