@@ -14,3 +14,7 @@ extension UIColor {
     static let crayon = #colorLiteral(red: 0.8923148716, green: 0.8923148716, blue: 0.8923148716, alpha: 1)
     static let confirmGreen = #colorLiteral(red: 0.4856337309, green: 0.7388194203, blue: 0.5548433661, alpha: 1)
 }
+
+extension CGColor {
+    static let black: CGColor = UIColor.black.cgColor
+}

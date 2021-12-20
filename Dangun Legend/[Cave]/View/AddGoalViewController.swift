@@ -11,6 +11,8 @@ import Kingfisher
 
 class AddGoalViewController: UIViewController {
     
+    var caveDelegate: CaveViewDelegate!
+    
     private var addGoalView: UIView!
     
     private var goalTextView: UITextView!
@@ -27,10 +29,6 @@ class AddGoalViewController: UIViewController {
     
     private var totalDaysArray: [String] = Array(1...100).map { "\($0*10)일 중" }
     
-    var caveViewAddNewGoalClosure: ((_ goal: GoalModel)->Void)?
-    
-    var caveViewAddButtonSpinActionClosure: (()->Void)?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setAddGoalView()
@@ -44,7 +42,7 @@ class AddGoalViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.caveViewAddButtonSpinActionClosure?()
+        self.caveDelegate.addGoalViewDisappeared()
     }
     
     // MARK: - Action
@@ -82,7 +80,7 @@ class AddGoalViewController: UIViewController {
             goal: self.goalTextView.text,
             failCap: totalDays - targetDays
         )
-        self.caveViewAddNewGoalClosure?(newGoal)
+        self.caveDelegate.addGoal(newGoal)
         self.dismiss(animated: true)
     }
     
@@ -161,6 +159,7 @@ class AddGoalViewController: UIViewController {
             totalDaysPick.delegate = self
             totalDaysPick.dataSource = self
             totalDaysPick.backgroundColor = .clear
+            totalDaysPick.selectRow(9, inComponent: 0, animated: false)
             stackView.addArrangedSubview(totalDaysPick)
             self.totalDaysPicker = totalDaysPick
         }()
@@ -270,7 +269,7 @@ extension AddGoalViewController: UITextViewDelegate {
             self.challengeButtonLabel.textColor = .lightGray
         } else {
             self.challengeButton.isEnabled = true
-            self.challengeButton.layer.borderColor = UIColor.black.cgColor
+            self.challengeButton.layer.borderColor = .black
             self.challengeButtonLabel.textColor = .black
         }
         
