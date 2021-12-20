@@ -59,10 +59,10 @@ class SingleCaveView: UIScrollView, UIScrollViewDelegate {
     }
     
     private func deleteViewAlphaControl(x xOffset: CGFloat) {
-        if xOffset < 0 {
-            self.deleteView.alpha = (-xOffset)*0.1
+        if xOffset-70 < 0 {
+            self.deleteView.alpha = (-xOffset)*0.01
         }
-        if xOffset < -100 {
+        if xOffset < -110 {
             self.showDeleteAlert()
         }
     }
@@ -70,11 +70,11 @@ class SingleCaveView: UIScrollView, UIScrollViewDelegate {
     private func showDeleteAlert() {
         guard let caveVc = self.viewContainingController() as? CaveViewController else { return }
         let alerView = UIAlertController(title: "목표를 삭제합니다.", message: "", preferredStyle: .alert)
+        alerView.addAction( UIAlertAction(title: "취소", style: .default) { _ in } )
         
-        alerView.addAction( UIAlertAction(title: "확인", style: .default) { _ in
-            self.caveDelegate.deleteGoalAt(self.tag)
+        alerView.addAction( UIAlertAction(title: "삭제", style: .destructive) { _ in
+            caveVc.deleteGoalAt(self.tag)
         })
-        alerView.addAction( UIAlertAction(title: "취소", style: .cancel) { _ in } )
         
         caveVc.present(alerView, animated: true, completion: nil)
     }
@@ -92,7 +92,7 @@ extension SingleCaveView {
         self.setBackGroundImageView()
         self.setLightImageView()
         
-        self.setCircleView()
+        self.setSquareView()
         self.setDeleteLabel()
     }
     
@@ -130,14 +130,14 @@ extension SingleCaveView {
         }
     }
     
-    private func setCircleView() {
-        let circle = UIView()
-        circle.layer.borderColor = .black
-        circle.layer.borderWidth = 3
-        self.contentView.addSubview(circle)
-        circle.snp.makeConstraints { make in
+    private func setSquareView() {
+        let square = UIView()
+        square.layer.borderColor = .black
+        square.layer.borderWidth = 3
+        self.contentView.addSubview(square)
+        square.snp.makeConstraints { make in
             make.leading.top.bottom.equalToSuperview()
-            make.width.equalTo(circle.snp.height)
+            make.width.equalTo(square.snp.height)
         }
 
         let label = UILabel()
@@ -145,7 +145,7 @@ extension SingleCaveView {
         label.numberOfLines = 10
         label.minimumScaleFactor = 0.5
         label.textAlignment = .center
-        circle.addSubview(label)
+        square.addSubview(label)
         label.snp.makeConstraints { make in
             make.width.lessThanOrEqualToSuperview()
             make.center.equalToSuperview()
@@ -155,8 +155,9 @@ extension SingleCaveView {
     
     private func setDeleteLabel() {
         let deleteView = GradientView.init(
-            colours: [.systemRed, .systemRed.withAlphaComponent(0.3)],
+            colours: [.systemRed.withAlphaComponent(0.5), .systemRed.withAlphaComponent(0.0)],
             frame: CGRect(x: 0, y: 0, width: 200, height: self.selfHeight),
+            gradientLocation: [0,0.5],
             start: CGPoint(x: 1.0, y:0.5), end: CGPoint(x: 0.5, y: 1.0)
         )
         deleteView.gradientLayer.type = .radial

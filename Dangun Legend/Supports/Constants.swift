@@ -36,6 +36,8 @@ enum CS {
         }
     }
     
+    static var dummyGoal: GoalModel = .init(goal: "설정된 목표가 아직 없습니다.\n오른쪽 아래 +버튼을 눌러 추가해주세요.", failCap: 0)
+    
     // MARK: - Keys  static var UDKEY_00000 = "UDKEY_00000"
     
     static var UDKEY_USERINFO: String = "UDKEY_USERINFO"

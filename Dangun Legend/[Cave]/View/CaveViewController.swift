@@ -9,8 +9,6 @@ import Foundation
 import UIKit
 
 protocol CaveViewDelegate {
-    func deleteGoalAt(_ index: Int)
-    
     func addGoal(_ newGoal: GoalModel)
     
     func addGoalViewDisappeared()
@@ -37,23 +35,18 @@ class CaveViewController: UIViewController {
     
     @objc private func addGoalTapped() {
         self.rotate()
-//        let vc = AddGoalViewController()
-//        vc.caveViewAddNewGoalClosure = { [weak self] newGoal in
-//            guard let self = self, var info = self.userInfo else { return }
-//            info.usersGoalData.insert(newGoal, at: 0)
-//            info.totalTrialCount+=1
-//
-//            CS.saveUserInfo(info: info)
-//            self.userInfo = info
-//
-//            self.updateScrollView()
-//        }
-//
-//        vc.caveViewAddButtonSpinActionClosure = { [weak self] in
-//            guard let self = self else { return }
-//            self.rotateBack()
-//        }
-        self.present(AddGoalViewController(), animated: true, completion: nil)
+        let addGoalVc = AddGoalViewController()
+        addGoalVc.caveDelegate = self
+        self.present(addGoalVc, animated: true, completion: nil)
+    }
+    
+    func deleteGoalAt(_ index: Int) {
+        guard var info = CS.userInfo else { return }
+        info.usersGoalData.remove(at: index)
+        CS.saveUserInfo(info: info)
+        
+        self.userInfo = info
+        self.updateScrollView()
     }
     
     func updateScrollView() {
@@ -76,15 +69,6 @@ class CaveViewController: UIViewController {
 }
 
 extension CaveViewController: CaveViewDelegate {
-    func deleteGoalAt(_ index: Int) {
-        guard var info = CS.userInfo else { return }
-        info.usersGoalData.remove(at: index)
-        CS.saveUserInfo(info: info)
-        
-        self.userInfo = info
-        self.updateScrollView()
-    }
-    
     func addGoal(_ newGoal: GoalModel) {
         guard var info = self.userInfo else { return }
         info.usersGoalData.insert(newGoal, at: 0)
@@ -137,24 +121,37 @@ extension CaveViewController {
     }
     
     private func setGoalsScrollView() {
+        guard let goalDataArray = self.userInfo?.usersGoalData else { return }
+        
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .leading
         stackView.distribution = .equalSpacing
         stackView.spacing = 60
-
-        self.userInfo?.usersGoalData
-            .enumerated()
-            .forEach { (i, goalData) in
-                let singleCaveView = SingleCaveView.init()
-                singleCaveView.tag = i
-                stackView.addArrangedSubview(singleCaveView)
-                singleCaveView.snp.makeConstraints { make in
-                    make.height.equalTo(singleCaveView.selfHeight)
-                    make.width.equalToSuperview()
+        
+        if !goalDataArray.isEmpty {
+            goalDataArray
+                .enumerated()
+                .forEach { (i, goalData) in
+                    let singleCaveView = SingleCaveView.init()
+                    singleCaveView.tag = i
+                    stackView.addArrangedSubview(singleCaveView)
+                    singleCaveView.snp.makeConstraints { make in
+                        make.height.equalTo(singleCaveView.selfHeight)
+                        make.width.equalToSuperview()
+                    }
+                    singleCaveView.setGoalInfo(goalData)
                 }
-                singleCaveView.setGoalInfo(goalData)
+        } else {
+            let singleCaveView = SingleCaveView.init()
+            singleCaveView.isScrollEnabled = false
+            stackView.addArrangedSubview(singleCaveView)
+            singleCaveView.snp.makeConstraints { make in
+                make.height.equalTo(singleCaveView.selfHeight)
+                make.width.equalToSuperview()
             }
+            singleCaveView.setGoalInfo(CS.dummyGoal)
+        }
 
         self.caveMainScrollView.addSubview(stackView)
         stackView.snp.makeConstraints { make in

@@ -27,7 +27,7 @@ class AddGoalViewController: UIViewController {
     
     private var dummyDismissButton: UIButton!
     
-    private var totalDaysArray: [String] = Array(1...100).map { "\($0*10)일 중" }
+    private var totalDaysArray: [Int] = Array(1...100)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,8 +83,11 @@ class AddGoalViewController: UIViewController {
         self.caveDelegate.addGoal(newGoal)
         self.dismiss(animated: true)
     }
-    
+}
+
+
     // MARK: - UI Setting
+extension AddGoalViewController {
     private func setAddGoalView() {
         let addGoalView = UIView()
         addGoalView.backgroundColor = .white
@@ -298,7 +301,7 @@ extension AddGoalViewController: UIPickerViewDataSource, UIPickerViewDelegate {
         }
         if pickerView.tag == 0 {
             label?.font = .fontSFProDisplay(size: 23, family: .Medium)
-            label?.text = self.totalDaysArray[row]
+            label?.text = "\(self.totalDaysArray[row]*10)일 중"
         } else {
             label?.font = .fontSFProDisplay(size: 23, family: .Bold)
             label?.text = "\((self.totalDaysPicker.selectedRow(inComponent: 0)+1)*10-row)일 실행"
