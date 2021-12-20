@@ -15,9 +15,9 @@ class SingleCaveView: UIScrollView, UIScrollViewDelegate {
     
     private var caveImageView: UIImageView!
     
-    private var caveTitleLabel: UILabel!
-    
     private var deleteView: GradientView!
+    
+    var caveTitleLabel: UILabel!
     
     var caveDelegate: CaveViewDelegate!
     
@@ -141,13 +141,14 @@ extension SingleCaveView {
         }
 
         let label = UILabel()
-        label.font = .fontSFProDisplay(size: 20, family: .Heavy)
+        label.font = .fontSFProDisplay(size: 25, family: .Heavy)
         label.numberOfLines = 10
         label.minimumScaleFactor = 0.5
-        label.textAlignment = .center
+        label.textAlignment = .left
         square.addSubview(label)
         label.snp.makeConstraints { make in
-            make.width.lessThanOrEqualToSuperview()
+            make.leading.greaterThanOrEqualTo(55)
+            make.trailing.lessThanOrEqualToSuperview()
             make.center.equalToSuperview()
         }
         self.caveTitleLabel = label

@@ -151,6 +151,7 @@ extension CaveViewController {
                 make.width.equalToSuperview()
             }
             singleCaveView.setGoalInfo(CS.dummyGoal)
+            singleCaveView.caveTitleLabel.textAlignment = .left
         }
 
         self.caveMainScrollView.addSubview(stackView)
